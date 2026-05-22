@@ -1,0 +1,44 @@
+import type { Block } from 'payload'
+
+export const Stats: Block = {
+  slug: 'stats',
+  labels: { singular: 'Stats', plural: 'Stats' },
+  fields: [
+    { name: 'eyebrow', type: 'text' },
+    {
+      name: 'heading',
+      type: 'textarea',
+      admin: { description: 'Wrap a word in *asterisks* for italic.' },
+    },
+    {
+      name: 'variant',
+      type: 'radio',
+      defaultValue: 'light',
+      admin: { layout: 'horizontal' },
+      options: [
+        { label: 'Light tiles (home)', value: 'light' },
+        { label: 'Dark panel (our story)', value: 'darkPanel' },
+      ],
+    },
+    {
+      name: 'source',
+      type: 'radio',
+      defaultValue: 'global',
+      admin: { layout: 'horizontal' },
+      options: [
+        { label: 'Use global Site Settings stats', value: 'global' },
+        { label: 'Define custom stats for this page', value: 'custom' },
+      ],
+    },
+    {
+      name: 'items',
+      type: 'array',
+      labels: { singular: 'Stat', plural: 'Stats' },
+      admin: { condition: (_, sibs) => sibs.source === 'custom' },
+      fields: [
+        { name: 'value', type: 'text', required: true, admin: { description: 'e.g. "350,000"' } },
+        { name: 'label', type: 'text', required: true, admin: { description: 'e.g. "meals served"' } },
+      ],
+    },
+  ],
+}
