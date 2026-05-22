@@ -1743,6 +1743,10 @@ export interface Navigation {
           externalHref?: string | null;
           openInNewTab?: boolean | null;
         };
+        /**
+         * Shown on the right side of the overlay menu when this link is hovered (desktop only).
+         */
+        previewImage?: (number | null) | Media;
         id?: string | null;
       }[]
     | null;
@@ -1892,6 +1896,7 @@ export interface NavigationSelect<T extends boolean = true> {
               externalHref?: T;
               openInNewTab?: T;
             };
+        previewImage?: T;
         id?: T;
       };
   secondary?:

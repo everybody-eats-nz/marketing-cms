@@ -11,7 +11,17 @@ export const Navigation: GlobalConfig = {
       type: 'array',
       labels: { singular: 'Primary link', plural: 'Primary links' },
       admin: { description: 'Main nav (3–4 items max)' },
-      fields: [linkGroup()],
+      fields: [
+        linkGroup(),
+        {
+          name: 'previewImage',
+          type: 'upload',
+          relationTo: 'media',
+          admin: {
+            description: 'Shown on the right side of the overlay menu when this link is hovered (desktop only).',
+          },
+        },
+      ],
     },
     {
       name: 'secondary',
