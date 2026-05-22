@@ -401,13 +401,17 @@ async function seedGlobals(payload: any) {
   })
   console.log('  ✓ site-settings')
 
+  const navDineImageId = await uploadMedia(payload, '66da1b61c565fbd49ef16956_diners.jpg', 'Diners enjoying a meal at Everybody Eats')
+  const navInvolvedImageId = await uploadMedia(payload, '66de6b9a3555ab75c618a795_Alex-McVinnie_K9A4777-2.jpg', 'A volunteer stirring a pot in the Everybody Eats kitchen')
+  const navStoryImageId = await uploadMedia(payload, '67e2378394cdd938f52d6b15_WLGPP25-Parade-154.jpg', 'Everybody Eats team at the Wellington Pride Parade')
+
   await payload.updateGlobal({
     slug: 'navigation',
     data: {
       primary: [
-        { link: { label: 'Dine with us', type: 'internal', internalHref: '/dine-with-us' } },
-        { link: { label: 'Get involved', type: 'internal', internalHref: '/get-involved' } },
-        { link: { label: 'Our story', type: 'internal', internalHref: '/our-story' } },
+        { link: { label: 'Dine with us', type: 'internal', internalHref: '/dine-with-us' }, previewImage: navDineImageId },
+        { link: { label: 'Get involved', type: 'internal', internalHref: '/get-involved' }, previewImage: navInvolvedImageId },
+        { link: { label: 'Our story', type: 'internal', internalHref: '/our-story' }, previewImage: navStoryImageId },
       ],
       secondary: [
         { link: { label: 'The team', type: 'internal', internalHref: '/about/team' } },

@@ -6,11 +6,11 @@ import { MobileMenu } from './mobile-menu'
 export async function SiteHeader() {
   const payload = await getPayloadClient()
   const [nav, settings] = await Promise.all([
-    payload.findGlobal({ slug: 'navigation' }).catch(() => null),
+    payload.findGlobal({ slug: 'navigation', depth: 2 }).catch(() => null),
     payload.findGlobal({ slug: 'site-settings' }).catch(() => null),
   ])
 
-  const primary: Array<{ link: LinkValue }> = (nav as any)?.primary || []
+  const primary: Array<{ link: LinkValue; previewImage?: unknown }> = (nav as any)?.primary || []
   const secondary: Array<{ link: LinkValue }> = (nav as any)?.secondary || []
   const ctas = (nav as any)?.ctas || {}
   const donateUrl = (settings as any)?.donateUrl || '/get-involved/donate'
