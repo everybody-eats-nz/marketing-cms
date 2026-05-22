@@ -5,7 +5,7 @@ export function Marquee({ items, className = '' }: { items: string[]; className?
     <div className={`overflow-hidden ${className}`} aria-hidden>
       <div className="marquee-track">
         {doubled.map((item, i) => (
-          <span key={i} className="display text-3xl sm:text-5xl text-forest-600/85 inline-flex items-center gap-12">
+          <span key={i} className="display text-3xl sm:text-5xl !leading-[1.3] inline-flex items-center gap-12">
             <span>{item}</span>
             <Sparkle />
           </span>

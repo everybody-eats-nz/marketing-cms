@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { getPayloadClient } from '@/lib/payload'
 import { resolveHref, type LinkValue } from '@/lib/types'
@@ -15,6 +16,7 @@ export async function SiteHeader() {
   const ctas = (nav as any)?.ctas || {}
   const donateUrl = (settings as any)?.donateUrl || '/get-involved/donate'
   const shopUrl = (settings as any)?.shopUrl || '#'
+  const volunteerUrl = (settings as any)?.volunteerUrl || 'https://volunteers.everybodyeats.nz'
 
   return (
     <header className="sticky top-0 z-40 backdrop-blur-md bg-cream-50/85 border-b border-forest-500/10">
@@ -22,9 +24,16 @@ export async function SiteHeader() {
         <Link
           href="/"
           aria-label="Everybody Eats — home"
-          className="display text-lg sm:text-xl font-medium text-forest-600 tracking-tight"
+          className="text-forest-600 hover:text-forest-700 transition-colors"
         >
-          Everybody <em className="font-display">Eats</em>
+          <Image
+            src="/everybody-eats-logo.svg"
+            alt="Everybody Eats"
+            width={179}
+            height={65}
+            priority
+            className="h-8 sm:h-10 w-auto"
+          />
         </Link>
 
         <nav aria-label="Primary" className="hidden lg:flex items-center gap-1">
@@ -40,12 +49,22 @@ export async function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-3">
+          {ctas.showVolunteer !== false && volunteerUrl && (
+            <a
+              href={volunteerUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="hidden sm:inline-flex btn-ghost text-xs px-4 py-2"
+            >
+              {ctas.volunteerLabel || 'Volunteer'}
+            </a>
+          )}
           {ctas.showShop && shopUrl && (
             <a
               href={shopUrl}
               target="_blank"
               rel="noreferrer"
-              className="hidden sm:inline-flex btn-ghost text-xs px-4 py-2"
+              className="hidden md:inline-flex btn-ghost text-xs px-4 py-2"
             >
               {ctas.shopLabel || 'Shop'}
             </a>
