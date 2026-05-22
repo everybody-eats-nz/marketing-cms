@@ -101,3 +101,23 @@ There's a one-time content migration pipeline in `scripts/`:
 - `seed-pages-layouts.ts`, `seed-home-layout.ts`, `seed-nav-images.ts` → build out the blocks-based `layout` arrays from the extracted Webflow page HTML.
 
 These exist to bootstrap the CMS; they're not part of the runtime path.
+
+## Working inside `.claude/worktrees/*`
+
+Git worktrees don't copy untracked files, so a fresh worktree has **no `.env`** — Payload then fails to boot with `Error: missing secret key. A secret key is needed to secure Payload.` Before starting the dev server in a worktree, symlink the main repo's `.env`:
+
+```bash
+ln -s ../../../.env .env
+```
+
+(From a worktree at `.claude/worktrees/<name>/`, `../../../.env` resolves to the main repo root.) Prefer a symlink over copying so the worktree stays in sync if secrets change.
+
+The Postgres container from `pnpm db:up` is shared across worktrees on port 5433 — don't start a second one.
+
+## Always-load skills
+
+For any UI/frontend work in this repo (component edits, page layouts, styling, design review), load these two skills via the Skill tool before doing the work — do not wait to be asked:
+
+- `frontend-design:frontend-design` — production-grade frontend interface generation, avoids generic AI aesthetics.
+- `ui-ux-pro-max:ui-ux-pro-max` — UI/UX design intelligence (50+ styles, 161 palettes, 57 font pairings, component patterns).
+

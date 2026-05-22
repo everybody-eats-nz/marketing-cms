@@ -1776,6 +1776,8 @@ export interface Navigation {
     donateLabel?: string | null;
     shopLabel?: string | null;
     showShop?: boolean | null;
+    volunteerLabel?: string | null;
+    showVolunteer?: boolean | null;
   };
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -1920,6 +1922,8 @@ export interface NavigationSelect<T extends boolean = true> {
         donateLabel?: T;
         shopLabel?: T;
         showShop?: T;
+        volunteerLabel?: T;
+        showVolunteer?: T;
       };
   updatedAt?: T;
   createdAt?: T;

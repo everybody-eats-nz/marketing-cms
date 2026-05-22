@@ -52,6 +52,12 @@ export const Navigation: GlobalConfig = {
           defaultValue: 'Shop',
         },
         { name: 'showShop', type: 'checkbox', defaultValue: true },
+        {
+          name: 'volunteerLabel',
+          type: 'text',
+          defaultValue: 'Volunteer',
+        },
+        { name: 'showVolunteer', type: 'checkbox', defaultValue: true },
       ],
     },
   ],
