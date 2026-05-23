@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
+import Image from 'next/image'
 import Link from 'next/link'
 import { resolveHref, type LinkValue, type Media } from '@/lib/types'
 import { PayloadImage } from './payload-image'
@@ -84,9 +85,16 @@ export function MobileMenu({ primary, secondary }: Props) {
         <Link
           href="/"
           onClick={() => setOpen(false)}
-          className="display text-lg sm:text-xl font-medium text-cream-50"
+          aria-label="Everybody Eats — home"
+          className="inline-flex items-center"
         >
-          Everybody <em>Eats</em>
+          <Image
+            src="/everybody-eats-logo.svg"
+            alt="Everybody Eats"
+            width={179}
+            height={65}
+            className="h-8 sm:h-10 w-auto brightness-0 invert"
+          />
         </Link>
         <button
           type="button"
@@ -112,10 +120,12 @@ export function MobileMenu({ primary, secondary }: Props) {
                   onClick={() => setOpen(false)}
                   onMouseEnter={() => setActiveIndex(i)}
                   onFocus={() => setActiveIndex(i)}
-                  className={`display italic font-light tracking-tight leading-[0.95] text-5xl sm:text-7xl lg:text-7xl xl:text-8xl transition-colors duration-300 ${
+                  className={`font-display italic leading-[0.95] text-5xl sm:text-7xl lg:text-7xl xl:text-8xl transition-colors duration-300 ${
                     isActive ? 'text-sun-200' : 'text-cream-50 hover:text-sun-200'
                   }`}
                   style={{
+                    fontWeight: 230,
+                    fontFeatureSettings: 'normal',
                     transitionDelay: open ? `${i * 60}ms` : '0ms',
                     transform: open ? 'translateY(0)' : 'translateY(20px)',
                     opacity: open ? 1 : 0,

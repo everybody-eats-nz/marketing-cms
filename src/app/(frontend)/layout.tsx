@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
-import { Fraunces, Plus_Jakarta_Sans, JetBrains_Mono } from 'next/font/google'
+import localFont from 'next/font/local'
+import { Plus_Jakarta_Sans, JetBrains_Mono } from 'next/font/google'
 import { getPayloadClient } from '@/lib/payload'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
@@ -11,11 +12,23 @@ import './globals.css'
 // without a redeploy.
 export const dynamic = 'force-dynamic'
 
-const fraunces = Fraunces({
-  subsets: ['latin'],
+// Self-hosted Fraunces variable font (same TTFs used by the original Webflow site)
+// with all four axes: SOFT, WONK, opsz, wght.
+const fraunces = localFont({
   variable: '--font-fraunces',
   display: 'swap',
-  axes: ['SOFT', 'WONK', 'opsz'],
+  src: [
+    {
+      path: '../../../public/fonts/Fraunces-VariableFont.ttf',
+      style: 'normal',
+      weight: '100 900',
+    },
+    {
+      path: '../../../public/fonts/Fraunces-Italic-VariableFont.ttf',
+      style: 'italic',
+      weight: '100 900',
+    },
+  ],
 })
 
 const jakarta = Plus_Jakarta_Sans({
