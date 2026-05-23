@@ -72,7 +72,7 @@ export async function SiteHeader() {
           <Link href={donateUrl} className="btn-primary text-xs sm:text-sm px-4 sm:px-6 py-2 sm:py-2.5">
             {ctas.donateLabel || 'Donate'}
           </Link>
-          <MobileMenu primary={primary} secondary={secondary} />
+          <MobileMenu primary={primary as any} secondary={secondary} />
         </div>
       </div>
     </header>

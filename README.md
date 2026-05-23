@@ -138,8 +138,58 @@ pnpm seed              # → upserts into Payload by slug
 
 The `seed-*.ts` scripts then build the blocks-based `layout` arrays from the extracted Webflow HTML. These are bootstrap-only, not part of the runtime path.
 
+## 🚢 Deploying to Coolify
+
+The app ships with a [`Dockerfile`](Dockerfile) and [`docker-entrypoint.sh`](docker-entrypoint.sh) that work as-is on Coolify (or any container host).
+
+### 1. Provision Postgres
+
+In Coolify → **Resources → New → Database → PostgreSQL** (16+). Copy the internal connection string — it looks like `postgres://USER:PASS@<service-name>:5432/<db>`.
+
+### 2. Create the application
+
+**Resources → New → Application → Public/Private Repository**, pick this repo, then:
+
+- **Build Pack**: `Dockerfile`
+- **Port (exposed)**: `3000`
+- **Health-check path**: `/admin/login` (returns 200 once the server is up)
+
+### 3. Environment variables
+
+| Key | Value |
+| --- | --- |
+| `DATABASE_URI` | the Postgres connection string from step 1 |
+| `PAYLOAD_SECRET` | a long random string (e.g. `openssl rand -base64 48`) |
+| `NEXT_PUBLIC_SITE_URL` | the public URL Coolify gives the app (e.g. `https://cms.example.org`) |
+
+### 4. Persistent storage
+
+Add a **Storage** mount so uploaded media survives redeploys:
+
+- **Source**: `<auto>` (Coolify-managed volume)
+- **Destination**: `/app/media`
+
+### 5. Deploy
+
+Hit **Deploy**. The [`docker-entrypoint.sh`](docker-entrypoint.sh) will:
+
+1. If `src/migrations/` exists and has files → run `payload migrate`.
+2. Otherwise → run a one-off schema push via [`src/sync-schema.ts`](src/sync-schema.ts) (idempotent, safe to re-run on every boot).
+3. Start Next.js on port 3000.
+
+Visit `/admin` to create the first admin user.
+
+### Switching to migration-based deploys (recommended once stable)
+
+Schema push is fine for a small CMS, but for stricter change control:
+
+1. Locally, point `DATABASE_URI` at a fresh staging DB and run `pnpm migrate:create`.
+2. Commit the generated `src/migrations/*` files.
+3. Redeploy. The entrypoint will detect the migrations directory and run `payload migrate` instead of pushing.
+
 ## 📚 Further reading
 
 - 🧠 [CLAUDE.md](CLAUDE.md) — architectural notes for working in this codebase
 - 📖 [Payload docs](https://payloadcms.com/docs)
 - 📖 [Next.js App Router docs](https://nextjs.org/docs/app)
+- 📖 [Coolify docs](https://coolify.io/docs)

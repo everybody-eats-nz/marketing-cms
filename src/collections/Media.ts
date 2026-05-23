@@ -1,11 +1,16 @@
+import path from 'path'
 import type { CollectionConfig } from 'payload'
+
+// Absolute path so the location is the same in dev (cwd = repo root) and in
+// Docker (cwd = /app), and matches the volume mount point in production.
+const mediaDir = path.resolve(process.cwd(), 'media')
 
 export const Media: CollectionConfig = {
   slug: 'media',
   access: { read: () => true },
   admin: { useAsTitle: 'filename' },
   upload: {
-    staticDir: 'media',
+    staticDir: mediaDir,
     imageSizes: [
       { name: 'thumbnail', width: 400 },
       { name: 'card', width: 800 },
