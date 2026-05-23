@@ -17,7 +17,6 @@
 
   body {
     @apply bg-cream-50 text-forest-700 font-sans antialiased;
-    font-feature-settings: 'ss01', 'ss02', 'cv01', 'cv11';
   }
 
   ::selection {
@@ -25,7 +24,7 @@
     color: rgb(var(--primary));
   }
 
-  /* Fraunces "soft-wonk" italic — same effect as the live Webflow site */
+  /* Editorial italic accent — matches the live Webflow site exactly */
   h1 em,
   h2 em,
   h3 em,
@@ -33,8 +32,8 @@
   .display em {
     font-family: var(--font-fraunces), serif;
     font-style: italic;
-    font-weight: 350;
-    font-variation-settings: 'SOFT' 100, 'WONK' 1, 'opsz' 144;
+    font-weight: 230;
+    font-feature-settings: normal;
   }
 
   /* Body links */
@@ -46,7 +45,6 @@
 @layer components {
   .display {
     @apply font-display tracking-tight;
-    font-feature-settings: 'kern', 'liga', 'ss01';
   }
 
   /* Container shorthands */

@@ -88,9 +88,9 @@ If the schema change is structural, also create a migration: `pnpm migrate:creat
 
 ## Styling
 
-Tailwind 3 with a custom brand palette ([tailwind.config.ts](tailwind.config.ts)): `cream`, `forest`, `sun`, `clay`, `ink`. Display font is Fraunces (variable, uses `SOFT`/`WONK` axes for the editorial italic — see `h1 em` rule in [globals.css](src/app/(frontend)/globals.css)). Body is Plus Jakarta Sans.
+Tailwind 3 with a custom brand palette ([tailwind.config.ts](tailwind.config.ts)): `cream`, `forest`, `sun`, `clay`, `ink`. Display font is Fraunces — self-hosted via `next/font/local` from the same variable TTFs the original Webflow site uses (in `public/fonts/`, all four axes `SOFT`/`WONK`/`opsz`/`wght`). Body is Plus Jakarta Sans.
 
-Brand convention: wrap a word in `<em>` (or `*asterisks*` in CMS textareas that the renderer converts) to render it in the soft-wonk italic style.
+Brand convention: wrap a word in `<em>` (or `*asterisks*` in CMS textareas that the renderer converts) to render the light editorial italic — see the `.display em` rule in [globals.css](src/app/(frontend)/globals.css), which matches the live Webflow site (`font-weight: 230`, defaults on every variation axis).
 
 ## Webflow extraction & seeding
 

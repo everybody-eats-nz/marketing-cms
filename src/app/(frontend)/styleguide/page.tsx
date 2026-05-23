@@ -211,9 +211,10 @@ export default function StyleGuidePage() {
           <div>
             <h3 className="display text-2xl text-forest-700 mb-2">Display — Fraunces</h3>
             <p className="text-sm text-forest-600/70 mb-8 max-w-md">
-              Editorial serif with custom <Code>SOFT</Code> and <Code>WONK</Code> axes. Apply{' '}
-              <Code>display</Code> or <Code>font-display</Code>. Headings render the soft-wonk
-              italic automatically when you wrap a word in <Code>&lt;em&gt;</Code>.
+              Self-hosted Fraunces variable font with all four axes (<Code>SOFT</Code>,{' '}
+              <Code>WONK</Code>, <Code>opsz</Code>, <Code>wght</Code>). Apply <Code>display</Code> or{' '}
+              <Code>font-display</Code>. Headings render the light editorial italic
+              automatically when you wrap a word in <Code>&lt;em&gt;</Code>.
             </p>
             <div className="space-y-6">
               {displaySizes.map((s) => (
