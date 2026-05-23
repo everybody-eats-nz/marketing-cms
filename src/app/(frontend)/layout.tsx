@@ -5,6 +5,12 @@ import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import './globals.css'
 
+// Layout fetches site-wide CMS data (settings, nav, footer) on every request.
+// Forcing dynamic rendering means we don't need a DB connection at build time
+// (the Docker build runs without one) and content edits in Payload appear
+// without a redeploy.
+export const dynamic = 'force-dynamic'
+
 const fraunces = Fraunces({
   subsets: ['latin'],
   variable: '--font-fraunces',
