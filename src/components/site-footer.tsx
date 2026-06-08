@@ -19,12 +19,6 @@ export async function SiteFooter() {
 
   return (
     <footer className="relative bg-forest-700 text-cream-50 grain mt-32 overflow-hidden">
-      {/* Yellow corner accent */}
-      <div
-        className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-sun-200/95 opacity-90 blur-3xl pointer-events-none"
-        aria-hidden
-      />
-
       <div className="relative container-wide pt-20 pb-12">
         <h2 className="display text-4xl sm:text-6xl lg:text-7xl font-light max-w-4xl leading-[1.02]">
           Make a difference{' '}
@@ -66,9 +60,14 @@ export async function SiteFooter() {
               </Link>
             ))}
             {charityNumber && (
-              <span className="text-cream-50/50">
+              <a
+                href={`https://register.charities.govt.nz/Charity/${charityNumber}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-cream-50/50 hover:text-cream-50 underline-offset-4 hover:underline"
+              >
                 Charity #{charityNumber}
-              </span>
+              </a>
             )}
             <span className="text-cream-50/50">{copyright} {year}</span>
           </div>
