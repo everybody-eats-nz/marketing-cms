@@ -883,7 +883,7 @@ export interface Faq {
     };
     [k: string]: unknown;
   };
-  category?: ('dining' | 'pay-as-you-feel' | 'volunteering' | 'donating' | 'events' | 'about-us') | null;
+  category?: ('pay-as-you-feel' | 'about-us' | 'dining' | 'volunteering' | 'donating' | 'our-meals' | 'events') | null;
   displayOrder?: number | null;
   updatedAt: string;
   createdAt: string;

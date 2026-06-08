@@ -46,10 +46,12 @@ export function DonateHeroBlock({ block, defaultDonateUrl, charityNumber }: Prop
                   <a
                     key={a.amount}
                     href={`${donateUrl}?amount=${a.amount}`}
-                    className="border border-forest-500/30 hover:bg-forest-500 hover:text-cream-50 hover:border-forest-500 rounded-2xl py-4 text-center transition-all"
+                    className="group border border-forest-500/30 hover:bg-forest-500 hover:text-cream-50 hover:border-forest-500 rounded-2xl py-4 text-center transition-all"
                   >
                     <div className="display text-2xl font-medium">${a.amount}</div>
-                    <div className="text-xs text-forest-500 mt-1">{a.label}</div>
+                    <div className="text-xs text-forest-500 group-hover:text-cream-50/75 mt-1 transition-colors">
+                      {a.label}
+                    </div>
                   </a>
                 ))}
               </div>
