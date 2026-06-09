@@ -1,4 +1,5 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
+import { resendAdapter } from '@payloadcms/email-resend'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig } from 'payload'
@@ -50,6 +51,11 @@ export default buildConfig({
   ],
   globals: [SiteSettings, Navigation, Footer],
   editor: lexicalEditor(),
+  email: resendAdapter({
+    defaultFromName: 'Everybody Eats CMS',
+    defaultFromAddress: process.env.RESEND_FROM_ADDRESS || '',
+    apiKey: process.env.RESEND_API_KEY || '',
+  }),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
