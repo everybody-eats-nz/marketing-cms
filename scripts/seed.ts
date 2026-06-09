@@ -209,9 +209,15 @@ async function seedLocations(payload: any) {
 async function seedTeamMembers(payload: any) {
   console.log('\n→ Team members')
   const { items } = await loadCollection('team')
+  // Webflow stores `staff-type` as an Option-field *reference id*, not a label,
+  // so map the known ids (and a few string fallbacks) onto our staffType enum.
   const STAFF_TYPE_MAP: Record<string, string> = {
+    '82aa02a231a338fc22c394b66e4ad3f7': 'board', // "Board"
+    '1629d4b53abc556def908b2464f0df37': 'operations', // "Ops"
     'board': 'board',
-    'staff': 'leadership',
+    'ops': 'operations',
+    'operations': 'operations',
+    'staff': 'operations',
     'leadership': 'leadership',
   }
   let i = 0
@@ -222,7 +228,7 @@ async function seedTeamMembers(payload: any) {
     await upsertBySlug(payload, 'team-members', f.slug, {
       name: f.name,
       jobTitle: f['job-title'] || '',
-      staffType: STAFF_TYPE_MAP[f['staff-type']?.toLowerCase()] || 'leadership',
+      staffType: STAFF_TYPE_MAP[f['staff-type']?.toLowerCase()] || 'operations',
       bioSummary: f['bio-summary'] || '',
       bio: richTextFromHtml(f.bio),
       profilePicture: picId,
