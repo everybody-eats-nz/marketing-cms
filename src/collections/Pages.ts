@@ -17,6 +17,9 @@ import { PartnersGrid } from '../blocks/PartnersGrid'
 import { LocationsMagazine } from '../blocks/LocationsMagazine'
 import { MediaBlock } from '../blocks/MediaBlock'
 import { DonateHero } from '../blocks/DonateHero'
+import { Process } from '../blocks/Process'
+import { Values } from '../blocks/Values'
+import { Testimonials } from '../blocks/Testimonials'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -65,6 +68,9 @@ export const Pages: CollectionConfig = {
         Stats,
         Marquee,
         Timeline,
+        Process,
+        Values,
+        Testimonials,
         CardGrid,
         Pillars,
         CtaStrip,
