@@ -169,16 +169,16 @@ export function MobileMenu({ primary, secondary }: Props) {
         aria-label={open ? 'Close menu' : 'Open menu'}
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
-        className="relative w-10 h-10 grid place-items-center rounded-full border border-forest-500/20 hover:bg-forest-500/5 transition-colors"
+        className="relative w-10 h-10 grid place-items-center rounded-full border border-line/20 hover:bg-content/5 transition-colors"
       >
         <span className="sr-only">Menu</span>
         <span
-          className={`absolute inset-x-2 top-[14px] h-[1.5px] bg-forest-600 transition-all duration-300 ${
+          className={`absolute inset-x-2 top-[14px] h-[1.5px] bg-content transition-all duration-300 ${
             open ? 'translate-y-[6px] rotate-45' : ''
           }`}
         />
         <span
-          className={`absolute inset-x-2 top-[20px] h-[1.5px] bg-forest-600 transition-all duration-300 ${
+          className={`absolute inset-x-2 top-[20px] h-[1.5px] bg-content transition-all duration-300 ${
             open ? '-translate-y-[6px] -rotate-45' : ''
           }`}
         />

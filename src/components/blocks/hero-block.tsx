@@ -72,15 +72,15 @@ export function HeroBlock({ block, fallbackHeading }: Props) {
         <div className="lg:col-span-7 relative z-10">
           {block.eyebrow && (
             <p className="eyebrow mb-6 flex items-center gap-3">
-              <span className="inline-block w-8 h-px bg-forest-500/50" />
+              <span className="inline-block w-8 h-px bg-line/50" />
               {block.eyebrow}
             </p>
           )}
-          <h1 className="display text-5xl sm:text-7xl lg:text-[7.5rem] font-light leading-[0.95] text-forest-700">
+          <h1 className="display text-5xl sm:text-7xl lg:text-[7.5rem] font-light leading-[0.95] text-content">
             {renderRichInline(heading, block.highlightWord)}
           </h1>
           {block.subheading && (
-            <p className="mt-8 text-lg sm:text-xl max-w-2xl text-forest-600/85 leading-relaxed">
+            <p className="mt-8 text-lg sm:text-xl max-w-2xl text-content/85 leading-relaxed">
               {block.subheading}
             </p>
           )}
@@ -101,7 +101,7 @@ export function HeroBlock({ block, fallbackHeading }: Props) {
         </div>
 
         <div className="lg:col-span-5 relative">
-          <div className="relative aspect-[4/5] rounded-[3rem] overflow-hidden bg-forest-100 shadow-2xl">
+          <div className="relative aspect-[4/5] rounded-[3rem] overflow-hidden bg-surface-3 shadow-2xl">
             {block.image ? (
               <PayloadImage
                 media={block.image}

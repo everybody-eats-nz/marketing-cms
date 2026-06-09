@@ -23,7 +23,7 @@ export function PartnersGridBlock({ block, partners }: Props) {
         <div>
           {block.eyebrow && <p className="eyebrow mb-3">{block.eyebrow}</p>}
           {block.heading && (
-            <h2 className="display text-4xl sm:text-6xl text-forest-700 font-light leading-tight">
+            <h2 className="display text-4xl sm:text-6xl text-content font-light leading-tight">
               {renderRichText(block.heading)}
             </h2>
           )}
@@ -37,8 +37,8 @@ export function PartnersGridBlock({ block, partners }: Props) {
 
       {platinum.length > 0 && (
         <div className="mb-12">
-          <p className="eyebrow mb-6 text-forest-500/85">Platinum partners</p>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-px bg-forest-500/15 rounded-2xl overflow-hidden">
+          <p className="eyebrow mb-6 text-muted/85">Platinum partners</p>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-px bg-line/15 rounded-2xl overflow-hidden">
             {platinum.map((p) => (
               <PartnerCard key={p.id} partner={p} large />
             ))}
@@ -48,7 +48,7 @@ export function PartnersGridBlock({ block, partners }: Props) {
 
       {others.length > 0 && (
         <>
-          <p className="eyebrow mb-6 text-forest-500/85">All supporters</p>
+          <p className="eyebrow mb-6 text-muted/85">All supporters</p>
           <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-x-8 gap-y-10">
             {others.map((p) => (
               <PartnerCard key={p.id} partner={p} />
@@ -64,7 +64,9 @@ function PartnerCard({ partner, large }: { partner: any; large?: boolean }) {
   const inner = (
     <div
       className={`relative ${
-        large ? 'aspect-[4/3] bg-cream-50 p-6 sm:p-10' : 'aspect-square'
+        large
+          ? 'aspect-[4/3] bg-cream-50 p-6 sm:p-10'
+          : 'aspect-square dark:bg-cream-50 dark:rounded-xl dark:p-3'
       } flex items-center justify-center transition-opacity hover:opacity-75`}
     >
       {partner.logo ? (

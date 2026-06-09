@@ -23,10 +23,10 @@ export default async function JournalPage() {
     <>
       <section className="container-wide pt-16 sm:pt-24 pb-16">
         <p className="eyebrow mb-5">Journal</p>
-        <h1 className="display text-5xl sm:text-7xl lg:text-8xl font-light leading-[1] text-forest-700">
+        <h1 className="display text-5xl sm:text-7xl lg:text-8xl font-light leading-[1] text-content">
           Stories from <em>the table</em>.
         </h1>
-        <p className="mt-8 max-w-2xl text-lg sm:text-xl text-forest-600/85 leading-relaxed">
+        <p className="mt-8 max-w-2xl text-lg sm:text-xl text-content/85 leading-relaxed">
           Dispatches from our kitchens, our diners, our partners, and the food we rescue.
         </p>
       </section>
@@ -37,7 +37,7 @@ export default async function JournalPage() {
             href={`/journal/${featured.slug}`}
             className="group grid lg:grid-cols-12 gap-8 lg:gap-12 items-end"
           >
-            <div className="lg:col-span-8 relative aspect-[3/2] rounded-[2.5rem] overflow-hidden bg-forest-100">
+            <div className="lg:col-span-8 relative aspect-[3/2] rounded-[2.5rem] overflow-hidden bg-surface-3">
               {featured.mainImage ? (
                 <PayloadImage
                   media={featured.mainImage}
@@ -50,18 +50,18 @@ export default async function JournalPage() {
               ) : null}
             </div>
             <div className="lg:col-span-4">
-              <p className="font-mono text-xs uppercase tracking-[0.15em] text-forest-500/85 mb-3">
+              <p className="font-mono text-xs uppercase tracking-[0.15em] text-muted/85 mb-3">
                 Featured · {featured.category || 'Story'}
               </p>
-              <h2 className="display text-3xl sm:text-5xl font-light text-forest-700 leading-tight group-hover:underline underline-offset-4">
+              <h2 className="display text-3xl sm:text-5xl font-light text-content leading-tight group-hover:underline underline-offset-4">
                 {featured.title}
               </h2>
               {featured.summary && (
-                <p className="mt-5 text-forest-600/85 leading-relaxed line-clamp-4">
+                <p className="mt-5 text-content/85 leading-relaxed line-clamp-4">
                   {featured.summary}
                 </p>
               )}
-              <span className="mt-6 inline-flex items-center gap-2 text-sm text-forest-500 group-hover:gap-3 transition-all">
+              <span className="mt-6 inline-flex items-center gap-2 text-sm text-muted group-hover:gap-3 transition-all">
                 Read story <span>→</span>
               </span>
             </div>
@@ -77,7 +77,7 @@ export default async function JournalPage() {
               href={`/journal/${post.slug}`}
               className="group flex flex-col"
             >
-              <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-forest-100 mb-5">
+              <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-surface-3 mb-5">
                 {post.mainImage ? (
                   <PayloadImage
                     media={post.mainImage}
@@ -90,14 +90,14 @@ export default async function JournalPage() {
                   <div className="absolute inset-0 bg-gradient-to-br from-clay-100 to-clay-200" />
                 )}
               </div>
-              <p className="font-mono text-xs uppercase tracking-[0.15em] text-forest-500/85 mb-2">
+              <p className="font-mono text-xs uppercase tracking-[0.15em] text-muted/85 mb-2">
                 {post.category || 'Story'}
               </p>
-              <h3 className="display text-xl sm:text-2xl text-forest-700 font-medium leading-snug group-hover:underline underline-offset-4">
+              <h3 className="display text-xl sm:text-2xl text-content font-medium leading-snug group-hover:underline underline-offset-4">
                 {post.title}
               </h3>
               {post.summary && (
-                <p className="mt-3 text-sm text-forest-600/75 line-clamp-3">{post.summary}</p>
+                <p className="mt-3 text-sm text-content/75 line-clamp-3">{post.summary}</p>
               )}
             </Link>
           ))}

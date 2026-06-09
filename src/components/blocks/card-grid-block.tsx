@@ -30,10 +30,10 @@ const COLUMN_CLASSES: Record<string, string> = {
 }
 
 const COLOR_CLASSES: Record<string, string> = {
-  cream: 'bg-cream-100 text-forest-700',
+  cream: 'bg-surface-2 text-content',
   sun: 'bg-sun-200 text-forest-700',
   clay: 'bg-clay-100 text-forest-700',
-  forest100: 'bg-forest-100 text-forest-700',
+  forest100: 'bg-surface-3 text-content',
   forest700: 'bg-forest-700 text-cream-50',
 }
 
@@ -45,7 +45,7 @@ export function CardGridBlock({ block }: Props) {
 
   const wrapperClasses =
     style === 'tile'
-      ? `grid gap-px bg-forest-500/15 rounded-3xl overflow-hidden ${colClass}`
+      ? `grid gap-px bg-line/15 rounded-3xl overflow-hidden ${colClass}`
       : `grid gap-6 ${colClass}`
 
   return (
@@ -55,7 +55,7 @@ export function CardGridBlock({ block }: Props) {
           <div>
             {block.eyebrow && <p className="eyebrow mb-3">{block.eyebrow}</p>}
             {block.heading && (
-              <h2 className="display text-4xl sm:text-6xl text-forest-700 font-light leading-tight">
+              <h2 className="display text-4xl sm:text-6xl text-content font-light leading-tight">
                 {renderRichText(block.heading)}
               </h2>
             )}
@@ -72,10 +72,10 @@ export function CardGridBlock({ block }: Props) {
         {items.map((c, i) => {
           const cardBg =
             style === 'tile'
-              ? 'bg-cream-50 text-forest-700'
+              ? 'bg-surface text-content'
               : style === 'mixed'
                 ? COLOR_CLASSES[c.color || 'cream']
-                : 'bg-cream-100 text-forest-700'
+                : 'bg-surface-2 text-content'
           const isDark = style === 'mixed' && c.color === 'forest700'
 
           const cardInner = (
@@ -83,7 +83,7 @@ export function CardGridBlock({ block }: Props) {
               {c.number && (
                 <div
                   className={`font-mono text-xs uppercase tracking-[0.2em] mb-6 ${
-                    isDark ? 'text-sun-200/80' : 'text-forest-500/70'
+                    isDark ? 'text-sun-200/80' : 'text-muted/70'
                   }`}
                 >
                   {c.number}
@@ -98,7 +98,7 @@ export function CardGridBlock({ block }: Props) {
               {c.email && (
                 <a
                   href={`mailto:${c.email}`}
-                  className="mt-2 inline-flex items-center gap-2 text-sm text-forest-500 hover:text-forest-700 underline underline-offset-4 break-all"
+                  className="mt-2 inline-flex items-center gap-2 text-sm text-muted hover:text-content underline underline-offset-4 break-all"
                 >
                   {c.email}
                 </a>
@@ -106,7 +106,7 @@ export function CardGridBlock({ block }: Props) {
               {c.ctaLabel && c.href && (
                 <span
                   className={`mt-auto pt-6 inline-flex items-center gap-2 text-sm font-medium group-hover:gap-3 transition-all ${
-                    isDark ? 'text-sun-200' : 'text-forest-500'
+                    isDark ? 'text-sun-200' : 'text-muted'
                   }`}
                 >
                   {c.ctaLabel}

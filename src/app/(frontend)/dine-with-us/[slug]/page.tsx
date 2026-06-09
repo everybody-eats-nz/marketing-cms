@@ -92,7 +92,7 @@ export default async function LocationPage({ params }: Params) {
                   href={loc.payAtTableUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="btn border border-cream-50/40 text-cream-50 hover:bg-cream-50 hover:text-forest-700"
+                  className="btn border border-cream-50/40 text-cream-50 hover:bg-surface hover:text-content"
                 >
                   Pay at table
                 </a>
@@ -104,31 +104,31 @@ export default async function LocationPage({ params }: Params) {
 
       {/* Practical info strip */}
       <section className="container-wide -mt-16 relative z-10">
-        <div className="grid sm:grid-cols-3 bg-cream-50 rounded-[2rem] shadow-xl border border-forest-500/10 overflow-hidden">
-          <div className="p-8 sm:p-10 border-b sm:border-b-0 sm:border-r border-forest-500/10">
+        <div className="grid sm:grid-cols-3 bg-surface rounded-[2rem] shadow-xl border border-line/10 overflow-hidden">
+          <div className="p-8 sm:p-10 border-b sm:border-b-0 sm:border-r border-line/10">
             <p className="eyebrow mb-2">Address</p>
-            <p className="text-forest-700 text-lg">{loc.address || '—'}</p>
+            <p className="text-content text-lg">{loc.address || '—'}</p>
           </div>
-          <div className="p-8 sm:p-10 border-b sm:border-b-0 sm:border-r border-forest-500/10">
+          <div className="p-8 sm:p-10 border-b sm:border-b-0 sm:border-r border-line/10">
             <p className="eyebrow mb-2">Open</p>
             {loc.hours?.length > 0 ? (
               loc.hours.map((h: any, j: number) => (
-                <p key={j} className="text-forest-700 text-lg">
+                <p key={j} className="text-content text-lg">
                   {h.label}
-                  <span className="block text-sm text-forest-500">
+                  <span className="block text-sm text-muted">
                     {h.times}{h.note && ` · ${h.note}`}
                   </span>
                 </p>
               ))
             ) : (
-              <p className="text-forest-700 text-lg">Wed–Sat · 5pm – 9pm</p>
+              <p className="text-content text-lg">Wed–Sat · 5pm – 9pm</p>
             )}
           </div>
           <div className="p-8 sm:p-10">
             <p className="eyebrow mb-2">How it works</p>
-            <p className="text-forest-700 text-lg">
+            <p className="text-content text-lg">
               One three-course menu nightly.{' '}
-              <span className="text-forest-500/85">
+              <span className="text-muted/85">
                 Pay what feels right when you leave.
               </span>
             </p>
@@ -139,7 +139,7 @@ export default async function LocationPage({ params }: Params) {
       {/* About paragraph */}
       <section className="container-tight py-24">
         <p className="eyebrow mb-6">About this restaurant</p>
-        <p className="display text-3xl sm:text-4xl font-light text-forest-700 leading-tight max-w-3xl">
+        <p className="display text-3xl sm:text-4xl font-light text-content leading-tight max-w-3xl">
           A neighbourhood table, made from the day's rescue.{' '}
           <em>{loc.name}</em> seats around 60 every service — strangers turning into
           regulars over a shared menu.
@@ -150,7 +150,7 @@ export default async function LocationPage({ params }: Params) {
       {upcomingEvents.docs.length > 0 && (
         <section className="container-wide py-12 pb-24">
           <div className="flex items-end justify-between mb-10">
-            <h2 className="display text-3xl sm:text-5xl font-light text-forest-700">
+            <h2 className="display text-3xl sm:text-5xl font-light text-content">
               Coming up at <em>{loc.name}</em>
             </h2>
             <Link href="/events" className="btn-ghost shrink-0">All events →</Link>
@@ -164,7 +164,7 @@ export default async function LocationPage({ params }: Params) {
                   href={`/events/${ev.slug}`}
                   className="group flex flex-col"
                 >
-                  <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-forest-100 mb-4">
+                  <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-surface-3 mb-4">
                     {ev.image ? (
                       <PayloadImage
                         media={ev.image}
@@ -176,11 +176,11 @@ export default async function LocationPage({ params }: Params) {
                     ) : null}
                   </div>
                   {date && (
-                    <p className="font-mono text-xs uppercase tracking-[0.15em] text-forest-500/70 mb-2">
+                    <p className="font-mono text-xs uppercase tracking-[0.15em] text-muted/70 mb-2">
                       {date.toLocaleDateString('en-NZ', { weekday: 'short', day: 'numeric', month: 'short' })}
                     </p>
                   )}
-                  <h3 className="display text-xl text-forest-700 font-medium leading-snug">
+                  <h3 className="display text-xl text-content font-medium leading-snug">
                     {ev.name}
                   </h3>
                 </Link>
@@ -202,7 +202,7 @@ export default async function LocationPage({ params }: Params) {
                 Book now
               </a>
             )}
-            <Link href="/get-involved/donate" className="btn border border-cream-50/40 text-cream-50 hover:bg-cream-50 hover:text-forest-700">
+            <Link href="/get-involved/donate" className="btn border border-cream-50/40 text-cream-50 hover:bg-surface hover:text-content">
               Donate a meal
             </Link>
           </div>

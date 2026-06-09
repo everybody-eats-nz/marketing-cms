@@ -61,7 +61,7 @@ export function CtaStripBlock({ block }: Props) {
                   className={
                     isSun
                       ? 'btn-ghost border-forest-700/30 text-forest-700 hover:bg-forest-700 hover:text-cream-50'
-                      : 'btn-ghost border-cream-50/30 text-cream-50 hover:bg-cream-50 hover:text-forest-700'
+                      : 'btn-ghost border-cream-50/30 text-cream-50 hover:bg-surface hover:text-content'
                   }
                 >
                   {secondary.label}

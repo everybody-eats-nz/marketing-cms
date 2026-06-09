@@ -8,6 +8,27 @@
     --ink: 26 20 16;
     --primary: 29 83 55; /* forest-500 */
     --accent: 248 251 105; /* sun-200 */
+
+    /* Semantic theme tokens (light) — match the original paper palette exactly. */
+    --surface: 253 248 239; /* cream-50  — page background */
+    --surface-2: 250 242 228; /* cream-100 — elevated cards / sections */
+    --surface-3: 245 233 210; /* cream-200 — insets / dividers */
+    --content: 14 42 28; /* forest-700 — primary text */
+    --muted: 29 83 55; /* forest-500 — secondary text */
+    --line: 29 83 55; /* forest-500 — borders (used at low opacity) */
+  }
+
+  .dark {
+    /* Dark theme — a deep forest-ink page with warm cream text. Tuned so the
+       paper sections invert cleanly while staying on-brand. */
+    --surface: 12 20 16; /* near-black forest */
+    --surface-2: 18 28 22; /* elevated panel */
+    --surface-3: 26 38 31; /* insets / dividers */
+    --content: 243 237 224; /* warm cream text */
+    --muted: 168 192 173; /* desaturated forest-green for secondary text */
+    --line: 200 214 196; /* light, used at low opacity for borders */
+
+    color-scheme: dark;
   }
 
   html {
@@ -16,7 +37,7 @@
   }
 
   body {
-    @apply bg-cream-50 text-forest-700 font-sans antialiased;
+    @apply bg-surface text-content font-sans antialiased;
   }
 
   ::selection {
@@ -73,13 +94,13 @@
   }
 
   .btn-ghost {
-    @apply btn border border-forest-500/30 text-forest-600 hover:bg-forest-500 hover:text-cream-50
-           hover:border-forest-500;
+    @apply btn border border-line/30 text-content hover:bg-content hover:text-surface
+           hover:border-content;
   }
 
   /* Eyebrow / kicker text */
   .eyebrow {
-    @apply text-[0.65rem] uppercase tracking-[0.18em] font-medium text-forest-500/80;
+    @apply text-[0.65rem] uppercase tracking-[0.18em] font-medium text-muted/90;
   }
 
   /* Subtle paper grain — applied to backgrounds */
@@ -96,6 +117,11 @@
     opacity: 0.05;
     mix-blend-mode: multiply;
     background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.6"/></svg>');
+  }
+  /* Multiply vanishes on dark surfaces — switch to screen so grain stays visible. */
+  .dark .grain::after {
+    mix-blend-mode: screen;
+    opacity: 0.04;
   }
 
   /* Card hover lift */
@@ -120,11 +146,11 @@
   /* Prose tweaks for journal */
   .prose-eats {
     @apply prose prose-lg prose-headings:font-display prose-headings:tracking-tight
-           prose-headings:text-forest-700 prose-p:text-forest-700/85
-           prose-a:text-forest-500 prose-a:no-underline hover:prose-a:underline
-           prose-strong:text-forest-700 prose-blockquote:border-sun-300
+           prose-headings:text-content prose-p:text-content/85
+           prose-a:text-muted prose-a:no-underline hover:prose-a:underline
+           prose-strong:text-content prose-blockquote:border-sun-300
            prose-blockquote:not-italic prose-blockquote:font-display
-           prose-blockquote:text-forest-600 prose-li:marker:text-forest-400 max-w-none;
+           prose-blockquote:text-content/90 prose-li:marker:text-muted max-w-none;
   }
 }
 

@@ -38,7 +38,7 @@ export function DonateHeroBlock({ block, defaultDonateUrl, charityNumber }: Prop
           )}
         </div>
         <div className="lg:col-span-5">
-          <div className="bg-cream-50 rounded-[2rem] p-8 sm:p-10 shadow-xl">
+          <div className="bg-surface rounded-[2rem] p-8 sm:p-10 shadow-xl">
             {block.panelLabel && <p className="eyebrow mb-3">{block.panelLabel}</p>}
             {amounts.length > 0 && (
               <div className={`grid gap-3 mb-6 ${amounts.length === 4 ? 'grid-cols-4' : amounts.length === 2 ? 'grid-cols-2' : 'grid-cols-3'}`}>
@@ -46,10 +46,10 @@ export function DonateHeroBlock({ block, defaultDonateUrl, charityNumber }: Prop
                   <a
                     key={a.amount}
                     href={`${donateUrl}?amount=${a.amount}`}
-                    className="group border border-forest-500/30 hover:bg-forest-500 hover:text-cream-50 hover:border-forest-500 rounded-2xl py-4 text-center transition-all"
+                    className="group border border-line/30 hover:bg-forest-500 hover:text-cream-50 hover:border-line rounded-2xl py-4 text-center transition-all"
                   >
                     <div className="display text-2xl font-medium">${a.amount}</div>
-                    <div className="text-xs text-forest-500 group-hover:text-cream-50/75 mt-1 transition-colors">
+                    <div className="text-xs text-muted group-hover:text-cream-50/75 mt-1 transition-colors">
                       {a.label}
                     </div>
                   </a>
@@ -60,7 +60,7 @@ export function DonateHeroBlock({ block, defaultDonateUrl, charityNumber }: Prop
               {block.ctaLabel || 'Donate now →'}
             </a>
             {(block.footnote || charityNumber) && (
-              <p className="mt-4 text-xs text-forest-500/85 text-center">
+              <p className="mt-4 text-xs text-muted/85 text-center">
                 {block.footnote || `Registered charity ${charityNumber} · Receipts emailed.`}
               </p>
             )}

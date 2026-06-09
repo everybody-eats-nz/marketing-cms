@@ -24,7 +24,7 @@ export function JournalListBlock({ block, journal }: Props) {
         <div>
           {block.eyebrow && <p className="eyebrow mb-4">{block.eyebrow}</p>}
           {block.heading && (
-            <h2 className="display text-4xl sm:text-6xl text-forest-700 font-light">
+            <h2 className="display text-4xl sm:text-6xl text-content font-light">
               {renderRichText(block.heading)}
             </h2>
           )}
@@ -39,7 +39,7 @@ export function JournalListBlock({ block, journal }: Props) {
       <div className="grid md:grid-cols-3 gap-6">
         {docs.map((post) => (
           <Link key={post.id} href={`/journal/${post.slug}`} className="group flex flex-col">
-            <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-forest-100 mb-5">
+            <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-surface-3 mb-5">
               {post.mainImage ? (
                 <PayloadImage
                   media={post.mainImage}
@@ -52,14 +52,14 @@ export function JournalListBlock({ block, journal }: Props) {
                 <div className="absolute inset-0 bg-gradient-to-br from-clay-100 to-clay-200" />
               )}
             </div>
-            <p className="font-mono text-xs uppercase tracking-[0.15em] text-forest-500/70 mb-3">
+            <p className="font-mono text-xs uppercase tracking-[0.15em] text-muted/70 mb-3">
               {post.category || 'Story'}
             </p>
-            <h3 className="display text-xl sm:text-2xl text-forest-700 font-medium leading-snug group-hover:underline underline-offset-4">
+            <h3 className="display text-xl sm:text-2xl text-content font-medium leading-snug group-hover:underline underline-offset-4">
               {post.title}
             </h3>
             {post.summary && (
-              <p className="mt-3 text-sm text-forest-600/75 line-clamp-3">{post.summary}</p>
+              <p className="mt-3 text-sm text-content/75 line-clamp-3">{post.summary}</p>
             )}
           </Link>
         ))}

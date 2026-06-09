@@ -24,7 +24,7 @@ export function LocationsGridBlock({ block, locations }: Props) {
         <div>
           {block.eyebrow && <p className="eyebrow mb-4">{block.eyebrow}</p>}
           {block.heading && (
-            <h2 className="display text-4xl sm:text-6xl text-forest-700 font-light">
+            <h2 className="display text-4xl sm:text-6xl text-content font-light">
               {renderRichText(block.heading)}
             </h2>
           )}
@@ -41,7 +41,7 @@ export function LocationsGridBlock({ block, locations }: Props) {
           <Link
             key={loc.id}
             href={`/dine-with-us/${loc.slug}`}
-            className="group relative aspect-[4/5] rounded-3xl overflow-hidden bg-forest-100 card-hover"
+            className="group relative aspect-[4/5] rounded-3xl overflow-hidden bg-surface-3 card-hover"
           >
             {loc.heroImage ? (
               <PayloadImage
