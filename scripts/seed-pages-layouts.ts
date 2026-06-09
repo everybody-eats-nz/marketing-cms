@@ -60,27 +60,57 @@ async function main() {
           aspect: '16:8',
         },
         {
-          blockType: 'cardGrid',
-          eyebrow: 'What we stand for',
-          columns: '3',
-          cardStyle: 'tile',
+          blockType: 'process',
+          eyebrow: 'How it works',
+          heading: 'From *rescued food* to a shared table.',
           items: [
             {
               number: '01',
-              title: 'Restaurant-quality',
-              copy: 'Three-course menu cooked by trained chefs in real kitchens. Not a soup kitchen.',
+              title: 'Food rescue',
+              copy: 'We collect surplus food from supermarkets, growers and producers — perfectly good meat and veg that is a little wonky or close to its date — in our electric vans, before any of it can go to waste.',
             },
             {
               number: '02',
-              title: 'Pay what you can',
-              copy:
-                "Suggested koha covers tonight's meal — pay more to cover the next person, or less if you need to.",
+              title: 'Preparation',
+              copy: 'Each afternoon our chefs turn that day’s rescued ingredients into a fresh three-course menu, with volunteers learning to cook and cut waste right alongside them.',
             },
             {
               number: '03',
-              title: 'Rescued food',
-              copy:
-                'Every plate starts as ingredients that would otherwise be wasted. Nothing planned, everything fresh.',
+              title: 'Service',
+              copy: 'At 6pm the doors open. Guests share long tables, volunteers carry the plates, and strangers become neighbours over dinner.',
+            },
+            {
+              number: '04',
+              title: 'Pay as you feel',
+              copy: 'There are no prices. Pay what you can — more to cover someone else’s meal, less if times are tight — so everyone eats with dignity.',
+            },
+          ],
+        },
+        {
+          blockType: 'values',
+          eyebrow: 'What drives us',
+          missionLabel: 'Our mission',
+          mission:
+            'To address food waste, food insecurity and social isolation in *Aotearoa*.',
+          visionLabel: 'Our vision',
+          vision:
+            'Everybody Eats restaurants across the country — building stronger communities and making a *measurable difference*.',
+          valuesLabel: 'Ngā Uara — our values',
+          items: [
+            {
+              term: 'Whanaungatanga',
+              translation: 'Connection & belonging',
+              copy: 'We build community through trust, connection and a shared sense of belonging at every table.',
+            },
+            {
+              term: 'Manaakitanga',
+              translation: 'Care & hospitality',
+              copy: 'We look after one another with generosity, care and empathy — everyone is welcome, no questions asked.',
+            },
+            {
+              term: 'Kaitiakitanga',
+              translation: 'Guardianship',
+              copy: 'We care for our environment through a circular, waste-free food system that gives good food a second life.',
             },
           ],
         },
@@ -90,29 +120,49 @@ async function main() {
           heading: 'From *pop-up* to *permanent*.',
           items: [
             {
+              year: '2016',
+              title: 'An idea takes shape',
+              body: 'Founder Nick Loosley, drawing on years in hospitality, sets out to tackle food insecurity and food waste together.',
+            },
+            {
               year: '2017',
-              title: 'Pop-up dinner',
-              body: 'Nick Loosley hosts the first pay-as-you-feel pop-up in Auckland. It sells out instantly.',
+              title: 'The first pop-up',
+              body: 'A pay-as-you-feel pop-up at Gemmayze Street in St Kevin’s Arcade sells out — and wins the Restaurant Association’s Good Neighbour Award.',
             },
             {
               year: '2018',
-              title: 'First Onehunga restaurant',
-              body: 'Everybody Eats opens its doors permanently in Onehunga, Auckland.',
+              title: 'A registered charity',
+              body: 'Everybody Eats becomes a charity, a crowdfunding campaign raises $129,000, and Nick is named a Westfield Local Hero.',
+            },
+            {
+              year: '2019',
+              title: 'Onehunga opens',
+              body: 'Our flagship Onehunga restaurant opens permanently, serving five nights a week.',
             },
             {
               year: '2020',
-              title: 'Wellington opens',
-              body: 'We expand to central Wellington and feed a city through lockdowns.',
+              title: '20,000 meals',
+              body: 'Wellington and Papamoa pop-ups launch, we serve our 20,000th meal, and we pivot to takeaways through lockdown. Nick is named Kiwibank Local Hero of the Year.',
             },
             {
-              year: '2022',
-              title: 'Glen Innes joins',
-              body: 'A third restaurant opens in East Auckland, kindly supported by local funders.',
+              year: '2021',
+              title: '50,000 meals',
+              body: 'We pass 50,000 meals and launch the Goodie Box with DDB and Al Brown.',
+            },
+            {
+              year: '2023',
+              title: '100,000 meals',
+              body: 'Our 100,000th meal is served and a third restaurant opens in Glen Innes, alongside shared space Tātou.',
+            },
+            {
+              year: '2024',
+              title: '200,000 meals',
+              body: 'We reach 200,000 meals served, and Wellington wins Outstanding Sustainability Practices at the Welly Hospo Awards.',
             },
             {
               year: 'Today',
-              title: '350,000+ meals',
-              body: 'Three restaurants, hundreds of volunteers, and one big pay-as-you-feel table.',
+              title: 'One big table',
+              body: 'Three restaurants, hundreds of volunteers, and one pay-as-you-feel table that keeps on growing.',
             },
           ],
         },
@@ -122,6 +172,33 @@ async function main() {
           heading: 'By the *numbers*',
           variant: 'darkPanel',
           source: 'global',
+        },
+        {
+          blockType: 'testimonials',
+          eyebrow: 'From our guests',
+          heading: 'Pull up a chair, *stay a while*.',
+          items: [
+            {
+              quote: 'The staff were so attentive and friendly. I left feeling cared for, not just fed.',
+              attribution: 'Diner, Onehunga',
+            },
+            {
+              quote: 'I was genuinely blown away by how good the food was — three courses, all from rescued ingredients.',
+              attribution: 'Diner, Wellington',
+            },
+            {
+              quote: 'Everybody Eats has been a life saver for me, financially and socially. It’s a place to belong.',
+              attribution: 'Diner, Glen Innes',
+            },
+            {
+              quote: 'We came in to celebrate a birthday and couldn’t have asked for a warmer welcome. Thank you for making it special.',
+              attribution: 'Diner, Wellington',
+            },
+            {
+              quote: 'Ka pai to the whole team. You’re doing something really special here.',
+              attribution: 'Diner, Onehunga',
+            },
+          ],
         },
         {
           blockType: 'ctaStrip',
@@ -367,6 +444,271 @@ async function main() {
     },
 
     {
+      slug: 'get-involved/regular-giving',
+      title: 'Regular giving',
+      seo: {
+        description:
+          'Become an Everybody Eats superstar with a monthly gift. Pick an amount that suits your budget and help us plan ahead.',
+      },
+      layout: [
+        {
+          blockType: 'hero',
+          eyebrow: 'Regular giving',
+          heading: 'Become an Everybody Eats\n*superstar*.',
+          subheading:
+            'Choose to support us with regular contributions and you help us plan and grow our impact across Aotearoa. Pick an amount that suits your budget below — or get in touch for a personalised giving plan.',
+          secondaryCta: { label: 'Prefer to give once?', href: '/get-involved/donate' },
+        },
+        {
+          blockType: 'cardGrid',
+          eyebrow: 'Monthly giving',
+          heading: 'Pick your *monthly* gift.',
+          columns: '3',
+          cardStyle: 'soft',
+          items: [
+            {
+              title: '$10 / month',
+              copy: 'A steady hand — helps cover a meal every month.',
+              ctaLabel: 'Set up $10 →',
+              href: 'https://buy.stripe.com/eVag0McpH070e2I3cd',
+            },
+            {
+              title: '$20 / month',
+              copy: 'Puts another seat at the table, month after month.',
+              ctaLabel: 'Set up $20 →',
+              href: 'https://buy.stripe.com/28odSEdtL070cYE4gi',
+            },
+            {
+              title: '$50 / month',
+              copy: 'Around three meals, every single month.',
+              ctaLabel: 'Set up $50 →',
+              href: 'https://buy.stripe.com/4gw4i4ahz8Dwf6MeUX',
+            },
+            {
+              title: '$100 / month',
+              copy: 'Five meals a month — a regular at our table.',
+              ctaLabel: 'Set up $100 →',
+              href: 'https://buy.stripe.com/7sI6qcgFX9HA4s87sw',
+            },
+            {
+              title: '$250 / month',
+              copy: 'Helps keep a whole service running.',
+              ctaLabel: 'Set up $250 →',
+              href: 'https://buy.stripe.com/14k6qc9dv0705wc28d',
+            },
+            {
+              title: '$500 / month',
+              copy: 'A champion of the pay-as-you-feel table.',
+              ctaLabel: 'Set up $500 →',
+              href: 'https://buy.stripe.com/eVa01O4Xf1b4gaQcMS',
+            },
+          ],
+        },
+        {
+          blockType: 'cardGrid',
+          eyebrow: 'Other ways to give regularly',
+          columns: '3',
+          cardStyle: 'soft',
+          items: [
+            {
+              title: 'A personalised plan',
+              copy: 'Want to give a different amount, or talk it through? We will set up a plan that suits your budget.',
+              email: 'amy@everybodyeats.nz',
+            },
+            {
+              title: 'Bank transfer',
+              copy: 'Kiwi Bank · Everybody Eats Charitable Trust · 38-9020-0272020-00. Use your name and organisation as the reference.',
+            },
+            {
+              title: 'Claim it back',
+              copy: 'Donations of $5 or more are eligible for a 33.33% tax credit through IRD. We email a receipt for every gift.',
+            },
+          ],
+        },
+        {
+          blockType: 'ctaStrip',
+          heading: 'Not ready for monthly? *Give once.*',
+          body: 'Every one-off gift goes straight towards keeping our doors open and our communities fed.',
+          variant: 'sun',
+          align: 'center',
+          primaryCta: { label: 'Make a one-off gift →', href: '/get-involved/donate' },
+        },
+      ],
+    },
+
+    {
+      slug: 'get-involved/corporate-giving',
+      title: 'Corporate giving',
+      seo: {
+        description:
+          'Payroll giving, matched donations, team volunteering and more — partner your business with Everybody Eats.',
+      },
+      layout: [
+        {
+          blockType: 'hero',
+          eyebrow: 'Corporate giving',
+          heading: "Let's build\n*healthier communities*.",
+          subheading:
+            'Strong partnerships with business help build healthier communities and a more sustainable future. There are many meaningful ways your company can get involved and make a lasting impact.',
+        },
+        {
+          blockType: 'cardGrid',
+          eyebrow: 'Ways to support',
+          heading: 'Eight ways to *get involved*.',
+          columns: '4',
+          cardStyle: 'soft',
+          items: [
+            {
+              number: '01',
+              title: 'Payroll giving',
+              copy: 'Make it easy for your team to give regularly. Even small contributions add up to big change.',
+            },
+            {
+              number: '02',
+              title: 'Team building',
+              copy: 'Book a session in our kitchen — learn zero-waste cooking, prepare meals and package them for families in need.',
+            },
+            {
+              number: '03',
+              title: 'Matched donations',
+              copy: "Double the impact of your employees' generosity by matching their donations.",
+            },
+            {
+              number: '04',
+              title: 'Volunteer hours & skills',
+              copy: 'Volunteer in our restaurants, or contribute professional skills and services to support our growth.',
+            },
+            {
+              number: '05',
+              title: 'Charity partnership',
+              copy: 'Become an official partner and work with us on shared goals, campaigns and events.',
+            },
+            {
+              number: '06',
+              title: 'Host an event',
+              copy: 'Use our welcoming spaces in Auckland or Wellington for your next meeting or celebration.',
+            },
+            {
+              number: '07',
+              title: 'Catering services',
+              copy: 'Choose us for catering — surplus and seasonal options make every event tastier and more sustainable.',
+            },
+            {
+              number: '08',
+              title: 'Workplace fundraising',
+              copy: 'Bake sales, quizzes, dress-up days — we provide a speaker, resources and ideas to get started.',
+            },
+          ],
+        },
+        {
+          blockType: 'cardGrid',
+          eyebrow: 'Making a donation',
+          columns: '2',
+          cardStyle: 'mixed',
+          items: [
+            {
+              title: 'Donate by bank transfer',
+              copy: 'For larger donations, or payments that need an invoice or tax receipt, donate directly: Kiwi Bank · Everybody Eats Charitable Trust · 38-9020-0272020-00. We can provide a donation receipt and certificate of appreciation on request.',
+              color: 'cream',
+            },
+            {
+              title: 'Tell us your plan',
+              copy: "Get in touch to tell us what you're planning, or to request support for your team's activity.",
+              email: 'susan@everybodyeats.nz',
+              color: 'sun',
+            },
+          ],
+        },
+        {
+          blockType: 'ctaStrip',
+          heading: 'Make a difference *one plate at a time*.',
+          body: "Let's create impact together. Tell us what you have in mind and we'll help make it happen.",
+          variant: 'forest',
+          align: 'center',
+          primaryCta: {
+            label: 'susan@everybodyeats.nz',
+            href: 'mailto:susan@everybodyeats.nz?subject=Corporate giving',
+          },
+        },
+      ],
+    },
+
+    {
+      slug: 'get-involved/fundraise',
+      title: 'Fundraise for us',
+      seo: {
+        description:
+          'Bake, bike or throw a quiz night — every dollar you raise helps us rescue food and feed communities.',
+      },
+      layout: [
+        {
+          blockType: 'hero',
+          eyebrow: 'Fundraise',
+          heading: 'Throw a *fundraiser*.\nFeed a community.',
+          subheading:
+            "Whether you're baking, biking or throwing a quiz night, every dollar you raise helps us rescue more food, keep our kitchens open and create dignified dining experiences for anyone who needs a good meal.",
+        },
+        {
+          blockType: 'pillars',
+          eyebrow: 'How it works',
+          heading: 'Three steps to *get started*.',
+          theme: 'forest',
+          items: [
+            {
+              number: '01',
+              title: 'Choose an idea',
+              copy: 'Pick something that suits you — big or small. Anything goes, as long as it brings people together.',
+              ctaLabel: 'Talk it through',
+              href: 'mailto:amy@everybodyeats.nz?subject=Fundraising',
+            },
+            {
+              number: '02',
+              title: 'Set up a page',
+              copy: 'Spin up an online fundraising page (Give-a-Little is great) so people can chip in from anywhere.',
+              ctaLabel: 'Get help setting up',
+              href: 'mailto:amy@everybodyeats.nz?subject=Fundraising',
+            },
+            {
+              number: '03',
+              title: 'Spread the word',
+              copy: 'Share it through your networks and social media — then watch the meals add up.',
+              ctaLabel: 'Tell us about it',
+              href: 'mailto:amy@everybodyeats.nz?subject=Fundraising',
+            },
+          ],
+        },
+        {
+          blockType: 'cardGrid',
+          eyebrow: 'Need inspiration?',
+          heading: 'Fundraising *ideas*.',
+          columns: '4',
+          cardStyle: 'soft',
+          items: [
+            { title: 'Sponsored challenge', copy: 'Run, ride or swim with a Give-a-Little page behind you.' },
+            { title: 'Workplace match-giving', copy: 'Get your employer to match what your team raises.' },
+            { title: 'Pay-what-you-can dinner', copy: 'Host a dinner party in the Everybody Eats spirit.' },
+            { title: 'Give instead of gifts', copy: 'Ask for donations for your birthday or special occasion.' },
+            { title: 'Bake sale', copy: 'A classic for a reason. Sell treats, raise dough.' },
+            { title: 'Skills or fitness session', copy: 'Teach a class and donate the takings.' },
+            { title: 'Movie or quiz night', copy: 'Charge an entry fee and have a laugh for a cause.' },
+            { title: 'Garage sale', copy: 'Clear out the clutter and turn it into meals.' },
+          ],
+        },
+        {
+          blockType: 'ctaStrip',
+          heading: "Got an idea? *Let's make it happen.*",
+          body: "Tell us what you're planning and we'll help with resources, ideas and a cheer squad.",
+          variant: 'sun',
+          align: 'center',
+          primaryCta: {
+            label: 'amy@everybodyeats.nz',
+            href: 'mailto:amy@everybodyeats.nz?subject=Fundraising',
+          },
+        },
+      ],
+    },
+
+    {
       slug: 'get-involved/volunteer',
       title: 'Volunteer',
       seo: {
@@ -391,21 +733,21 @@ async function main() {
               number: '01',
               title: 'Sign up',
               copy: 'Create a volunteer account on our portal — it takes a minute.',
-              ctaLabel: 'Open portal →',
+              ctaLabel: 'Open portal',
               href: 'https://volunteers.everybodyeats.nz',
             },
             {
               number: '02',
               title: 'Pick a shift',
               copy: 'Browse upcoming shifts at your nearest restaurant.',
-              ctaLabel: 'Open portal →',
+              ctaLabel: 'Open portal',
               href: 'https://volunteers.everybodyeats.nz',
             },
             {
               number: '03',
               title: 'Turn up',
               copy: "Arrive a little early. We'll show you the ropes and feed you after.",
-              ctaLabel: 'Open portal →',
+              ctaLabel: 'Open portal',
               href: 'https://volunteers.everybodyeats.nz',
             },
           ],

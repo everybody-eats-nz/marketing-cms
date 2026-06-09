@@ -70,7 +70,7 @@ export function PillarsBlock({ block }: Props) {
                   isForest ? 'text-sun-200' : 'text-muted'
                 }`}
               >
-                {c.ctaLabel || 'Learn more'} <span>→</span>
+                {(c.ctaLabel || 'Learn more').replace(/\s*→\s*$/, '')} <span>→</span>
               </span>
             </Link>
           ))}
