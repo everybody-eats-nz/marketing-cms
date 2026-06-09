@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+# Cancel superseded runs on the same branch/PR.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Lint, typegen & build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Reads the pinned version from package.json "packageManager".
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      # --frozen-lockfile fails the build if package.json and the lockfile drift.
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      # Loads the Payload config, which runs checkDependencies(). This is the
+      # step that catches mismatched @payloadcms/* versions (the failure that
+      # only surfaced at runtime on the host before). No database required.
+      - name: Generate Payload types
+        run: pnpm payload generate:types
+
+      # Frontend routes are force-dynamic, so the build never connects to the
+      # database — these env vars only need to be present, not real.
+      - name: Build
+        run: pnpm build
+        env:
+          PAYLOAD_SECRET: ci-build-not-a-real-secret
+          DATABASE_URI: postgres://payload:payload@localhost:5432/everybodyeats
+          NEXT_PUBLIC_SITE_URL: http://localhost:3000
