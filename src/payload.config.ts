@@ -1,5 +1,6 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { resendAdapter } from '@payloadcms/email-resend'
+import { s3Storage } from '@payloadcms/storage-s3'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig } from 'payload'
@@ -24,6 +25,37 @@ import { Footer } from './globals/Footer'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+
+// Object storage for media uploads (S3-compatible: Cloudflare R2, MinIO, Backblaze
+// B2, AWS S3). Only enabled when S3_BUCKET is set — otherwise media falls back to
+// local-disk storage (Media.ts staticDir), which is convenient for local dev.
+//
+// On a containerised host (Coolify) local disk is fragile: files don't survive
+// redeploys and can't be seeded into prod from a laptop (the bytes land wherever
+// the script runs). Object storage fixes both — the destination is the bucket,
+// regardless of where the upload/seed runs. Files are streamed through Payload's
+// own route, so the bucket does NOT need to be publicly readable.
+const storagePlugins = process.env.S3_BUCKET
+  ? [
+      s3Storage({
+        collections: {
+          media: true,
+        },
+        bucket: process.env.S3_BUCKET,
+        config: {
+          endpoint: process.env.S3_ENDPOINT,
+          region: process.env.S3_REGION || 'auto',
+          credentials: {
+            accessKeyId: process.env.S3_ACCESS_KEY_ID || '',
+            secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || '',
+          },
+          // Path-style addressing — required by MinIO, works with R2. Set
+          // S3_FORCE_PATH_STYLE=false for providers that need virtual-hosted URLs.
+          forcePathStyle: process.env.S3_FORCE_PATH_STYLE !== 'false',
+        },
+      }),
+    ]
+  : []
 
 export default buildConfig({
   admin: {
@@ -50,6 +82,7 @@ export default buildConfig({
     DailyMenus,
   ],
   globals: [SiteSettings, Navigation, Footer],
+  plugins: storagePlugins,
   editor: lexicalEditor(),
   email: resendAdapter({
     defaultFromName: 'Everybody Eats CMS',
