@@ -21,7 +21,7 @@ export function LocationsMagazineBlock({ locations }: Props) {
             <div className="lg:col-span-7 [direction:ltr]">
               <Link
                 href={`/dine-with-us/${loc.slug}`}
-                className="block group relative aspect-[4/3] overflow-hidden rounded-[2.5rem] bg-forest-100"
+                className="block group relative aspect-[4/3] overflow-hidden rounded-[2.5rem] bg-surface-3"
               >
                 {loc.heroImage ? (
                   <PayloadImage
@@ -34,7 +34,7 @@ export function LocationsMagazineBlock({ locations }: Props) {
                 ) : (
                   <div className="absolute inset-0 bg-gradient-to-br from-forest-300 to-forest-600" />
                 )}
-                <span className="absolute bottom-6 left-6 flex items-center gap-2 px-4 py-2 rounded-pill bg-cream-50/95 text-forest-700 text-xs uppercase tracking-[0.15em] font-medium">
+                <span className="absolute bottom-6 left-6 flex items-center gap-2 px-4 py-2 rounded-pill bg-surface/95 text-content text-xs uppercase tracking-[0.15em] font-medium">
                   <span className="w-2 h-2 rounded-full bg-forest-500 animate-pulse" />
                   {loc.openStatus === 'open' ? 'Open this week' : loc.openStatus}
                 </span>
@@ -42,26 +42,26 @@ export function LocationsMagazineBlock({ locations }: Props) {
             </div>
 
             <div className="lg:col-span-5 [direction:ltr]">
-              <p className="font-mono text-xs uppercase tracking-[0.2em] text-forest-500/70 mb-3">
+              <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted/70 mb-3">
                 {String(i + 1).padStart(2, '0')} / {loc.city || 'New Zealand'}
               </p>
-              <h2 className="display text-5xl sm:text-6xl font-light text-forest-700">{loc.name}</h2>
+              <h2 className="display text-5xl sm:text-6xl font-light text-content">{loc.name}</h2>
               {loc.tagline && (
-                <p className="mt-5 text-lg text-forest-600/85 leading-relaxed">{loc.tagline}</p>
+                <p className="mt-5 text-lg text-content/85 leading-relaxed">{loc.tagline}</p>
               )}
               {loc.address && (
-                <div className="mt-7 pt-5 border-t border-forest-500/15">
+                <div className="mt-7 pt-5 border-t border-line/15">
                   <p className="eyebrow mb-1.5">Address</p>
-                  <p className="text-forest-700">{loc.address}</p>
+                  <p className="text-content">{loc.address}</p>
                 </div>
               )}
               {loc.hours?.length > 0 && (
                 <div className="mt-5">
                   <p className="eyebrow mb-1.5">Hours</p>
                   {loc.hours.map((h: any, j: number) => (
-                    <p key={j} className="text-forest-700">
+                    <p key={j} className="text-content">
                       {h.label}: {h.times}
-                      {h.note && <span className="text-forest-500/70"> · {h.note}</span>}
+                      {h.note && <span className="text-muted/70"> · {h.note}</span>}
                     </p>
                   ))}
                 </div>

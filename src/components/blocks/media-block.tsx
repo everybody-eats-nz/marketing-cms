@@ -20,7 +20,7 @@ export function MediaBlockRenderer({ block }: Props) {
   const aspect = ASPECT_CLASS[block.aspect || '16:8']
   return (
     <section className="container-wide pb-20">
-      <div className={`relative ${aspect} rounded-[3rem] overflow-hidden bg-forest-100`}>
+      <div className={`relative ${aspect} rounded-[3rem] overflow-hidden bg-surface-3`}>
         <PayloadImage
           media={block.image}
           size="hero"

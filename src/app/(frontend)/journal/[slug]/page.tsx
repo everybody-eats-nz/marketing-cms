@@ -40,31 +40,31 @@ export default async function JournalPost({ params }: Params) {
       <article className="container-tight pt-12 sm:pt-20 pb-12">
         <Link
           href="/journal"
-          className="inline-flex items-center gap-2 text-sm text-forest-500/85 hover:text-forest-700 mb-10"
+          className="inline-flex items-center gap-2 text-sm text-muted/85 hover:text-content mb-10"
         >
           <span>←</span> All stories
         </Link>
 
-        <p className="font-mono text-xs uppercase tracking-[0.18em] text-forest-500/85 mb-5">
+        <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted/85 mb-5">
           {post.category || 'Story'}
           {published && <> · {published.toLocaleDateString('en-NZ', { day: 'numeric', month: 'long', year: 'numeric' })}</>}
         </p>
-        <h1 className="display text-4xl sm:text-6xl lg:text-7xl text-forest-700 font-light leading-[1.05]">
+        <h1 className="display text-4xl sm:text-6xl lg:text-7xl text-content font-light leading-[1.05]">
           {post.title}
         </h1>
         {post.summary && (
-          <p className="mt-8 display text-xl sm:text-2xl text-forest-600/85 leading-relaxed max-w-3xl font-light">
+          <p className="mt-8 display text-xl sm:text-2xl text-content/85 leading-relaxed max-w-3xl font-light">
             {post.summary}
           </p>
         )}
         {post.author && (
-          <p className="mt-8 text-sm text-forest-500/85">By {post.author}</p>
+          <p className="mt-8 text-sm text-muted/85">By {post.author}</p>
         )}
       </article>
 
       {post.mainImage && (
         <div className="container-wide mb-12">
-          <div className="relative aspect-[16/9] rounded-[2.5rem] overflow-hidden bg-forest-100">
+          <div className="relative aspect-[16/9] rounded-[2.5rem] overflow-hidden bg-surface-3">
             <PayloadImage
               media={post.mainImage}
               size="hero"
@@ -91,7 +91,7 @@ export default async function JournalPost({ params }: Params) {
           </h2>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link href="/journal" className="btn-accent">All stories</Link>
-            <Link href="/newsletter" className="btn border border-cream-50/40 text-cream-50 hover:bg-cream-50 hover:text-forest-700">
+            <Link href="/newsletter" className="btn border border-cream-50/40 text-cream-50 hover:bg-surface hover:text-content">
               Subscribe →
             </Link>
           </div>

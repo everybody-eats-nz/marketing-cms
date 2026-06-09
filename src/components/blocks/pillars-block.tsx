@@ -25,7 +25,7 @@ export function PillarsBlock({ block }: Props) {
 
   return (
     <section
-      className={`${isForest ? 'bg-forest-700 text-cream-50' : 'bg-cream-100 text-forest-700'} grain py-24 sm:py-32 relative overflow-hidden`}
+      className={`${isForest ? 'bg-forest-700 text-cream-50' : 'bg-surface-2 text-content'} grain py-24 sm:py-32 relative overflow-hidden`}
     >
       <div className="container-wide relative z-10">
         {block.eyebrow && (
@@ -40,20 +40,20 @@ export function PillarsBlock({ block }: Props) {
         <div
           className={`mt-16 grid gap-px rounded-3xl overflow-hidden ${
             items.length >= 3 ? 'md:grid-cols-3' : items.length === 2 ? 'md:grid-cols-2' : ''
-          } ${isForest ? 'bg-cream-50/10' : 'bg-forest-500/15'}`}
+          } ${isForest ? 'bg-cream-50/10' : 'bg-line/15'}`}
         >
           {items.map((c, i) => (
             <Link
               key={i}
               href={c.href}
               className={`group p-8 sm:p-12 transition-colors ${
-                isForest ? 'bg-forest-700 hover:bg-forest-600' : 'bg-cream-50 hover:bg-cream-100'
+                isForest ? 'bg-forest-700 hover:bg-forest-600' : 'bg-surface hover:bg-surface-2'
               }`}
             >
               {c.number && (
                 <div
                   className={`font-mono text-xs mb-6 tracking-[0.2em] ${
-                    isForest ? 'text-sun-200/80' : 'text-forest-500/70'
+                    isForest ? 'text-sun-200/80' : 'text-muted/70'
                   }`}
                 >
                   {c.number}
@@ -61,13 +61,13 @@ export function PillarsBlock({ block }: Props) {
               )}
               <h3 className="display text-3xl sm:text-4xl font-light mb-4">{c.title}</h3>
               {c.copy && (
-                <p className={`leading-relaxed mb-8 ${isForest ? 'text-cream-50/80' : 'text-forest-700/80'}`}>
+                <p className={`leading-relaxed mb-8 ${isForest ? 'text-cream-50/80' : 'text-content/80'}`}>
                   {c.copy}
                 </p>
               )}
               <span
                 className={`inline-flex items-center gap-2 text-sm font-medium group-hover:gap-3 transition-all ${
-                  isForest ? 'text-sun-200' : 'text-forest-500'
+                  isForest ? 'text-sun-200' : 'text-muted'
                 }`}
               >
                 {c.ctaLabel || 'Learn more'} <span>→</span>

@@ -16,10 +16,10 @@ const colorGroups: Array<{
     name: 'Cream',
     note: 'Paper backgrounds. cream-50 is the page default.',
     swatches: [
-      { token: 'cream-50', hex: '#FDF8EF', tw: 'bg-cream-50', text: 'dark' },
-      { token: 'cream-100', hex: '#FAF2E4', tw: 'bg-cream-100', text: 'dark' },
-      { token: 'cream-200', hex: '#F5E9D2', tw: 'bg-cream-200', text: 'dark' },
-      { token: 'cream-300', hex: '#EDDDB7', tw: 'bg-cream-300', text: 'dark' },
+      { token: 'cream-50', hex: '#FDF8EF', tw: 'bg-surface', text: 'dark' },
+      { token: 'cream-100', hex: '#FAF2E4', tw: 'bg-surface-2', text: 'dark' },
+      { token: 'cream-200', hex: '#F5E9D2', tw: 'bg-surface-3', text: 'dark' },
+      { token: 'cream-300', hex: '#EDDDB7', tw: 'bg-surface-3', text: 'dark' },
     ],
   },
   {
@@ -95,10 +95,10 @@ function Section({
   children: React.ReactNode
 }) {
   return (
-    <section id={id} className="container-wide py-20 sm:py-24 border-t border-forest-500/10">
+    <section id={id} className="container-wide py-20 sm:py-24 border-t border-line/10">
       <div className="mb-12 max-w-3xl">
         <p className="eyebrow mb-4">{eyebrow}</p>
-        <h2 className="display text-4xl sm:text-5xl font-light text-forest-700">{title}</h2>
+        <h2 className="display text-4xl sm:text-5xl font-light text-content">{title}</h2>
       </div>
       {children}
     </section>
@@ -107,7 +107,7 @@ function Section({
 
 function Code({ children }: { children: React.ReactNode }) {
   return (
-    <code className="font-mono text-[0.72rem] text-forest-600 bg-forest-500/8 px-2 py-1 rounded">
+    <code className="font-mono text-[0.72rem] text-content bg-forest-500/8 px-2 py-1 rounded">
       {children}
     </code>
   )
@@ -131,10 +131,10 @@ export default function StyleGuidePage() {
           <span className="inline-block w-8 h-px bg-forest-500/50" />
           Internal — design system
         </p>
-        <h1 className="display text-5xl sm:text-7xl lg:text-8xl font-light leading-[0.95] text-forest-700">
+        <h1 className="display text-5xl sm:text-7xl lg:text-8xl font-light leading-[0.95] text-content">
           The <em>style</em> guide.
         </h1>
-        <p className="mt-8 text-lg sm:text-xl max-w-2xl text-forest-600/85 leading-relaxed">
+        <p className="mt-8 text-lg sm:text-xl max-w-2xl text-content/85 leading-relaxed">
           A live reference for the Everybody Eats marketing site — the tokens, type, buttons and
           section patterns that make up the system. Use it when building new blocks or auditing
           existing ones.
@@ -154,25 +154,25 @@ export default function StyleGuidePage() {
           {colorGroups.map((group) => (
             <div key={group.name}>
               <div className="flex flex-wrap items-baseline justify-between gap-4 mb-5">
-                <h3 className="display text-2xl text-forest-700">{group.name}</h3>
-                <p className="text-sm text-forest-600/70 max-w-md">{group.note}</p>
+                <h3 className="display text-2xl text-content">{group.name}</h3>
+                <p className="text-sm text-content/70 max-w-md">{group.note}</p>
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
                 {group.swatches.map((sw) => (
                   <div
                     key={sw.token}
-                    className={`${sw.tw} rounded-2xl p-5 h-32 flex flex-col justify-between border border-forest-500/10`}
+                    className={`${sw.tw} rounded-2xl p-5 h-32 flex flex-col justify-between border border-line/10`}
                   >
                     <span
                       className={`font-mono text-[0.7rem] tracking-wider ${
-                        sw.text === 'light' ? 'text-cream-50/80' : 'text-forest-700/70'
+                        sw.text === 'light' ? 'text-cream-50/80' : 'text-content/70'
                       }`}
                     >
                       {sw.token}
                     </span>
                     <span
                       className={`font-mono text-xs ${
-                        sw.text === 'light' ? 'text-cream-50' : 'text-forest-700'
+                        sw.text === 'light' ? 'text-cream-50' : 'text-content'
                       }`}
                     >
                       {sw.hex}
@@ -183,12 +183,12 @@ export default function StyleGuidePage() {
             </div>
           ))}
         </div>
-        <div className="mt-12 bg-cream-100 rounded-3xl p-8 border border-forest-500/10">
-          <h3 className="display text-2xl text-forest-700 mb-3">Roles, not just colours</h3>
-          <ul className="text-base text-forest-600/85 space-y-2 leading-relaxed">
+        <div className="mt-12 bg-surface-2 rounded-3xl p-8 border border-line/10">
+          <h3 className="display text-2xl text-content mb-3">Roles, not just colours</h3>
+          <ul className="text-base text-content/85 space-y-2 leading-relaxed">
             <li>
-              <Code>bg-cream-50</Code> — default page background. Always paired with{' '}
-              <Code>text-forest-700</Code>.
+              <Code>bg-surface</Code> — default page background. Always paired with{' '}
+              <Code>text-content</Code>.
             </li>
             <li>
               <Code>bg-forest-700</Code> — dark panels (stats, pillars, CTA). Text becomes{' '}
@@ -209,8 +209,8 @@ export default function StyleGuidePage() {
       <Section id="type" eyebrow="02 / Foundation" title="Typography">
         <div className="grid lg:grid-cols-2 gap-12">
           <div>
-            <h3 className="display text-2xl text-forest-700 mb-2">Display — Fraunces</h3>
-            <p className="text-sm text-forest-600/70 mb-8 max-w-md">
+            <h3 className="display text-2xl text-content mb-2">Display — Fraunces</h3>
+            <p className="text-sm text-content/70 mb-8 max-w-md">
               Self-hosted Fraunces variable font with all four axes (<Code>SOFT</Code>,{' '}
               <Code>WONK</Code>, <Code>opsz</Code>, <Code>wght</Code>). Apply <Code>display</Code> or{' '}
               <Code>font-display</Code>. Headings render the light editorial italic
@@ -218,14 +218,14 @@ export default function StyleGuidePage() {
             </p>
             <div className="space-y-6">
               {displaySizes.map((s) => (
-                <div key={s.cls} className="border-b border-forest-500/10 pb-5">
+                <div key={s.cls} className="border-b border-line/10 pb-5">
                   <div className="flex items-baseline justify-between gap-4 mb-2">
                     <span className="eyebrow">{s.label}</span>
                     <Code>
                       {s.cls} · {s.note}
                     </Code>
                   </div>
-                  <p className={`display font-light text-forest-700 ${s.cls}`}>
+                  <p className={`display font-light text-content ${s.cls}`}>
                     Everybody <em>eats</em>.
                   </p>
                 </div>
@@ -234,21 +234,21 @@ export default function StyleGuidePage() {
           </div>
 
           <div>
-            <h3 className="display text-2xl text-forest-700 mb-2">Body — Plus Jakarta Sans</h3>
-            <p className="text-sm text-forest-600/70 mb-8 max-w-md">
+            <h3 className="display text-2xl text-content mb-2">Body — Plus Jakarta Sans</h3>
+            <p className="text-sm text-content/70 mb-8 max-w-md">
               The default <Code>font-sans</Code>. Used for paragraphs, navigation, buttons, meta.
-              Body text default is <Code>text-forest-700</Code> at 85% opacity for long-form copy.
+              Body text default is <Code>text-content</Code> at 85% opacity for long-form copy.
             </p>
             <div className="space-y-6">
               {bodySizes.map((s) => (
-                <div key={s.cls} className="border-b border-forest-500/10 pb-5">
+                <div key={s.cls} className="border-b border-line/10 pb-5">
                   <div className="flex items-baseline justify-between gap-4 mb-2">
                     <span className="eyebrow">{s.label}</span>
                     <Code>
                       {s.cls} · {s.note}
                     </Code>
                   </div>
-                  <p className={`text-forest-700/85 ${s.cls}`}>
+                  <p className={`text-content/85 ${s.cls}`}>
                     Pay-as-you-feel, restaurant-quality meals from rescued ingredients.
                   </p>
                 </div>
@@ -259,16 +259,16 @@ export default function StyleGuidePage() {
               <div>
                 <p className="eyebrow mb-3">Eyebrow / kicker</p>
                 <p className="eyebrow">A small label that sits above headings</p>
-                <p className="mt-2 text-xs text-forest-600/70">
+                <p className="mt-2 text-xs text-content/70">
                   Class: <Code>eyebrow</Code> — 0.65rem, uppercase, 0.18em tracking.
                 </p>
               </div>
               <div>
                 <p className="eyebrow mb-3">Soft-wonk italic</p>
-                <h3 className="display text-3xl text-forest-700 font-light">
+                <h3 className="display text-3xl text-content font-light">
                   Wrap a word in <em>emphasis</em> for the editorial italic.
                 </h3>
-                <p className="mt-2 text-xs text-forest-600/70">
+                <p className="mt-2 text-xs text-content/70">
                   Works on h1–h4 and any element with class <Code>display</Code>. In CMS textareas,{' '}
                   <Code>*asterisks*</Code> are converted to <Code>&lt;em&gt;</Code> by the
                   renderer.
@@ -276,7 +276,7 @@ export default function StyleGuidePage() {
               </div>
               <div>
                 <p className="eyebrow mb-3">Mono — JetBrains Mono</p>
-                <p className="font-mono text-sm text-forest-600">
+                <p className="font-mono text-sm text-content">
                   // Used for kickers, stat labels, code.
                 </p>
               </div>
@@ -288,24 +288,24 @@ export default function StyleGuidePage() {
       {/* Buttons */}
       <Section id="buttons" eyebrow="03 / Components" title="Buttons & links">
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div className="bg-cream-100 rounded-3xl p-8 border border-forest-500/10">
+          <div className="bg-surface-2 rounded-3xl p-8 border border-line/10">
             <p className="eyebrow mb-4">Primary</p>
             <button className="btn-primary">Donate now</button>
-            <p className="mt-4 text-xs text-forest-600/70 leading-relaxed">
+            <p className="mt-4 text-xs text-content/70 leading-relaxed">
               <Code>btn-primary</Code> — forest fill, lifts on hover. The default action.
             </p>
           </div>
-          <div className="bg-cream-100 rounded-3xl p-8 border border-forest-500/10">
+          <div className="bg-surface-2 rounded-3xl p-8 border border-line/10">
             <p className="eyebrow mb-4">Accent</p>
             <button className="btn-accent">Book a table</button>
-            <p className="mt-4 text-xs text-forest-600/70 leading-relaxed">
+            <p className="mt-4 text-xs text-content/70 leading-relaxed">
               <Code>btn-accent</Code> — sun-yellow on light backgrounds. Marketing CTAs.
             </p>
           </div>
-          <div className="bg-cream-100 rounded-3xl p-8 border border-forest-500/10">
+          <div className="bg-surface-2 rounded-3xl p-8 border border-line/10">
             <p className="eyebrow mb-4">Ghost</p>
             <button className="btn-ghost">Learn more</button>
-            <p className="mt-4 text-xs text-forest-600/70 leading-relaxed">
+            <p className="mt-4 text-xs text-content/70 leading-relaxed">
               <Code>btn-ghost</Code> — outline only, fills on hover. Secondary actions.
             </p>
           </div>
@@ -314,7 +314,7 @@ export default function StyleGuidePage() {
             <button className="btn-accent">Donate now</button>
             <p className="mt-4 text-xs text-cream-50/70 leading-relaxed">
               On forest panels, prefer{' '}
-              <code className="font-mono text-[0.72rem] text-sun-200 bg-cream-50/10 px-2 py-1 rounded">
+              <code className="font-mono text-[0.72rem] text-sun-200 bg-surface/10 px-2 py-1 rounded">
                 btn-accent
               </code>{' '}
               for primary, or invert ghost borders.
@@ -323,19 +323,19 @@ export default function StyleGuidePage() {
           <div className="bg-sun-200 rounded-3xl p-8">
             <p className="eyebrow mb-4">On sun</p>
             <button className="btn-primary">Donate now</button>
-            <p className="mt-4 text-xs text-forest-700/70 leading-relaxed">
+            <p className="mt-4 text-xs text-content/70 leading-relaxed">
               On sun panels, forest primary keeps contrast strongest.
             </p>
           </div>
-          <div className="bg-cream-100 rounded-3xl p-8 border border-forest-500/10">
+          <div className="bg-surface-2 rounded-3xl p-8 border border-line/10">
             <p className="eyebrow mb-4">Inline arrow link</p>
             <a
               href="#"
-              className="group inline-flex items-center gap-2 text-sm font-medium text-forest-500 hover:gap-3 transition-all"
+              className="group inline-flex items-center gap-2 text-sm font-medium text-muted hover:gap-3 transition-all"
             >
               Read the story <span>→</span>
             </a>
-            <p className="mt-4 text-xs text-forest-600/70 leading-relaxed">
+            <p className="mt-4 text-xs text-content/70 leading-relaxed">
               The pillar/card link convention. Arrow nudges right on hover via gap change.
             </p>
           </div>
@@ -347,8 +347,8 @@ export default function StyleGuidePage() {
         <div className="space-y-12">
           {/* Card hover */}
           <div>
-            <h3 className="display text-2xl text-forest-700 mb-2">Cards</h3>
-            <p className="text-sm text-forest-600/70 mb-6 max-w-md">
+            <h3 className="display text-2xl text-content mb-2">Cards</h3>
+            <p className="text-sm text-content/70 mb-6 max-w-md">
               Rounded corners (<Code>rounded-3xl</Code> or <Code>rounded-[3rem]</Code>), cream
               fills, lift on hover via <Code>card-hover</Code>.
             </p>
@@ -356,15 +356,15 @@ export default function StyleGuidePage() {
               {[1, 2, 3].map((i) => (
                 <div
                   key={i}
-                  className="card-hover bg-cream-100 rounded-3xl p-8 border border-forest-500/10"
+                  className="card-hover bg-surface-2 rounded-3xl p-8 border border-line/10"
                 >
-                  <div className="font-mono text-xs mb-6 tracking-[0.2em] text-forest-500/70">
+                  <div className="font-mono text-xs mb-6 tracking-[0.2em] text-muted/70">
                     0{i}
                   </div>
-                  <h4 className="display text-2xl font-light text-forest-700 mb-3">
+                  <h4 className="display text-2xl font-light text-content mb-3">
                     Rescue food
                   </h4>
-                  <p className="text-sm text-forest-700/80 leading-relaxed">
+                  <p className="text-sm text-content/80 leading-relaxed">
                     Hover to see the card lift. The pattern is used by pillars, journal cards and
                     locations.
                   </p>
@@ -375,12 +375,12 @@ export default function StyleGuidePage() {
 
           {/* Sun underline */}
           <div>
-            <h3 className="display text-2xl text-forest-700 mb-2">Sun underline highlight</h3>
-            <p className="text-sm text-forest-600/70 mb-6 max-w-md">
+            <h3 className="display text-2xl text-content mb-2">Sun underline highlight</h3>
+            <p className="text-sm text-content/70 mb-6 max-w-md">
               The signature hero highlight — a sun-200 pill sits behind a keyword. Used in{' '}
               <Code>hero-block.tsx</Code> via <Code>highlightWord</Code>.
             </p>
-            <h2 className="display text-4xl sm:text-6xl font-light text-forest-700">
+            <h2 className="display text-4xl sm:text-6xl font-light text-content">
               Restaurant-quality meals,{' '}
               <span className="relative inline-block">
                 pay
@@ -395,8 +395,8 @@ export default function StyleGuidePage() {
 
           {/* Eyebrow + rule */}
           <div>
-            <h3 className="display text-2xl text-forest-700 mb-2">Eyebrow with rule</h3>
-            <p className="text-sm text-forest-600/70 mb-6 max-w-md">
+            <h3 className="display text-2xl text-content mb-2">Eyebrow with rule</h3>
+            <p className="text-sm text-content/70 mb-6 max-w-md">
               An eyebrow paired with an 8px hairline. Often opens hero sections.
             </p>
             <p className="eyebrow flex items-center gap-3">
@@ -407,15 +407,15 @@ export default function StyleGuidePage() {
 
           {/* Sticker */}
           <div>
-            <h3 className="display text-2xl text-forest-700 mb-2">Sun sticker</h3>
-            <p className="text-sm text-forest-600/70 mb-6 max-w-md">
+            <h3 className="display text-2xl text-content mb-2">Sun sticker</h3>
+            <p className="text-sm text-content/70 mb-6 max-w-md">
               The rotated yellow disc that overlaps hero imagery. Used in{' '}
               <Code>hero-block.tsx</Code>.
             </p>
             <div className="relative inline-block">
               <div className="w-48 h-60 rounded-[3rem] bg-forest-300" />
               <div
-                className="absolute -top-6 -right-6 w-32 h-32 grid place-items-center rounded-full bg-sun-200 text-forest-700 rotate-12 shadow-xl"
+                className="absolute -top-6 -right-6 w-32 h-32 grid place-items-center rounded-full bg-sun-200 text-content rotate-12 shadow-xl"
                 aria-hidden
               >
                 <span className="display text-center text-sm leading-tight font-medium">
@@ -429,16 +429,16 @@ export default function StyleGuidePage() {
 
           {/* Form input */}
           <div>
-            <h3 className="display text-2xl text-forest-700 mb-2">Form inputs</h3>
-            <p className="text-sm text-forest-600/70 mb-6 max-w-md">
+            <h3 className="display text-2xl text-content mb-2">Form inputs</h3>
+            <p className="text-sm text-content/70 mb-6 max-w-md">
               Pill inputs on dark, soft outline on light. From the newsletter form block.
             </p>
             <div className="grid sm:grid-cols-2 gap-6">
-              <form className="flex items-center gap-2 bg-cream-100 rounded-pill p-1.5 border border-forest-500/10">
+              <form className="flex items-center gap-2 bg-surface-2 rounded-pill p-1.5 border border-line/10">
                 <input
                   type="email"
                   placeholder="you@everybodyeats.nz"
-                  className="flex-1 bg-transparent px-5 py-2 text-sm placeholder:text-forest-600/40 text-forest-700 focus:outline-none"
+                  className="flex-1 bg-transparent px-5 py-2 text-sm placeholder:text-content/40 text-content focus:outline-none"
                 />
                 <button type="button" className="btn-primary text-xs px-5 py-2">
                   Sign up
@@ -461,19 +461,19 @@ export default function StyleGuidePage() {
 
       {/* Section patterns */}
       <Section id="sections" eyebrow="05 / Layout" title="Section patterns">
-        <p className="text-base text-forest-600/85 max-w-2xl mb-10 leading-relaxed">
+        <p className="text-base text-content/85 max-w-2xl mb-10 leading-relaxed">
           Almost every section uses one of three surfaces: the default cream page, a sun-yellow
           panel, or a forest-dark panel. Pick the surface by mood — informational stays cream,
           marketing CTAs go sun, statements/numbers go forest.
         </p>
 
         {/* Light */}
-        <div className="rounded-3xl bg-cream-100 grain p-10 mb-6 border border-forest-500/10">
+        <div className="rounded-3xl bg-surface-2 grain p-10 mb-6 border border-line/10">
           <p className="eyebrow mb-3">Light section</p>
-          <h3 className="display text-3xl sm:text-4xl text-forest-700 font-light max-w-2xl">
+          <h3 className="display text-3xl sm:text-4xl text-content font-light max-w-2xl">
             Default surface — cream-50 page, cream-100 panel.
           </h3>
-          <p className="mt-4 text-forest-700/80 max-w-xl">
+          <p className="mt-4 text-content/80 max-w-xl">
             Used for stats, journal lists, locations, FAQs. Pair with the <Code>grain</Code>{' '}
             utility for paper texture.
           </p>
@@ -482,10 +482,10 @@ export default function StyleGuidePage() {
         {/* Sun */}
         <div className="rounded-3xl bg-sun-200 grain p-10 mb-6">
           <p className="eyebrow mb-3">Sun panel</p>
-          <h3 className="display text-3xl sm:text-4xl text-forest-700 font-light max-w-2xl">
+          <h3 className="display text-3xl sm:text-4xl text-content font-light max-w-2xl">
             For marketing CTAs and joyful statements.
           </h3>
-          <p className="mt-4 text-forest-700/80 max-w-xl">
+          <p className="mt-4 text-content/80 max-w-xl">
             Always pair with forest text. Used by <Code>cta-strip-block</Code> in its sun variant.
           </p>
         </div>
@@ -509,17 +509,17 @@ export default function StyleGuidePage() {
         </div>
 
         <div className="mt-10 grid sm:grid-cols-2 gap-6">
-          <div className="bg-cream-100 rounded-2xl p-6 border border-forest-500/10">
+          <div className="bg-surface-2 rounded-2xl p-6 border border-line/10">
             <p className="eyebrow mb-2">Container</p>
-            <p className="text-sm text-forest-600/85">
+            <p className="text-sm text-content/85">
               <Code>container-wide</Code> — 88rem max, used on most sections.
               <br />
               <Code>container-tight</Code> — 64rem max, long-form / article surfaces.
             </p>
           </div>
-          <div className="bg-cream-100 rounded-2xl p-6 border border-forest-500/10">
+          <div className="bg-surface-2 rounded-2xl p-6 border border-line/10">
             <p className="eyebrow mb-2">Rhythm</p>
-            <p className="text-sm text-forest-600/85">
+            <p className="text-sm text-content/85">
               Section vertical padding: <Code>py-20</Code> sm <Code>py-24</Code>, panels{' '}
               <Code>py-24</Code> sm <Code>py-32</Code>. Inside panels: <Code>p-10</Code> to{' '}
               <Code>p-16</Code>.
@@ -531,42 +531,42 @@ export default function StyleGuidePage() {
       {/* Motion & texture */}
       <Section id="motion" eyebrow="06 / Detail" title="Motion & texture">
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div className="bg-cream-100 rounded-3xl p-8 border border-forest-500/10">
+          <div className="bg-surface-2 rounded-3xl p-8 border border-line/10">
             <p className="eyebrow mb-3">Grain</p>
-            <p className="text-sm text-forest-600/85 leading-relaxed">
+            <p className="text-sm text-content/85 leading-relaxed">
               Apply <Code>grain</Code> for the paper texture overlay. Built from an inline SVG
               fractal noise, multiply-blended at 5%.
             </p>
           </div>
-          <div className="bg-cream-100 rounded-3xl p-8 border border-forest-500/10">
+          <div className="bg-surface-2 rounded-3xl p-8 border border-line/10">
             <p className="eyebrow mb-3">Card lift</p>
-            <p className="text-sm text-forest-600/85 leading-relaxed">
+            <p className="text-sm text-content/85 leading-relaxed">
               <Code>card-hover</Code> — 300ms ease, -translate-y-1, shadow-xl.
             </p>
           </div>
-          <div className="bg-cream-100 rounded-3xl p-8 border border-forest-500/10">
+          <div className="bg-surface-2 rounded-3xl p-8 border border-line/10">
             <p className="eyebrow mb-3">Button lift</p>
-            <p className="text-sm text-forest-600/85 leading-relaxed">
+            <p className="text-sm text-content/85 leading-relaxed">
               Built into <Code>btn-primary</Code> / <Code>btn-accent</Code>: -translate-y-0.5 on
               hover, shadow-lg.
             </p>
           </div>
-          <div className="bg-cream-100 rounded-3xl p-8 border border-forest-500/10">
+          <div className="bg-surface-2 rounded-3xl p-8 border border-line/10">
             <p className="eyebrow mb-3">Marquee</p>
-            <p className="text-sm text-forest-600/85 leading-relaxed">
+            <p className="text-sm text-content/85 leading-relaxed">
               <Code>marquee-track</Code> — 35s linear loop. Pauses on hover. Used by the partners
               marquee.
             </p>
           </div>
-          <div className="bg-cream-100 rounded-3xl p-8 border border-forest-500/10">
+          <div className="bg-surface-2 rounded-3xl p-8 border border-line/10">
             <p className="eyebrow mb-3">Fade up</p>
-            <p className="text-sm text-forest-600/85 leading-relaxed">
+            <p className="text-sm text-content/85 leading-relaxed">
               <Code>animate-fade-up</Code> — 0.8s entrance. Apply sparingly to feature reveals.
             </p>
           </div>
-          <div className="bg-cream-100 rounded-3xl p-8 border border-forest-500/10">
+          <div className="bg-surface-2 rounded-3xl p-8 border border-line/10">
             <p className="eyebrow mb-3">Easing</p>
-            <p className="text-sm text-forest-600/85 leading-relaxed">
+            <p className="text-sm text-content/85 leading-relaxed">
               <Code>ease-in-out-soft</Code> for everyday interactions. <Code>ease-expressive</Code>{' '}
               for delight moments.
             </p>
@@ -584,9 +584,9 @@ export default function StyleGuidePage() {
       </Section>
 
       {/* Footer */}
-      <section className="container-wide py-20 border-t border-forest-500/10">
+      <section className="container-wide py-20 border-t border-line/10">
         <div className="flex flex-wrap items-baseline justify-between gap-4">
-          <p className="text-sm text-forest-600/70 max-w-2xl">
+          <p className="text-sm text-content/70 max-w-2xl">
             Looking for the full agent reference? See <Code>STYLEGUIDE.md</Code> at the repo root —
             it&apos;s the canonical guide for adding new blocks and pages.
           </p>

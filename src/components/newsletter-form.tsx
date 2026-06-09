@@ -7,7 +7,7 @@ export function NewsletterForm() {
 
   return (
     <form
-      className="mt-12 bg-cream-100 rounded-[2rem] p-8 sm:p-10"
+      className="mt-12 bg-surface-2 rounded-[2rem] p-8 sm:p-10"
       onSubmit={async (e) => {
         e.preventDefault()
         setStatus('submitting')
@@ -17,7 +17,7 @@ export function NewsletterForm() {
       }}
     >
       {status === 'success' ? (
-        <p className="display text-xl text-forest-700 leading-relaxed">
+        <p className="display text-xl text-content leading-relaxed">
           Thanks. We'll send the next letter your way <em>soon</em>.
         </p>
       ) : (
@@ -28,7 +28,7 @@ export function NewsletterForm() {
               type="email"
               required
               placeholder="you@example.com"
-              className="w-full bg-cream-50 border border-forest-500/20 rounded-pill px-5 py-3.5 text-forest-700 placeholder-forest-500/50 focus:outline-none focus:border-forest-500"
+              className="w-full bg-surface border border-line/20 rounded-pill px-5 py-3.5 text-content placeholder-muted/50 focus:outline-none focus:border-line"
             />
           </label>
           <button

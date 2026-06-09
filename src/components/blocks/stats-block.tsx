@@ -57,19 +57,19 @@ export function StatsBlock({ block, globalStats = [] }: Props) {
         <div className="mb-12">
           {block.eyebrow && <p className="eyebrow mb-4">{block.eyebrow}</p>}
           {block.heading && (
-            <h2 className="display text-4xl sm:text-6xl text-forest-700 font-light">
+            <h2 className="display text-4xl sm:text-6xl text-content font-light">
               {renderRichText(block.heading)}
             </h2>
           )}
         </div>
       )}
-      <div className="grid sm:grid-cols-3 gap-px bg-forest-500/15 rounded-3xl overflow-hidden">
+      <div className="grid sm:grid-cols-3 gap-px bg-line/15 rounded-3xl overflow-hidden">
         {stats.map((s, i) => (
-          <div key={i} className="bg-cream-50 px-8 py-10 sm:py-14">
-            <div className="display text-5xl sm:text-6xl lg:text-7xl font-light text-forest-600 tracking-tight">
+          <div key={i} className="bg-surface px-8 py-10 sm:py-14">
+            <div className="display text-5xl sm:text-6xl lg:text-7xl font-light text-content tracking-tight">
               {s.value}
             </div>
-            <div className="mt-3 text-sm uppercase tracking-[0.15em] text-forest-500/70">
+            <div className="mt-3 text-sm uppercase tracking-[0.15em] text-muted/70">
               {s.label}
             </div>
           </div>
