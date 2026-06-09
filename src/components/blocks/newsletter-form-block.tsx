@@ -11,7 +11,7 @@ export function NewsletterFormBlockRenderer({ block }: Props) {
     <section className="container-tight pb-32">
       <NewsletterForm />
       {block.footnote && (
-        <p className="mt-4 text-xs text-forest-500/85">{block.footnote}</p>
+        <p className="mt-4 text-xs text-muted/85">{block.footnote}</p>
       )}
     </section>
   )

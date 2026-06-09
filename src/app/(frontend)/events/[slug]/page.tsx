@@ -40,14 +40,14 @@ export default async function EventPage({ params }: Params) {
       <section className="container-wide pt-12 sm:pt-20 pb-16">
         <Link
           href="/events"
-          className="inline-flex items-center gap-2 text-sm text-forest-500/85 hover:text-forest-700 mb-10"
+          className="inline-flex items-center gap-2 text-sm text-muted/85 hover:text-content mb-10"
         >
           <span>←</span> All events
         </Link>
 
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
           <div className="lg:col-span-7">
-            <div className="relative aspect-[5/4] rounded-[2.5rem] overflow-hidden bg-forest-100 shadow-xl">
+            <div className="relative aspect-[5/4] rounded-[2.5rem] overflow-hidden bg-surface-3 shadow-xl">
               {ev.image && (
                 <PayloadImage
                   media={ev.image}
@@ -63,8 +63,8 @@ export default async function EventPage({ params }: Params) {
 
           <div className="lg:col-span-5 lg:sticky lg:top-28">
             {date && (
-              <div className="font-mono text-xs uppercase tracking-[0.18em] text-forest-500/85 mb-4 flex items-center gap-3">
-                <span className="inline-block w-6 h-px bg-forest-500/40" />
+              <div className="font-mono text-xs uppercase tracking-[0.18em] text-muted/85 mb-4 flex items-center gap-3">
+                <span className="inline-block w-6 h-px bg-line/40" />
                 {date.toLocaleDateString('en-NZ', {
                   weekday: 'long',
                   day: 'numeric',
@@ -74,26 +74,26 @@ export default async function EventPage({ params }: Params) {
                 {ev.displayTime && <span>· {ev.displayTime}</span>}
               </div>
             )}
-            <h1 className="display text-4xl sm:text-6xl text-forest-700 font-light leading-tight">
+            <h1 className="display text-4xl sm:text-6xl text-content font-light leading-tight">
               {ev.name}
             </h1>
             {ev.shortDescription && (
-              <p className="mt-6 text-lg text-forest-600/85 leading-relaxed">
+              <p className="mt-6 text-lg text-content/85 leading-relaxed">
                 {ev.shortDescription}
               </p>
             )}
 
-            <dl className="mt-10 space-y-5 border-t border-forest-500/15 pt-8">
+            <dl className="mt-10 space-y-5 border-t border-line/15 pt-8">
               {ev.location?.name && (
                 <div className="flex justify-between gap-4">
                   <dt className="eyebrow shrink-0">Where</dt>
-                  <dd className="text-right text-forest-700">{ev.location.name}</dd>
+                  <dd className="text-right text-content">{ev.location.name}</dd>
                 </div>
               )}
               {ev.tickets?.priceLabel && (
                 <div className="flex justify-between gap-4">
                   <dt className="eyebrow shrink-0">Tickets</dt>
-                  <dd className="text-right text-forest-700">{ev.tickets.priceLabel}</dd>
+                  <dd className="text-right text-content">{ev.tickets.priceLabel}</dd>
                 </div>
               )}
             </dl>
@@ -109,7 +109,7 @@ export default async function EventPage({ params }: Params) {
                   Get tickets →
                 </a>
                 {ev.tickets.caption && (
-                  <p className="mt-3 text-xs text-forest-500/85">{ev.tickets.caption}</p>
+                  <p className="mt-3 text-xs text-muted/85">{ev.tickets.caption}</p>
                 )}
               </div>
             )}

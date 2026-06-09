@@ -31,16 +31,16 @@ export function TeamGridBlock({ team }: Props) {
         if (!members.length) return null
         return (
           <section key={key} className="container-wide pb-24">
-            <h2 className="display text-3xl sm:text-4xl font-light text-forest-700 mb-10 flex items-baseline gap-4">
+            <h2 className="display text-3xl sm:text-4xl font-light text-content mb-10 flex items-baseline gap-4">
               {STAFF_LABELS[key] || key}
-              <span className="font-mono text-sm text-forest-500/70 normal-case tracking-normal">
+              <span className="font-mono text-sm text-muted/70 normal-case tracking-normal">
                 · {String(members.length).padStart(2, '0')}
               </span>
             </h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
               {members.map((m) => (
                 <article key={m.id} className="group">
-                  <div className="relative aspect-[4/5] rounded-[1.5rem] overflow-hidden bg-forest-100 mb-5">
+                  <div className="relative aspect-[4/5] rounded-[1.5rem] overflow-hidden bg-surface-3 mb-5">
                     {m.profilePicture ? (
                       <PayloadImage
                         media={m.profilePicture}
@@ -53,10 +53,10 @@ export function TeamGridBlock({ team }: Props) {
                       <div className="absolute inset-0 bg-gradient-to-br from-forest-300 to-forest-500" />
                     )}
                   </div>
-                  <h3 className="display text-xl text-forest-700 font-medium">{m.name}</h3>
-                  {m.jobTitle && <p className="text-sm text-forest-500/85 mt-1">{m.jobTitle}</p>}
+                  <h3 className="display text-xl text-content font-medium">{m.name}</h3>
+                  {m.jobTitle && <p className="text-sm text-muted/85 mt-1">{m.jobTitle}</p>}
                   {m.bioSummary && (
-                    <p className="mt-4 text-sm text-forest-600/75 leading-relaxed line-clamp-4">
+                    <p className="mt-4 text-sm text-content/75 leading-relaxed line-clamp-4">
                       {m.bioSummary}
                     </p>
                   )}

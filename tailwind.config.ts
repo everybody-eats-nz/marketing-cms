@@ -2,12 +2,25 @@ import type { Config } from 'tailwindcss'
 import typography from '@tailwindcss/typography'
 
 const config: Config = {
+  darkMode: 'class',
   content: [
     './src/**/*.{ts,tsx,mdx,js,jsx}',
   ],
   theme: {
     extend: {
       colors: {
+        // Semantic, theme-aware tokens (CSS-variable backed so opacity
+        // modifiers like `text-content/70` still work). These flip between
+        // light and dark via the `.dark` class — see globals.css. Use these
+        // for "paper" sections (light surfaces + forest text) so they invert
+        // cleanly. The literal brand ramps below stay fixed for intentionally
+        // dark panels (footer, CTA, darkPanel) and accents.
+        surface: 'rgb(var(--surface) / <alpha-value>)',
+        'surface-2': 'rgb(var(--surface-2) / <alpha-value>)',
+        'surface-3': 'rgb(var(--surface-3) / <alpha-value>)',
+        content: 'rgb(var(--content) / <alpha-value>)',
+        muted: 'rgb(var(--muted) / <alpha-value>)',
+        line: 'rgb(var(--line) / <alpha-value>)',
         // Off-white "paper" backgrounds
         cream: {
           50: '#FDF8EF',
