@@ -116,18 +116,26 @@ async function uploadMedia(payload: any, localFile: string | undefined | null, a
   }
 
   const buffer = await readFile(filePath)
-  const created = await payload.create({
-    collection: 'media',
-    data: { alt: alt || '' },
-    file: {
-      data: buffer,
-      mimetype: guessMime(filename),
-      name: filename,
-      size: buffer.length,
-    },
-  })
-  mediaCache.set(localFile, created.id)
-  return created.id
+  // Don't let a single bad/unsupported asset abort the whole seed. uploadMedia runs
+  // for collections (events, team, partners…) that come BEFORE seedPages in main(),
+  // so an unhandled upload error here means pages never get seeded. Warn and skip.
+  try {
+    const created = await payload.create({
+      collection: 'media',
+      data: { alt: alt || '' },
+      file: {
+        data: buffer,
+        mimetype: guessMime(filename),
+        name: filename,
+        size: buffer.length,
+      },
+    })
+    mediaCache.set(localFile, created.id)
+    return created.id
+  } catch (err) {
+    console.warn(`  ⚠ skipped media "${filename}": ${(err as Error).message}`)
+    return null
+  }
 }
 
 function guessMime(filename: string): string {
@@ -137,10 +145,14 @@ function guessMime(filename: string): string {
     '.jpeg': 'image/jpeg',
     '.png': 'image/png',
     '.webp': 'image/webp',
+    '.avif': 'image/avif',
     '.gif': 'image/gif',
     '.svg': 'image/svg+xml',
+    '.heic': 'image/heic',
+    '.heif': 'image/heif',
     '.mp4': 'video/mp4',
     '.webm': 'video/webm',
+    '.mov': 'video/quicktime',
   }[ext] || 'application/octet-stream'
 }
 

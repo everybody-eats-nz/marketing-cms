@@ -185,6 +185,7 @@ export interface Media {
    * Photo credit / attribution (optional)
    */
   credit?: string | null;
+  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -1086,6 +1087,7 @@ export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   caption?: T;
   credit?: T;
+  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;

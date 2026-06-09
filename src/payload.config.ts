@@ -27,7 +27,7 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 // Object storage for media uploads (S3-compatible: Cloudflare R2, MinIO, Backblaze
-// B2, AWS S3). Only enabled when S3_BUCKET is set — otherwise media falls back to
+// B2, AWS S3). Activates only when S3_BUCKET is set — otherwise media falls back to
 // local-disk storage (Media.ts staticDir), which is convenient for local dev.
 //
 // On a containerised host (Coolify) local disk is fragile: files don't survive
@@ -35,27 +35,32 @@ const dirname = path.dirname(filename)
 // the script runs). Object storage fixes both — the destination is the bucket,
 // regardless of where the upload/seed runs. Files are streamed through Payload's
 // own route, so the bucket does NOT need to be publicly readable.
-const storagePlugins = process.env.S3_BUCKET
-  ? [
-      s3Storage({
-        collections: {
-          media: true,
-        },
-        bucket: process.env.S3_BUCKET,
-        config: {
-          endpoint: process.env.S3_ENDPOINT,
-          region: process.env.S3_REGION || 'auto',
-          credentials: {
-            accessKeyId: process.env.S3_ACCESS_KEY_ID || '',
-            secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || '',
-          },
-          // Path-style addressing — required by MinIO, works with R2. Set
-          // S3_FORCE_PATH_STYLE=false for providers that need virtual-hosted URLs.
-          forcePathStyle: process.env.S3_FORCE_PATH_STYLE !== 'false',
-        },
-      }),
-    ]
-  : []
+//
+// The plugin is ALWAYS registered (toggled via `enabled`) with `alwaysInsertFields`,
+// so the admin importMap and collection schema are identical across dev, build, and
+// prod. Gating the whole plugin on the env var instead would generate a build-time
+// importMap without the S3 client component, then fail at runtime when S3 is on.
+const storagePlugins = [
+  s3Storage({
+    enabled: Boolean(process.env.S3_BUCKET),
+    alwaysInsertFields: true,
+    collections: {
+      media: true,
+    },
+    bucket: process.env.S3_BUCKET || '',
+    config: {
+      endpoint: process.env.S3_ENDPOINT,
+      region: process.env.S3_REGION || 'auto',
+      credentials: {
+        accessKeyId: process.env.S3_ACCESS_KEY_ID || '',
+        secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || '',
+      },
+      // Path-style addressing — required by MinIO, works with R2. Set
+      // S3_FORCE_PATH_STYLE=false for providers that need virtual-hosted URLs.
+      forcePathStyle: process.env.S3_FORCE_PATH_STYLE !== 'false',
+    },
+  }),
+]
 
 export default buildConfig({
   admin: {
