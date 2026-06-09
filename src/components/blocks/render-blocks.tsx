@@ -16,6 +16,9 @@ import { NewsletterFormBlockRenderer } from './newsletter-form-block'
 import { PartnersGridBlock } from './partners-grid-block'
 import { LocationsMagazineBlock } from './locations-magazine-block'
 import { DonateHeroBlock } from './donate-hero-block'
+import { ProcessBlock } from './process-block'
+import { ValuesBlock } from './values-block'
+import { TestimonialsBlock } from './testimonials-block'
 
 type AnyBlock = { blockType: string; id?: string; [k: string]: any }
 
@@ -76,6 +79,12 @@ export function RenderBlocks({
             return <MarqueeBlock key={key} block={block as any} />
           case 'timeline':
             return <TimelineBlock key={key} block={block as any} />
+          case 'process':
+            return <ProcessBlock key={key} block={block as any} />
+          case 'values':
+            return <ValuesBlock key={key} block={block as any} />
+          case 'testimonials':
+            return <TestimonialsBlock key={key} block={block as any} />
           case 'cardGrid':
             return <CardGridBlock key={key} block={block as any} />
           case 'pillars':

@@ -60,27 +60,57 @@ async function main() {
           aspect: '16:8',
         },
         {
-          blockType: 'cardGrid',
-          eyebrow: 'What we stand for',
-          columns: '3',
-          cardStyle: 'tile',
+          blockType: 'process',
+          eyebrow: 'How it works',
+          heading: 'From *rescued food* to a shared table.',
           items: [
             {
               number: '01',
-              title: 'Restaurant-quality',
-              copy: 'Three-course menu cooked by trained chefs in real kitchens. Not a soup kitchen.',
+              title: 'Food rescue',
+              copy: 'We collect surplus food from supermarkets, growers and producers — perfectly good meat and veg that is a little wonky or close to its date — in our electric vans, before any of it can go to waste.',
             },
             {
               number: '02',
-              title: 'Pay what you can',
-              copy:
-                "Suggested koha covers tonight's meal — pay more to cover the next person, or less if you need to.",
+              title: 'Preparation',
+              copy: 'Each afternoon our chefs turn that day’s rescued ingredients into a fresh three-course menu, with volunteers learning to cook and cut waste right alongside them.',
             },
             {
               number: '03',
-              title: 'Rescued food',
-              copy:
-                'Every plate starts as ingredients that would otherwise be wasted. Nothing planned, everything fresh.',
+              title: 'Service',
+              copy: 'At 6pm the doors open. Guests share long tables, volunteers carry the plates, and strangers become neighbours over dinner.',
+            },
+            {
+              number: '04',
+              title: 'Pay as you feel',
+              copy: 'There are no prices. Pay what you can — more to cover someone else’s meal, less if times are tight — so everyone eats with dignity.',
+            },
+          ],
+        },
+        {
+          blockType: 'values',
+          eyebrow: 'What drives us',
+          missionLabel: 'Our mission',
+          mission:
+            'To address food waste, food insecurity and social isolation in *Aotearoa*.',
+          visionLabel: 'Our vision',
+          vision:
+            'Everybody Eats restaurants across the country — building stronger communities and making a *measurable difference*.',
+          valuesLabel: 'Ngā Uara — our values',
+          items: [
+            {
+              term: 'Whanaungatanga',
+              translation: 'Connection & belonging',
+              copy: 'We build community through trust, connection and a shared sense of belonging at every table.',
+            },
+            {
+              term: 'Manaakitanga',
+              translation: 'Care & hospitality',
+              copy: 'We look after one another with generosity, care and empathy — everyone is welcome, no questions asked.',
+            },
+            {
+              term: 'Kaitiakitanga',
+              translation: 'Guardianship',
+              copy: 'We care for our environment through a circular, waste-free food system that gives good food a second life.',
             },
           ],
         },
@@ -90,29 +120,49 @@ async function main() {
           heading: 'From *pop-up* to *permanent*.',
           items: [
             {
+              year: '2016',
+              title: 'An idea takes shape',
+              body: 'Founder Nick Loosley, drawing on years in hospitality, sets out to tackle food insecurity and food waste together.',
+            },
+            {
               year: '2017',
-              title: 'Pop-up dinner',
-              body: 'Nick Loosley hosts the first pay-as-you-feel pop-up in Auckland. It sells out instantly.',
+              title: 'The first pop-up',
+              body: 'A pay-as-you-feel pop-up at Gemmayze Street in St Kevin’s Arcade sells out — and wins the Restaurant Association’s Good Neighbour Award.',
             },
             {
               year: '2018',
-              title: 'First Onehunga restaurant',
-              body: 'Everybody Eats opens its doors permanently in Onehunga, Auckland.',
+              title: 'A registered charity',
+              body: 'Everybody Eats becomes a charity, a crowdfunding campaign raises $129,000, and Nick is named a Westfield Local Hero.',
+            },
+            {
+              year: '2019',
+              title: 'Onehunga opens',
+              body: 'Our flagship Onehunga restaurant opens permanently, serving five nights a week.',
             },
             {
               year: '2020',
-              title: 'Wellington opens',
-              body: 'We expand to central Wellington and feed a city through lockdowns.',
+              title: '20,000 meals',
+              body: 'Wellington and Papamoa pop-ups launch, we serve our 20,000th meal, and we pivot to takeaways through lockdown. Nick is named Kiwibank Local Hero of the Year.',
             },
             {
-              year: '2022',
-              title: 'Glen Innes joins',
-              body: 'A third restaurant opens in East Auckland, kindly supported by local funders.',
+              year: '2021',
+              title: '50,000 meals',
+              body: 'We pass 50,000 meals and launch the Goodie Box with DDB and Al Brown.',
+            },
+            {
+              year: '2023',
+              title: '100,000 meals',
+              body: 'Our 100,000th meal is served and a third restaurant opens in Glen Innes, alongside shared space Tātou.',
+            },
+            {
+              year: '2024',
+              title: '200,000 meals',
+              body: 'We reach 200,000 meals served, and Wellington wins Outstanding Sustainability Practices at the Welly Hospo Awards.',
             },
             {
               year: 'Today',
-              title: '350,000+ meals',
-              body: 'Three restaurants, hundreds of volunteers, and one big pay-as-you-feel table.',
+              title: 'One big table',
+              body: 'Three restaurants, hundreds of volunteers, and one pay-as-you-feel table that keeps on growing.',
             },
           ],
         },
@@ -122,6 +172,33 @@ async function main() {
           heading: 'By the *numbers*',
           variant: 'darkPanel',
           source: 'global',
+        },
+        {
+          blockType: 'testimonials',
+          eyebrow: 'From our guests',
+          heading: 'Pull up a chair, *stay a while*.',
+          items: [
+            {
+              quote: 'The staff were so attentive and friendly. I left feeling cared for, not just fed.',
+              attribution: 'Diner, Onehunga',
+            },
+            {
+              quote: 'I was genuinely blown away by how good the food was — three courses, all from rescued ingredients.',
+              attribution: 'Diner, Wellington',
+            },
+            {
+              quote: 'Everybody Eats has been a life saver for me, financially and socially. It’s a place to belong.',
+              attribution: 'Diner, Glen Innes',
+            },
+            {
+              quote: 'We came in to celebrate a birthday and couldn’t have asked for a warmer welcome. Thank you for making it special.',
+              attribution: 'Diner, Wellington',
+            },
+            {
+              quote: 'Ka pai to the whole team. You’re doing something really special here.',
+              attribution: 'Diner, Onehunga',
+            },
+          ],
         },
         {
           blockType: 'ctaStrip',

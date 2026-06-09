@@ -406,6 +406,78 @@ export interface Page {
              * Optional. Wrap a word in *asterisks* for italic.
              */
             heading?: string | null;
+            items?:
+              | {
+                  /**
+                   * e.g. "01"
+                   */
+                  number?: string | null;
+                  title: string;
+                  copy?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'process';
+          }
+        | {
+            eyebrow?: string | null;
+            missionLabel?: string | null;
+            /**
+             * Wrap a word in *asterisks* for italic.
+             */
+            mission?: string | null;
+            visionLabel?: string | null;
+            /**
+             * Wrap a word in *asterisks* for italic.
+             */
+            vision?: string | null;
+            valuesLabel?: string | null;
+            items?:
+              | {
+                  /**
+                   * Te reo Māori term, e.g. "Manaakitanga"
+                   */
+                  term: string;
+                  /**
+                   * Short English gloss, e.g. "Care & hospitality"
+                   */
+                  translation?: string | null;
+                  copy?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'values';
+          }
+        | {
+            eyebrow?: string | null;
+            /**
+             * Optional. Wrap a word in *asterisks* for italic.
+             */
+            heading?: string | null;
+            items?:
+              | {
+                  quote: string;
+                  /**
+                   * e.g. "Diner, Wellington"
+                   */
+                  attribution?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'testimonials';
+          }
+        | {
+            eyebrow?: string | null;
+            /**
+             * Optional. Wrap a word in *asterisks* for italic.
+             */
+            heading?: string | null;
             /**
              * Optional CTA next to the heading (e.g. "Become a partner →")
              */
@@ -1258,6 +1330,57 @@ export interface PagesSelect<T extends boolean = true> {
                     year?: T;
                     title?: T;
                     body?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        process?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              items?:
+                | T
+                | {
+                    number?: T;
+                    title?: T;
+                    copy?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        values?:
+          | T
+          | {
+              eyebrow?: T;
+              missionLabel?: T;
+              mission?: T;
+              visionLabel?: T;
+              vision?: T;
+              valuesLabel?: T;
+              items?:
+                | T
+                | {
+                    term?: T;
+                    translation?: T;
+                    copy?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        testimonials?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              items?:
+                | T
+                | {
+                    quote?: T;
+                    attribution?: T;
                     id?: T;
                   };
               id?: T;
