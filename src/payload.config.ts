@@ -45,7 +45,12 @@ const storagePlugins = [
     enabled: Boolean(process.env.S3_BUCKET),
     alwaysInsertFields: true,
     collections: {
-      media: true,
+      // prefix must be set explicitly (even empty): when the plugin is enabled it
+      // ignores alwaysInsertFields and only adds the `prefix` field if a prefix
+      // option exists, while the disabled path always adds it. Without this, the
+      // schema differs between S3 and non-S3 environments and schema push tries
+      // to drop the media.prefix column on deploy. '' keeps file keys unprefixed.
+      media: { prefix: '' },
     },
     bucket: process.env.S3_BUCKET || '',
     config: {
