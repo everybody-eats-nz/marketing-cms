@@ -159,41 +159,64 @@ function guessMime(filename: string): string {
 async function seedLocations(payload: any) {
   console.log('\n→ Locations')
   // Hero images sourced from the live Webflow CDN — we picked one per restaurant
+  // Details sourced from the live site (everybodyeats.nz/dine-with-us/*), June 2026.
+  // Booking URLs are the NowBookIt iframes each page's "Book a table" modal embeds.
+  // Location `name` must match the volunteers API `location` param
+  // (https://volunteers.everybodyeats.nz/api/menus?date=...&location=...), which the
+  // frontend uses to fetch tonight's menu.
   const locations = [
     {
       name: 'Onehunga',
       slug: 'onehunga',
       city: 'Auckland',
-      tagline: 'A pay-as-you-feel restaurant in the heart of Onehunga.',
-      address: '292 Onehunga Mall, Onehunga, Auckland 1061',
-      bookingUrl: 'https://www.everybodyeats.nz/dine-with-us/onehunga-auck',
+      tagline: 'Our flagship pay-what-you-can restaurant, at the heart of Everybody Eats since 2019.',
+      intro:
+        'Opened in November 2019 following a successful crowd funding campaign, our Onehunga restaurant is the heart of Everybody Eats. As our flagship location, it’s situated in a vibrant, diverse community in reach of the city center and bustling South and West Auckland. Onehunga’s unique mix of people makes it ideal for our pay-what-you-can dining model, where contributions support those in need. Here, everyone is welcome to dine with dignity, share stories, and be part of a caring community.',
+      address: '306 Onehunga Mall, Auckland',
+      email: 'nic.hm@everybodyeats.nz',
+      bookingUrl:
+        'https://bookings.nowbookit.com/?accountid=42c3d92b-6e94-405b-8f94-e52d98c2c9ec&venueid=14234&theme=light&colors=hex,0d3a23',
       payAtTableUrl: 'https://www.everybodyeats.nz/dine-with-us/pay/all',
       openStatus: 'open',
-      hours: [{ label: 'Wed – Sat', times: '5pm – 9pm', note: 'Last seating 8:30pm' }],
+      hours: [{ label: 'Sun – Thu', times: '6pm – 8pm', note: 'Kitchen closes 8pm' }],
       heroImageFile: '6722e909b25b8836ac4fb3e8_IMG20240911130916.jpg',
     },
     {
       name: 'Glen Innes',
       slug: 'glen-innes',
       city: 'Auckland',
-      tagline: 'Bringing pay-as-you-feel dining to East Auckland.',
-      address: 'Glen Innes Town Centre, Auckland',
-      bookingUrl: 'https://www.everybodyeats.nz/dine-with-us/glen-innes',
+      tagline: 'Pay-what-you-can dining in East Auckland, with seating for up to 70 people.',
+      intro:
+        'Opened in August 2023, our Glen Innes restaurant is our third permanent location and second in Auckland. Since its launch, this vibrant space, with seating for up to 70 people, has quickly become a cherished part of the community, embodying the spirit of Everybody Eats. With its welcoming atmosphere, Glen Innes fosters connections among diverse locals, where everyone can come together to enjoy hearty meals and support one another through our pay-what-you-can model.',
+      address: '133 Line Road, Glen Innes, Auckland',
+      email: 'amanda@everybodyeats.nz',
+      phone: '+64 21 856 884',
+      bookingUrl:
+        'https://bookings.nowbookit.com/?accountid=42c3d92b-6e94-405b-8f94-e52d98c2c9ec&venueid=14209&theme=light&colors=hex,0d3a23',
       payAtTableUrl: 'https://www.everybodyeats.nz/dine-with-us/pay/all',
       openStatus: 'open',
-      hours: [{ label: 'Wed – Sat', times: '5pm – 9pm', note: 'Last seating 8:30pm' }],
+      hours: [
+        { label: 'Sun – Thu', times: '6pm – 8pm', note: 'Final sitting 7:45pm, kitchen closes 8pm' },
+      ],
       heroImageFile: '6891934bf5573fe950e1b327_RESIZED%20of%20A.%20McVinnie%20-%20EEGI%20Aug_K9A7404.jpg',
     },
     {
       name: 'Wellington',
       slug: 'wellington',
       city: 'Wellington',
-      tagline: 'Pay-as-you-feel dining in central Wellington.',
-      address: 'Wellington Central',
-      bookingUrl: 'https://www.everybodyeats.nz/dine-with-us/wellington',
+      tagline: 'Pay-what-you-can dining in the heart of the city, at LTD on Dixon Street.',
+      intro:
+        'Opened in 2021, our Wellington restaurant is situated in the heart of the city, where everyone is welcome. As our second permanent restaurant, it has quickly established itself as a community hub, bringing together diverse individuals to share delicious meals and meaningful connections. With our pay-what-you-can model, we strive to ensure that all diners can enjoy a dignified dining experience, fostering a sense of belonging and support within the vibrant Wellington community.',
+      address: 'LTD, 60 Dixon Street, Te Aro, Wellington',
+      email: 'hami@everybodyeats.nz',
+      bookingUrl:
+        'https://bookings.nowbookit.com/?accountid=42c3d92b-6e94-405b-8f94-e52d98c2c9ec&venueid=14201&theme=light&colors=hex,0d3a23',
       payAtTableUrl: 'https://www.everybodyeats.nz/dine-with-us/pay/all',
       openStatus: 'open',
-      hours: [{ label: 'Wed – Sat', times: '5pm – 9pm', note: 'Last seating 8:30pm' }],
+      hours: [
+        { label: 'Sun – Wed', times: '6pm – 8pm', note: 'Kitchen closes 8pm' },
+        { label: 'Thu', times: 'Private bookings & events' },
+      ],
       heroImageFile: '67e2378394cdd938f52d6b15_WLGPP25-Parade-154.jpg',
     },
   ]
