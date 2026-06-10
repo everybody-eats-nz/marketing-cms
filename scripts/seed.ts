@@ -176,7 +176,7 @@ async function seedLocations(payload: any) {
       email: 'nic.hm@everybodyeats.nz',
       bookingUrl:
         'https://bookings.nowbookit.com/?accountid=42c3d92b-6e94-405b-8f94-e52d98c2c9ec&venueid=14234&theme=light&colors=hex,0d3a23',
-      payAtTableUrl: 'https://www.everybodyeats.nz/dine-with-us/pay/all',
+      payAtTableUrl: '/dine-with-us/pay/onehunga',
       openStatus: 'open',
       hours: [{ label: 'Sun – Thu', times: '6pm – 8pm', note: 'Kitchen closes 8pm' }],
       heroImageFile: '6722e909b25b8836ac4fb3e8_IMG20240911130916.jpg',
@@ -193,7 +193,7 @@ async function seedLocations(payload: any) {
       phone: '+64 21 856 884',
       bookingUrl:
         'https://bookings.nowbookit.com/?accountid=42c3d92b-6e94-405b-8f94-e52d98c2c9ec&venueid=14209&theme=light&colors=hex,0d3a23',
-      payAtTableUrl: 'https://www.everybodyeats.nz/dine-with-us/pay/all',
+      payAtTableUrl: '/dine-with-us/pay/glen-innes',
       openStatus: 'open',
       hours: [
         { label: 'Sun – Thu', times: '6pm – 8pm', note: 'Final sitting 7:45pm, kitchen closes 8pm' },
@@ -211,7 +211,7 @@ async function seedLocations(payload: any) {
       email: 'hami@everybodyeats.nz',
       bookingUrl:
         'https://bookings.nowbookit.com/?accountid=42c3d92b-6e94-405b-8f94-e52d98c2c9ec&venueid=14201&theme=light&colors=hex,0d3a23',
-      payAtTableUrl: 'https://www.everybodyeats.nz/dine-with-us/pay/all',
+      payAtTableUrl: '/dine-with-us/pay/wellington',
       openStatus: 'open',
       hours: [
         { label: 'Sun – Wed', times: '6pm – 8pm', note: 'Kitchen closes 8pm' },
@@ -485,7 +485,7 @@ async function seedGlobals(payload: any) {
             { link: { label: 'Onehunga', type: 'internal', internalHref: '/dine-with-us/onehunga' } },
             { link: { label: 'Glen Innes', type: 'internal', internalHref: '/dine-with-us/glen-innes' } },
             { link: { label: 'Wellington', type: 'internal', internalHref: '/dine-with-us/wellington' } },
-            { link: { label: 'Pay at table', type: 'external', externalHref: 'https://www.everybodyeats.nz/dine-with-us/pay/all', openInNewTab: true } },
+            { link: { label: 'Pay at table', type: 'internal', internalHref: '/dine-with-us/pay' } },
           ],
         },
         {
