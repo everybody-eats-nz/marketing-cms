@@ -118,16 +118,12 @@ export default async function LocationPage({ params }: Params) {
                   Book a table
                 </a>
               )}
-              {loc.payAtTableUrl && (
-                <a
-                  href={loc.payAtTableUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="btn border border-cream-50/40 text-cream-50 hover:bg-surface hover:text-content"
-                >
-                  Pay at table
-                </a>
-              )}
+              <Link
+                href={`/dine-with-us/pay/${loc.slug}`}
+                className="btn border border-cream-50/40 text-cream-50 hover:bg-surface hover:text-content"
+              >
+                Pay at table
+              </Link>
             </div>
           </div>
         </div>
