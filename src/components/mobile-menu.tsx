@@ -5,16 +5,35 @@ import { createPortal } from 'react-dom'
 import Image from 'next/image'
 import Link from 'next/link'
 import { resolveHref, type LinkValue, type Media } from '@/lib/types'
+import { ExternalLinkIcon } from './external-link-icon'
 import { PayloadImage } from './payload-image'
 
 type PrimaryItem = { link: LinkValue; previewImage?: Media | string | number | null }
 
+export type MenuAction = {
+  label: string
+  href: string
+  external?: boolean
+  variant: 'solid' | 'accent' | 'outline'
+}
+
 type Props = {
   primary: PrimaryItem[]
   secondary: Array<{ link: LinkValue }>
+  actions?: MenuAction[]
 }
 
-export function MobileMenu({ primary, secondary }: Props) {
+// On the forest overlay: solid cream for Book, sun accent for Donate,
+// inverted ghost for the rest (per STYLEGUIDE's dark-panel pairings).
+const actionClasses: Record<MenuAction['variant'], string> = {
+  solid:
+    'bg-cream-50 text-forest-700 hover:bg-sun-200 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0',
+  accent:
+    'bg-sun-200 text-forest-700 hover:bg-sun-300 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0',
+  outline: 'border border-cream-50/30 text-cream-50 hover:bg-cream-50 hover:text-forest-700',
+}
+
+export function MobileMenu({ primary, secondary, actions = [] }: Props) {
   const [open, setOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
   const [activeIndex, setActiveIndex] = useState<number>(0)
@@ -80,8 +99,9 @@ export function MobileMenu({ primary, secondary }: Props) {
         })}
       </div>
 
-      {/* Top bar — logo + close (floats above image on desktop) */}
-      <div className="container-wide flex items-center justify-between h-16 sm:h-20 relative z-20 lg:max-w-none lg:mx-0 lg:px-12 xl:px-20">
+      {/* Top bar — same container as the site header so the logo and close
+          button sit exactly where the header logo and burger were. */}
+      <div className="container-wide flex items-center justify-between h-16 sm:h-20 relative z-20">
         <Link
           href="/"
           onClick={() => setOpen(false)}
@@ -107,56 +127,103 @@ export function MobileMenu({ primary, secondary }: Props) {
         </button>
       </div>
 
-      {/* Left — nav links (constrained to half-width on lg+) */}
-      <div className="relative z-10 h-[calc(100dvh-4rem)] sm:h-[calc(100dvh-5rem)] lg:w-1/2 overflow-y-auto">
-        <div className="container-wide lg:max-w-none lg:mx-0 lg:pl-12 xl:pl-20 lg:pr-12 pt-6 sm:pt-10 lg:pt-12 pb-10 sm:pb-14 min-h-full flex flex-col justify-between gap-12">
-          <nav aria-label="Primary mobile" className="flex flex-col gap-4 sm:gap-6 lg:gap-3">
-            {primary.map((item, i) => {
-              const isActive = activeIndex === i
-              return (
-                <Link
-                  key={i}
-                  href={resolveHref(item.link)}
-                  onClick={() => setOpen(false)}
-                  onMouseEnter={() => setActiveIndex(i)}
-                  onFocus={() => setActiveIndex(i)}
-                  className={`font-display italic leading-[0.95] text-5xl sm:text-7xl lg:text-7xl xl:text-8xl transition-colors duration-300 ${
-                    isActive ? 'text-sun-200' : 'text-cream-50 hover:text-sun-200'
-                  }`}
+      {/* Left — nav links. Same container as the top bar so the links align
+          with the logo; content constrained to the left half on lg+ (the
+          right half is the image pane). */}
+      <div className="relative z-10 h-[calc(100dvh-4rem)] sm:h-[calc(100dvh-5rem)] overflow-y-auto">
+        <div className="container-wide min-h-full pt-6 sm:pt-10 lg:pt-12 pb-10 sm:pb-14 flex flex-col">
+          <div className="lg:w-1/2 lg:pr-10 flex-1 flex flex-col justify-between gap-12">
+            <nav aria-label="Primary mobile" className="flex flex-col gap-4 sm:gap-6 lg:gap-3">
+              {primary.map((item, i) => {
+                const isActive = activeIndex === i
+                return (
+                  <Link
+                    key={i}
+                    href={resolveHref(item.link)}
+                    onClick={() => setOpen(false)}
+                    onMouseEnter={() => setActiveIndex(i)}
+                    onFocus={() => setActiveIndex(i)}
+                    className={`font-display italic leading-[0.95] text-5xl sm:text-7xl lg:text-7xl xl:text-8xl transition-colors duration-300 ${
+                      isActive ? 'text-sun-200' : 'text-cream-50 hover:text-sun-200'
+                    }`}
+                    style={{
+                      fontWeight: 230,
+                      fontFeatureSettings: 'normal',
+                      transitionDelay: open ? `${i * 60}ms` : '0ms',
+                      transform: open ? 'translateY(0)' : 'translateY(20px)',
+                      opacity: open ? 1 : 0,
+                      transitionProperty: 'transform, opacity, color',
+                      transitionDuration: '500ms',
+                      transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+                    }}
+                  >
+                    {item.link.label}
+                  </Link>
+                )
+              })}
+            </nav>
+
+            <div className="flex flex-col gap-10">
+              {actions.length > 0 && (
+                <nav
+                  aria-label="Quick actions"
+                  className="grid grid-cols-2 gap-3 max-w-md"
                   style={{
-                    fontWeight: 230,
-                    fontFeatureSettings: 'normal',
-                    transitionDelay: open ? `${i * 60}ms` : '0ms',
+                    transitionDelay: open ? `${primary.length * 60 + 80}ms` : '0ms',
                     transform: open ? 'translateY(0)' : 'translateY(20px)',
                     opacity: open ? 1 : 0,
-                    transitionProperty: 'transform, opacity, color',
+                    transitionProperty: 'transform, opacity',
                     transitionDuration: '500ms',
                     transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
                   }}
                 >
-                  {item.link.label}
-                </Link>
-              )
-            })}
-          </nav>
+                  {actions.map((action) => {
+                    const className = `inline-flex items-center justify-center gap-1.5 rounded-pill px-5 py-3 text-sm font-medium transition-all duration-200 ease-in-out-soft ${actionClasses[action.variant]}`
+                    return action.external ? (
+                      <a
+                        key={action.label}
+                        href={action.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className={className}
+                      >
+                        {action.label}
+                        <ExternalLinkIcon className="h-2.5 w-2.5 opacity-70" />
+                        <span className="sr-only">(opens in new tab)</span>
+                      </a>
+                    ) : (
+                      <Link
+                        key={action.label}
+                        href={action.href}
+                        onClick={() => setOpen(false)}
+                        className={className}
+                      >
+                        {action.label}
+                      </Link>
+                    )
+                  })}
+                </nav>
+              )}
 
-          {secondary.length > 0 && (
-            <nav
-              aria-label="Secondary mobile"
-              className="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-5 max-w-2xl"
-            >
-              {secondary.map((item, i) => (
-                <Link
-                  key={i}
-                  href={resolveHref(item.link)}
-                  onClick={() => setOpen(false)}
-                  className="text-sm font-medium text-cream-50/70 hover:text-sun-200 transition-colors"
+              {secondary.length > 0 && (
+                <nav
+                  aria-label="Secondary mobile"
+                  className="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-5 max-w-2xl"
                 >
-                  {item.link.label}
-                </Link>
-              ))}
-            </nav>
-          )}
+                  {secondary.map((item, i) => (
+                    <Link
+                      key={i}
+                      href={resolveHref(item.link)}
+                      onClick={() => setOpen(false)}
+                      className="text-sm font-medium text-cream-50/70 hover:text-sun-200 transition-colors"
+                    >
+                      {item.link.label}
+                    </Link>
+                  ))}
+                </nav>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>

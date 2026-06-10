@@ -425,7 +425,9 @@ async function seedGlobals(payload: any) {
         'Restaurant-quality meals from rescued ingredients, served on a pay-as-you-feel basis. A New Zealand registered charity.',
       charityNumber: 'CC56055',
       contactEmail: 'hello@everybodyeats.nz',
-      bookingUrl: '#bookingModal',
+      // The old Webflow site used '#bookingModal' here; on this site each
+      // location carries its own booking link, so point at the locations page.
+      bookingUrl: '/dine-with-us',
       donateUrl: '/get-involved/donate',
       volunteerUrl: 'https://volunteers.everybodyeats.nz',
       shopUrl: 'https://everybodyeatsnz.shop/',
