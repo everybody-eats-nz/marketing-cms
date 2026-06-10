@@ -84,7 +84,7 @@ The `@payload-config` alias resolves to `src/payload.config.ts` (see tsconfig pa
 
 Run `pnpm generate:types` to refresh [src/payload-types.ts](src/payload-types.ts). Most of the rendering code uses `any` casts anyway (see comments in [src/lib/types.ts](src/lib/types.ts)), but the generated types are the source of truth for typed admin work.
 
-If the schema change is structural, also create a migration: `pnpm migrate:create`.
+**Any schema change MUST ship with a migration** (`pnpm migrate:create <name>`): production deploys are migration-based — drizzle schema push only runs when `NODE_ENV === 'development'` (see the `push` option in [src/payload.config.ts](src/payload.config.ts)), and [docker-entrypoint.sh](docker-entrypoint.sh) runs `payload migrate` before `next start`. A schema change without a checked-in migration silently never reaches prod. Generate migrations against a clean database (the shared dev DB has stale orphaned tables that would pollute the diff). [src/baseline-migrations.ts](src/baseline-migrations.ts) is a one-time-per-database guard that converts a push-created DB to migration tracking; don't remove it from the entrypoint.
 
 ## Styling
 

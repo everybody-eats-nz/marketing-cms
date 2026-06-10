@@ -2,9 +2,12 @@
  * DANGER: Wipes the entire database that DATABASE_URI points at.
  *
  * Drops and recreates the `public` schema (every table, including all Payload
- * collections, versions, and migrations state), then exits. The next `pnpm seed`
- * run (or the app's boot, which pushes schema in non-production) recreates the
- * schema fresh.
+ * collections, versions, and migrations state), then exits. Rebuild the schema
+ * afterwards BEFORE seeding — seed scripts cannot bootstrap an empty database
+ * (schema push only runs under NODE_ENV=development):
+ *   - local: `pnpm migrate` (or just boot `pnpm dev`, which pushes)
+ *   - prod:  redeploy (docker-entrypoint.sh runs `payload migrate`), or run
+ *            `DATABASE_URI="..." pnpm migrate` from your machine
  *
  * Usage (LOCAL):
  *   pnpm tsx scripts/db-reset.ts

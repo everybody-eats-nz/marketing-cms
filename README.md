@@ -173,19 +173,19 @@ Add a **Storage** mount so uploaded media survives redeploys:
 
 Hit **Deploy**. The [`docker-entrypoint.sh`](docker-entrypoint.sh) will:
 
-1. If `src/migrations/` exists and has files → run `payload migrate`.
-2. Otherwise → run a one-off schema push via [`src/sync-schema.ts`](src/sync-schema.ts) (idempotent, safe to re-run on every boot).
+1. Run [`src/baseline-migrations.ts`](src/baseline-migrations.ts) — a one-time-per-database guard that converts a database originally created by schema push to migration tracking (no-op on fresh databases and on every boot after the first).
+2. Run `payload migrate` to apply any pending migrations from `src/migrations/`.
 3. Start Next.js on port 3000.
 
 Visit `/admin` to create the first admin user.
 
-### Switching to migration-based deploys (recommended once stable)
+### Schema changes are migration-based
 
-Schema push is fine for a small CMS, but for stricter change control:
+Drizzle schema push only runs in local dev (`NODE_ENV === 'development'` — see the `push` option in [`src/payload.config.ts`](src/payload.config.ts)). Push prompts interactively on destructive changes, which hangs non-TTY deploys, so production only ever applies checked-in migrations:
 
-1. Locally, point `DATABASE_URI` at a fresh staging DB and run `pnpm migrate:create`.
-2. Commit the generated `src/migrations/*` files.
-3. Redeploy. The entrypoint will detect the migrations directory and run `payload migrate` instead of pushing.
+1. After changing collections/globals/blocks, run `pnpm migrate:create <name>` against a **clean** database (the long-lived dev DB accumulates orphaned tables that pollute the diff).
+2. Commit the generated `src/migrations/*` files with the schema change.
+3. Deploy — the entrypoint runs `payload migrate` before the server starts.
 
 ## 📚 Further reading
 

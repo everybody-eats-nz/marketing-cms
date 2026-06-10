@@ -107,6 +107,11 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URI || '',
     },
+    // Drizzle schema push is dev-only. In production (and any non-TTY context)
+    // push can prompt interactively on destructive changes and hang the deploy —
+    // schema changes ship as checked-in migrations instead (pnpm migrate:create),
+    // run by docker-entrypoint.sh before the server starts.
+    push: process.env.NODE_ENV === 'development',
   }),
   sharp,
   cors: [process.env.NEXT_PUBLIC_SITE_URL || ''].filter(Boolean),
