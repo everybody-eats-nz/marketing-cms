@@ -27,10 +27,15 @@ pnpm extract:webflow    # one-off: pull content from Webflow into data/webflow/ 
 pnpm seed               # seed Payload from data/webflow/ (idempotent, upserts by slug)
 
 pnpm lint               # next lint
+pnpm typecheck          # tsc --noEmit
 pnpm build              # next build
 ```
 
-Package manager is **pnpm** (see `engines` in package.json). Postgres runs in Docker on port **5433** (not 5432) — see [docker-compose.yml](docker-compose.yml).
+Package manager is **pnpm** (see `engines` in package.json). Postgres runs in Docker on port **5433** (not 5432) — see [docker-compose.yml](docker-compose.yml). `pnpm db:down` stops it.
+
+There is no test suite. CI ([.github/workflows/ci.yml](.github/workflows/ci.yml)) runs `pnpm typecheck`, `pnpm payload generate:types` (this loads the Payload config and catches mismatched `@payloadcms/*` versions), and `pnpm build` — no database needed, because the frontend layout sets `export const dynamic = 'force-dynamic'` so builds never connect to Postgres. Run those three locally to predict CI.
+
+`scripts/db-reset.ts` (`pnpm tsx scripts/db-reset.ts --yes`) **wipes the entire database** `DATABASE_URI` points at — drops the `public` schema including migration state. After a reset, rebuild the schema via `pnpm migrate` (or boot `pnpm dev`, which pushes) *before* seeding.
 
 ## Architecture: blocks-based page rendering
 
@@ -71,6 +76,8 @@ When adding a new collection-backed detail page, follow this pattern (don't try 
 
 - Pages have `versions.drafts: true` — content edits go through draft → publish.
 - `media` uses Sharp with four named image sizes: `thumbnail` (400w), `card` (800w), `feature` (1400w), `hero` (2000w). Always go through [`<PayloadImage>`](src/components/payload-image.tsx) which picks the right size and falls back gracefully — don't reach for `next/image` directly with raw Payload media objects.
+- Media storage: the S3 plugin is **always registered** but only `enabled` when `S3_BUCKET` is set (R2/MinIO compatible, path-style by default). Don't gate the plugin itself on the env var — the importMap and `media` schema must stay identical across S3 and non-S3 environments (see the comments in [src/payload.config.ts](src/payload.config.ts), including why `prefix: ''` must be set explicitly).
+- Email goes through Resend (`@payloadcms/email-resend`, needs `RESEND_API_KEY` / `RESEND_FROM_ADDRESS`).
 - The shared `linkGroup` field ([src/fields/link.ts](src/fields/link.ts)) is the canonical pattern for CMS links (internal vs. external with conditional UI). Resolve it via `resolveHref()` in [src/lib/types.ts](src/lib/types.ts).
 - `seoField` ([src/fields/seo.ts](src/fields/seo.ts)) is reused across collections that need per-doc SEO override.
 
@@ -84,9 +91,11 @@ The `@payload-config` alias resolves to `src/payload.config.ts` (see tsconfig pa
 
 Run `pnpm generate:types` to refresh [src/payload-types.ts](src/payload-types.ts). Most of the rendering code uses `any` casts anyway (see comments in [src/lib/types.ts](src/lib/types.ts)), but the generated types are the source of truth for typed admin work.
 
-**Any schema change MUST ship with a migration** (`pnpm migrate:create <name>`): production deploys are migration-based — drizzle schema push only runs when `NODE_ENV === 'development'` (see the `push` option in [src/payload.config.ts](src/payload.config.ts)), and [docker-entrypoint.sh](docker-entrypoint.sh) runs `payload migrate` before `next start`. A schema change without a checked-in migration silently never reaches prod. Generate migrations against a clean database (the shared dev DB has stale orphaned tables that would pollute the diff). [src/baseline-migrations.ts](src/baseline-migrations.ts) is a one-time-per-database guard that converts a push-created DB to migration tracking; don't remove it from the entrypoint.
+**Any schema change MUST ship with a migration** (`pnpm migrate:create <name>`, output lands in `src/migrations/`): production deploys are migration-based — drizzle schema push only runs when `NODE_ENV === 'development'` (see the `push` option in [src/payload.config.ts](src/payload.config.ts)), and [docker-entrypoint.sh](docker-entrypoint.sh) runs `payload migrate` before `next start`. A schema change without a checked-in migration silently never reaches prod. Generate migrations against a clean database (the shared dev DB has stale orphaned tables that would pollute the diff). [src/baseline-migrations.ts](src/baseline-migrations.ts) is a one-time-per-database guard that converts a push-created DB to migration tracking; don't remove it from the entrypoint.
 
 ## Styling
+
+**[STYLEGUIDE.md](STYLEGUIDE.md) is the canonical brand-system reference** — tokens, common colour pairings, typography rules, spacing/container conventions, and motion utilities. It pairs with the live `/styleguide` page ([src/app/(frontend)/styleguide/page.tsx](src/app/(frontend)/styleguide/page.tsx)); when they disagree, the live page wins. Read it before building or reviewing any UI.
 
 Tailwind 3 with a custom brand palette ([tailwind.config.ts](tailwind.config.ts)): `cream`, `forest`, `sun`, `clay`, `ink`. Display font is Fraunces — self-hosted via `next/font/local` from the same variable TTFs the original Webflow site uses (in `public/fonts/`, all four axes `SOFT`/`WONK`/`opsz`/`wght`). Body is Plus Jakarta Sans.
 
