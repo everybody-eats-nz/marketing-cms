@@ -86,7 +86,7 @@ export function BookingLocationLink({
 function themedBookingUrl(raw: string): string {
   try {
     const url = new URL(raw)
-    if (!url.hostname.endsWith('nowbookit.com')) return raw
+    if (url.hostname !== 'nowbookit.com' && !url.hostname.endsWith('.nowbookit.com')) return raw
     url.searchParams.set('theme', 'light')
     url.searchParams.set('bg', 'FDF8EF') // cream-50
     url.searchParams.set('font', 'Plus Jakarta Sans')
