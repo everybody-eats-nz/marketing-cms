@@ -31,7 +31,7 @@ const COLUMN_CLASSES: Record<string, string> = {
 
 const COLOR_CLASSES: Record<string, string> = {
   cream: 'bg-surface-2 text-content',
-  sun: 'bg-sun-200 text-forest-700',
+  sun: 'bg-sun-100 text-forest-700',
   clay: 'bg-clay-100 text-forest-700',
   forest100: 'bg-surface-3 text-content',
   forest700: 'bg-forest-700 text-cream-50',
@@ -77,13 +77,17 @@ export function CardGridBlock({ block }: Props) {
                 ? COLOR_CLASSES[c.color || 'cream']
                 : 'bg-surface-2 text-content'
           const isDark = style === 'mixed' && c.color === 'forest700'
+          // sun/clay fills don't flip with the theme, so their secondary text
+          // must stay forest-dark rather than use the theme-driven `muted` token
+          // (which goes pale in dark mode and vanishes on the light fill).
+          const isFixedLight = style === 'mixed' && (c.color === 'sun' || c.color === 'clay')
 
           const cardInner = (
             <div className={`${cardBg} grain p-8 sm:p-10 rounded-${style === 'tile' ? 'none' : '[2rem]'} flex flex-col h-full`}>
               {c.number && (
                 <div
                   className={`font-mono text-xs uppercase tracking-[0.2em] mb-6 ${
-                    isDark ? 'text-sun-200/80' : 'text-muted/70'
+                    isDark ? 'text-sun-200/80' : isFixedLight ? 'text-forest-700/60' : 'text-muted/70'
                   }`}
                 >
                   {c.number}
@@ -98,7 +102,11 @@ export function CardGridBlock({ block }: Props) {
               {c.email && (
                 <a
                   href={`mailto:${c.email}`}
-                  className="mt-2 inline-flex items-center gap-2 text-sm text-muted hover:text-content underline underline-offset-4 break-all"
+                  className={`mt-2 inline-flex items-center gap-2 text-sm underline underline-offset-4 break-all ${
+                    isFixedLight
+                      ? 'text-forest-500 hover:text-forest-700'
+                      : 'text-muted hover:text-content'
+                  }`}
                 >
                   {c.email}
                 </a>
@@ -106,7 +114,7 @@ export function CardGridBlock({ block }: Props) {
               {c.ctaLabel && c.href && (
                 <span
                   className={`mt-auto pt-6 inline-flex items-center gap-2 text-sm font-medium group-hover:gap-3 transition-all ${
-                    isDark ? 'text-sun-200' : 'text-muted'
+                    isDark ? 'text-sun-200' : isFixedLight ? 'text-forest-500' : 'text-muted'
                   }`}
                 >
                   {c.ctaLabel}

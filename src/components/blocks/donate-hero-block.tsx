@@ -22,23 +22,29 @@ export function DonateHeroBlock({ block, defaultDonateUrl, charityNumber }: Prop
   const amounts = block.amounts || []
 
   return (
-    <section className="bg-sun-200 grain relative overflow-hidden">
-      <div className="container-wide pt-16 sm:pt-24 pb-20 grid lg:grid-cols-12 gap-8 items-end">
+    <section className="bg-sun-100 dark:bg-surface-2 grain relative overflow-hidden">
+      <div
+        className="hidden dark:block absolute -bottom-32 -right-32 w-96 h-96 rounded-full bg-sun-200/15 blur-3xl"
+        aria-hidden
+      />
+      <div className="container-wide pt-16 sm:pt-24 pb-20 grid lg:grid-cols-12 gap-8 items-end relative">
         <div className="lg:col-span-7">
-          {block.eyebrow && <p className="eyebrow mb-5 text-forest-700/85">{block.eyebrow}</p>}
+          {block.eyebrow && (
+            <p className="eyebrow mb-5 text-forest-700/85 dark:text-sun-200/80">{block.eyebrow}</p>
+          )}
           {block.heading && (
-            <h1 className="display text-5xl sm:text-7xl lg:text-[7.5rem] font-light leading-[0.95] text-forest-700">
+            <h1 className="display text-5xl sm:text-7xl lg:text-[7.5rem] font-light leading-[0.95] text-forest-700 dark:text-content">
               {renderRichText(block.heading)}
             </h1>
           )}
           {block.subheading && (
-            <p className="mt-8 max-w-xl text-lg text-forest-700/85 leading-relaxed">
+            <p className="mt-8 max-w-xl text-lg text-forest-700/85 dark:text-content/75 leading-relaxed">
               {block.subheading}
             </p>
           )}
         </div>
         <div className="lg:col-span-5">
-          <div className="bg-surface rounded-[2rem] p-8 sm:p-10 shadow-xl">
+          <div className="bg-surface dark:bg-surface-3 rounded-[2rem] p-8 sm:p-10 shadow-xl dark:ring-1 dark:ring-line/15">
             {block.panelLabel && <p className="eyebrow mb-3">{block.panelLabel}</p>}
             {amounts.length > 0 && (
               <div className={`grid gap-3 mb-6 ${amounts.length === 4 ? 'grid-cols-4' : amounts.length === 2 ? 'grid-cols-2' : 'grid-cols-3'}`}>
