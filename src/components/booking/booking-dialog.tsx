@@ -16,9 +16,20 @@ export type BookingLocation = {
 
 const OPEN_EVENT = 'ee:booking:open'
 
-/** Open the booking dialog from anywhere (header button, mobile menu, …). */
-export function openBookingDialog() {
-  window.dispatchEvent(new CustomEvent(OPEN_EVENT))
+/**
+ * Open the booking dialog from anywhere (header button, mobile menu, …).
+ * Pass a location slug to skip the picker and land on that restaurant's
+ * widget. Returns whether a mounted dialog handled the request — callers
+ * with their own fallback (e.g. a raw booking link) can check this.
+ */
+export function openBookingDialog(locationSlug?: string): boolean {
+  const event = new CustomEvent(OPEN_EVENT, {
+    cancelable: true,
+    detail: { locationSlug },
+  })
+  // The dialog calls preventDefault() to signal it took the request, which
+  // makes dispatchEvent return false.
+  return !window.dispatchEvent(event)
 }
 
 /** A button that opens the booking dialog. Style it via className. */
@@ -30,9 +41,41 @@ export function BookingDialogTrigger({
   children: React.ReactNode
 }) {
   return (
-    <button type="button" onClick={openBookingDialog} className={className}>
+    <button type="button" onClick={() => openBookingDialog()} className={className}>
       {children}
     </button>
+  )
+}
+
+/**
+ * Booking CTA for a specific restaurant (location pages). Opens the dialog
+ * preselected to that restaurant; when no dialog is mounted (site-settings
+ * overrides Book to an external URL, or JS hasn't hydrated) the anchor
+ * falls through to the raw Now Book It link in a new tab.
+ */
+export function BookingLocationLink({
+  locationSlug,
+  bookingUrl,
+  className,
+  children,
+}: {
+  locationSlug: string
+  bookingUrl: string
+  className?: string
+  children: React.ReactNode
+}) {
+  return (
+    <a
+      href={bookingUrl}
+      target="_blank"
+      rel="noreferrer"
+      className={className}
+      onClick={(e) => {
+        if (openBookingDialog(locationSlug)) e.preventDefault()
+      }}
+    >
+      {children}
+    </a>
   )
 }
 
@@ -66,15 +109,20 @@ export function BookingDialog({ locations }: { locations: BookingLocation[] }) {
   }, [])
 
   useEffect(() => {
-    const onOpen = () => {
+    const onOpen = (e: Event) => {
+      e.preventDefault() // tells openBookingDialog() a dialog is handling it
+      const slug = (e as CustomEvent<{ locationSlug?: string }>).detail?.locationSlug
+      const preselected = slug
+        ? locations.find((l) => l.slug === slug && l.bookingUrl && !l.comingSoon) || null
+        : null
       restoreFocusRef.current = document.activeElement as HTMLElement | null
-      setSelected(null)
+      setSelected(preselected)
       setWidgetReady(false)
       setOpen(true)
     }
     window.addEventListener(OPEN_EVENT, onOpen)
     return () => window.removeEventListener(OPEN_EVENT, onOpen)
-  }, [])
+  }, [locations])
 
   useEffect(() => {
     if (!open) return
