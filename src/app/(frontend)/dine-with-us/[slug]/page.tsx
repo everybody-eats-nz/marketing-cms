@@ -95,6 +95,17 @@ export default async function LocationPage({ params }: Params) {
 
         <div className="absolute inset-0 flex items-end">
           <div className="container-wide pb-28 sm:pb-20 text-cream-50">
+            {/* White hand-drawn sketch of the building, as on the original site's
+                restaurant heroes. The hero photo is always dark-scrimmed, so the
+                white variant works in both themes. */}
+            {loc.illustrationWhite && (
+              <PayloadImage
+                media={loc.illustrationWhite}
+                size="thumbnail"
+                alt=""
+                className="h-20 sm:h-24 w-auto object-contain mb-6 drop-shadow-md"
+              />
+            )}
             <div className="inline-flex items-center gap-3 mb-6 text-xs uppercase tracking-[0.18em] text-cream-50/80">
               <span className="w-8 h-px bg-cream-50/40" />
               {loc.city || 'New Zealand'}

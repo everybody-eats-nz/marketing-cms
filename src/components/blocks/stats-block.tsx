@@ -1,3 +1,4 @@
+import { KawakawaPattern } from '@/components/kawakawa-pattern'
 import { renderRichText } from './render-text'
 
 type Stat = { value: string; label: string }
@@ -22,29 +23,28 @@ export function StatsBlock({ block, globalStats = [] }: Props) {
     return (
       <section className="container-wide py-24">
         <div className="bg-forest-700 grain rounded-[3rem] text-cream-50 px-8 sm:px-16 py-20 relative overflow-hidden">
-          <div
-            className="absolute -bottom-32 -right-32 w-96 h-96 rounded-full bg-sun-200/15 blur-3xl"
-            aria-hidden
-          />
-          {block.eyebrow && (
-            <p className="eyebrow text-cream-50/70 mb-4">{block.eyebrow}</p>
-          )}
-          {block.heading && (
-            <h2 className="display text-4xl sm:text-6xl font-light max-w-3xl">
-              {renderRichText(block.heading)}
-            </h2>
-          )}
-          <div className="mt-16 grid sm:grid-cols-3 gap-12">
-            {stats.map((s, i) => (
-              <div key={i}>
-                <div className="display text-5xl sm:text-7xl font-light text-cream-50">
-                  {s.value}
+          <KawakawaPattern className="top-0 -right-8 w-80 sm:w-[26rem]" />
+          <div className="relative z-10">
+            {block.eyebrow && (
+              <p className="eyebrow text-cream-50/70 mb-4">{block.eyebrow}</p>
+            )}
+            {block.heading && (
+              <h2 className="display text-4xl sm:text-6xl font-light max-w-3xl">
+                {renderRichText(block.heading)}
+              </h2>
+            )}
+            <div className="mt-16 grid sm:grid-cols-3 gap-12">
+              {stats.map((s, i) => (
+                <div key={i}>
+                  <div className="display text-5xl sm:text-7xl font-light text-cream-50">
+                    {s.value}
+                  </div>
+                  <div className="mt-3 text-sm uppercase tracking-[0.15em] text-cream-50/70">
+                    {s.label}
+                  </div>
                 </div>
-                <div className="mt-3 text-sm uppercase tracking-[0.15em] text-cream-50/70">
-                  {s.label}
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>

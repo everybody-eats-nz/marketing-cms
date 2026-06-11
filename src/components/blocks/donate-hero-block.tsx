@@ -1,3 +1,4 @@
+import { KawakawaPattern } from '@/components/kawakawa-pattern'
 import { renderRichText } from './render-text'
 
 type Amount = { amount: number; label: string }
@@ -23,10 +24,9 @@ export function DonateHeroBlock({ block, defaultDonateUrl, charityNumber }: Prop
 
   return (
     <section className="bg-sun-100 dark:bg-surface-2 grain relative overflow-hidden">
-      <div
-        className="hidden dark:block absolute -bottom-32 -right-32 w-96 h-96 rounded-full bg-sun-200/15 blur-3xl"
-        aria-hidden
-      />
+      {/* On the light sun fill the green doodles read at low strength; on the
+          dark surface they're tone-on-tone, so let them through stronger. */}
+      <KawakawaPattern className="top-0 -right-10 w-80 sm:w-[30rem] opacity-25 dark:opacity-80" />
       <div className="container-wide pt-16 sm:pt-24 pb-20 grid lg:grid-cols-12 gap-8 items-end relative">
         <div className="lg:col-span-7">
           {block.eyebrow && (
