@@ -42,6 +42,34 @@ export function LocationsMagazineBlock({ locations }: Props) {
             </div>
 
             <div className="lg:col-span-5 [direction:ltr]">
+              {/* Hand-drawn building sketch: ink-on-transparent for light mode,
+                  with a white chalk variant swapped in for dark mode (the ink
+                  art vanishes on dark surfaces, and CSS-inverting it would
+                  wreck its yellow highlights). */}
+              {(loc.illustration || loc.illustrationWhite) && (
+                <div aria-hidden className="mb-7">
+                  {loc.illustration && (
+                    <PayloadImage
+                      media={loc.illustration}
+                      size="thumbnail"
+                      alt=""
+                      className={`h-28 w-auto object-contain ${
+                        loc.illustrationWhite ? 'dark:hidden' : ''
+                      }`}
+                    />
+                  )}
+                  {loc.illustrationWhite && (
+                    <PayloadImage
+                      media={loc.illustrationWhite}
+                      size="thumbnail"
+                      alt=""
+                      className={`h-28 w-auto object-contain ${
+                        loc.illustration ? 'hidden dark:block' : 'invert dark:invert-0'
+                      }`}
+                    />
+                  )}
+                </div>
+              )}
               <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted/70 mb-3">
                 {String(i + 1).padStart(2, '0')} / {loc.city || 'New Zealand'}
               </p>

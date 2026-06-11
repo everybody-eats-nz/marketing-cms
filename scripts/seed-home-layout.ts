@@ -28,6 +28,14 @@ async function main() {
   const existingHeroBlock = existingLayout.find((b: any) => b?.blockType === 'hero')
   const existingHeroImage = existingHeroBlock?.image
 
+  // Preserve pillar illustrations (uploaded by scripts/seed-illustrations.ts),
+  // keyed by pillar title.
+  const existingPillarsBlock = existingLayout.find((b: any) => b?.blockType === 'pillars')
+  const pillarIllustration = (title: string) =>
+    existingPillarsBlock?.items?.find(
+      (it: any) => (it.title || '').trim().toLowerCase() === title.toLowerCase(),
+    )?.illustration
+
   const layout = [
     {
       blockType: 'hero',
@@ -74,6 +82,7 @@ async function main() {
       items: [
         {
           number: '01',
+          illustration: pillarIllustration('Volunteer'),
           title: 'Volunteer',
           copy: 'Cook, serve, host. Spend an evening helping us fill the table — no experience needed.',
           ctaLabel: 'Learn more',
@@ -81,6 +90,7 @@ async function main() {
         },
         {
           number: '02',
+          illustration: pillarIllustration('Donate'),
           title: 'Donate',
           copy: 'Every $20 puts another seat at our table. Give once or set up a regular gift.',
           ctaLabel: 'Learn more',
@@ -88,6 +98,7 @@ async function main() {
         },
         {
           number: '03',
+          illustration: pillarIllustration('Partner'),
           title: 'Partner',
           copy: "Businesses, food rescuers, suppliers — let's work together.",
           ctaLabel: 'Learn more',

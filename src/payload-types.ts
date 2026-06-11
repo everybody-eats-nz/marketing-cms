@@ -523,6 +523,10 @@ export interface Page {
             items?:
               | {
                   /**
+                   * Small hand-drawn illustration shown above the title. White line art is made for the forest theme (it is inverted to ink on the cream theme).
+                   */
+                  illustration?: (number | null) | Media;
+                  /**
                    * e.g. "01"
                    */
                   number?: string | null;
@@ -691,6 +695,14 @@ export interface Location {
     [k: string]: unknown;
   } | null;
   heroImage?: (number | null) | Media;
+  /**
+   * Hand-drawn building sketch (ink on transparent) shown beside the location on listing pages.
+   */
+  illustration?: (number | null) | Media;
+  /**
+   * White line version of the sketch — used over the dark hero on the location page and in dark mode.
+   */
+  illustrationWhite?: (number | null) | Media;
   gallery?:
     | {
         image: number | Media;
@@ -1419,6 +1431,7 @@ export interface PagesSelect<T extends boolean = true> {
               items?:
                 | T
                 | {
+                    illustration?: T;
                     number?: T;
                     title?: T;
                     copy?: T;
@@ -1546,6 +1559,8 @@ export interface LocationsSelect<T extends boolean = true> {
   intro?: T;
   body?: T;
   heroImage?: T;
+  illustration?: T;
+  illustrationWhite?: T;
   gallery?:
     | T
     | {

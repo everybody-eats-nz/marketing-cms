@@ -1,7 +1,10 @@
 import Link from 'next/link'
+import { KawakawaPattern } from '@/components/kawakawa-pattern'
+import { PayloadImage } from '@/components/payload-image'
 import { renderRichText } from './render-text'
 
 type Pillar = {
+  illustration?: any
   number?: string
   title: string
   copy?: string
@@ -50,6 +53,19 @@ export function PillarsBlock({ block }: Props) {
                 isForest ? 'bg-forest-700 hover:bg-forest-600' : 'bg-surface hover:bg-surface-2'
               }`}
             >
+              {c.illustration && (
+                <PayloadImage
+                  media={c.illustration}
+                  size="thumbnail"
+                  alt=""
+                  // The hand-drawn art is white line work made for the forest
+                  // theme; on the cream theme (light surface) invert it to ink,
+                  // but not when dark mode flips that surface dark again.
+                  className={`h-20 w-auto mb-8 object-contain transition-transform duration-500 group-hover:-rotate-2 ${
+                    isForest ? '' : 'invert dark:invert-0'
+                  }`}
+                />
+              )}
               {c.number && (
                 <div
                   className={`font-mono text-xs mb-6 tracking-[0.2em] ${
@@ -77,10 +93,7 @@ export function PillarsBlock({ block }: Props) {
         </div>
       </div>
       {isForest && (
-        <div
-          className="absolute -bottom-32 -left-32 w-96 h-96 rounded-full bg-sun-200/15 blur-3xl pointer-events-none"
-          aria-hidden
-        />
+        <KawakawaPattern className="top-0 -right-10 w-80 sm:w-[30rem]" />
       )}
     </section>
   )

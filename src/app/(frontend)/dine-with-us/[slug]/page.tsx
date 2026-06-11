@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getPayloadClient } from '@/lib/payload'
+import { BookingLocationLink } from '@/components/booking/booking-dialog'
 import { PayloadImage } from '@/components/payload-image'
 
 type Params = { params: Promise<{ slug: string }> }
@@ -95,6 +96,17 @@ export default async function LocationPage({ params }: Params) {
 
         <div className="absolute inset-0 flex items-end">
           <div className="container-wide pb-28 sm:pb-20 text-cream-50">
+            {/* White hand-drawn sketch of the building, as on the original site's
+                restaurant heroes. The hero photo is always dark-scrimmed, so the
+                white variant works in both themes. */}
+            {loc.illustrationWhite && (
+              <PayloadImage
+                media={loc.illustrationWhite}
+                size="thumbnail"
+                alt=""
+                className="h-20 sm:h-24 w-auto object-contain mb-6 drop-shadow-md"
+              />
+            )}
             <div className="inline-flex items-center gap-3 mb-6 text-xs uppercase tracking-[0.18em] text-cream-50/80">
               <span className="w-8 h-px bg-cream-50/40" />
               {loc.city || 'New Zealand'}
@@ -109,14 +121,13 @@ export default async function LocationPage({ params }: Params) {
             )}
             <div className="mt-8 flex flex-wrap gap-3">
               {loc.bookingUrl && (
-                <a
-                  href={loc.bookingUrl}
-                  target="_blank"
-                  rel="noreferrer"
+                <BookingLocationLink
+                  locationSlug={loc.slug}
+                  bookingUrl={loc.bookingUrl}
                   className="btn-accent"
                 >
                   Book a table
-                </a>
+                </BookingLocationLink>
               )}
               <Link
                 href={`/dine-with-us/pay/${loc.slug}`}
@@ -295,9 +306,9 @@ export default async function LocationPage({ params }: Params) {
           </h2>
           <div className="mt-10 flex flex-wrap gap-3 justify-center">
             {loc.bookingUrl && (
-              <a href={loc.bookingUrl} target="_blank" rel="noreferrer" className="btn-accent">
+              <BookingLocationLink locationSlug={loc.slug} bookingUrl={loc.bookingUrl} className="btn-accent">
                 Book now
-              </a>
+              </BookingLocationLink>
             )}
             <Link href="/get-involved/donate" className="btn border border-cream-50/40 text-cream-50 hover:bg-surface hover:text-content">
               Donate a meal

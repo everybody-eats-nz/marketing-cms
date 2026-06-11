@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { getPayloadClient } from '@/lib/payload'
 import { resolveHref, type LinkValue } from '@/lib/types'
+import { BookingDialog, BookingDialogTrigger, type BookingLocation } from './booking/booking-dialog'
 import { ExternalLinkIcon } from './external-link-icon'
 import { MobileMenu, type MenuAction } from './mobile-menu'
 import { ThemeToggle } from './theme-toggle'
@@ -10,9 +11,12 @@ const isExternal = (href: string) => /^https?:\/\//.test(href)
 
 export async function SiteHeader() {
   const payload = await getPayloadClient()
-  const [nav, settings] = await Promise.all([
+  const [nav, settings, locationsRes] = await Promise.all([
     payload.findGlobal({ slug: 'navigation', depth: 2 }).catch(() => null),
     payload.findGlobal({ slug: 'site-settings' }).catch(() => null),
+    payload
+      .find({ collection: 'locations', limit: 12, sort: 'name', depth: 0 })
+      .catch(() => ({ docs: [] as any[] })),
   ])
 
   const primary: Array<{ link: LinkValue; previewImage?: unknown }> = (nav as any)?.primary || []
@@ -29,10 +33,34 @@ export async function SiteHeader() {
   const showVolunteer = ctas.showVolunteer !== false && Boolean(volunteerUrl)
   const showShop = Boolean(ctas.showShop && shopUrl && shopUrl !== '#')
 
+  // Booking dialog: pick a restaurant, then the (re-themed) Now Book It
+  // widget loads in place. Only when Book isn't overridden to an external
+  // URL in site-settings, and at least one open restaurant takes bookings.
+  const bookingLocations: BookingLocation[] = (locationsRes.docs as any[])
+    .filter((l) => l.openStatus !== 'closed')
+    .map((l) => ({
+      name: l.name,
+      slug: l.slug,
+      city: l.city || null,
+      hoursSummary: l.hours?.length
+        ? [l.hours[0].label, l.hours[0].times].filter(Boolean).join(' · ')
+        : null,
+      bookingUrl: l.bookingUrl || null,
+      comingSoon: l.openStatus === 'coming-soon',
+    }))
+  const bookViaDialog =
+    !isExternal(bookUrl) && bookingLocations.some((l) => l.bookingUrl && !l.comingSoon)
+
   // All four actions, surfaced inside the overlay menu so they're reachable
   // at every breakpoint (the mobile header bar only fits Donate).
   const menuActions: MenuAction[] = [
-    { label: ctas.bookLabel || 'Book', href: bookUrl, external: isExternal(bookUrl), variant: 'solid' },
+    {
+      label: ctas.bookLabel || 'Book',
+      href: bookUrl,
+      external: isExternal(bookUrl),
+      variant: 'solid',
+      opensBooking: bookViaDialog,
+    },
     { label: ctas.donateLabel || 'Donate', href: donateUrl, external: isExternal(donateUrl), variant: 'accent' },
     ...(showVolunteer
       ? [{ label: ctas.volunteerLabel || 'Volunteer', href: volunteerUrl, external: isExternal(volunteerUrl), variant: 'outline' as const }]
@@ -99,7 +127,11 @@ export async function SiteHeader() {
 
         {/* CTA pair, then utilities (theme + menu) at the edge */}
         <div className="flex items-center gap-2 sm:gap-3">
-          {isExternal(bookUrl) ? (
+          {bookViaDialog ? (
+            <BookingDialogTrigger className="hidden sm:inline-flex btn-ghost text-xs sm:text-sm px-4 sm:px-6 py-2 sm:py-2.5">
+              {ctas.bookLabel || 'Book'}
+            </BookingDialogTrigger>
+          ) : isExternal(bookUrl) ? (
             <a
               href={bookUrl}
               target="_blank"
@@ -123,6 +155,7 @@ export async function SiteHeader() {
           <MobileMenu primary={primary as any} secondary={secondary} actions={menuActions} />
         </div>
       </div>
+      {bookViaDialog && <BookingDialog locations={bookingLocations} />}
     </header>
   )
 }

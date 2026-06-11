@@ -42,6 +42,25 @@ export const Locations: CollectionConfig = {
             { name: 'body', type: 'richText' },
             { name: 'heroImage', type: 'upload', relationTo: 'media' },
             {
+              name: 'illustration',
+              type: 'upload',
+              relationTo: 'media',
+              admin: {
+                description:
+                  'Hand-drawn building sketch (ink on transparent) shown beside the location on listing pages.',
+              },
+            },
+            {
+              name: 'illustrationWhite',
+              label: 'Illustration (white)',
+              type: 'upload',
+              relationTo: 'media',
+              admin: {
+                description:
+                  'White line version of the sketch — used over the dark hero on the location page and in dark mode.',
+              },
+            },
+            {
               name: 'gallery',
               type: 'array',
               fields: [
