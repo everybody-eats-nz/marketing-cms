@@ -5,6 +5,7 @@ import { createPortal } from 'react-dom'
 import Image from 'next/image'
 import Link from 'next/link'
 import { resolveHref, type LinkValue, type Media } from '@/lib/types'
+import { openBookingDialog } from './booking/booking-dialog'
 import { ExternalLinkIcon } from './external-link-icon'
 import { PayloadImage } from './payload-image'
 
@@ -15,6 +16,8 @@ export type MenuAction = {
   href: string
   external?: boolean
   variant: 'solid' | 'accent' | 'outline'
+  /** Open the booking dialog instead of navigating to href. */
+  opensBooking?: boolean
 }
 
 type Props = {
@@ -179,6 +182,21 @@ export function MobileMenu({ primary, secondary, actions = [] }: Props) {
                 >
                   {actions.map((action) => {
                     const className = `inline-flex items-center justify-center gap-1.5 rounded-pill px-5 py-3 text-sm font-medium transition-all duration-200 ease-in-out-soft ${actionClasses[action.variant]}`
+                    if (action.opensBooking) {
+                      return (
+                        <button
+                          key={action.label}
+                          type="button"
+                          onClick={() => {
+                            setOpen(false)
+                            openBookingDialog()
+                          }}
+                          className={className}
+                        >
+                          {action.label}
+                        </button>
+                      )
+                    }
                     return action.external ? (
                       <a
                         key={action.label}
