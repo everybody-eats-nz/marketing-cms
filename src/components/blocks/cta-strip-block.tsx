@@ -25,7 +25,7 @@ export function CtaStripBlock({ block }: Props) {
     <section className="container-wide pt-12 pb-24">
       <div
         className={`relative overflow-hidden rounded-[3rem] p-10 sm:p-16 grain ${
-          isSun ? 'bg-sun-200' : 'bg-forest-700'
+          isSun ? 'bg-sun-200 dark:bg-surface-2 dark:ring-1 dark:ring-line/15' : 'bg-forest-700'
         } ${isCentered ? 'text-center' : ''}`}
       >
         <div
@@ -34,7 +34,7 @@ export function CtaStripBlock({ block }: Props) {
           {block.heading && (
             <h2
               className={`display text-4xl sm:text-6xl font-light leading-tight ${
-                isSun ? 'text-forest-700' : 'text-cream-50'
+                isSun ? 'text-forest-700 dark:text-content' : 'text-cream-50'
               } ${isCentered ? 'mx-auto' : ''}`}
             >
               {renderRichText(block.heading)}
@@ -43,7 +43,7 @@ export function CtaStripBlock({ block }: Props) {
           {block.body && (
             <p
               className={`mt-6 text-lg ${
-                isSun ? 'text-forest-700/85' : 'text-cream-50/85'
+                isSun ? 'text-forest-700/85 dark:text-content/75' : 'text-cream-50/85'
               } ${isCentered ? 'mx-auto max-w-xl' : 'max-w-xl'}`}
             >
               {block.body}
@@ -61,7 +61,7 @@ export function CtaStripBlock({ block }: Props) {
                   href={secondary.href}
                   className={
                     isSun
-                      ? 'btn-ghost border-forest-700/30 text-forest-700 hover:bg-forest-700 hover:text-cream-50'
+                      ? 'btn-ghost border-forest-700/30 text-forest-700 hover:bg-forest-700 hover:text-cream-50 dark:border-sun-200/30 dark:text-sun-200/80 dark:hover:bg-sun-200 dark:hover:text-forest-700 dark:hover:border-sun-200'
                       : 'btn-ghost border-cream-50/30 text-cream-50 hover:bg-surface hover:text-content'
                   }
                 >
@@ -73,8 +73,10 @@ export function CtaStripBlock({ block }: Props) {
         </div>
         {!isCentered && (
           <KawakawaPattern
+            // The sun variant goes dark-surface in dark mode, where the green
+            // doodles are tone-on-tone — let them through stronger there.
             className={`top-0 -right-8 w-80 sm:w-[26rem] ${
-              isSun ? 'opacity-25' : ''
+              isSun ? 'opacity-25 dark:opacity-80' : ''
             }`}
           />
         )}

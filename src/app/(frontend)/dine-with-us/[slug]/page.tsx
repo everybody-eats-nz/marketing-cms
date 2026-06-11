@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getPayloadClient } from '@/lib/payload'
+import { BookingLocationLink } from '@/components/booking/booking-dialog'
 import { PayloadImage } from '@/components/payload-image'
 
 type Params = { params: Promise<{ slug: string }> }
@@ -120,14 +121,13 @@ export default async function LocationPage({ params }: Params) {
             )}
             <div className="mt-8 flex flex-wrap gap-3">
               {loc.bookingUrl && (
-                <a
-                  href={loc.bookingUrl}
-                  target="_blank"
-                  rel="noreferrer"
+                <BookingLocationLink
+                  locationSlug={loc.slug}
+                  bookingUrl={loc.bookingUrl}
                   className="btn-accent"
                 >
                   Book a table
-                </a>
+                </BookingLocationLink>
               )}
               <Link
                 href={`/dine-with-us/pay/${loc.slug}`}
@@ -306,9 +306,9 @@ export default async function LocationPage({ params }: Params) {
           </h2>
           <div className="mt-10 flex flex-wrap gap-3 justify-center">
             {loc.bookingUrl && (
-              <a href={loc.bookingUrl} target="_blank" rel="noreferrer" className="btn-accent">
+              <BookingLocationLink locationSlug={loc.slug} bookingUrl={loc.bookingUrl} className="btn-accent">
                 Book now
-              </a>
+              </BookingLocationLink>
             )}
             <Link href="/get-involved/donate" className="btn border border-cream-50/40 text-cream-50 hover:bg-surface hover:text-content">
               Donate a meal
