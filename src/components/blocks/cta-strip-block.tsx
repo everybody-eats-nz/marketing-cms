@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { KawakawaPattern } from '@/components/kawakawa-pattern'
 import { renderRichText } from './render-text'
 
 type CTA = { label?: string; href?: string } | null | undefined
@@ -27,12 +28,6 @@ export function CtaStripBlock({ block }: Props) {
           isSun ? 'bg-sun-200 dark:bg-surface-2 dark:ring-1 dark:ring-line/15' : 'bg-forest-700'
         } ${isCentered ? 'text-center' : ''}`}
       >
-        {isSun && (
-          <div
-            className="hidden dark:block absolute -bottom-32 -right-32 w-96 h-96 rounded-full bg-sun-200/15 blur-3xl"
-            aria-hidden
-          />
-        )}
         <div
           className={`relative z-10 ${isCentered ? 'max-w-3xl mx-auto' : 'max-w-3xl'}`}
         >
@@ -77,18 +72,13 @@ export function CtaStripBlock({ block }: Props) {
           ) : null}
         </div>
         {!isCentered && (
-          <svg
-            viewBox="0 0 240 240"
-            className={`absolute -right-12 -bottom-12 w-72 h-72 sm:w-96 sm:h-96 ${
-              isSun ? 'text-forest-700/15 dark:text-sun-200/15' : 'text-sun-200/15'
+          <KawakawaPattern
+            // The sun variant goes dark-surface in dark mode, where the green
+            // doodles are tone-on-tone — let them through stronger there.
+            className={`top-0 -right-8 w-80 sm:w-[26rem] ${
+              isSun ? 'opacity-25 dark:opacity-80' : ''
             }`}
-            aria-hidden
-          >
-            <path
-              fill="currentColor"
-              d="M120 0c5 56 64 116 120 120-56 5-115 64-120 120-5-56-64-115-120-120C56 115 115 56 120 0z"
-            />
-          </svg>
+          />
         )}
       </div>
     </section>

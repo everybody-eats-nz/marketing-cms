@@ -1,3 +1,4 @@
+import { KawakawaPattern } from '@/components/kawakawa-pattern'
 import { renderRichText } from './render-text'
 
 type Value = { term: string; translation?: string; copy?: string }
@@ -78,14 +79,7 @@ export function ValuesBlock({ block }: Props) {
         )}
       </div>
 
-      <div
-        className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-sun-200/15 blur-3xl pointer-events-none"
-        aria-hidden
-      />
-      <div
-        className="absolute -bottom-40 -left-40 w-[28rem] h-[28rem] rounded-full bg-clay-300/10 blur-3xl pointer-events-none"
-        aria-hidden
-      />
+      <KawakawaPattern className="top-0 -right-10 w-80 sm:w-[30rem]" />
     </section>
   )
 }
