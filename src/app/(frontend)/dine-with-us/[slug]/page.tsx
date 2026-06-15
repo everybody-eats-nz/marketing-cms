@@ -17,6 +17,8 @@ type TonightsMenu = {
   mains?: MenuCourse[]
   drink?: MenuCourse[]
   dessert?: MenuCourse[]
+  // The portal falls back to the most recent menu when today's isn't published.
+  isFallback?: boolean
 }
 
 // Tonight's menu is published to the volunteers portal by the restaurant teams.
@@ -25,12 +27,20 @@ async function fetchTonightsMenu(locationName: string): Promise<TonightsMenu | n
   const date = new Intl.DateTimeFormat('en-CA', { timeZone: 'Pacific/Auckland' }).format(new Date())
   const url = `https://volunteers.everybodyeats.nz/api/menus?date=${date}&location=${encodeURIComponent(locationName)}`
   try {
-    const res = await fetch(url, { next: { revalidate: 900 } })
+    // Cap the upstream call so a slow/unavailable portal (e.g. no menu published
+    // for today) can't stall the whole page render. Responses are cached briefly
+    // so we don't re-hit the upstream on every request, but stay fresh enough to
+    // pick up a newly published menu quickly.
+    const res = await fetch(url, {
+      signal: AbortSignal.timeout(3000),
+      next: { revalidate: 10 },
+    })
     if (!res.ok) return null
     const menu = (await res.json()) as TonightsMenu
     const courses = [menu.starter, menu.mains, menu.dessert, menu.drink]
     return courses.some((c) => Array.isArray(c) && c.length > 0) ? menu : null
   } catch {
+    // Timeout, network error, or bad JSON — render the page without the menu.
     return null
   }
 }
@@ -178,7 +188,9 @@ export default async function LocationPage({ params }: Params) {
       {tonightsMenu && (
         <section className="container-tight pt-24">
           <div className="rounded-[2.5rem] border border-line/15 bg-surface px-8 py-14 sm:px-16 text-center shadow-sm">
-            <p className="eyebrow mb-4">On the menu tonight</p>
+            <p className="eyebrow mb-4">
+              {tonightsMenu.isFallback ? 'Our latest menu' : 'On the menu tonight'}
+            </p>
             <p className="display text-3xl sm:text-4xl font-light text-content">
               {new Date(`${tonightsMenu.date}T00:00:00`).toLocaleDateString('en-NZ', {
                 weekday: 'long',
