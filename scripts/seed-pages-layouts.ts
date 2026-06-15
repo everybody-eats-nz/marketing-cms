@@ -37,6 +37,21 @@ async function main() {
   })
   const ourStoryHeroImage = (firstLocation.docs[0] as any)?.heroImage
 
+  // Reuse images already in the media library for the new corporate pages.
+  // `diners` is the same Webflow asset as the live catering-events hero; the
+  // McVinnie kitchen shot fits the hands-on cooking-session pages.
+  const findMediaId = async (frag: string) => {
+    const r = await payload.find({
+      collection: 'media',
+      where: { filename: { contains: frag } },
+      limit: 1,
+      depth: 0,
+    })
+    return (r.docs[0] as any)?.id
+  }
+  const dinersImage = await findMediaId('diners')
+  const kitchenImage = await findMediaId('Alex-McVinnie')
+
   const pages: PageSpec[] = [
     {
       slug: 'our-story',
@@ -381,6 +396,22 @@ async function main() {
               href: '/get-involved/partner',
               color: 'cream',
             },
+            {
+              number: '04',
+              title: 'Catering & events',
+              copy: 'Cater a function, hire a restaurant, or bring your team into the kitchen — every booking feeds the community.',
+              ctaLabel: 'Learn more',
+              href: '/get-involved/catering-events',
+              color: 'clay',
+            },
+            {
+              number: '05',
+              title: 'Team experiences',
+              copy: 'Hands-on cooking sessions, private dinners and restaurant takeovers — meaningful days that give back.',
+              ctaLabel: 'Learn more',
+              href: '/get-involved/cooking-sessions',
+              color: 'forest100',
+            },
           ],
         },
         {
@@ -567,6 +598,8 @@ async function main() {
               number: '02',
               title: 'Team building',
               copy: 'Book a session in our kitchen — learn zero-waste cooking, prepare meals and package them for families in need.',
+              ctaLabel: 'Explore team experiences →',
+              href: '/get-involved/cooking-sessions',
             },
             {
               number: '03',
@@ -586,12 +619,16 @@ async function main() {
             {
               number: '06',
               title: 'Host an event',
-              copy: 'Use our welcoming spaces in Auckland or Wellington for your next meeting or celebration.',
+              copy: 'Use our welcoming spaces in Onehunga, Glen Innes or Wellington for your next meeting or celebration.',
+              ctaLabel: 'Plan an event →',
+              href: '/get-involved/catering-events',
             },
             {
               number: '07',
               title: 'Catering services',
               copy: 'Choose us for catering — surplus and seasonal options make every event tastier and more sustainable.',
+              ctaLabel: 'See catering →',
+              href: '/get-involved/catering-events',
             },
             {
               number: '08',
@@ -832,6 +869,386 @@ async function main() {
             label: 'hello@everybodyeats.nz',
             href: 'mailto:hello@everybodyeats.nz?subject=Partnership',
           },
+        },
+      ],
+    },
+    {
+      slug: 'get-involved/catering-events',
+      title: 'Catering & events',
+      seo: {
+        title: 'Catering & events — Everybody Eats',
+        description:
+          'From canapés to full-service dinners, in-house experiences to private events at home or in the workplace — food experiences that bring people together and give back.',
+      },
+      layout: [
+        {
+          blockType: 'hero',
+          eyebrow: 'Events & catering',
+          heading: 'Catering\n*and events*.',
+          subheading:
+            'Our events and catering offering supports our restaurants and the communities they serve. From canapés to full-service dinners, and from in-house dining experiences to private events at home or in the workplace, we offer something for every occasion.',
+          image: dinersImage,
+          primaryCta: { label: 'Start an enquiry', href: '#enquiry' },
+          secondaryCta: {
+            label: 'jack@everybodyeats.nz',
+            href: 'mailto:jack@everybodyeats.nz?subject=Events%20%26%20Catering%20enquiry',
+          },
+        },
+        {
+          blockType: 'cardGrid',
+          eyebrow: 'What we offer',
+          heading: 'From the kitchen to *your table*.',
+          columns: '3',
+          cardStyle: 'soft',
+          items: [
+            {
+              number: '01',
+              title: 'Catering from the kitchen',
+              copy: 'Good kai, delivered fresh and served in style. Everything from individual lunch boxes and sharing platters to canapés and bespoke full-service dinners, all crafted using seasonal and rescued ingredients.',
+            },
+            {
+              number: '02',
+              title: 'Venue hire',
+              copy: 'Our three restaurants in Onehunga, Glen Innes and Wellington are available for private and corporate events — fully equipped with furniture, cutlery, sound and WiFi. Every booking directly supports our pay-what-you-can kaupapa.',
+            },
+            {
+              number: '03',
+              title: 'Dine for good',
+              copy: 'Our fundraising dining series fills great restaurants with food-loving supporters for one special night. Chefs design creative menus using seasonal and surplus ingredients, and every ticket directly funds Everybody Eats.',
+            },
+          ],
+        },
+        {
+          blockType: 'ctaStrip',
+          variant: 'sun',
+          align: 'center',
+          heading: 'Food that brings people *together*.',
+          body:
+            'From the kitchen to your table, we create food experiences that bring people together and give back.',
+        },
+        {
+          blockType: 'testimonials',
+          eyebrow: 'From our guests',
+          heading: 'Memorable for all the *right reasons*.',
+          items: [
+            {
+              quote:
+                'Everybody Eats gave me a birthday experience that was memorable for all the right reasons. Beautiful food, a meaningful story, and a team that made everything effortless.',
+              attribution: 'Sarah — birthday party',
+            },
+          ],
+        },
+        {
+          blockType: 'enquiryForm',
+          eyebrow: 'Start an enquiry',
+          variant: 'forest',
+          heading: "Let's plan something\n*special*.",
+          intro:
+            'Whatever the occasion, we would love to work with you. Get in touch and we’ll find the right option for your event, your budget and your values — every booking supports our restaurants and the communities they serve.',
+          recipientEmail: 'jack@everybodyeats.nz',
+          enquiryTypes: [
+            { label: 'Catering from the kitchen' },
+            { label: 'Venue hire' },
+            { label: 'Dine for good (fundraising dinner)' },
+            { label: 'Something else' },
+          ],
+          successMessage:
+            "Thanks — your enquiry is on its way to Jack. We'll be in touch within two working *days*.",
+          footnote: 'Prefer email? Reach us any time at jack@everybodyeats.nz.',
+        },
+      ],
+    },
+    {
+      slug: 'get-involved/cooking-sessions',
+      title: 'Gather for Good',
+      seo: {
+        title: 'Gather for Good — team experiences — Everybody Eats',
+        description:
+          'Meaningful, hands-on team experiences that give back — from a single restaurant service to a full restaurant takeover. Whatever your group size or goals.',
+      },
+      layout: [
+        {
+          blockType: 'hero',
+          eyebrow: 'Cooking sessions',
+          heading: 'Gather for\n*good*.',
+          subheading:
+            "Looking for a team-building experience that's meaningful, hands-on and gives back? We have a range of ways to gather for good, whatever your group size or goals.",
+          image: kitchenImage,
+          primaryCta: { label: 'Enquire about a session', href: '#enquiry' },
+          secondaryCta: {
+            label: 'jack@everybodyeats.nz',
+            href: 'mailto:jack@everybodyeats.nz?subject=Gather%20for%20Good%20enquiry',
+          },
+        },
+        {
+          blockType: 'cardGrid',
+          eyebrow: 'Option 01 · $100 + GST per person',
+          heading: 'Step into *Service*.',
+          columns: '3',
+          cardStyle: 'soft',
+          items: [
+            {
+              title: 'The experience',
+              copy: 'Join our kitchen or front-of-house team during a normal service and see how rescued food becomes a three-course meal. Invite friends or whānau to dine on a meal you helped make — we work with one point of contact to handle registration and booking.',
+            },
+            { title: 'Group size', copy: 'Groups of 2–6.' },
+            { title: 'When', copy: 'Prep 12–4pm, or evening service 5:30–8:30pm (front-of-house, kitchen or dishwashing).' },
+            { title: 'Availability', copy: 'Auckland Mon–Thu · Wellington Mon–Wed.' },
+            { title: 'Where', copy: 'Onehunga, Glen Innes or Wellington.' },
+            {
+              title: 'Enquire',
+              copy: 'The easy way to volunteer as a group — get in touch and we’ll set it up.',
+              ctaLabel: 'Enquire →',
+              href: '/get-involved/cooking-sessions?type=Step%20into%20Service#enquiry',
+            },
+          ],
+        },
+        {
+          blockType: 'cardGrid',
+          eyebrow: 'Option 02 · $1,500 + GST for up to 10',
+          heading: 'Meals that *Matter*.',
+          columns: '3',
+          cardStyle: 'soft',
+          items: [
+            {
+              title: 'The experience',
+              copy: 'A hands-on team session cooking nourishing meals for a community partner, using thoughtfully sourced ingredients and zero-waste techniques. The meals go straight to where they’re needed most.',
+            },
+            { title: 'When', copy: '11am–3pm, with time to share kai. Double sessions available for two groups a day.' },
+            { title: 'Where', copy: 'Glen Innes (Tuesdays) or Wellington (Thursdays).' },
+            {
+              title: 'Full details',
+              copy: 'Everything that’s included, the day flow, and the addresses.',
+              ctaLabel: 'Open the page →',
+              href: '/get-involved/cooking-sessions/meals-that-matter',
+            },
+          ],
+        },
+        {
+          blockType: 'cardGrid',
+          eyebrow: 'Option 03 · from $2,000 + GST',
+          heading: 'Private *Events*.',
+          columns: '3',
+          cardStyle: 'soft',
+          items: [
+            {
+              title: 'The experience',
+              copy: 'A fully hosted Everybody Eats experience — hire one of our spaces for a private dinner or celebration that brings your team together and supports the community.',
+            },
+            { title: 'Group size', copy: '40–100.' },
+            { title: 'When', copy: 'Lunch 12–4pm (Glen Innes & Wellington) or dinner 5–10pm.' },
+            { title: 'Availability', copy: 'Glen Innes Tue · Onehunga Fri–Sat · Wellington Thu.' },
+            { title: 'Add-ons', copy: 'Drinks and AV packages available.' },
+            {
+              title: 'Enquire',
+              copy: 'Tell us your date and numbers and we’ll tailor a package.',
+              ctaLabel: 'Enquire →',
+              href: '/get-involved/cooking-sessions?type=Private%20Events#enquiry',
+            },
+          ],
+        },
+        {
+          blockType: 'cardGrid',
+          eyebrow: 'Option 04 · from $5,000 + GST',
+          heading: 'Restaurant *Takeover*.',
+          columns: '3',
+          cardStyle: 'soft',
+          items: [
+            {
+              title: 'The experience',
+              copy: 'Sponsor a service night and make it your own — your brand on the menu, and however involved you want to be: volunteer, showcase a product, run a pop-up, or simply lend your name to a night that feeds the community.',
+            },
+            { title: 'Group size', copy: 'Flexible — bring as many or as few as suits you.' },
+            { title: 'When', copy: 'Evening service 5:30–8:30pm (prep from 12pm for hands-on teams).' },
+            { title: 'Availability', copy: 'Auckland Mon–Thu · Wellington Mon–Wed.' },
+            {
+              title: 'What’s included',
+              copy: 'Pre-event promotion naming your organisation, your logo on the menu and signage, a community shoutout, menu input, photo opportunities, and a post-event impact summary.',
+            },
+            {
+              title: 'Enquire',
+              copy: 'Let’s build the night around your goals.',
+              ctaLabel: 'Enquire →',
+              href: '/get-involved/cooking-sessions?type=Restaurant%20Takeover#enquiry',
+            },
+          ],
+        },
+        {
+          blockType: 'cardGrid',
+          eyebrow: 'Option 05 · tailored pricing',
+          heading: 'Everybody Eats *on the Road*.',
+          columns: '3',
+          cardStyle: 'soft',
+          items: [
+            {
+              title: 'The experience',
+              copy: 'We bring the kaupapa to you — a catered lunch, a pop-up mini-restaurant, or a shared kōrero about Everybody Eats at your office, event or venue.',
+            },
+            { title: 'Group size', copy: '20–200 people.' },
+            { title: 'Cost', copy: 'Tailored to your space, numbers and vision.' },
+            {
+              title: 'Enquire',
+              copy: 'Tell us where and when, and we’ll shape it to suit.',
+              ctaLabel: 'Enquire →',
+              href: '/get-involved/cooking-sessions?type=Everybody%20Eats%20on%20the%20Road#enquiry',
+            },
+          ],
+        },
+        {
+          blockType: 'testimonials',
+          eyebrow: 'From the teams',
+          heading: 'Closer to *home*.',
+          items: [
+            {
+              quote:
+                'Of all the volunteering opportunities we get exposed to, this feels like the one where you can see the tangible impact. It’s relatable. It feels closer to home.',
+              attribution: 'Lion',
+            },
+            {
+              quote:
+                'Everybody Eats gave me a birthday experience that was memorable for all the right reasons. Beautiful food, a meaningful story, and a team that made everything effortless.',
+              attribution: 'Sarah — birthday party',
+            },
+          ],
+        },
+        {
+          blockType: 'enquiryForm',
+          eyebrow: 'Enquire about a session',
+          variant: 'forest',
+          heading: 'Gather your team\n*for good*.',
+          intro:
+            'Tell us about your group and what you have in mind — including anything that isn’t listed here, we love a creative collaboration — and we’ll help you find the right fit.',
+          recipientEmail: 'jack@everybodyeats.nz',
+          enquiryTypes: [
+            { label: 'Step into Service' },
+            { label: 'Meals that Matter' },
+            { label: 'Private Events' },
+            { label: 'Restaurant Takeover' },
+            { label: 'Everybody Eats on the Road' },
+            { label: 'Not sure yet' },
+          ],
+          successMessage:
+            "Thanks — your enquiry is on its way to Jack. We'll be in touch within two working *days*.",
+          footnote: 'Prefer email? Reach us any time at jack@everybodyeats.nz.',
+        },
+      ],
+    },
+    {
+      slug: 'get-involved/cooking-sessions/meals-that-matter',
+      title: 'Meals that Matter',
+      seo: {
+        title: 'Meals that Matter — Everybody Eats',
+        description:
+          'A hands-on team experience cooking nourishing meals for the community using thoughtfully sourced ingredients and zero-waste techniques. $1,500 +GST for up to 10 people.',
+      },
+      layout: [
+        {
+          blockType: 'hero',
+          eyebrow: 'Gather for good',
+          heading: 'Meals that\n*matter*.',
+          subheading:
+            'An exclusive hands-on team experience cooking nourishing meals for the wider community. Your team prepares meals using thoughtfully sourced ingredients and zero-waste techniques to support a local community organisation — then they’re distributed directly to a partner organisation, where they’re needed most.',
+          image: kitchenImage,
+          primaryCta: { label: 'Book your team', href: '#enquiry' },
+          secondaryCta: {
+            label: 'See all team experiences',
+            href: '/get-involved/cooking-sessions',
+          },
+        },
+        {
+          blockType: 'cardGrid',
+          eyebrow: 'The essentials',
+          heading: 'What to *know*.',
+          columns: '4',
+          cardStyle: 'soft',
+          items: [
+            { number: '01', title: 'Cost', copy: '$1,500 + GST for a group of up to 10 people.' },
+            { number: '02', title: 'When', copy: 'A four-hour session, 11am–3pm, with time to sit down and share kai together.' },
+            { number: '03', title: 'Where', copy: 'Glen Innes on Tuesdays, Wellington on Thursdays. Other weekdays by prior arrangement.' },
+            { number: '04', title: 'Group size', copy: 'Up to 10 — and double sessions are available for two groups in a day.' },
+          ],
+        },
+        {
+          blockType: 'process',
+          eyebrow: 'How the day runs',
+          heading: 'Four hours, *one* shared purpose.',
+          items: [
+            {
+              number: '01',
+              title: 'Arrive & learn',
+              copy: 'Meet our chefs, pull on an apron, and get a feel for the rescued and thoughtfully sourced ingredients you’ll be cooking with.',
+            },
+            {
+              number: '02',
+              title: 'Cook together',
+              copy: 'Your team prepares nourishing meals hands-on, learning zero-waste techniques side by side with our kitchen.',
+            },
+            {
+              number: '03',
+              title: 'Share kai',
+              copy: 'Sit down together over a meal you’ve made — the part everyone remembers.',
+            },
+            {
+              number: '04',
+              title: 'Meals delivered',
+              copy: 'The meals go straight to a community partner — a charity of your choice if you have one — distributed where they’re needed most.',
+            },
+          ],
+        },
+        {
+          blockType: 'ctaStrip',
+          variant: 'sun',
+          align: 'center',
+          heading: 'Team building, learning, and real *impact*.',
+          body:
+            'Meals that Matter blends a hands-on team day with tangible social good — and we can work with a charity partner of your choice to receive the meals.',
+        },
+        {
+          blockType: 'cardGrid',
+          eyebrow: 'Where you’ll cook',
+          heading: 'Two kitchens, *one* kaupapa.',
+          columns: '2',
+          cardStyle: 'soft',
+          items: [
+            {
+              title: 'Glen Innes',
+              copy: '133 Line Road, Glen Innes, Auckland 1072. Sessions on Tuesdays.',
+            },
+            {
+              title: 'Wellington',
+              copy: '60 Dixon Street, Te Aro, Wellington 6011. Sessions on Thursdays.',
+            },
+          ],
+        },
+        {
+          blockType: 'testimonials',
+          eyebrow: 'From the teams',
+          heading: 'Closer to *home*.',
+          items: [
+            {
+              quote:
+                'Of all the volunteering opportunities we get exposed to, this feels like the one where you can see the tangible impact. It’s relatable. It feels closer to home.',
+              attribution: 'Lion',
+            },
+          ],
+        },
+        {
+          blockType: 'enquiryForm',
+          eyebrow: 'Book your team',
+          variant: 'forest',
+          heading: 'Bring your team\n*to the table*.',
+          intro:
+            'Tell us about your group and your preferred dates, and we’ll lock in a Meals that Matter session for you. Double sessions for two groups in a day are available on request.',
+          recipientEmail: 'jack@everybodyeats.nz',
+          enquiryTypes: [
+            { label: 'Meals that Matter — single session' },
+            { label: 'Meals that Matter — double session' },
+            { label: 'Another Gather for Good experience' },
+            { label: 'Something else' },
+          ],
+          successMessage:
+            "Thanks — your enquiry is on its way to Jack. We'll be in touch within two working *days*.",
+          footnote: 'Looking at other ways to gather for good? Email jack@everybodyeats.nz and we’ll talk options.',
         },
       ],
     },

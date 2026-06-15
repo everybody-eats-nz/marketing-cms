@@ -13,6 +13,7 @@ import { Timeline } from '../blocks/Timeline'
 import { TeamGrid } from '../blocks/TeamGrid'
 import { FaqsAccordion } from '../blocks/FaqsAccordion'
 import { NewsletterFormBlock } from '../blocks/NewsletterFormBlock'
+import { EnquiryForm } from '../blocks/EnquiryForm'
 import { PartnersGrid } from '../blocks/PartnersGrid'
 import { LocationsMagazine } from '../blocks/LocationsMagazine'
 import { MediaBlock } from '../blocks/MediaBlock'
@@ -82,6 +83,7 @@ export const Pages: CollectionConfig = {
         FaqsAccordion,
         PartnersGrid,
         NewsletterFormBlock,
+        EnquiryForm,
       ],
     },
     {

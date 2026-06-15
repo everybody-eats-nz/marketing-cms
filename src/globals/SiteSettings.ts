@@ -26,6 +26,11 @@ export const SiteSettings: GlobalConfig = {
             { name: 'contactEmail', type: 'email' },
             { name: 'pressEmail', type: 'email' },
             { name: 'volunteerEmail', type: 'email' },
+            {
+              name: 'corporateEmail',
+              type: 'email',
+              admin: { description: 'Where corporate events / catering enquiries are sent' },
+            },
             { name: 'phone', type: 'text' },
             { name: 'charityNumber', type: 'text', defaultValue: 'CC56055' },
             {
