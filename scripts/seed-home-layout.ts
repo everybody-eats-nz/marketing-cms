@@ -107,6 +107,31 @@ async function main() {
       ],
     },
     {
+      blockType: 'cardGrid',
+      eyebrow: 'For teams & celebrations',
+      heading: 'Bring your people *together*.',
+      columns: '2',
+      cardStyle: 'mixed',
+      items: [
+        {
+          number: '01',
+          title: 'Catering & events',
+          copy: 'Cater a function, hire one of our restaurants, or host a private event — every booking helps fund free meals.',
+          ctaLabel: 'Learn more',
+          href: '/get-involved/catering-events',
+          color: 'clay',
+        },
+        {
+          number: '02',
+          title: 'Team experiences',
+          copy: 'Hands-on cooking sessions, private dinners and restaurant takeovers — meaningful days that give back.',
+          ctaLabel: 'Learn more',
+          href: '/get-involved/cooking-sessions',
+          color: 'forest700',
+        },
+      ],
+    },
+    {
       blockType: 'eventsList',
       eyebrow: "What's coming up",
       heading: 'Special *nights*, special *plates*',

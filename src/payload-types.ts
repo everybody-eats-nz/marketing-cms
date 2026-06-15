@@ -651,6 +651,42 @@ export interface Page {
             blockName?: string | null;
             blockType: 'newsletterForm';
           }
+        | {
+            eyebrow?: string | null;
+            /**
+             * Wrap a word in *asterisks* for the brand italic.
+             */
+            heading: string;
+            /**
+             * Short paragraph above the form. *asterisks* allowed.
+             */
+            intro?: string | null;
+            variant?: ('forest' | 'cream') | null;
+            /**
+             * Options in the "What can we help with?" dropdown.
+             */
+            enquiryTypes?:
+              | {
+                  label: string;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Where enquiries are sent. Leave blank to use the corporate email in Site Settings.
+             */
+            recipientEmail?: string | null;
+            /**
+             * Shown after a successful submit. *asterisks* allowed.
+             */
+            successMessage?: string | null;
+            /**
+             * Small print under the form, e.g. a phone fallback.
+             */
+            footnote?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'enquiryForm';
+          }
       )[]
     | null;
   seo?: {
@@ -1535,6 +1571,25 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        enquiryForm?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              intro?: T;
+              variant?: T;
+              enquiryTypes?:
+                | T
+                | {
+                    label?: T;
+                    id?: T;
+                  };
+              recipientEmail?: T;
+              successMessage?: T;
+              footnote?: T;
+              id?: T;
+              blockName?: T;
+            };
       };
   seo?:
     | T
@@ -1820,6 +1875,10 @@ export interface SiteSetting {
   contactEmail?: string | null;
   pressEmail?: string | null;
   volunteerEmail?: string | null;
+  /**
+   * Where corporate events / catering enquiries are sent
+   */
+  corporateEmail?: string | null;
   phone?: string | null;
   charityNumber?: string | null;
   mailingAddress?: string | null;
@@ -1996,6 +2055,7 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   contactEmail?: T;
   pressEmail?: T;
   volunteerEmail?: T;
+  corporateEmail?: T;
   phone?: T;
   charityNumber?: T;
   mailingAddress?: T;

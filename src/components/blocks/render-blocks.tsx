@@ -13,6 +13,7 @@ import { MediaBlockRenderer } from './media-block'
 import { TeamGridBlock } from './team-grid-block'
 import { FaqsAccordionBlock } from './faqs-accordion-block'
 import { NewsletterFormBlockRenderer } from './newsletter-form-block'
+import { EnquiryFormBlock } from './enquiry-form-block'
 import { PartnersGridBlock } from './partners-grid-block'
 import { LocationsMagazineBlock } from './locations-magazine-block'
 import { DonateHeroBlock } from './donate-hero-block'
@@ -107,6 +108,8 @@ export function RenderBlocks({
             return <PartnersGridBlock key={key} block={block as any} partners={partners} />
           case 'newsletterForm':
             return <NewsletterFormBlockRenderer key={key} block={block as any} />
+          case 'enquiryForm':
+            return <EnquiryFormBlock key={key} block={block as any} />
           default:
             return null
         }
