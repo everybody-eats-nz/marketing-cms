@@ -17,6 +17,8 @@ type TonightsMenu = {
   mains?: MenuCourse[]
   drink?: MenuCourse[]
   dessert?: MenuCourse[]
+  // The portal falls back to the most recent menu when today's isn't published.
+  isFallback?: boolean
 }
 
 // Tonight's menu is published to the volunteers portal by the restaurant teams.
@@ -186,7 +188,9 @@ export default async function LocationPage({ params }: Params) {
       {tonightsMenu && (
         <section className="container-tight pt-24">
           <div className="rounded-[2.5rem] border border-line/15 bg-surface px-8 py-14 sm:px-16 text-center shadow-sm">
-            <p className="eyebrow mb-4">On the menu tonight</p>
+            <p className="eyebrow mb-4">
+              {tonightsMenu.isFallback ? 'Our latest menu' : 'On the menu tonight'}
+            </p>
             <p className="display text-3xl sm:text-4xl font-light text-content">
               {new Date(`${tonightsMenu.date}T00:00:00`).toLocaleDateString('en-NZ', {
                 weekday: 'long',
