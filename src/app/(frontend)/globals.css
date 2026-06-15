@@ -160,7 +160,8 @@
            prose-a:text-muted prose-a:no-underline hover:prose-a:underline
            prose-strong:text-content prose-blockquote:border-sun-300
            prose-blockquote:not-italic prose-blockquote:font-display
-           prose-blockquote:text-content/90 prose-li:marker:text-muted max-w-none;
+           prose-blockquote:text-content/90 prose-li:text-content/85
+           prose-li:marker:text-muted max-w-none;
   }
 }
 
