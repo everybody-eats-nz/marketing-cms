@@ -143,6 +143,16 @@
     100% { transform: translateX(-50%); }
   }
 
+  /* Hero carousel active-dot progress fill — animates over the slide interval.
+     Keyed on the active frame in the component so it restarts each advance. */
+  @keyframes dot-progress {
+    from { width: 0%; }
+    to { width: 100%; }
+  }
+  .dot-progress {
+    animation: dot-progress linear forwards;
+  }
+
   /* Prose tweaks for journal */
   .prose-eats {
     @apply prose prose-lg prose-headings:font-display prose-headings:tracking-tight
