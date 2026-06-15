@@ -2,6 +2,14 @@ import { withPayload } from '@payloadcms/next/withPayload'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // The deploy container's `next build` was OOM-killed during the type-check
+  // phase (Payload's generated types make `tsc` memory-heavy, and the build host
+  // has less RAM than CI). Type safety is already gated by the dedicated CI step
+  // (`pnpm typecheck`), so skip the redundant in-build check to keep the
+  // container build within memory. ESLint is skipped too — the repo has no
+  // ESLint config, so `next build` would only ever prompt/skip it anyway.
+  typescript: { ignoreBuildErrors: true },
+  eslint: { ignoreDuringBuilds: true },
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'cdn.prod.website-files.com' },

@@ -462,6 +462,8 @@ async function seedGlobals(payload: any) {
         { link: { label: 'Contact', type: 'internal', internalHref: '/contact' } },
         { link: { label: 'FAQs', type: 'internal', internalHref: '/about/faqs' } },
         { link: { label: 'Events', type: 'internal', internalHref: '/events' } },
+        { link: { label: 'Catering & events', type: 'internal', internalHref: '/get-involved/catering-events' } },
+        { link: { label: 'Team experiences', type: 'internal', internalHref: '/get-involved/cooking-sessions' } },
         { link: { label: 'Newsletter', type: 'internal', internalHref: '/newsletter' } },
       ],
       ctas: {
@@ -494,6 +496,8 @@ async function seedGlobals(payload: any) {
             { link: { label: 'Volunteer', type: 'internal', internalHref: '/get-involved/volunteer' } },
             { link: { label: 'Donate', type: 'internal', internalHref: '/get-involved/donate' } },
             { link: { label: 'Partner', type: 'internal', internalHref: '/get-involved/partner' } },
+            { link: { label: 'Catering & events', type: 'internal', internalHref: '/get-involved/catering-events' } },
+            { link: { label: 'Team experiences', type: 'internal', internalHref: '/get-involved/cooking-sessions' } },
             { link: { label: 'Events', type: 'internal', internalHref: '/events' } },
           ],
         },
