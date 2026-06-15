@@ -25,12 +25,19 @@ async function fetchTonightsMenu(locationName: string): Promise<TonightsMenu | n
   const date = new Intl.DateTimeFormat('en-CA', { timeZone: 'Pacific/Auckland' }).format(new Date())
   const url = `https://volunteers.everybodyeats.nz/api/menus?date=${date}&location=${encodeURIComponent(locationName)}`
   try {
-    const res = await fetch(url, { next: { revalidate: 900 } })
+    // Cap the upstream call so a slow/unavailable portal (e.g. no menu published
+    // for today) can't stall the whole page render. Failed responses are cached
+    // briefly so we don't re-hit a struggling upstream on every request.
+    const res = await fetch(url, {
+      signal: AbortSignal.timeout(3000),
+      next: { revalidate: 900 },
+    })
     if (!res.ok) return null
     const menu = (await res.json()) as TonightsMenu
     const courses = [menu.starter, menu.mains, menu.dessert, menu.drink]
     return courses.some((c) => Array.isArray(c) && c.length > 0) ? menu : null
   } catch {
+    // Timeout, network error, or bad JSON — render the page without the menu.
     return null
   }
 }
