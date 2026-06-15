@@ -324,7 +324,7 @@ const pages: PageSpec[] = [
 async function main() {
   const payload = await getPayload({ config })
 
-  const existing = await payload.find({ collection: 'pages', limit: 200, depth: 0 })
+  const existing = await payload.find({ collection: 'pages', where: { slug: { in: pages.map((p) => p.slug) } }, limit: pages.length, depth: 0 })
 
   for (const spec of pages) {
     const found = existing.docs.find((d: any) => d.slug === spec.slug)
