@@ -39,7 +39,7 @@ export default async function PayLocationPickerPage() {
               className="group flex items-baseline justify-between gap-4 rounded-[1.75rem] border border-cream-50/15 bg-cream-50/[0.04] px-7 py-6 sm:px-9 sm:py-7 transition-all duration-200 hover:bg-cream-50 hover:text-forest-700 hover:border-cream-50 active:scale-[0.99]"
             >
               <span className="flex items-baseline gap-4 min-w-0">
-                <span className="display text-3xl sm:text-4xl font-light leading-tight truncate">
+                <span className="display text-3xl sm:text-4xl font-light leading-normal sm:leading-normal truncate">
                   {loc.name}
                 </span>
                 {loc.city && loc.city !== loc.name && (
