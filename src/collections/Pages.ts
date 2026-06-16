@@ -21,6 +21,7 @@ import { DonateHero } from '../blocks/DonateHero'
 import { Process } from '../blocks/Process'
 import { Values } from '../blocks/Values'
 import { Testimonials } from '../blocks/Testimonials'
+import { Downloads } from '../blocks/Downloads'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -84,6 +85,7 @@ export const Pages: CollectionConfig = {
         PartnersGrid,
         NewsletterFormBlock,
         EnquiryForm,
+        Downloads,
       ],
     },
     {

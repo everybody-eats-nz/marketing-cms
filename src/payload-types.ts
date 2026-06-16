@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    documents: Document;
     pages: Page;
     locations: Location;
     'team-members': TeamMember;
@@ -87,6 +88,7 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    documents: DocumentsSelect<false> | DocumentsSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     locations: LocationsSelect<false> | LocationsSelect<true>;
     'team-members': TeamMembersSelect<false> | TeamMembersSelect<true>;
@@ -231,6 +233,33 @@ export interface Media {
       filename?: string | null;
     };
   };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "documents".
+ */
+export interface Document {
+  id: number;
+  /**
+   * Human-friendly name shown in the admin and as the default download label.
+   */
+  title?: string | null;
+  /**
+   * Optional short summary, used as the default description on download cards.
+   */
+  description?: string | null;
+  prefix?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -687,6 +716,35 @@ export interface Page {
             blockName?: string | null;
             blockType: 'enquiryForm';
           }
+        | {
+            eyebrow?: string | null;
+            /**
+             * Section heading. Wrap a word in *asterisks* for the brand italic.
+             */
+            heading?: string | null;
+            /**
+             * Optional short paragraph under the heading. *asterisks* allowed.
+             */
+            intro?: string | null;
+            columns?: ('1' | '2' | '3') | null;
+            items?:
+              | {
+                  file: number | Document;
+                  /**
+                   * Overrides the document's title. Leave blank to use it.
+                   */
+                  title?: string | null;
+                  /**
+                   * Overrides the document's description. Leave blank to use it.
+                   */
+                  description?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'downloads';
+          }
       )[]
     | null;
   seo?: {
@@ -1098,6 +1156,10 @@ export interface PayloadLockedDocument {
         value: number | Media;
       } | null)
     | ({
+        relationTo: 'documents';
+        value: number | Document;
+      } | null)
+    | ({
         relationTo: 'pages';
         value: number | Page;
       } | null)
@@ -1263,6 +1325,26 @@ export interface MediaSelect<T extends boolean = true> {
               filename?: T;
             };
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "documents_select".
+ */
+export interface DocumentsSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  prefix?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1587,6 +1669,24 @@ export interface PagesSelect<T extends boolean = true> {
               recipientEmail?: T;
               successMessage?: T;
               footnote?: T;
+              id?: T;
+              blockName?: T;
+            };
+        downloads?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              intro?: T;
+              columns?: T;
+              items?:
+                | T
+                | {
+                    file?: T;
+                    title?: T;
+                    description?: T;
+                    id?: T;
+                  };
               id?: T;
               blockName?: T;
             };

@@ -21,6 +21,14 @@ const nextConfig = {
   experimental: {
     reactCompiler: false,
   },
+  // Preserve inbound links to the old Webflow legal URLs (the pages now live at
+  // /terms and /privacy — see scripts/seed-legal-pages.ts).
+  async redirects() {
+    return [
+      { source: '/hygiene/terms-and-conditions', destination: '/terms', permanent: true },
+      { source: '/hygiene/privacy-policy', destination: '/privacy', permanent: true },
+    ]
+  },
 }
 
 export default withPayload(nextConfig, { devBundleServerPackages: false })

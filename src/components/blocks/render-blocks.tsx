@@ -20,6 +20,7 @@ import { DonateHeroBlock } from './donate-hero-block'
 import { ProcessBlock } from './process-block'
 import { ValuesBlock } from './values-block'
 import { TestimonialsBlock } from './testimonials-block'
+import { DownloadsBlock } from './downloads-block'
 
 type AnyBlock = { blockType: string; id?: string; [k: string]: any }
 
@@ -110,6 +111,8 @@ export function RenderBlocks({
             return <NewsletterFormBlockRenderer key={key} block={block as any} />
           case 'enquiryForm':
             return <EnquiryFormBlock key={key} block={block as any} />
+          case 'downloads':
+            return <DownloadsBlock key={key} block={block as any} />
           default:
             return null
         }
