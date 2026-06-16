@@ -19,7 +19,6 @@ const SKIP = new Set([
   'detail_minor-business-partners',
   'detail_funding-partners',
   'detail_supporting-partners',
-  'detail_daily-menus',
   'detail_sku',
   'detail_product',
   'detail_category',
