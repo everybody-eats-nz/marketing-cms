@@ -57,7 +57,7 @@ export function StatsBlock({ block, globalStats = [], liveStats = null }: Props)
             <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-12">
               {stats.map((s, i) => (
                 <div key={i}>
-                  <div className="display text-[clamp(2.5rem,5.2vw,5rem)] font-light text-cream-50 tabular-nums whitespace-nowrap">
+                  <div className="display stat-figure-dark font-light text-cream-50 tabular-nums whitespace-nowrap">
                     <CountUp value={s.value} delay={i * 120} />
                   </div>
                   <div className="mt-3 text-sm uppercase tracking-[0.15em] text-cream-50/70">
@@ -87,7 +87,7 @@ export function StatsBlock({ block, globalStats = [], liveStats = null }: Props)
       <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-line/15 rounded-3xl overflow-hidden">
         {stats.map((s, i) => (
           <div key={i} className="bg-surface px-8 py-10 sm:py-14">
-            <div className="display text-[clamp(2.5rem,5.5vw,6.5rem)] font-light text-content tracking-tight tabular-nums whitespace-nowrap">
+            <div className="display stat-figure font-light text-content tracking-tight tabular-nums whitespace-nowrap">
               <CountUp value={s.value} delay={i * 120} />
             </div>
             <div className="mt-3 text-sm uppercase tracking-[0.15em] text-muted/70">
