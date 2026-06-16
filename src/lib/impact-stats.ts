@@ -23,6 +23,10 @@ export async function fetchLiveImpactStats(): Promise<LiveImpactStats | null> {
   try {
     const res = await fetch(`${base.replace(/\/$/, '')}/api/public/impact-stats`, {
       next: { revalidate: 3600 },
+      // Fail fast to the CMS fallback if the portal is unreachable (e.g. blocked
+      // egress / hairpin NAT) rather than blocking the homepage render on a dead
+      // connection until the OS-level TCP timeout. Mirrors fetchImpactStory.
+      signal: AbortSignal.timeout(4000),
     })
     if (!res.ok) return null
     const data = (await res.json()) as Record<string, unknown>

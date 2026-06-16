@@ -78,7 +78,6 @@ export interface Config {
     quotes: Quote;
     faqs: Faq;
     partners: Partner;
-    'daily-menus': DailyMenu;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -97,7 +96,6 @@ export interface Config {
     quotes: QuotesSelect<false> | QuotesSelect<true>;
     faqs: FaqsSelect<false> | FaqsSelect<true>;
     partners: PartnersSelect<false> | PartnersSelect<true>;
-    'daily-menus': DailyMenusSelect<false> | DailyMenusSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -1093,46 +1091,6 @@ export interface Partner {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "daily-menus".
- */
-export interface DailyMenu {
-  id: number;
-  /**
-   * Auto-generated from date if blank
-   */
-  name: string;
-  slug: string;
-  menuDate: string;
-  location?: (number | null) | Location;
-  chefName?: string | null;
-  courses?: {
-    starter?: string | null;
-    mainMeat?: string | null;
-    mainVeg?: string | null;
-    vegOnly?: boolean | null;
-    dessert?: string | null;
-    drink?: string | null;
-  };
-  announcement?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -1198,10 +1156,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'partners';
         value: number | Partner;
-      } | null)
-    | ({
-        relationTo: 'daily-menus';
-        value: number | DailyMenu;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -1893,30 +1847,6 @@ export interface PartnersSelect<T extends boolean = true> {
   url?: T;
   description?: T;
   displayOrder?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "daily-menus_select".
- */
-export interface DailyMenusSelect<T extends boolean = true> {
-  name?: T;
-  slug?: T;
-  menuDate?: T;
-  location?: T;
-  chefName?: T;
-  courses?:
-    | T
-    | {
-        starter?: T;
-        mainMeat?: T;
-        mainVeg?: T;
-        vegOnly?: T;
-        dessert?: T;
-        drink?: T;
-      };
-  announcement?: T;
   updatedAt?: T;
   createdAt?: T;
 }

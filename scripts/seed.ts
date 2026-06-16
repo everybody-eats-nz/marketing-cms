@@ -390,30 +390,6 @@ async function seedJournalPosts(payload: any) {
   }
 }
 
-async function seedDailyMenus(payload: any) {
-  console.log('\n→ Daily menus')
-  const { items } = await loadCollection('daily-menus')
-  for (const item of items) {
-    const f = item.fieldData || {}
-    if (!f.slug) continue
-    await upsertBySlug(payload, 'daily-menus', f.slug, {
-      name: f.name || f.slug,
-      menuDate: f['menu-date'],
-      chefName: f.chefname || '',
-      courses: {
-        starter: f.starter || '',
-        mainMeat: f.mainmeat || '',
-        mainVeg: f.mainveg || '',
-        vegOnly: f.vegonly || false,
-        dessert: f.dessert || '',
-        drink: f.drink || '',
-      },
-      announcement: richTextFromHtml(f.annoucement),
-    })
-    console.log(`  ✓ ${f.name || f.slug}`)
-  }
-}
-
 async function seedGlobals(payload: any) {
   console.log('\n→ Globals')
   await payload.updateGlobal({
@@ -601,7 +577,6 @@ async function main() {
   await seedPartners(payload)
   await seedEvents(payload)
   await seedJournalPosts(payload)
-  await seedDailyMenus(payload)
   await seedGlobals(payload)
   await seedPages(payload)
 

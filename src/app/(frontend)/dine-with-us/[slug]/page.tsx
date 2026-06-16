@@ -25,7 +25,12 @@ type TonightsMenu = {
 // `location` must match the Payload location's name ("Onehunga", "Glen Innes", "Wellington").
 async function fetchTonightsMenu(locationName: string): Promise<TonightsMenu | null> {
   const date = new Intl.DateTimeFormat('en-CA', { timeZone: 'Pacific/Auckland' }).format(new Date())
-  const url = `https://volunteers.everybodyeats.nz/api/menus?date=${date}&location=${encodeURIComponent(locationName)}`
+  // Read the portal base from env (set to the internal Docker alias in prod) so
+  // this fetch goes container-to-container; falling back to the public URL keeps
+  // local dev working. Hitting the public domain from the deployed container
+  // fails (same-host hairpin NAT) — keep this in sync with VOLUNTEER_PORTAL_URL.
+  const base = (process.env.VOLUNTEER_PORTAL_URL || 'https://volunteers.everybodyeats.nz').replace(/\/$/, '')
+  const url = `${base}/api/menus?date=${date}&location=${encodeURIComponent(locationName)}`
   try {
     // Cap the upstream call so a slow/unavailable portal (e.g. no menu published
     // for today) can't stall the whole page render. Responses are cached briefly

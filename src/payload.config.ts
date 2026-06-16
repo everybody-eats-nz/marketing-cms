@@ -18,7 +18,6 @@ import { JournalPosts } from './collections/JournalPosts'
 import { Quotes } from './collections/Quotes'
 import { Faqs } from './collections/Faqs'
 import { Partners } from './collections/Partners'
-import { DailyMenus } from './collections/DailyMenus'
 
 import { SiteSettings } from './globals/SiteSettings'
 import { Navigation } from './globals/Navigation'
@@ -96,7 +95,6 @@ export default buildConfig({
     Quotes,
     Faqs,
     Partners,
-    DailyMenus,
   ],
   globals: [SiteSettings, Navigation, Footer],
   plugins: storagePlugins,
