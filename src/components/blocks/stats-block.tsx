@@ -1,7 +1,15 @@
 import { KawakawaPattern } from '@/components/kawakawa-pattern'
+import { CountUp } from '@/components/count-up'
+import type { LiveImpactStats } from '@/lib/impact-stats'
+import type { LiveMetric } from '@/fields/stat-item'
 import { renderRichText } from './render-text'
 
-type Stat = { value: string; label: string }
+type Stat = {
+  value: string
+  label: string
+  liveMetric?: LiveMetric | 'none' | null
+  suffix?: string | null
+}
 
 type Props = {
   block: {
@@ -12,11 +20,24 @@ type Props = {
     items?: Stat[]
   }
   globalStats?: Stat[]
+  liveStats?: LiveImpactStats | null
 }
 
-export function StatsBlock({ block, globalStats = [] }: Props) {
-  const stats = block.source === 'custom' ? block.items || [] : globalStats
-  if (!stats.length) return null
+/** Resolve a stat's display value — a live figure when bound and available, else the fixed value. */
+function resolveValue(stat: Stat, liveStats?: LiveImpactStats | null): string {
+  if (stat.liveMetric && stat.liveMetric !== 'none') {
+    const live = liveStats?.[stat.liveMetric]
+    if (typeof live === 'number' && Number.isFinite(live)) {
+      return `${live.toLocaleString('en-NZ')}${stat.suffix ?? ''}`
+    }
+  }
+  return stat.value
+}
+
+export function StatsBlock({ block, globalStats = [], liveStats = null }: Props) {
+  const source = block.source === 'custom' ? block.items || [] : globalStats
+  if (!source.length) return null
+  const stats = source.map((s) => ({ value: resolveValue(s, liveStats), label: s.label }))
   const isDark = block.variant === 'darkPanel'
 
   if (isDark) {
@@ -33,11 +54,11 @@ export function StatsBlock({ block, globalStats = [] }: Props) {
                 {renderRichText(block.heading)}
               </h2>
             )}
-            <div className="mt-16 grid sm:grid-cols-3 gap-12">
+            <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-12">
               {stats.map((s, i) => (
                 <div key={i}>
-                  <div className="display text-5xl sm:text-7xl font-light text-cream-50">
-                    {s.value}
+                  <div className="display text-[clamp(2.5rem,5vw,4.5rem)] font-light text-cream-50 tabular-nums whitespace-nowrap">
+                    <CountUp value={s.value} delay={i * 120} />
                   </div>
                   <div className="mt-3 text-sm uppercase tracking-[0.15em] text-cream-50/70">
                     {s.label}
@@ -63,11 +84,11 @@ export function StatsBlock({ block, globalStats = [] }: Props) {
           )}
         </div>
       )}
-      <div className="grid sm:grid-cols-3 gap-px bg-line/15 rounded-3xl overflow-hidden">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-line/15 rounded-3xl overflow-hidden">
         {stats.map((s, i) => (
           <div key={i} className="bg-surface px-8 py-10 sm:py-14">
-            <div className="display text-5xl sm:text-6xl lg:text-7xl font-light text-content tracking-tight">
-              {s.value}
+            <div className="display text-[clamp(2.5rem,5vw,4.5rem)] font-light text-content tracking-tight tabular-nums whitespace-nowrap">
+              <CountUp value={s.value} delay={i * 120} />
             </div>
             <div className="mt-3 text-sm uppercase tracking-[0.15em] text-muted/70">
               {s.label}

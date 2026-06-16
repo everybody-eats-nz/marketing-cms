@@ -383,13 +383,21 @@ export interface Page {
             items?:
               | {
                   /**
-                   * e.g. "350,000"
+                   * e.g. "350,000". Used as a fallback when a live metric is set but unavailable.
                    */
                   value: string;
                   /**
                    * e.g. "meals served"
                    */
                   label: string;
+                  /**
+                   * Pull this number live from the volunteer portal. Leave as "None" for a fixed value.
+                   */
+                  liveMetric?: ('none' | 'peopleServed' | 'volunteerHours' | 'foodSavedKg') | null;
+                  /**
+                   * Optional, appended to the value — e.g. "+" or " kg". Only applied to live values.
+                   */
+                  suffix?: string | null;
                   id?: string | null;
                 }[]
               | null;
@@ -1432,6 +1440,8 @@ export interface PagesSelect<T extends boolean = true> {
                 | {
                     value?: T;
                     label?: T;
+                    liveMetric?: T;
+                    suffix?: T;
                     id?: T;
                   };
               id?: T;
@@ -2005,13 +2015,21 @@ export interface SiteSetting {
   stats?:
     | {
         /**
-         * e.g. "350,000"
+         * e.g. "350,000". Used as a fallback when a live metric is set but unavailable.
          */
         value: string;
         /**
          * e.g. "meals served"
          */
         label: string;
+        /**
+         * Pull this number live from the volunteer portal. Leave as "None" for a fixed value.
+         */
+        liveMetric?: ('none' | 'peopleServed' | 'volunteerHours' | 'foodSavedKg') | null;
+        /**
+         * Optional, appended to the value — e.g. "+" or " kg". Only applied to live values.
+         */
+        suffix?: string | null;
         id?: string | null;
       }[]
     | null;
@@ -2175,6 +2193,8 @@ export interface SiteSettingsSelect<T extends boolean = true> {
     | {
         value?: T;
         label?: T;
+        liveMetric?: T;
+        suffix?: T;
         id?: T;
       };
   updatedAt?: T;

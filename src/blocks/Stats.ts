@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { statItemFields } from '../fields/stat-item'
 
 export const Stats: Block = {
   slug: 'stats',
@@ -35,10 +36,7 @@ export const Stats: Block = {
       type: 'array',
       labels: { singular: 'Stat', plural: 'Stats' },
       admin: { condition: (_, sibs) => sibs.source === 'custom' },
-      fields: [
-        { name: 'value', type: 'text', required: true, admin: { description: 'e.g. "350,000"' } },
-        { name: 'label', type: 'text', required: true, admin: { description: 'e.g. "meals served"' } },
-      ],
+      fields: statItemFields,
     },
   ],
 }

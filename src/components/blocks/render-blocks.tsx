@@ -26,6 +26,7 @@ type AnyBlock = { blockType: string; id?: string; [k: string]: any }
 
 export type RenderExtras = {
   globalStats?: Array<{ value: string; label: string }>
+  liveStats?: import('@/lib/impact-stats').LiveImpactStats | null
   locations?: any[]
   events?: any[]
   journal?: any[]
@@ -44,6 +45,7 @@ type Props = {
 export function RenderBlocks({
   blocks,
   globalStats = [],
+  liveStats = null,
   locations = [],
   events = [],
   journal = [],
@@ -76,7 +78,14 @@ export function RenderBlocks({
           case 'media':
             return <MediaBlockRenderer key={key} block={block as any} />
           case 'stats':
-            return <StatsBlock key={key} block={block as any} globalStats={globalStats} />
+            return (
+              <StatsBlock
+                key={key}
+                block={block as any}
+                globalStats={globalStats}
+                liveStats={liveStats}
+              />
+            )
           case 'marquee':
             return <MarqueeBlock key={key} block={block as any} />
           case 'timeline':
