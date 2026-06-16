@@ -43,7 +43,7 @@ export function StatsBlock({ block, globalStats = [], liveStats = null }: Props)
   if (isDark) {
     return (
       <section className="container-wide py-24">
-        <div className="bg-forest-700 grain rounded-[3rem] text-cream-50 px-8 sm:px-16 py-20 relative overflow-hidden">
+        <div className="bg-forest-700 grain rounded-[3rem] text-cream-50 px-8 lg:px-16 py-20 relative overflow-hidden">
           <KawakawaPattern className="top-0 -right-8 w-80 sm:w-[26rem]" />
           <div className="relative z-10">
             {block.eyebrow && (
@@ -57,7 +57,7 @@ export function StatsBlock({ block, globalStats = [], liveStats = null }: Props)
             <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-12">
               {stats.map((s, i) => (
                 <div key={i}>
-                  <div className="display text-[clamp(2.5rem,5vw,4.5rem)] font-light text-cream-50 tabular-nums whitespace-nowrap">
+                  <div className="display text-[clamp(2.5rem,5.2vw,5rem)] font-light text-cream-50 tabular-nums whitespace-nowrap">
                     <CountUp value={s.value} delay={i * 120} />
                   </div>
                   <div className="mt-3 text-sm uppercase tracking-[0.15em] text-cream-50/70">
@@ -87,7 +87,7 @@ export function StatsBlock({ block, globalStats = [], liveStats = null }: Props)
       <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-line/15 rounded-3xl overflow-hidden">
         {stats.map((s, i) => (
           <div key={i} className="bg-surface px-8 py-10 sm:py-14">
-            <div className="display text-[clamp(2.5rem,5vw,4.5rem)] font-light text-content tracking-tight tabular-nums whitespace-nowrap">
+            <div className="display text-[clamp(2.5rem,5.5vw,6.5rem)] font-light text-content tracking-tight tabular-nums whitespace-nowrap">
               <CountUp value={s.value} delay={i * 120} />
             </div>
             <div className="mt-3 text-sm uppercase tracking-[0.15em] text-muted/70">
