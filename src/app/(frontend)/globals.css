@@ -165,6 +165,93 @@
     animation: dot-progress linear forwards;
   }
 
+  /* Impact story — communal-table seat dot. Eased colour/shadow swap so the
+     paid/guest balance morphs as you scrub the years. */
+  .seat {
+    transition:
+      background-color 0.32s ease,
+      box-shadow 0.32s ease,
+      opacity 0.32s ease,
+      transform 0.3s ease;
+  }
+  .seat:hover {
+    transform: scale(1.18);
+  }
+
+  /* Impact story — year scrubber. Sun thumb on a forest track. */
+  .impact-scrub {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    border-radius: 999px;
+    background: rgb(253 248 239 / 0.18);
+    outline: none;
+    cursor: pointer;
+  }
+  .impact-scrub::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgb(248 251 105);
+    border: 3px solid rgb(14 42 28);
+    box-shadow: 0 0 0 1px rgb(248 251 105);
+    cursor: pointer;
+  }
+  .impact-scrub::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgb(248 251 105);
+    border: 3px solid rgb(14 42 28);
+    cursor: pointer;
+  }
+  .impact-scrub:focus-visible {
+    box-shadow: 0 0 0 2px rgb(248 251 105 / 0.6);
+  }
+
+  /* Impact story charts — theme-aware colour tokens so SVG ink, labels and bars
+     stay legible on both the cream (light) and dark panels. */
+  .impact-chart {
+    --chart-ink: 29 83 55; /* axis labels / year ticks (forest-500) */
+    --chart-label: 22 63 42; /* bold value labels (forest-600) */
+    --chart-bar-from: 46 100 56; /* forest-400 */
+    --chart-bar-to: 29 83 55; /* forest-500 */
+  }
+  .dark .impact-chart {
+    --chart-ink: 168 192 173; /* desaturated green for ticks */
+    --chart-label: 243 237 224; /* cream for value labels */
+    --chart-bar-from: 155 189 160; /* forest-200 */
+    --chart-bar-to: 90 139 98; /* forest-300 */
+  }
+
+  /* Scroll-reveal — grows a bar up from its base / wipes a fill in from the
+     left / fades a label in once its container scrolls into view. The global
+     reduced-motion rule collapses these to their final state instantly. */
+  .reveal-grow-y {
+    transform: scaleY(0);
+    transform-box: fill-box;
+    transform-origin: bottom;
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal-fade {
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+  }
+  .reveal-grow-x {
+    width: 0;
+    transition: width 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  [data-inview='true'] .reveal-grow-y {
+    transform: scaleY(1);
+  }
+  [data-inview='true'] .reveal-fade {
+    opacity: 1;
+  }
+  [data-inview='true'] .reveal-grow-x {
+    width: var(--reveal-w, 100%);
+  }
+
   /* Prose tweaks for journal */
   .prose-eats {
     @apply prose prose-lg prose-headings:font-display prose-headings:tracking-tight
