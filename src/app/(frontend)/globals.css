@@ -68,6 +68,18 @@
     @apply font-display tracking-tight;
   }
 
+  /* Impact stat figures — fluid so six-figure numbers stay bold on wide
+     screens yet fit a 3-up column on tablets. Defined as real CSS (not a
+     Tailwind arbitrary value) so the clamp always applies, incl. Safari. */
+  .stat-figure {
+    font-size: clamp(2.4rem, 5.3vw, 5.75rem);
+    line-height: 0.95;
+  }
+  .stat-figure-dark {
+    font-size: clamp(2.4rem, 5.3vw, 5.5rem);
+    line-height: 0.95;
+  }
+
   /* Container shorthands */
   .container-wide {
     @apply max-w-[88rem] mx-auto px-5 sm:px-8 lg:px-12;

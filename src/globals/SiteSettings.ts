@@ -1,4 +1,5 @@
 import type { GlobalConfig } from 'payload'
+import { statItemFields } from '../fields/stat-item'
 
 export const SiteSettings: GlobalConfig = {
   slug: 'site-settings',
@@ -75,10 +76,7 @@ export const SiteSettings: GlobalConfig = {
               type: 'array',
               labels: { singular: 'Impact stat', plural: 'Impact stats' },
               admin: { description: 'Headline impact numbers used in the hero + footer' },
-              fields: [
-                { name: 'value', type: 'text', required: true, admin: { description: 'e.g. "350,000"' } },
-                { name: 'label', type: 'text', required: true, admin: { description: 'e.g. "meals served"' } },
-              ],
+              fields: statItemFields,
             },
           ],
         },

@@ -1,5 +1,6 @@
 import { draftMode } from 'next/headers'
 import { getPayloadClient } from '@/lib/payload'
+import { fetchLiveImpactStats } from '@/lib/impact-stats'
 import { RenderBlocks } from './render-blocks'
 import { PageLivePreview } from './page-live-preview'
 
@@ -31,10 +32,11 @@ export async function PageBody({ page, isDraft }: { page: any; isDraft: boolean 
   const needSettings = isDraft || types.has('stats') || types.has('donateHero')
 
   const payload = await getPayloadClient()
-  const [settings, locations, events, journal, team, faqs, partners] = await Promise.all([
+  const [settings, liveStats, locations, events, journal, team, faqs, partners] = await Promise.all([
     needSettings
       ? payload.findGlobal({ slug: 'site-settings' }).catch(() => null)
       : Promise.resolve(null),
+    isDraft || types.has('stats') ? fetchLiveImpactStats() : Promise.resolve(null),
     needLocations
       ? payload.find({ collection: 'locations', limit: 20, sort: 'name', depth: 1 })
       : Promise.resolve({ docs: [] as any[] }),
@@ -63,6 +65,7 @@ export async function PageBody({ page, isDraft }: { page: any; isDraft: boolean 
 
   const extras = {
     globalStats: (settings as any)?.stats || [],
+    liveStats,
     locations: locations.docs as any[],
     events: events.docs as any[],
     journal: journal.docs as any[],
