@@ -9,6 +9,7 @@ import sharp from 'sharp'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
+import { Documents } from './collections/Documents'
 import { Pages } from './collections/Pages'
 import { Locations } from './collections/Locations'
 import { TeamMembers } from './collections/TeamMembers'
@@ -51,6 +52,11 @@ const storagePlugins = [
       // schema differs between S3 and non-S3 environments and schema push tries
       // to drop the media.prefix column on deploy. '' keeps file keys unprefixed.
       media: { prefix: '' },
+      // Same rationale as media (prefix must be set explicitly), but namespaced
+      // under `documents/` so PDFs don't share the bucket root with media —
+      // both collections live in the same R2 bucket, so an unprefixed document
+      // and media file with the same filename would otherwise overwrite.
+      documents: { prefix: 'documents' },
     },
     bucket: process.env.S3_BUCKET || '',
     config: {
@@ -81,6 +87,7 @@ export default buildConfig({
   collections: [
     Users,
     Media,
+    Documents,
     Pages,
     Locations,
     TeamMembers,
