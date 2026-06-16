@@ -1,6 +1,11 @@
-import type { LiveMetric } from '@/fields/stat-item'
+import { LIVE_METRICS, type LiveMetric } from '@/fields/stat-item'
 
-export type LiveImpactStats = Record<LiveMetric, number>
+/**
+ * Partial so a single bad/missing field in the portal response only drops that
+ * one metric — the others still resolve live, and `resolveValue` falls back per
+ * stat for anything absent.
+ */
+export type LiveImpactStats = Partial<Record<LiveMetric, number>>
 
 /**
  * Fetches the headline impact figures from the volunteer portal's public
@@ -20,15 +25,23 @@ export async function fetchLiveImpactStats(): Promise<LiveImpactStats | null> {
       next: { revalidate: 3600 },
     })
     if (!res.ok) return null
-    const data = (await res.json()) as Partial<LiveImpactStats>
+    const data = (await res.json()) as Record<string, unknown>
 
-    const peopleServed = Number(data.peopleServed)
-    const volunteerHours = Number(data.volunteerHours)
-    const foodSavedKg = Number(data.foodSavedKg)
-    if (![peopleServed, volunteerHours, foodSavedKg].every(Number.isFinite)) return null
+    // Parse each metric independently: one bad field shouldn't sink the others.
+    const stats: LiveImpactStats = {}
+    const invalid: LiveMetric[] = []
+    for (const metric of LIVE_METRICS) {
+      const value = Number(data[metric])
+      if (Number.isFinite(value)) stats[metric] = value
+      else invalid.push(metric)
+    }
 
-    return { peopleServed, volunteerHours, foodSavedKg }
-  } catch {
+    if (invalid.length) {
+      console.warn(`[impact-stats] portal response missing/invalid metrics: ${invalid.join(', ')}`)
+    }
+    return Object.keys(stats).length ? stats : null
+  } catch (error) {
+    console.warn('[impact-stats] failed to fetch portal stats:', error)
     return null
   }
 }

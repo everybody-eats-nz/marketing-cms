@@ -1,15 +1,8 @@
 import { KawakawaPattern } from '@/components/kawakawa-pattern'
 import { CountUp } from '@/components/count-up'
 import type { LiveImpactStats } from '@/lib/impact-stats'
-import type { LiveMetric } from '@/fields/stat-item'
+import type { StatItem } from '@/fields/stat-item'
 import { renderRichText } from './render-text'
-
-type Stat = {
-  value: string
-  label: string
-  liveMetric?: LiveMetric | 'none' | null
-  suffix?: string | null
-}
 
 type Props = {
   block: {
@@ -17,14 +10,14 @@ type Props = {
     heading?: string
     variant?: 'light' | 'darkPanel'
     source?: 'global' | 'custom'
-    items?: Stat[]
+    items?: StatItem[]
   }
-  globalStats?: Stat[]
+  globalStats?: StatItem[]
   liveStats?: LiveImpactStats | null
 }
 
 /** Resolve a stat's display value — a live figure when bound and available, else the fixed value. */
-function resolveValue(stat: Stat, liveStats?: LiveImpactStats | null): string {
+function resolveValue(stat: StatItem, liveStats?: LiveImpactStats | null): string {
   if (stat.liveMetric && stat.liveMetric !== 'none') {
     const live = liveStats?.[stat.liveMetric]
     if (typeof live === 'number' && Number.isFinite(live)) {

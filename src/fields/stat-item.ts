@@ -5,6 +5,18 @@ export const LIVE_METRICS = ['peopleServed', 'volunteerHours', 'foodSavedKg'] as
 export type LiveMetric = (typeof LIVE_METRICS)[number]
 
 /**
+ * Runtime shape of a single impact stat (from `statItemFields`). The shared
+ * source of truth for both the Stats block's custom items and the Site Settings
+ * global impact stats, so the live-metric binding survives every type boundary.
+ */
+export type StatItem = {
+  value: string
+  label: string
+  liveMetric?: LiveMetric | 'none' | null
+  suffix?: string | null
+}
+
+/**
  * Shared fields for a single impact stat — reused by the Stats block's custom
  * items and the Site Settings global impact stats.
  *

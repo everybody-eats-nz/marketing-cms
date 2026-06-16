@@ -25,7 +25,7 @@ import { DownloadsBlock } from './downloads-block'
 type AnyBlock = { blockType: string; id?: string; [k: string]: any }
 
 export type RenderExtras = {
-  globalStats?: Array<{ value: string; label: string }>
+  globalStats?: import('@/fields/stat-item').StatItem[]
   liveStats?: import('@/lib/impact-stats').LiveImpactStats | null
   locations?: any[]
   events?: any[]
