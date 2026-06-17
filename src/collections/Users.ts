@@ -2,6 +2,13 @@ import type { CollectionConfig } from 'payload'
 
 const adminURL = (process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000').replace(/\/$/, '')
 
+const escapeHtml = (value: string): string =>
+  value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+
 export const Users: CollectionConfig = {
   slug: 'users',
   admin: {
@@ -14,16 +21,16 @@ export const Users: CollectionConfig = {
     // the CMS. Until the link is clicked the account stays unverified and login
     // is blocked.
     verify: {
-      generateEmailSubject: () => 'You’ve been invited to the Everybody Eats CMS',
+      generateEmailSubject: () => "You've been invited to the Everybody Eats CMS",
       generateEmailHTML: ({ token, user }) => {
         // Matches Payload's default verify route: {serverURL}/admin/{collection}/verify/{token}
-        const verifyURL = `${adminURL}/admin/users/verify/${token}`
+        const verifyURL = escapeHtml(`${adminURL}/admin/users/verify/${token}`)
         const name = (user as { name?: string })?.name
         return `
-          <p>Kia ora${name ? ` ${name}` : ''},</p>
-          <p>You’ve been added to the Everybody Eats CMS. Confirm your email address to activate your account:</p>
+          <p>Kia ora${name ? ` ${escapeHtml(name)}` : ''},</p>
+          <p>You've been added to the Everybody Eats CMS. Confirm your email address to activate your account:</p>
           <p><a href="${verifyURL}">Verify my account</a></p>
-          <p>If the button doesn’t work, copy and paste this link into your browser:</p>
+          <p>If the button doesn't work, copy and paste this link into your browser:</p>
           <p>${verifyURL}</p>
         `
       },
