@@ -61,6 +61,25 @@ async function fetchLocation(slug: string) {
   return docs[0] || null
 }
 
+// A deliberately coarse "posted ~when" label for diner notes — credible
+// recency without pinning an exact date to a quote.
+function roughDate(iso?: string): string | null {
+  if (!iso) return null
+  const ms = Date.now() - new Date(iso).getTime()
+  if (Number.isNaN(ms)) return null
+  const days = Math.floor(ms / 86_400_000)
+  if (days <= 0) return 'Today'
+  if (days < 7) return 'This week'
+  if (days < 14) return 'Last week'
+  if (days < 31) return `${Math.round(days / 7)} weeks ago`
+  if (days < 365) {
+    const months = Math.max(1, Math.round(days / 30))
+    return months === 1 ? 'A month ago' : `${months} months ago`
+  }
+  const years = Math.round(days / 365)
+  return years <= 1 ? 'Over a year ago' : `${years} years ago`
+}
+
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params
   const loc = await fetchLocation(slug)
@@ -346,8 +365,16 @@ export default async function LocationPage({ params }: Params) {
                 <blockquote className="display text-xl font-light text-content leading-snug">
                   “{note.message}”
                 </blockquote>
-                {note.name && (
-                  <figcaption className="mt-4 text-sm text-muted">— {note.name}</figcaption>
+                {(note.name || roughDate(note.createdAt)) && (
+                  <figcaption className="mt-4 flex flex-wrap items-baseline gap-x-2 text-sm text-muted">
+                    {note.name && <span>— {note.name}</span>}
+                    {roughDate(note.createdAt) && (
+                      <time dateTime={note.createdAt} className="text-muted/70">
+                        {note.name ? '· ' : ''}
+                        {roughDate(note.createdAt)}
+                      </time>
+                    )}
+                  </figcaption>
                 )}
               </figure>
             ))}
