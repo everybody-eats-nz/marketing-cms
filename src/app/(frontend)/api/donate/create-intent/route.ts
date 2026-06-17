@@ -57,18 +57,24 @@ export async function POST(request: Request) {
   // Round to cents to avoid floating-point surprises on custom amounts.
   const cents = Math.round(dollars * 100)
 
+  const locName =
+    typeof locationName === 'string' && locationName.trim() ? locationName.trim() : ''
+  const slug = typeof locationSlug === 'string' ? locationSlug : ''
+
   try {
     const intent = await stripe.paymentIntents.create({
       amount: cents,
       currency: 'nzd',
       automatic_payment_methods: { enabled: true },
-      // Surfaced on the diner's bank statement / Stripe receipt.
-      description: 'Everybody Eats — pay what you feel',
+      // Location-specific so the Stripe Payments list and the receipt show which
+      // restaurant a gift was for at a glance; the metadata below stays the
+      // source of truth for filtering, exports, and reporting.
+      description: locName ? `Everybody Eats — ${locName}` : 'Everybody Eats — pay what you feel',
       ...(receiptEmail ? { receipt_email: receiptEmail } : {}),
       metadata: {
         source: 'pay-at-table',
-        locationSlug: typeof locationSlug === 'string' ? locationSlug : '',
-        locationName: typeof locationName === 'string' ? locationName : '',
+        locationSlug: slug,
+        locationName: locName,
       },
     })
 
