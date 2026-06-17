@@ -3,6 +3,8 @@ import type { Block } from 'payload'
 export const Pillars: Block = {
   slug: 'pillars',
   labels: { singular: 'Pillars section', plural: 'Pillars sections' },
+  imageURL: '/block-previews/pillars.jpg',
+  imageAltText: 'Pillars — supporting points in columns',
   fields: [
     { name: 'eyebrow', type: 'text' },
     {

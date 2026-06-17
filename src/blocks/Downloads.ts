@@ -7,6 +7,8 @@ import type { Block } from 'payload'
 export const Downloads: Block = {
   slug: 'downloads',
   labels: { singular: 'Downloads', plural: 'Downloads' },
+  imageURL: '/block-previews/downloads.jpg',
+  imageAltText: 'Downloadable files list',
   fields: [
     { name: 'eyebrow', type: 'text', defaultValue: 'Download' },
     {

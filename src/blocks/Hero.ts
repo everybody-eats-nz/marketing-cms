@@ -3,6 +3,8 @@ import type { Block } from 'payload'
 export const Hero: Block = {
   slug: 'hero',
   labels: { singular: 'Hero', plural: 'Heroes' },
+  imageURL: '/block-previews/hero.jpg',
+  imageAltText: 'Hero — large editorial heading with image and call-to-action buttons',
   fields: [
     { name: 'eyebrow', type: 'text' },
     {

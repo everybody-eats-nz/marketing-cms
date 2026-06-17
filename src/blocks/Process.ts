@@ -3,6 +3,8 @@ import type { Block } from 'payload'
 export const Process: Block = {
   slug: 'process',
   labels: { singular: 'Process steps', plural: 'Process steps' },
+  imageURL: '/block-previews/process.jpg',
+  imageAltText: 'Numbered process steps',
   fields: [
     { name: 'eyebrow', type: 'text' },
     {

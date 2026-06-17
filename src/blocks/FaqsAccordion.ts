@@ -3,6 +3,8 @@ import type { Block } from 'payload'
 export const FaqsAccordion: Block = {
   slug: 'faqsAccordion',
   labels: { singular: 'FAQs accordion', plural: 'FAQs accordions' },
+  imageURL: '/block-previews/faqsAccordion.jpg',
+  imageAltText: 'Frequently asked questions accordion',
   admin: { group: 'Lists' },
   fields: [
     {

@@ -3,6 +3,8 @@ import type { Block } from 'payload'
 export const CtaStrip: Block = {
   slug: 'ctaStrip',
   labels: { singular: 'CTA strip', plural: 'CTA strips' },
+  imageURL: '/block-previews/ctaStrip.jpg',
+  imageAltText: 'Call-to-action strip with a button',
   fields: [
     {
       name: 'heading',

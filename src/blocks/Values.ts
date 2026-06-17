@@ -3,6 +3,8 @@ import type { Block } from 'payload'
 export const Values: Block = {
   slug: 'values',
   labels: { singular: 'Mission & values', plural: 'Mission & values' },
+  imageURL: '/block-previews/values.jpg',
+  imageAltText: 'Mission and values section',
   fields: [
     { name: 'eyebrow', type: 'text' },
     {

@@ -3,6 +3,8 @@ import type { Block } from 'payload'
 export const LocationsGrid: Block = {
   slug: 'locationsGrid',
   labels: { singular: 'Locations grid', plural: 'Locations grids' },
+  imageURL: '/block-previews/locationsGrid.jpg',
+  imageAltText: 'Grid of restaurant locations',
   fields: [
     { name: 'eyebrow', type: 'text' },
     {
