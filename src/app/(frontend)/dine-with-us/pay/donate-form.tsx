@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { loadStripe } from '@stripe/stripe-js'
 import type { Appearance } from '@stripe/stripe-js'
@@ -18,18 +18,35 @@ type Preset = { amount: number; label: string }
 const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 const stripePromise = publishableKey ? loadStripe(publishableKey) : null
 
-// Stripe Elements render inside a cross-origin iframe, so our CSS variables and
-// self-hosted fonts don't reach them — brand colours have to be passed as
-// literals (see tailwind.config.ts), and the body font (Plus Jakarta Sans) must
-// be loaded into the iframe explicitly via the `fonts` option below. `inherit`
-// does NOT work here; it falls back to a serif default.
-const appearance: Appearance = {
+// Stripe Elements render inside a cross-origin iframe, so our CSS variables,
+// self-hosted fonts, and `.dark` class don't reach them — brand colours and
+// fonts must be passed as literals (see tailwind.config.ts), and the theme has
+// to be detected here and handed to Stripe. `fontFamily: 'inherit'` does NOT
+// work; it falls back to a serif default.
+const FONT = '"Plus Jakarta Sans", system-ui, -apple-system, sans-serif'
+
+// Light theme — bright card on the forest backdrop (cream `--surface`).
+const lightAppearance: Appearance = {
   theme: 'stripe',
   variables: {
     colorPrimary: '#1D5337', // forest-500
     colorText: '#1A1410', // ink
     colorDanger: '#D87F58', // clay-300
-    fontFamily: '"Plus Jakarta Sans", system-ui, -apple-system, sans-serif',
+    fontFamily: FONT,
+    borderRadius: '14px',
+    spacingUnit: '4px',
+  },
+}
+
+// Dark theme — matches the near-black `--surface` the card flips to under .dark.
+const darkAppearance: Appearance = {
+  theme: 'night',
+  variables: {
+    colorPrimary: '#9BBDA0', // forest-200 — legible green on dark
+    colorBackground: '#121C16', // surface-2 dark (inputs sit above the card)
+    colorText: '#F3EDE0', // content dark (cream)
+    colorDanger: '#E8A988', // clay-200
+    fontFamily: FONT,
     borderRadius: '14px',
     spacingUnit: '4px',
   },
@@ -43,6 +60,23 @@ const fonts = [
   },
 ]
 
+// The site toggles dark mode by adding `.dark` to <html> (tailwind darkMode:
+// 'class'). The Stripe iframe can't observe that, so we watch it here and hand
+// Stripe the matching appearance — react-stripe-js applies it live (Stripe
+// supports updating appearance without remounting the Element).
+function useIsDark(): boolean {
+  const [dark, setDark] = useState(false)
+  useEffect(() => {
+    const el = document.documentElement
+    const update = () => setDark(el.classList.contains('dark'))
+    update()
+    const obs = new MutationObserver(update)
+    obs.observe(el, { attributes: true, attributeFilter: ['class'] })
+    return () => obs.disconnect()
+  }, [])
+  return dark
+}
+
 export function DonateForm({
   locationSlug,
   locationName,
@@ -54,9 +88,12 @@ export function DonateForm({
 }) {
   const [amount, setAmount] = useState<number | null>(presets[0]?.amount ?? null)
   const [custom, setCustom] = useState('')
+  const [email, setEmail] = useState('')
   const [clientSecret, setClientSecret] = useState<string | null>(null)
   const [starting, setStarting] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const isDark = useIsDark()
+  const appearance = isDark ? darkAppearance : lightAppearance
 
   const customActive = custom.trim() !== ''
   const effectiveAmount = customActive ? Number(custom) : amount
@@ -76,7 +113,12 @@ export function DonateForm({
       const res = await fetch('/api/donate/create-intent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: effectiveAmount, locationSlug, locationName }),
+        body: JSON.stringify({
+          amount: effectiveAmount,
+          locationSlug,
+          locationName,
+          email: email.trim() || undefined,
+        }),
       })
       const data = await res.json()
       if (!res.ok || !data.clientSecret) {
@@ -167,6 +209,16 @@ export function DonateForm({
           className="w-full bg-transparent text-lg outline-none placeholder:text-muted/70"
         />
       </label>
+
+      <input
+        type="email"
+        inputMode="email"
+        autoComplete="email"
+        placeholder="Email for a receipt (optional)"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        className="mt-3 w-full rounded-2xl border border-line/25 px-4 py-3 text-base outline-none focus:border-forest-500 transition-colors placeholder:text-muted/70"
+      />
 
       {error && <p className="mt-4 text-sm text-clay-300">{error}</p>}
 

@@ -19,6 +19,7 @@ type PaymentSummary = {
   locationName?: string
   locationSlug?: string
   paymentIntentId?: string
+  email?: string
 }
 
 // Confirm the payment server-side so the page never claims success for a
@@ -57,6 +58,7 @@ async function fetchPaymentSummary(params: {
         locationName: intent.metadata?.locationName || undefined,
         locationSlug: intent.metadata?.locationSlug || undefined,
         paymentIntentId: intent.id,
+        email: intent.receipt_email || undefined,
       }
     } catch {
       return null
@@ -110,9 +112,9 @@ export default async function PayThanksPage({ searchParams }: SearchParams) {
           )}
         </p>
 
-        {summary && (
+        {summary?.email && (
           <p className="mt-4 text-sm text-cream-50/60">
-            A receipt is on its way to your email from Stripe.
+            A receipt is on its way to {summary.email} from Stripe.
           </p>
         )}
 

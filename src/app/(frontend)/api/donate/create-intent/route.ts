@@ -22,11 +22,20 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Invalid request body.' }, { status: 400 })
   }
 
-  const { amount, locationSlug, locationName } = (body ?? {}) as {
+  const { amount, locationSlug, locationName, email } = (body ?? {}) as {
     amount?: unknown
     locationSlug?: unknown
     locationName?: unknown
+    email?: unknown
   }
+
+  // Email is optional. Only set receipt_email when it looks like an address —
+  // Stripe then emails its standard receipt (live mode, with customer receipts
+  // enabled in the dashboard; test mode records but never sends).
+  const receiptEmail =
+    typeof email === 'string' && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.trim())
+      ? email.trim()
+      : undefined
 
   const dollars = typeof amount === 'number' ? amount : Number(amount)
   if (!Number.isFinite(dollars) || dollars < MIN_AMOUNT || dollars > MAX_AMOUNT) {
@@ -46,6 +55,7 @@ export async function POST(request: Request) {
       automatic_payment_methods: { enabled: true },
       // Surfaced on the diner's bank statement / Stripe receipt.
       description: 'Everybody Eats — pay what you feel',
+      ...(receiptEmail ? { receipt_email: receiptEmail } : {}),
       metadata: {
         source: 'pay-at-table',
         locationSlug: typeof locationSlug === 'string' ? locationSlug : '',

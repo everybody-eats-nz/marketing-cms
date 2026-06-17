@@ -85,7 +85,7 @@ export function FeedbackForm({
         rows={3}
         maxLength={2000}
         placeholder="The food, the welcome, the room…"
-        className="w-full rounded-2xl border border-line/25 bg-cream-50/40 px-4 py-3 text-base outline-none focus:border-forest-500 transition-colors resize-none"
+        className="w-full rounded-2xl border border-line/25 bg-surface-2 px-4 py-3 text-base outline-none focus:border-forest-500 transition-colors resize-none"
       />
 
       <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3">
@@ -112,7 +112,7 @@ export function FeedbackForm({
           onChange={(e) => setName(e.target.value)}
           maxLength={100}
           placeholder="First name (optional)"
-          className="flex-1 min-w-[10rem] rounded-2xl border border-line/25 bg-cream-50/40 px-4 py-2.5 text-sm outline-none focus:border-forest-500 transition-colors"
+          className="flex-1 min-w-[10rem] rounded-2xl border border-line/25 bg-surface-2 px-4 py-2.5 text-sm outline-none focus:border-forest-500 transition-colors"
         />
       </div>
 
