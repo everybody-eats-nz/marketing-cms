@@ -4,7 +4,7 @@ import * as migration_20260615_040142_add_enquiry_form_and_corporate_email from 
 import * as migration_20260616_031659_add_documents_and_downloads from './20260616_031659_add_documents_and_downloads';
 import * as migration_20260616_055922_add_stat_live_metric_and_suffix from './20260616_055922_add_stat_live_metric_and_suffix';
 import * as migration_20260616_211500_remove_daily_menus from './20260616_211500_remove_daily_menus';
-import * as migration_20260617_000000_add_user_email_verification from './20260617_000000_add_user_email_verification';
+import * as migration_20260617_014949_add_user_email_verification from './20260617_014949_add_user_email_verification';
 
 export const migrations = [
   {
@@ -30,7 +30,7 @@ export const migrations = [
   {
     up: migration_20260616_055922_add_stat_live_metric_and_suffix.up,
     down: migration_20260616_055922_add_stat_live_metric_and_suffix.down,
-    name: '20260616_055922_add_stat_live_metric_and_suffix'
+    name: '20260616_055922_add_stat_live_metric_and_suffix',
   },
   {
     up: migration_20260616_211500_remove_daily_menus.up,
@@ -38,8 +38,8 @@ export const migrations = [
     name: '20260616_211500_remove_daily_menus',
   },
   {
-    up: migration_20260617_000000_add_user_email_verification.up,
-    down: migration_20260617_000000_add_user_email_verification.down,
-    name: '20260617_000000_add_user_email_verification',
+    up: migration_20260617_014949_add_user_email_verification.up,
+    down: migration_20260617_014949_add_user_email_verification.down,
+    name: '20260617_014949_add_user_email_verification',
   },
 ];

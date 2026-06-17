@@ -1,9 +1,8 @@
 import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
 
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
-  await db.execute(sql`
-   ALTER TABLE "users" ADD COLUMN IF NOT EXISTS "_verified" boolean;
-  ALTER TABLE "users" ADD COLUMN IF NOT EXISTS "_verification_token" varchar;`)
+  await db.execute(sql`ALTER TABLE "users" ADD COLUMN IF NOT EXISTS "_verified" boolean;`)
+  await db.execute(sql`ALTER TABLE "users" ADD COLUMN IF NOT EXISTS "_verificationtoken" varchar;`)
 
   // Mark all pre-existing accounts as verified. Payload only treats `_verified = true`
   // as verified, so without this backfill every current user (created before verification
@@ -12,7 +11,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
 }
 
 export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
-  await db.execute(sql`
-   ALTER TABLE "users" DROP COLUMN IF EXISTS "_verified";
-  ALTER TABLE "users" DROP COLUMN IF EXISTS "_verification_token";`)
+  await db.execute(sql`ALTER TABLE "users" DROP COLUMN IF EXISTS "_verified";`)
+  await db.execute(sql`ALTER TABLE "users" DROP COLUMN IF EXISTS "_verificationtoken";`)
 }
