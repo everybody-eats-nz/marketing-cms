@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getStripeClient } from '@/lib/stripe'
-import { recordDonation } from '@/lib/donations'
+import { isRecordedSource, recordDonation } from '@/lib/donations'
 import { PaySection } from '../pay-section'
 import { FeedbackForm } from '../feedback-form'
 
@@ -46,7 +46,7 @@ async function fetchPaymentSummary(params: {
       if (intent.status !== 'succeeded') return null
       // Safety net: the webhook is the authoritative writer, but record here too
       // so a donation is logged even where no webhook is configured. Idempotent.
-      if (intent.metadata?.source === 'pay-at-table') {
+      if (isRecordedSource(intent.metadata?.source)) {
         try {
           await recordDonation(intent)
         } catch {

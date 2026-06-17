@@ -81,10 +81,13 @@ export function DonateForm({
   locationSlug,
   locationName,
   presets,
+  source = 'pay-at-table',
 }: {
-  locationSlug: string
-  locationName: string
+  // Location is only set for the pay-at-table flow; omitted for /donate.
+  locationSlug?: string
+  locationName?: string
   presets: Preset[]
+  source?: 'pay-at-table' | 'donation'
 }) {
   const [amount, setAmount] = useState<number | null>(presets[0]?.amount ?? null)
   const [custom, setCustom] = useState('')
@@ -94,6 +97,22 @@ export function DonateForm({
   const [error, setError] = useState<string | null>(null)
   const isDark = useIsDark()
   const appearance = isDark ? darkAppearance : lightAppearance
+
+  // Prefill from a ?amount= query (e.g. /donate?amount=50): select it if it's a
+  // preset, otherwise drop it into the custom field. Read from window rather
+  // than useSearchParams to avoid a Suspense boundary requirement at build.
+  useEffect(() => {
+    const a = Number(new URLSearchParams(window.location.search).get('amount'))
+    if (!Number.isFinite(a) || a <= 0) return
+    if (presets.some((p) => p.amount === a)) {
+      setAmount(a)
+      setCustom('')
+    } else {
+      setCustom(String(a))
+    }
+    // presets are static for a given mount; run once.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const customActive = custom.trim() !== ''
   const effectiveAmount = customActive ? Number(custom) : amount
@@ -115,8 +134,9 @@ export function DonateForm({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           amount: effectiveAmount,
-          locationSlug,
-          locationName,
+          source,
+          ...(locationSlug ? { locationSlug } : {}),
+          ...(locationName ? { locationName } : {}),
           email: email.trim() || undefined,
         }),
       })
@@ -158,7 +178,9 @@ export function DonateForm({
   // Step 1 — choose an amount.
   return (
     <div>
-      <p className="eyebrow mb-4">Tonight, I’d like to give</p>
+      <p className="eyebrow mb-4">
+        {source === 'donation' ? 'I’d like to give' : 'Tonight, I’d like to give'}
+      </p>
       <div className="grid grid-cols-2 gap-3">
         {presets.map((preset) => {
           const selected = !customActive && amount === preset.amount

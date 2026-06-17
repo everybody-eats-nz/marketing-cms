@@ -22,12 +22,19 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Invalid request body.' }, { status: 400 })
   }
 
-  const { amount, locationSlug, locationName, email } = (body ?? {}) as {
+  const { amount, locationSlug, locationName, email, source } = (body ?? {}) as {
     amount?: unknown
     locationSlug?: unknown
     locationName?: unknown
     email?: unknown
+    source?: unknown
   }
+
+  // Which on-site flow this one-off gift came from: 'pay-at-table' (a diner
+  // paying for their meal, tied to a restaurant) or 'donation' (the /donate
+  // page, no location). Both are recorded to the Donations ledger and kept
+  // distinct in Stripe via metadata + description.
+  const giftSource = source === 'donation' ? 'donation' : 'pay-at-table'
 
   // Email is optional. Validate with split() + a single-token whitespace check
   // (no multi-quantifier regex) so a user-supplied value can't trigger ReDoS.
@@ -66,13 +73,18 @@ export async function POST(request: Request) {
       amount: cents,
       currency: 'nzd',
       automatic_payment_methods: { enabled: true },
-      // Location-specific so the Stripe Payments list and the receipt show which
-      // restaurant a gift was for at a glance; the metadata below stays the
-      // source of truth for filtering, exports, and reporting.
-      description: locName ? `Everybody Eats — ${locName}` : 'Everybody Eats — pay what you feel',
+      // Descriptive so the Stripe Payments list and receipt show context at a
+      // glance (which restaurant, or a general donation); metadata below stays
+      // the source of truth for filtering, exports, and reporting.
+      description:
+        giftSource === 'donation'
+          ? 'Everybody Eats — Donation'
+          : locName
+            ? `Everybody Eats — ${locName}`
+            : 'Everybody Eats — pay what you feel',
       ...(receiptEmail ? { receipt_email: receiptEmail } : {}),
       metadata: {
-        source: 'pay-at-table',
+        source: giftSource,
         locationSlug: slug,
         locationName: locName,
       },
