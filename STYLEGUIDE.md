@@ -8,7 +8,9 @@ If you're adding a block, opening a PR, or auditing an existing page, the system
 
 ## Tokens
 
-All design tokens live in [tailwind.config.ts](tailwind.config.ts) and [src/app/(frontend)/globals.css](src/app/(frontend)/globals.css). Never invent a new colour, font size, or radius in component code — extend the config instead.
+The colour palette and editorial scales live in one dependency-free module, [src/styles/brand-tokens.ts](src/styles/brand-tokens.ts), which is imported by **both** [tailwind.config.ts](tailwind.config.ts) (to build the theme) and the live [`/styleguide`](src/app/(frontend)/styleguide/page.tsx) page (so the reference can never drift from what Tailwind emits). Theme-aware CSS variables and component utilities live in [src/app/(frontend)/globals.css](src/app/(frontend)/globals.css). Never invent a new colour, font size, or radius in component code — change `brand-tokens.ts` (or extend the config) instead.
+
+The `/styleguide` page is interactive: click any token/class chip to copy it, toggle Light/Dark to preview semantic tokens, and use the built-in contrast checker and type playground before introducing a new pairing.
 
 ### Colour palette
 
