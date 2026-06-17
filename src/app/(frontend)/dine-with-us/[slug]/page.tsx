@@ -77,7 +77,7 @@ export default async function LocationPage({ params }: Params) {
   if (!loc) notFound()
 
   const payload = await getPayloadClient()
-  const [upcomingEvents, tonightsMenu] = await Promise.all([
+  const [upcomingEvents, tonightsMenu, dinerNotes] = await Promise.all([
     payload.find({
       collection: 'events',
       where: {
@@ -89,6 +89,18 @@ export default async function LocationPage({ params }: Params) {
       depth: 1,
     }).catch(() => ({ docs: [] })),
     fetchTonightsMenu(loc.name),
+    // Published diner feedback (positive + consented, auto-approved by the AI
+    // classifier on submit, with staff override). Social proof, in diners' words.
+    payload.find({
+      collection: 'feedback',
+      where: {
+        status: { equals: 'published' },
+        locationSlug: { equals: slug },
+      },
+      limit: 6,
+      sort: '-createdAt',
+      depth: 0,
+    }).catch(() => ({ docs: [] })),
   ])
 
   return (
@@ -311,6 +323,34 @@ export default async function LocationPage({ params }: Params) {
                 </Link>
               )
             })}
+          </div>
+        </section>
+      )}
+
+      {/* What diners are saying — published, consented feedback from the pay flow */}
+      {dinerNotes.docs.length > 0 && (
+        <section className="container-wide py-12 pb-24">
+          <p className="eyebrow mb-10">In diners’ own words</p>
+          <div className="columns-1 md:columns-2 lg:columns-3 gap-6 [column-fill:_balance]">
+            {dinerNotes.docs.map((note: any) => (
+              <figure
+                key={note.id}
+                className="mb-6 break-inside-avoid rounded-[1.75rem] border border-line/15 bg-surface p-7 shadow-sm"
+              >
+                {note.rating ? (
+                  <div aria-label={`${note.rating} out of 5`} className="mb-3 text-sun-400 text-sm">
+                    {'★'.repeat(note.rating)}
+                    <span className="text-line/40">{'★'.repeat(5 - note.rating)}</span>
+                  </div>
+                ) : null}
+                <blockquote className="display text-xl font-light text-content leading-snug">
+                  “{note.message}”
+                </blockquote>
+                {note.name && (
+                  <figcaption className="mt-4 text-sm text-muted">— {note.name}</figcaption>
+                )}
+              </figure>
+            ))}
           </div>
         </section>
       )}
