@@ -1,0 +1,63 @@
+import { NextResponse } from 'next/server'
+import { getStripeClient } from '@/lib/stripe'
+import { MAX_AMOUNT, MIN_AMOUNT } from '@/app/(frontend)/dine-with-us/pay/shared'
+
+// Stripe's SDK needs the Node runtime (not edge).
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
+
+// Creates a Stripe PaymentIntent for the embedded Payment Element. The browser
+// confirms the payment directly with Stripe using the returned client secret,
+// so card data never touches our server (PCI scope stays minimal, SAQ A).
+export async function POST(request: Request) {
+  const stripe = getStripeClient()
+  if (!stripe) {
+    return NextResponse.json({ error: 'Payments are not configured.' }, { status: 503 })
+  }
+
+  let body: unknown
+  try {
+    body = await request.json()
+  } catch {
+    return NextResponse.json({ error: 'Invalid request body.' }, { status: 400 })
+  }
+
+  const { amount, locationSlug, locationName } = (body ?? {}) as {
+    amount?: unknown
+    locationSlug?: unknown
+    locationName?: unknown
+  }
+
+  const dollars = typeof amount === 'number' ? amount : Number(amount)
+  if (!Number.isFinite(dollars) || dollars < MIN_AMOUNT || dollars > MAX_AMOUNT) {
+    return NextResponse.json(
+      { error: `Amount must be between $${MIN_AMOUNT} and $${MAX_AMOUNT}.` },
+      { status: 400 },
+    )
+  }
+
+  // Round to cents to avoid floating-point surprises on custom amounts.
+  const cents = Math.round(dollars * 100)
+
+  try {
+    const intent = await stripe.paymentIntents.create({
+      amount: cents,
+      currency: 'nzd',
+      automatic_payment_methods: { enabled: true },
+      // Surfaced on the diner's bank statement / Stripe receipt.
+      description: 'Everybody Eats — pay what you feel',
+      metadata: {
+        source: 'pay-at-table',
+        locationSlug: typeof locationSlug === 'string' ? locationSlug : '',
+        locationName: typeof locationName === 'string' ? locationName : '',
+      },
+    })
+
+    return NextResponse.json({ clientSecret: intent.client_secret })
+  } catch {
+    return NextResponse.json(
+      { error: 'Could not start the payment. Please try again.' },
+      { status: 502 },
+    )
+  }
+}

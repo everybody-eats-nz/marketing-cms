@@ -18,6 +18,8 @@ import { JournalPosts } from './collections/JournalPosts'
 import { Quotes } from './collections/Quotes'
 import { Faqs } from './collections/Faqs'
 import { Partners } from './collections/Partners'
+import { Donations } from './collections/Donations'
+import { Feedback } from './collections/Feedback'
 
 import { SiteSettings } from './globals/SiteSettings'
 import { Navigation } from './globals/Navigation'
@@ -95,6 +97,8 @@ export default buildConfig({
     Quotes,
     Faqs,
     Partners,
+    Donations,
+    Feedback,
   ],
   globals: [SiteSettings, Navigation, Footer],
   plugins: storagePlugins,

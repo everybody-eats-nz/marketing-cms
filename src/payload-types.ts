@@ -78,6 +78,8 @@ export interface Config {
     quotes: Quote;
     faqs: Faq;
     partners: Partner;
+    donations: Donation;
+    feedback: Feedback;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -96,6 +98,8 @@ export interface Config {
     quotes: QuotesSelect<false> | QuotesSelect<true>;
     faqs: FaqsSelect<false> | FaqsSelect<true>;
     partners: PartnersSelect<false> | PartnersSelect<true>;
+    donations: DonationsSelect<false> | DonationsSelect<true>;
+    feedback: FeedbackSelect<false> | FeedbackSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -1092,6 +1096,92 @@ export interface Partner {
   createdAt: string;
 }
 /**
+ * Donations taken through the on-site pay-what-you-feel flow.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "donations".
+ */
+export interface Donation {
+  id: number;
+  /**
+   * Stripe PaymentIntent id (pi_…) — the dedupe key.
+   */
+  stripePaymentIntentId: string;
+  /**
+   * Amount given, in dollars (NZD).
+   */
+  amount: number;
+  /**
+   * ISO currency code. Always nzd for now.
+   */
+  currency?: string | null;
+  status: 'succeeded' | 'pending' | 'failed';
+  /**
+   * Locations collection slug, or "special-events".
+   */
+  locationSlug?: string | null;
+  locationName?: string | null;
+  /**
+   * Receipt email captured by Stripe, if any.
+   */
+  email?: string | null;
+  /**
+   * Stripe-hosted receipt URL, if available.
+   */
+  receiptUrl?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Diner comments. AI sets sentiment; positive + consented feedback auto-publishes.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "feedback".
+ */
+export interface Feedback {
+  id: number;
+  /**
+   * The diner’s comment.
+   */
+  message: string;
+  /**
+   * First name to show with the quote (optional).
+   */
+  name?: string | null;
+  /**
+   * Optional 1–5 star rating.
+   */
+  rating?: number | null;
+  /**
+   * Diner ticked “OK to share publicly with my first name”.
+   */
+  consentToDisplay?: boolean | null;
+  /**
+   * Set automatically by the AI classifier on submit.
+   */
+  sentiment?: ('positive' | 'neutral' | 'negative' | 'unknown') | null;
+  /**
+   * AI’s one-line rationale for the sentiment (internal only).
+   */
+  sentimentReason?: string | null;
+  /**
+   * Auto-set on submit; edit here to override what the AI decided.
+   */
+  status: 'published' | 'hidden' | 'pending';
+  /**
+   * Locations slug, or "special-events".
+   */
+  locationSlug?: string | null;
+  locationName?: string | null;
+  /**
+   * Linked donation, if left after paying.
+   */
+  stripePaymentIntentId?: string | null;
+  source?: ('pay-flow' | 'standalone') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -1158,6 +1248,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'partners';
         value: number | Partner;
+      } | null)
+    | ({
+        relationTo: 'donations';
+        value: number | Donation;
+      } | null)
+    | ({
+        relationTo: 'feedback';
+        value: number | Feedback;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -1851,6 +1949,41 @@ export interface PartnersSelect<T extends boolean = true> {
   url?: T;
   description?: T;
   displayOrder?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "donations_select".
+ */
+export interface DonationsSelect<T extends boolean = true> {
+  stripePaymentIntentId?: T;
+  amount?: T;
+  currency?: T;
+  status?: T;
+  locationSlug?: T;
+  locationName?: T;
+  email?: T;
+  receiptUrl?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "feedback_select".
+ */
+export interface FeedbackSelect<T extends boolean = true> {
+  message?: T;
+  name?: T;
+  rating?: T;
+  consentToDisplay?: T;
+  sentiment?: T;
+  sentimentReason?: T;
+  status?: T;
+  locationSlug?: T;
+  locationName?: T;
+  stripePaymentIntentId?: T;
+  source?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -3,7 +3,8 @@ import Link from 'next/link'
 import { notFound, redirect } from 'next/navigation'
 import { getPayloadClient } from '@/lib/payload'
 import { PaySection } from '../pay-section'
-import { PRESET_AMOUNTS, SPECIAL_EVENTS, STRIPE_PAYMENT_LINKS } from '../shared'
+import { DonateForm } from '../donate-form'
+import { PRESET_AMOUNTS, SPECIAL_EVENTS } from '../shared'
 
 type Params = { params: Promise<{ location: string }> }
 
@@ -34,14 +35,13 @@ export default async function PayAmountPage({ params }: Params) {
   const { location } = await params
 
   // The old Webflow site used this slug for its special-events pay page —
-  // QR codes may still point at it.
+  // QR codes (and NFC tags) may still point at it.
   if (location === 'special-events-2') redirect(`/dine-with-us/pay/${SPECIAL_EVENTS.slug}`)
 
   const loc = await resolveLocation(location)
   if (!loc) notFound()
 
   const isSpecialEvent = loc.slug === SPECIAL_EVENTS.slug
-  const links = STRIPE_PAYMENT_LINKS[loc.slug]
 
   return (
     <PaySection>
@@ -68,53 +68,14 @@ export default async function PayAmountPage({ params }: Params) {
             </Link>
           </div>
 
-          {/* Right — amounts, each a direct Stripe Payment Link */}
+          {/* Right — embedded, on-site Stripe payment */}
           <div className="lg:col-span-6">
             <div className="rounded-[2rem] bg-surface text-content p-7 sm:p-10 shadow-2xl">
-              {links ? (
-                <>
-                  <p className="eyebrow mb-4">Tonight, I’d like to give</p>
-                  <div className="grid grid-cols-2 gap-3">
-                    {PRESET_AMOUNTS.map((preset) => {
-                      const href = links.amounts[preset.amount]
-                      if (!href) return null
-                      return (
-                        <a
-                          key={preset.amount}
-                          href={href}
-                          className="group rounded-2xl border border-line/25 px-4 py-5 text-center transition-all duration-200 hover:border-forest-500 hover:bg-forest-500 hover:text-cream-50 hover:shadow-lg active:scale-[0.98]"
-                        >
-                          <span className="display block text-3xl font-medium leading-tight">
-                            ${preset.amount}
-                          </span>
-                          <span className="mt-1 block text-xs leading-snug text-muted group-hover:text-cream-50/75 transition-colors">
-                            {preset.label}
-                          </span>
-                        </a>
-                      )
-                    })}
-                  </div>
-
-                  <a
-                    href={links.other}
-                    className="btn-primary w-full justify-center mt-5 py-4 text-base"
-                  >
-                    Choose another amount →
-                  </a>
-
-                  <p className="mt-5 text-xs text-muted/85 text-center leading-relaxed">
-                    Secure payment by Stripe — card, Apple Pay or Google Pay.
-                    <span className="block mt-1">
-                      No amount is too small. Koha of any size is welcome.
-                    </span>
-                  </p>
-                </>
-              ) : (
-                <p className="text-center text-base text-muted py-6">
-                  Online payments aren’t set up for {loc.name} yet — please see one of our team at
-                  the counter. Sorry!
-                </p>
-              )}
+              <DonateForm
+                locationSlug={loc.slug}
+                locationName={loc.name}
+                presets={PRESET_AMOUNTS}
+              />
             </div>
           </div>
         </div>
