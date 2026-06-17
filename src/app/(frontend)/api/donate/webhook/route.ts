@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import type Stripe from 'stripe'
 import { getStripeClient } from '@/lib/stripe'
-import { recordDonation } from '@/lib/donations'
+import { isRecordedSource, recordDonation } from '@/lib/donations'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -37,8 +37,8 @@ export async function POST(request: Request) {
     event.type === 'payment_intent.payment_failed'
   ) {
     const intent = event.data.object as Stripe.PaymentIntent
-    // Only record our own pay-at-table donations, not unrelated PaymentIntents.
-    if (intent.metadata?.source === 'pay-at-table') {
+    // Only record our own on-site gifts, not unrelated PaymentIntents.
+    if (isRecordedSource(intent.metadata?.source)) {
       try {
         // Re-fetch with the charge expanded so we capture the receipt URL/email.
         const full = await stripe.paymentIntents.retrieve(intent.id, {

@@ -1,4 +1,5 @@
 import { KawakawaPattern } from '@/components/kawakawa-pattern'
+import { DonateForm } from '@/app/(frontend)/dine-with-us/pay/donate-form'
 import { renderRichText } from './render-text'
 
 type Amount = { amount: number; label: string }
@@ -21,6 +22,11 @@ type Props = {
 export function DonateHeroBlock({ block, defaultDonateUrl, charityNumber }: Props) {
   const donateUrl = block.ctaHref || defaultDonateUrl || '#'
   const amounts = block.amounts || []
+  // An internal donate URL means this page IS the donation form (it points at
+  // itself), so we embed the Stripe Payment Element here rather than linking
+  // the amount tiles somewhere else. External URLs (e.g. a third-party
+  // processor) keep the old link-out behaviour.
+  const embed = donateUrl.startsWith('/')
 
   return (
     <section className="bg-sun-100 dark:bg-surface-2 grain relative overflow-hidden">
@@ -45,30 +51,37 @@ export function DonateHeroBlock({ block, defaultDonateUrl, charityNumber }: Prop
         </div>
         <div className="lg:col-span-5">
           <div className="bg-surface dark:bg-surface-3 rounded-[2rem] p-8 sm:p-10 shadow-xl dark:ring-1 dark:ring-line/15">
-            {block.panelLabel && <p className="eyebrow mb-3">{block.panelLabel}</p>}
-            {amounts.length > 0 && (
-              <div className={`grid gap-3 mb-6 ${amounts.length === 4 ? 'grid-cols-4' : amounts.length === 2 ? 'grid-cols-2' : 'grid-cols-3'}`}>
-                {amounts.map((a) => (
-                  <a
-                    key={a.amount}
-                    href={`${donateUrl}?amount=${a.amount}`}
-                    className="group border border-line/30 hover:bg-forest-500 hover:text-cream-50 hover:border-line rounded-2xl py-4 text-center transition-all"
-                  >
-                    <div className="display text-2xl font-medium">${a.amount}</div>
-                    <div className="text-xs text-muted group-hover:text-cream-50/75 mt-1 transition-colors">
-                      {a.label}
-                    </div>
-                  </a>
-                ))}
-              </div>
-            )}
-            <a href={donateUrl} className="btn-primary w-full justify-center">
-              {block.ctaLabel || 'Donate now →'}
-            </a>
-            {(block.footnote || charityNumber) && (
-              <p className="mt-4 text-xs text-muted/85 text-center">
-                {block.footnote || `Registered charity ${charityNumber} · Receipts emailed.`}
-              </p>
+            {embed ? (
+              // Embedded one-off donation — reads ?amount, takes payment on-site.
+              <DonateForm source="donation" presets={amounts} />
+            ) : (
+              <>
+                {block.panelLabel && <p className="eyebrow mb-3">{block.panelLabel}</p>}
+                {amounts.length > 0 && (
+                  <div className={`grid gap-3 mb-6 ${amounts.length === 4 ? 'grid-cols-4' : amounts.length === 2 ? 'grid-cols-2' : 'grid-cols-3'}`}>
+                    {amounts.map((a) => (
+                      <a
+                        key={a.amount}
+                        href={`${donateUrl}?amount=${a.amount}`}
+                        className="group border border-line/30 hover:bg-forest-500 hover:text-cream-50 hover:border-line rounded-2xl py-4 text-center transition-all"
+                      >
+                        <div className="display text-2xl font-medium">${a.amount}</div>
+                        <div className="text-xs text-muted group-hover:text-cream-50/75 mt-1 transition-colors">
+                          {a.label}
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                )}
+                <a href={donateUrl} className="btn-primary w-full justify-center">
+                  {block.ctaLabel || 'Donate now →'}
+                </a>
+                {(block.footnote || charityNumber) && (
+                  <p className="mt-4 text-xs text-muted/85 text-center">
+                    {block.footnote || `Registered charity ${charityNumber} · Receipts emailed.`}
+                  </p>
+                )}
+              </>
             )}
           </div>
         </div>

@@ -1,6 +1,15 @@
 import type Stripe from 'stripe'
 import { getPayloadClient } from '@/lib/payload'
 
+// PaymentIntent metadata.source values we recognise as our own on-site gifts
+// and record to the Donations ledger. Keeps the webhook and /thanks page from
+// recording unrelated PaymentIntents that might exist in the Stripe account.
+const RECORDED_SOURCES = ['pay-at-table', 'donation']
+
+export function isRecordedSource(source?: string | null): boolean {
+  return !!source && RECORDED_SOURCES.includes(source)
+}
+
 // Upsert a donation row keyed by the Stripe PaymentIntent id. Called from two
 // places — the Stripe webhook (authoritative) and the /thanks page (safety net
 // for environments without a webhook configured) — so it must be idempotent.
