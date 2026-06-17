@@ -3,6 +3,8 @@ import type { Block } from 'payload'
 export const Timeline: Block = {
   slug: 'timeline',
   labels: { singular: 'Timeline', plural: 'Timelines' },
+  imageURL: '/block-previews/timeline.jpg',
+  imageAltText: 'Vertical timeline of milestones',
   fields: [
     { name: 'eyebrow', type: 'text' },
     {

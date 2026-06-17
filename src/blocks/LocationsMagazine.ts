@@ -3,6 +3,8 @@ import type { Block } from 'payload'
 export const LocationsMagazine: Block = {
   slug: 'locationsMagazine',
   labels: { singular: 'Locations (magazine)', plural: 'Locations (magazine)' },
+  imageURL: '/block-previews/locationsMagazine.jpg',
+  imageAltText: 'Locations in a magazine-style layout',
   admin: { group: 'Lists' },
   fields: [
     {

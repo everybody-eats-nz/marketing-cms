@@ -3,6 +3,8 @@ import type { Block } from 'payload'
 export const MediaBlock: Block = {
   slug: 'media',
   labels: { singular: 'Media (full-bleed)', plural: 'Media (full-bleed)' },
+  imageURL: '/block-previews/media.jpg',
+  imageAltText: 'Full-bleed media image band',
   fields: [
     { name: 'image', type: 'upload', relationTo: 'media', required: true },
     {

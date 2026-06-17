@@ -3,6 +3,8 @@ import type { Block } from 'payload'
 export const DonateHero: Block = {
   slug: 'donateHero',
   labels: { singular: 'Donate hero', plural: 'Donate heroes' },
+  imageURL: '/block-previews/donateHero.jpg',
+  imageAltText: 'Donate hero — heading with preset donation amount buttons',
   fields: [
     { name: 'eyebrow', type: 'text' },
     {

@@ -3,6 +3,8 @@ import type { Block } from 'payload'
 export const Testimonials: Block = {
   slug: 'testimonials',
   labels: { singular: 'Testimonials', plural: 'Testimonials' },
+  imageURL: '/block-previews/testimonials.jpg',
+  imageAltText: 'Testimonial quotes',
   fields: [
     { name: 'eyebrow', type: 'text' },
     {

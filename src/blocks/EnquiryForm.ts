@@ -7,6 +7,8 @@ import type { Block } from 'payload'
 export const EnquiryForm: Block = {
   slug: 'enquiryForm',
   labels: { singular: 'Enquiry form', plural: 'Enquiry forms' },
+  imageURL: '/block-previews/enquiryForm.jpg',
+  imageAltText: 'Enquiry form with type selector',
   fields: [
     { name: 'eyebrow', type: 'text', defaultValue: 'Start an enquiry' },
     {

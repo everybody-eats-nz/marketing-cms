@@ -4,6 +4,8 @@ import { statItemFields } from '../fields/stat-item'
 export const Stats: Block = {
   slug: 'stats',
   labels: { singular: 'Stats', plural: 'Stats' },
+  imageURL: '/block-previews/stats.jpg',
+  imageAltText: 'Impact statistics — large figures shown in a row',
   fields: [
     { name: 'eyebrow', type: 'text' },
     {
