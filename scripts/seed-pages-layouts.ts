@@ -443,6 +443,7 @@ async function main() {
             { amount: 20, label: '1 meal' },
             { amount: 50, label: '~2 meals' },
             { amount: 100, label: '5 meals' },
+            { amount: 200, label: '10 meals' },
           ],
           ctaLabel: 'Donate now →',
         },
