@@ -16,27 +16,35 @@ function getClient(): Anthropic | null {
   return client
 }
 
-// The classifier defaults to Claude Opus 4.8 (the most capable model). Sentiment
-// is a cheap, high-volume task, so SENTIMENT_MODEL lets you drop to a smaller
-// model (e.g. claude-haiku-4-5) without a code change.
-const MODEL = process.env.SENTIMENT_MODEL || 'claude-opus-4-8'
+// Sentiment is a cheap, high-volume task on an unauthenticated endpoint, so the
+// default is Haiku — easily capable of binary sentiment on short comments and
+// far cheaper than larger models. SENTIMENT_MODEL overrides it without a code
+// change (e.g. claude-sonnet-4-6).
+const MODEL = process.env.SENTIMENT_MODEL || 'claude-haiku-4-5'
 
-const SENTIMENT_SCHEMA = {
-  type: 'object',
-  additionalProperties: false,
-  properties: {
-    sentiment: {
-      type: 'string',
-      enum: ['positive', 'neutral', 'negative'],
-      description: 'Overall sentiment of the diner’s comment.',
+// We force a tool call to get structured JSON back. Tool use is universally
+// supported across models and the SDK (no beta header, no type casts), so the
+// classifier can't silently fall back to free-form text we'd fail to parse.
+const SENTIMENT_TOOL: Anthropic.Tool = {
+  name: 'classify_sentiment',
+  description: 'Record the sentiment classification of a diner comment.',
+  input_schema: {
+    type: 'object',
+    additionalProperties: false,
+    properties: {
+      sentiment: {
+        type: 'string',
+        enum: ['positive', 'neutral', 'negative'],
+        description: 'Overall sentiment of the diner’s comment.',
+      },
+      reason: {
+        type: 'string',
+        description: 'One short sentence explaining the call (max ~20 words).',
+      },
     },
-    reason: {
-      type: 'string',
-      description: 'One short sentence explaining the call (max ~20 words).',
-    },
+    required: ['sentiment', 'reason'],
   },
-  required: ['sentiment', 'reason'],
-} as const
+}
 
 /**
  * Classify a diner's free-text comment. Used to decide whether feedback is
@@ -66,23 +74,22 @@ export async function classifyFeedback(
         'You classify the sentiment of short diner comments left for a New Zealand ' +
         'pay-as-you-feel charity restaurant. Judge the diner’s overall feeling about ' +
         'their experience. Sarcasm and backhanded compliments are negative. Mixed but ' +
-        'mostly warm is positive. Return only the structured result.',
-      // Structured output: constrain the response to our schema so we get
-      // valid JSON without prompt-wrangling or brittle parsing.
-      output_config: { format: { type: 'json_schema', schema: SENTIMENT_SCHEMA } },
+        'mostly warm is positive. Always record your answer with the classify_sentiment tool.',
+      tools: [SENTIMENT_TOOL],
+      tool_choice: { type: 'tool', name: SENTIMENT_TOOL.name },
       messages: [
         {
           role: 'user',
           content: `Classify this diner comment:\n\n"""${message}"""${ratingLine}`,
         },
       ],
-    } as Anthropic.MessageCreateParamsNonStreaming)
+    })
 
-    const text = response.content.find((b) => b.type === 'text')
-    if (!text || text.type !== 'text') {
-      return { sentiment: 'unknown', reason: 'No structured output returned.' }
+    const toolUse = response.content.find((b) => b.type === 'tool_use')
+    if (!toolUse || toolUse.type !== 'tool_use') {
+      return { sentiment: 'unknown', reason: 'No classification returned.' }
     }
-    const parsed = JSON.parse(text.text) as { sentiment: Sentiment; reason: string }
+    const parsed = toolUse.input as { sentiment: Sentiment; reason: string }
     return { sentiment: parsed.sentiment, reason: parsed.reason }
   } catch {
     // Network/model/parse failure — never block the diner's feedback on it.

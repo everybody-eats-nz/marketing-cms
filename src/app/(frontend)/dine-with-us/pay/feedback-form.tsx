@@ -17,6 +17,7 @@ export function FeedbackForm({
   const [message, setMessage] = useState('')
   const [name, setName] = useState('')
   const [rating, setRating] = useState<number | null>(null)
+  const [hoverRating, setHoverRating] = useState<number | null>(null)
   const [consent, setConsent] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [done, setDone] = useState<null | { published: boolean }>(null)
@@ -89,22 +90,42 @@ export function FeedbackForm({
       />
 
       <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3">
-        <div className="flex items-center gap-1" role="radiogroup" aria-label="Rating out of five">
-          {[1, 2, 3, 4, 5].map((star) => (
-            <button
-              key={star}
-              type="button"
-              role="radio"
-              aria-checked={rating === star}
-              aria-label={`${star} star${star > 1 ? 's' : ''}`}
-              onClick={() => setRating(rating === star ? null : star)}
-              className={`text-2xl leading-none transition-colors ${
-                rating && star <= rating ? 'text-sun-400' : 'text-line/50 hover:text-sun-300'
-              }`}
-            >
-              ★
-            </button>
-          ))}
+        <div className="flex items-center gap-2">
+          <div
+            className="flex items-center gap-1"
+            role="radiogroup"
+            aria-label="Rating out of five"
+            onMouseLeave={() => setHoverRating(null)}
+          >
+            {[1, 2, 3, 4, 5].map((star) => {
+              // Fill cumulatively up to the hovered star (preview) or the
+              // selected rating — so hovering the rightmost star lights all
+              // five, making clear that right = 5 = best.
+              const active = hoverRating ?? rating ?? 0
+              const filled = star <= active
+              return (
+                <button
+                  key={star}
+                  type="button"
+                  role="radio"
+                  aria-checked={rating === star}
+                  aria-label={`${star} star${star > 1 ? 's' : ''}`}
+                  onMouseEnter={() => setHoverRating(star)}
+                  onFocus={() => setHoverRating(star)}
+                  onBlur={() => setHoverRating(null)}
+                  onClick={() => setRating(rating === star ? null : star)}
+                  className={`text-2xl leading-none transition-colors ${
+                    filled ? 'text-sun-400' : 'text-line/50'
+                  }`}
+                >
+                  ★
+                </button>
+              )
+            })}
+          </div>
+          <span className="text-xs text-muted tabular-nums w-14">
+            {(hoverRating ?? rating) ? `${hoverRating ?? rating}/5` : ''}
+          </span>
         </div>
         <input
           type="text"

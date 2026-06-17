@@ -29,12 +29,21 @@ export async function POST(request: Request) {
     email?: unknown
   }
 
-  // Email is optional. Only set receipt_email when it looks like an address —
-  // Stripe then emails its standard receipt (live mode, with customer receipts
-  // enabled in the dashboard; test mode records but never sends).
+  // Email is optional. Validate with split() + a single-token whitespace check
+  // (no multi-quantifier regex) so a user-supplied value can't trigger ReDoS.
+  // Stripe emails its standard receipt in live mode (with customer receipts
+  // enabled in the dashboard); test mode records but never sends.
+  const trimmedEmail = typeof email === 'string' ? email.trim() : ''
+  const [emailLocal, emailDomain, ...emailRest] = trimmedEmail.split('@')
   const receiptEmail =
-    typeof email === 'string' && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.trim())
-      ? email.trim()
+    trimmedEmail.length > 0 &&
+    trimmedEmail.length <= 254 &&
+    emailRest.length === 0 &&
+    Boolean(emailLocal) &&
+    Boolean(emailDomain) &&
+    emailDomain.includes('.') &&
+    !/\s/.test(trimmedEmail)
+      ? trimmedEmail
       : undefined
 
   const dollars = typeof amount === 'number' ? amount : Number(amount)

@@ -4,8 +4,9 @@ import type { CollectionConfig } from 'payload'
 // from a standalone form. Each submission is run through an AI sentiment
 // classifier on create (see src/lib/sentiment.ts) and auto-published only when
 // the sentiment is positive AND the diner consented to public display. Staff
-// can override `status` in the admin at any time (the override wins — see the
-// beforeChange hook). Published feedback surfaces in two places:
+// can override `status` in the admin at any time — those edits go straight
+// through, because AI classification runs only in the /api/feedback route, not
+// on admin saves. Published feedback surfaces in two places:
 //   - public website: the restaurant page at /dine-with-us/[slug]
 //   - volunteer portal: pulled via GET /api/public/feedback (portal → CMS)
 //
