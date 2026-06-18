@@ -6,6 +6,7 @@ import { loadStripe } from '@stripe/stripe-js'
 import type { Appearance } from '@stripe/stripe-js'
 import {
   Elements,
+  ExpressCheckoutElement,
   PaymentElement,
   useElements,
   useStripe,
@@ -267,18 +268,20 @@ function CheckoutForm({ amount, onBack }: { amount: number; onBack: () => void }
   const router = useRouter()
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  // Whether Apple Pay / Google Pay actually rendered (browser/device support),
+  // so the "or pay by card" divider only shows when an express button is there.
+  const [hasWallet, setHasWallet] = useState(false)
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
+  // Shared by the card form submit and the express (wallet) buttons.
+  async function confirm() {
     if (!stripe || !elements) return
     setSubmitting(true)
     setError(null)
 
     const { error: submitError, paymentIntent } = await stripe.confirmPayment({
       elements,
-      // Wallets (Apple/Google Pay) may need a redirect; cards usually don't.
-      // `if_required` keeps card payments on-page and only redirects when the
-      // payment method demands it.
+      // Wallets may need a redirect; cards usually don't. `if_required` keeps
+      // card payments on-page and only redirects when the method demands it.
       redirect: 'if_required',
       confirmParams: {
         return_url: `${window.location.origin}/dine-with-us/pay/thanks`,
@@ -299,7 +302,12 @@ function CheckoutForm({ amount, onBack }: { amount: number; onBack: () => void }
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault()
+        confirm()
+      }}
+    >
       <div className="flex items-baseline justify-between mb-5">
         <p className="eyebrow">Giving ${amount.toLocaleString()}</p>
         <button
@@ -311,7 +319,23 @@ function CheckoutForm({ amount, onBack }: { amount: number; onBack: () => void }
         </button>
       </div>
 
-      <PaymentElement />
+      {/* Apple Pay / Google Pay first, so they're visible without scrolling.
+          Renders nothing on browsers/devices without an available wallet. */}
+      <ExpressCheckoutElement
+        onConfirm={confirm}
+        onReady={(event) => setHasWallet(Boolean(event.availablePaymentMethods))}
+      />
+      {hasWallet && (
+        <div className="my-5 flex items-center gap-3 text-[0.7rem] uppercase tracking-[0.15em] text-muted/70">
+          <span className="h-px flex-1 bg-line/20" />
+          or pay by card
+          <span className="h-px flex-1 bg-line/20" />
+        </div>
+      )}
+
+      {/* Wallets are handled by the express element above, so keep them out of
+          the card form to avoid duplicate Apple Pay / Google Pay entries. */}
+      <PaymentElement options={{ wallets: { applePay: 'never', googlePay: 'never' } }} />
 
       {error && <p className="mt-4 text-sm text-clay-300">{error}</p>}
 
