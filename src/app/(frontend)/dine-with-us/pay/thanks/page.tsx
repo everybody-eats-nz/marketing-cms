@@ -2,12 +2,15 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getStripeClient } from '@/lib/stripe'
 import { isRecordedSource, recordDonation } from '@/lib/donations'
+import { getPayCopy } from '@/lib/pay-copy.server'
+import { fillTemplate, formatDollars } from '@/lib/pay-copy'
+import { renderRichText } from '@/components/blocks/render-text'
 import { PaySection } from '../pay-section'
 import { FeedbackForm } from '../feedback-form'
 
-export const metadata: Metadata = {
-  title: 'Thank you',
-  robots: { index: false },
+export async function generateMetadata(): Promise<Metadata> {
+  const { thanks } = await getPayCopy()
+  return { title: thanks.metaTitle, robots: { index: false } }
 }
 
 type SearchParams = {
@@ -20,6 +23,8 @@ type PaymentSummary = {
   locationSlug?: string
   paymentIntentId?: string
   email?: string
+  // 'pay-at-table' (koha) or 'donation' — drives the koha / GST note.
+  source?: string
 }
 
 // Confirm the payment server-side so the page never claims success for a
@@ -59,6 +64,7 @@ async function fetchPaymentSummary(params: {
         locationSlug: intent.metadata?.locationSlug || undefined,
         paymentIntentId: intent.id,
         email: intent.receipt_email || undefined,
+        source: intent.metadata?.source || undefined,
       }
     } catch {
       return null
@@ -72,6 +78,8 @@ async function fetchPaymentSummary(params: {
       return {
         amount: session.amount_total / 100,
         locationName: session.metadata?.locationName || undefined,
+        // Legacy Stripe Payment Links were the table (koha) flow.
+        source: 'pay-at-table',
       }
     } catch {
       return null
@@ -83,38 +91,41 @@ async function fetchPaymentSummary(params: {
 
 export default async function PayThanksPage({ searchParams }: SearchParams) {
   const params = await searchParams
-  const summary = await fetchPaymentSummary(params)
+  const [summary, copy] = await Promise.all([fetchPaymentSummary(params), getPayCopy()])
+  const { thanks, feedback } = copy
+
+  // Pick the right message template, then fill in amount / location.
+  const message = (() => {
+    if (!summary) return thanks.messageFallback
+    const amount = formatDollars(summary.amount)
+    const hasLocation = summary.locationName && summary.locationName !== 'Special event'
+    return hasLocation
+      ? fillTemplate(thanks.messageWithLocation, { amount, location: summary.locationName! })
+      : fillTemplate(thanks.messageNoLocation, { amount })
+  })()
 
   return (
     <PaySection glow="sun">
       <div className="container-tight relative pt-24 sm:pt-32 pb-24 text-cream-50 text-center">
-        <p className="eyebrow text-sun-200/90 mb-6">Pay what you feel</p>
+        <p className="eyebrow text-sun-200/90 mb-6">{thanks.eyebrow}</p>
         <h1 className="display text-6xl sm:text-8xl font-light leading-[0.92]">
-          Thank <em className="text-sun-200">you</em>
+          {renderRichText(thanks.heading, undefined, 'text-sun-200')}
         </h1>
 
         <p className="mt-8 max-w-md mx-auto text-lg text-cream-50/85 leading-relaxed">
-          {summary ? (
-            <>
-              Your <span className="display text-sun-200">${summary.amount.toLocaleString('en-NZ')}</span>
-              {summary.locationName && summary.locationName !== 'Special event' ? (
-                <> goes straight back into the kitchen at {summary.locationName}</>
-              ) : (
-                <> goes straight back into the kitchen</>
-              )}
-              {' '}— rescuing food, training chefs, and keeping seats at the table for everyone.
-            </>
-          ) : (
-            <>
-              Your contribution goes straight back into the kitchen — rescuing food, training
-              chefs, and keeping seats at the table for everyone.
-            </>
-          )}
+          {renderRichText(message, undefined, 'display text-sun-200 not-italic')}
         </p>
 
         {summary?.email && (
           <p className="mt-4 text-sm text-cream-50/60">
-            A receipt is on its way to {summary.email} from Stripe.
+            {fillTemplate(thanks.receiptNote, { email: summary.email })}
+          </p>
+        )}
+
+        {/* Koha / GST clarification — pay-at-table only, never for /donate. */}
+        {summary?.source === 'pay-at-table' && thanks.kohaNote && (
+          <p className="mt-3 text-xs text-cream-50/45 max-w-md mx-auto leading-relaxed">
+            {thanks.kohaNote}
           </p>
         )}
 
@@ -125,24 +136,25 @@ export default async function PayThanksPage({ searchParams }: SearchParams) {
               stripePaymentIntentId={summary.paymentIntentId}
               locationSlug={summary.locationSlug}
               locationName={summary.locationName}
+              copy={feedback}
             />
           </div>
         )}
 
         <div className="mt-12 flex flex-wrap gap-3 justify-center">
           <Link href="/dine-with-us" className="btn-accent">
-            Book your next dinner
+            {thanks.bookLabel}
           </Link>
           <Link
             href="/get-involved"
             className="btn border border-cream-50/40 text-cream-50 hover:bg-surface hover:text-content"
           >
-            Other ways to help
+            {thanks.otherWaysLabel}
           </Link>
         </div>
 
         <p className="display mt-16 text-xl text-cream-50/50 font-light">
-          <em>See you at the table again soon.</em>
+          <em>{thanks.closing}</em>
         </p>
       </div>
     </PaySection>

@@ -11,9 +11,13 @@ import {
   useElements,
   useStripe,
 } from '@stripe/react-stripe-js'
-import { MAX_AMOUNT, MIN_AMOUNT } from './shared'
-
-type Preset = { amount: number; label: string }
+import {
+  DEFAULT_PAY_COPY,
+  fillTemplate,
+  formatDollars,
+  type FormCopy,
+  type Preset,
+} from '@/lib/pay-copy'
 
 // Loaded once per page. The publishable key is safe to expose to the browser.
 const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
@@ -83,13 +87,16 @@ export function DonateForm({
   locationName,
   presets,
   source = 'pay-at-table',
+  copy = DEFAULT_PAY_COPY.form,
 }: {
   // Location is only set for the pay-at-table flow; omitted for /donate.
   locationSlug?: string
   locationName?: string
   presets: Preset[]
   source?: 'pay-at-table' | 'donation'
+  copy?: FormCopy
 }) {
+  const { minAmount, maxAmount } = copy
   const [amount, setAmount] = useState<number | null>(presets[0]?.amount ?? null)
   const [custom, setCustom] = useState('')
   const [email, setEmail] = useState('')
@@ -121,11 +128,16 @@ export function DonateForm({
   async function startPayment() {
     setError(null)
     if (!effectiveAmount || !Number.isFinite(effectiveAmount)) {
-      setError('Choose or enter an amount to give.')
+      setError(copy.chooseAmountError)
       return
     }
-    if (effectiveAmount < MIN_AMOUNT || effectiveAmount > MAX_AMOUNT) {
-      setError(`Please enter an amount between $${MIN_AMOUNT} and $${MAX_AMOUNT.toLocaleString()}.`)
+    if (effectiveAmount < minAmount || effectiveAmount > maxAmount) {
+      setError(
+        fillTemplate(copy.rangeError, {
+          min: formatDollars(minAmount),
+          max: formatDollars(maxAmount),
+        }),
+      )
       return
     }
     setStarting(true)
@@ -154,11 +166,7 @@ export function DonateForm({
   }
 
   if (!stripePromise) {
-    return (
-      <p className="text-center text-base text-muted py-6">
-        Online payments aren’t set up yet — please see one of our team at the counter. Sorry!
-      </p>
-    )
+    return <p className="text-center text-base text-muted py-6">{copy.notConfigured}</p>
   }
 
   // Step 2 — embedded card / wallet form, shown once we have a client secret.
@@ -167,6 +175,7 @@ export function DonateForm({
       <Elements stripe={stripePromise} options={{ clientSecret, appearance, fonts }}>
         <CheckoutForm
           amount={effectiveAmount as number}
+          copy={copy}
           onBack={() => {
             setClientSecret(null)
             setError(null)
@@ -180,7 +189,7 @@ export function DonateForm({
   return (
     <div>
       <p className="eyebrow mb-4">
-        {source === 'donation' ? 'I’d like to give' : 'Tonight, I’d like to give'}
+        {source === 'donation' ? copy.donationPrompt : copy.payPrompt}
       </p>
       <div className="grid grid-cols-2 gap-3">
         {presets.map((preset) => {
@@ -221,9 +230,9 @@ export function DonateForm({
         <input
           type="number"
           inputMode="decimal"
-          min={MIN_AMOUNT}
-          max={MAX_AMOUNT}
-          placeholder="Other amount"
+          min={minAmount}
+          max={maxAmount}
+          placeholder={copy.otherPlaceholder}
           value={custom}
           onChange={(e) => {
             setCustom(e.target.value)
@@ -237,7 +246,7 @@ export function DonateForm({
         type="email"
         inputMode="email"
         autoComplete="email"
-        placeholder="Email for a receipt (optional)"
+        placeholder={copy.emailPlaceholder}
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         className="mt-3 w-full rounded-2xl border border-line/25 px-4 py-3 text-base outline-none focus:border-forest-500 transition-colors placeholder:text-muted/70"
@@ -251,18 +260,37 @@ export function DonateForm({
         disabled={starting}
         className="btn-primary w-full justify-center mt-5 py-4 text-base disabled:opacity-60"
       >
-        {starting ? 'One moment…' : `Continue${effectiveAmount ? ` — $${effectiveAmount.toLocaleString()}` : ''} →`}
+        {starting
+          ? copy.oneMomentLabel
+          : `${copy.continueLabel}${effectiveAmount ? ` — ${formatDollars(effectiveAmount)}` : ''} →`}
       </button>
 
       <p className="mt-5 text-xs text-muted/85 text-center leading-relaxed">
-        Secure payment by Stripe — card, Apple Pay or Google Pay.
-        <span className="block mt-1">No amount is too small. Koha of any size is welcome.</span>
+        {copy.securityNote1}
+        <span className="block mt-1">{copy.securityNote2}</span>
       </p>
+
+      {/* Koha clarification — pay-at-table only. The /donate flow is a genuine
+          (tax-deductible) donation, so this GST / "not a donation receipt" note
+          must not appear there. */}
+      {source === 'pay-at-table' && copy.kohaNote && (
+        <p className="mt-3 border-t border-line/15 pt-3 text-[0.7rem] text-muted/70 text-center leading-relaxed">
+          {copy.kohaNote}
+        </p>
+      )}
     </div>
   )
 }
 
-function CheckoutForm({ amount, onBack }: { amount: number; onBack: () => void }) {
+function CheckoutForm({
+  amount,
+  copy,
+  onBack,
+}: {
+  amount: number
+  copy: FormCopy
+  onBack: () => void
+}) {
   const stripe = useStripe()
   const elements = useElements()
   const router = useRouter()
@@ -309,13 +337,13 @@ function CheckoutForm({ amount, onBack }: { amount: number; onBack: () => void }
       }}
     >
       <div className="flex items-baseline justify-between mb-5">
-        <p className="eyebrow">Giving ${amount.toLocaleString()}</p>
+        <p className="eyebrow">{fillTemplate(copy.givingLabel, { amount: formatDollars(amount) })}</p>
         <button
           type="button"
           onClick={onBack}
           className="text-sm text-muted hover:text-content transition-colors"
         >
-          ← Change amount
+          ← {copy.changeAmountLabel}
         </button>
       </div>
 
@@ -328,7 +356,7 @@ function CheckoutForm({ amount, onBack }: { amount: number; onBack: () => void }
       {hasWallet && (
         <div className="my-5 flex items-center gap-3 text-[0.7rem] uppercase tracking-[0.15em] text-muted/70">
           <span className="h-px flex-1 bg-line/20" />
-          or pay by card
+          {copy.orPayByCard}
           <span className="h-px flex-1 bg-line/20" />
         </div>
       )}
@@ -344,11 +372,13 @@ function CheckoutForm({ amount, onBack }: { amount: number; onBack: () => void }
         disabled={!stripe || submitting}
         className="btn-primary w-full justify-center mt-6 py-4 text-base disabled:opacity-60"
       >
-        {submitting ? 'Processing…' : `Give $${amount.toLocaleString()} →`}
+        {submitting
+          ? copy.processingLabel
+          : fillTemplate(copy.giveLabel, { amount: formatDollars(amount) })}
       </button>
 
       <p className="mt-5 text-xs text-muted/85 text-center leading-relaxed">
-        Secure payment by Stripe. Your card details never touch our servers.
+        {copy.cardSecurityNote}
       </p>
     </form>
   )

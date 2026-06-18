@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { getStripeClient } from '@/lib/stripe'
-import { MAX_AMOUNT, MIN_AMOUNT } from '@/app/(frontend)/dine-with-us/pay/shared'
+import { getAmountBounds } from '@/lib/pay-copy.server'
 
 // Stripe's SDK needs the Node runtime (not edge).
 export const runtime = 'nodejs'
@@ -53,10 +53,13 @@ export async function POST(request: Request) {
       ? trimmedEmail
       : undefined
 
+  // Bounds come from the editable Pay & Donate global so server validation
+  // tracks whatever limits the form enforces.
+  const { minAmount, maxAmount } = await getAmountBounds()
   const dollars = typeof amount === 'number' ? amount : Number(amount)
-  if (!Number.isFinite(dollars) || dollars < MIN_AMOUNT || dollars > MAX_AMOUNT) {
+  if (!Number.isFinite(dollars) || dollars < minAmount || dollars > maxAmount) {
     return NextResponse.json(
-      { error: `Amount must be between $${MIN_AMOUNT} and $${MAX_AMOUNT}.` },
+      { error: `Amount must be between $${minAmount} and $${maxAmount}.` },
       { status: 400 },
     )
   }
