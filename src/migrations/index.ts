@@ -6,6 +6,7 @@ import * as migration_20260616_055922_add_stat_live_metric_and_suffix from './20
 import * as migration_20260616_211500_remove_daily_menus from './20260616_211500_remove_daily_menus';
 import * as migration_20260617_014949_add_user_email_verification from './20260617_014949_add_user_email_verification';
 import * as migration_20260617_081858_add_donations_and_feedback from './20260617_081858_add_donations_and_feedback';
+import * as migration_20260618_050316_add_pay_settings from './20260618_050316_add_pay_settings';
 
 export const migrations = [
   {
@@ -46,6 +47,11 @@ export const migrations = [
   {
     up: migration_20260617_081858_add_donations_and_feedback.up,
     down: migration_20260617_081858_add_donations_and_feedback.down,
-    name: '20260617_081858_add_donations_and_feedback'
+    name: '20260617_081858_add_donations_and_feedback',
+  },
+  {
+    up: migration_20260618_050316_add_pay_settings.up,
+    down: migration_20260618_050316_add_pay_settings.down,
+    name: '20260618_050316_add_pay_settings'
   },
 ];
