@@ -2,11 +2,14 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getStripeClient } from '@/lib/stripe'
 import { isRecordedSource, recordDonation } from '@/lib/donations'
+import { getPayloadClient } from '@/lib/payload'
 import { getPayCopy } from '@/lib/pay-copy.server'
 import { fillTemplate, formatDollars } from '@/lib/pay-copy'
+import { inferNewsletterRegion, type NewsletterRegion } from '@/lib/newsletter'
 import { renderRichText } from '@/components/blocks/render-text'
 import { PaySection } from '../pay-section'
 import { FeedbackForm } from '../feedback-form'
+import { NewsletterSignup } from '../newsletter-signup'
 
 export async function generateMetadata(): Promise<Metadata> {
   const { thanks } = await getPayCopy()
@@ -89,10 +92,36 @@ async function fetchPaymentSummary(params: {
   return null
 }
 
+// Pre-select the newsletter region from where the diner paid. Reads the
+// location's city (the authoritative region signal — "Auckland" / "Wellington")
+// by slug, falling back to the location name. Best-effort: any miss leaves the
+// choice unticked so the diner picks. The location name alone often carries the
+// region too, so try that first to skip the DB hit.
+async function resolveNewsletterRegion(summary: PaymentSummary | null): Promise<NewsletterRegion | undefined> {
+  if (!summary) return undefined
+  const fromName = inferNewsletterRegion(summary.locationName)
+  if (fromName) return fromName
+  if (!summary.locationSlug) return undefined
+  try {
+    const payload = await getPayloadClient()
+    const res = await payload.find({
+      collection: 'locations',
+      where: { slug: { equals: summary.locationSlug } },
+      limit: 1,
+      depth: 0,
+    })
+    const city = (res.docs[0] as { city?: string } | undefined)?.city
+    return inferNewsletterRegion(city, summary.locationName)
+  } catch {
+    return undefined
+  }
+}
+
 export default async function PayThanksPage({ searchParams }: SearchParams) {
   const params = await searchParams
   const [summary, copy] = await Promise.all([fetchPaymentSummary(params), getPayCopy()])
-  const { thanks, feedback } = copy
+  const newsletterRegion = await resolveNewsletterRegion(summary)
+  const { thanks, feedback, newsletter } = copy
 
   // Pick the right message template, then fill in amount / location.
   const message = (() => {
@@ -140,6 +169,12 @@ export default async function PayThanksPage({ searchParams }: SearchParams) {
             />
           </div>
         )}
+
+        {/* Newsletter sign-up — independent of payment; join the Auckland or
+            Wellington list (Campaign Monitor, same audiences as the portal). */}
+        <div className="mt-8 max-w-md mx-auto">
+          <NewsletterSignup copy={newsletter} defaultRegion={newsletterRegion} />
+        </div>
 
         <div className="mt-12 flex flex-wrap gap-3 justify-center">
           <Link href="/dine-with-us" className="btn-accent">

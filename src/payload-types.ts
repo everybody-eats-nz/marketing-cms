@@ -2368,6 +2368,32 @@ export interface PaySetting {
      */
     notConfigured?: string | null;
   };
+  newsletter?: {
+    /**
+     * Wrap a word in *asterisks* for italic.
+     */
+    heading?: string | null;
+    subtitle?: string | null;
+    /**
+     * Label above the Auckland / Wellington choice.
+     */
+    regionLabel?: string | null;
+    aucklandLabel?: string | null;
+    wellingtonLabel?: string | null;
+    emailPlaceholder?: string | null;
+    submitLabel?: string | null;
+    sendingLabel?: string | null;
+    /**
+     * Shown when no region is selected.
+     */
+    regionError?: string | null;
+    /**
+     * Generic failure message.
+     */
+    errorMessage?: string | null;
+    successTitle?: string | null;
+    successMessage?: string | null;
+  };
   thanks?: {
     eyebrow?: string | null;
     /**
@@ -2638,6 +2664,22 @@ export interface PaySettingsSelect<T extends boolean = true> {
         chooseAmountError?: T;
         rangeError?: T;
         notConfigured?: T;
+      };
+  newsletter?:
+    | T
+    | {
+        heading?: T;
+        subtitle?: T;
+        regionLabel?: T;
+        aucklandLabel?: T;
+        wellingtonLabel?: T;
+        emailPlaceholder?: T;
+        submitLabel?: T;
+        sendingLabel?: T;
+        regionError?: T;
+        errorMessage?: T;
+        successTitle?: T;
+        successMessage?: T;
       };
   thanks?:
     | T
