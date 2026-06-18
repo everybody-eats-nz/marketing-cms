@@ -2,9 +2,12 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound, redirect } from 'next/navigation'
 import { getPayloadClient } from '@/lib/payload'
+import { getPayCopy } from '@/lib/pay-copy.server'
+import { fillTemplate } from '@/lib/pay-copy'
+import { renderRichText } from '@/components/blocks/render-text'
 import { PaySection } from '../pay-section'
 import { DonateForm } from '../donate-form'
-import { PRESET_AMOUNTS, SPECIAL_EVENTS } from '../shared'
+import { SPECIAL_EVENTS } from '../shared'
 
 type Params = { params: Promise<{ location: string }> }
 
@@ -25,9 +28,10 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { location } = await params
   const loc = await resolveLocation(location)
   if (!loc) return { title: 'Not found' }
+  const { payment } = await getPayCopy()
   return {
-    title: `Pay what you feel — ${loc.name}`,
-    description: 'Choose what to pay for tonight’s meal. Every dollar keeps the kitchen open.',
+    title: fillTemplate(payment.metaTitle, { location: loc.name }),
+    description: payment.metaDescription,
   }
 }
 
@@ -42,6 +46,8 @@ export default async function PayAmountPage({ params }: Params) {
   if (!loc) notFound()
 
   const isSpecialEvent = loc.slug === SPECIAL_EVENTS.slug
+  const copy = await getPayCopy()
+  const { payment } = copy
 
   return (
     <PaySection>
@@ -50,21 +56,21 @@ export default async function PayAmountPage({ params }: Params) {
           {/* Left — the ask */}
           <div className="lg:col-span-6">
             <p className="eyebrow text-sun-200/90 mb-6">
-              {isSpecialEvent ? 'Everybody Eats · Special event' : `Everybody Eats ${loc.name}`}
+              {isSpecialEvent
+                ? payment.eyebrowSpecial
+                : fillTemplate(payment.eyebrowLocation, { location: loc.name })}
             </p>
             <h1 className="display text-5xl sm:text-6xl lg:text-7xl font-light leading-[0.95]">
-              Pay what feels <em className="text-sun-200">right</em>
+              {renderRichText(payment.heading, undefined, 'text-sun-200')}
             </h1>
             <p className="mt-7 max-w-md text-lg text-cream-50/80 leading-relaxed">
-              Whatever you can give tonight makes a difference. A three-course meal like yours
-              typically costs <span className="text-cream-50">$25–$35</span> to put on the table —
-              anything beyond that shouts dinner for someone who can’t.
+              {renderRichText(payment.explanation, undefined, 'text-cream-50 not-italic')}
             </p>
             <Link
               href="/dine-with-us/pay"
               className="mt-8 inline-flex items-center gap-2 text-sm text-cream-50/60 hover:text-cream-50 transition-colors"
             >
-              <span aria-hidden>←</span> Not where you dined? Change restaurant
+              <span aria-hidden>←</span> {payment.changeRestaurant}
             </Link>
           </div>
 
@@ -74,7 +80,8 @@ export default async function PayAmountPage({ params }: Params) {
               <DonateForm
                 locationSlug={loc.slug}
                 locationName={loc.name}
-                presets={PRESET_AMOUNTS}
+                presets={copy.amounts.presets}
+                copy={copy.form}
               />
             </div>
           </div>

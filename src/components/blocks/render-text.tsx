@@ -2,7 +2,9 @@ import React from 'react'
 
 // Renders plain text supporting *em* markers and \n line breaks.
 // Optional highlightWord wraps the first non-em occurrence with the sun-underline span.
-export function renderRichText(text: string | undefined, highlight?: string) {
+// Optional emClassName is applied to the *asterisk* emphasis — used on the dark
+// pay/donate pages to colour it (e.g. the gold "text-sun-200" accent).
+export function renderRichText(text: string | undefined, highlight?: string, emClassName?: string) {
   if (!text) return null
   const lines = text.split('\n')
   return lines.map((line, lineIdx) => {
@@ -10,7 +12,11 @@ export function renderRichText(text: string | undefined, highlight?: string) {
     const rendered = parts.map((part, partIdx) => {
       const key = `${lineIdx}-${partIdx}`
       if (part.startsWith('*') && part.endsWith('*') && part.length > 2) {
-        return <em key={key}>{part.slice(1, -1)}</em>
+        return (
+          <em key={key} className={emClassName}>
+            {part.slice(1, -1)}
+          </em>
+        )
       }
       return renderWithHighlight(part, highlight, key)
     })

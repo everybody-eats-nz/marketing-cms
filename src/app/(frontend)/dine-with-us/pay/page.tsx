@@ -1,34 +1,39 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getPayloadClient } from '@/lib/payload'
+import { getPayCopy } from '@/lib/pay-copy.server'
+import { renderRichText } from '@/components/blocks/render-text'
 import { PaySection } from './pay-section'
 import { SPECIAL_EVENTS } from './shared'
 
-export const metadata: Metadata = {
-  title: 'Pay what you feel',
-  description:
-    'Thank you for dining with us. Choose the restaurant you visited tonight and pay what feels right.',
+export async function generateMetadata(): Promise<Metadata> {
+  const { picker } = await getPayCopy()
+  return { title: picker.metaTitle, description: picker.metaDescription }
 }
 
 export default async function PayLocationPickerPage() {
   const payload = await getPayloadClient()
-  const { docs: locations } = await payload.find({
-    collection: 'locations',
-    where: { openStatus: { equals: 'open' } },
-    sort: 'name',
-    limit: 20,
-    depth: 0,
-  })
+  const [{ docs: locations }, copy] = await Promise.all([
+    payload.find({
+      collection: 'locations',
+      where: { openStatus: { equals: 'open' } },
+      sort: 'name',
+      limit: 20,
+      depth: 0,
+    }),
+    getPayCopy(),
+  ])
+  const { picker } = copy
 
   return (
     <PaySection>
       <div className="container-tight relative pt-20 sm:pt-28 pb-24 text-cream-50">
-        <p className="eyebrow text-sun-200/90 mb-6">Pay what you feel</p>
+        <p className="eyebrow text-sun-200/90 mb-6">{picker.eyebrow}</p>
         <h1 className="display text-5xl sm:text-7xl font-light leading-[0.95] max-w-2xl">
-          Thank you for <em className="text-sun-200">dining</em> with us
+          {renderRichText(picker.heading, undefined, 'text-sun-200')}
         </h1>
         <p className="mt-6 max-w-md text-lg text-cream-50/80 leading-relaxed">
-          Where did you join us tonight?
+          {picker.subheading}
         </p>
 
         <div className="mt-12 max-w-2xl space-y-3">
@@ -62,7 +67,7 @@ export default async function PayLocationPickerPage() {
             className="group flex items-baseline justify-between gap-4 rounded-[1.75rem] border border-dashed border-cream-50/20 px-7 py-5 sm:px-9 transition-all duration-200 hover:bg-cream-50/[0.07] active:scale-[0.99]"
           >
             <span className="text-base text-cream-50/75 group-hover:text-cream-50 transition-colors">
-              {SPECIAL_EVENTS.name} or pop-up dinner
+              {picker.specialEventsLabel}
             </span>
             <span
               aria-hidden
@@ -75,7 +80,7 @@ export default async function PayLocationPickerPage() {
 
         <p className="mt-10 flex items-center gap-2 text-xs text-cream-50/55">
           <LockIcon />
-          Payments are processed securely by Stripe. Apple Pay and Google Pay accepted.
+          {picker.securityNote}
         </p>
       </div>
     </PaySection>

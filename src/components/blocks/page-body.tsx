@@ -1,6 +1,7 @@
 import { draftMode } from 'next/headers'
 import { getPayloadClient } from '@/lib/payload'
 import { fetchLiveImpactStats } from '@/lib/impact-stats'
+import { getPayCopy } from '@/lib/pay-copy.server'
 import { RenderBlocks } from './render-blocks'
 import { PageLivePreview } from './page-live-preview'
 
@@ -30,12 +31,15 @@ export async function PageBody({ page, isDraft }: { page: any; isDraft: boolean 
   const needFaqs = isDraft || types.has('faqsAccordion')
   const needPartners = isDraft || types.has('partnersGrid')
   const needSettings = isDraft || types.has('stats') || types.has('donateHero')
+  const needPayCopy = isDraft || types.has('donateHero')
 
   const payload = await getPayloadClient()
-  const [settings, liveStats, locations, events, journal, team, faqs, partners] = await Promise.all([
+  const [settings, payCopy, liveStats, locations, events, journal, team, faqs, partners] =
+    await Promise.all([
     needSettings
       ? payload.findGlobal({ slug: 'site-settings' }).catch(() => null)
       : Promise.resolve(null),
+    needPayCopy ? getPayCopy() : Promise.resolve(null),
     isDraft || types.has('stats') ? fetchLiveImpactStats() : Promise.resolve(null),
     needLocations
       ? payload.find({ collection: 'locations', limit: 20, sort: 'name', depth: 1 })
@@ -74,6 +78,7 @@ export async function PageBody({ page, isDraft }: { page: any; isDraft: boolean 
     partners: partners.docs as any[],
     defaultDonateUrl: (settings as any)?.donateUrl,
     charityNumber: (settings as any)?.charityNumber,
+    donateFormCopy: payCopy?.form,
   }
 
   const serverURL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'

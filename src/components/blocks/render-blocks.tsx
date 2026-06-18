@@ -35,6 +35,7 @@ export type RenderExtras = {
   partners?: any[]
   defaultDonateUrl?: string
   charityNumber?: string
+  donateFormCopy?: import('@/lib/pay-copy').FormCopy
 }
 
 type Props = {
@@ -54,6 +55,7 @@ export function RenderBlocks({
   partners = [],
   defaultDonateUrl,
   charityNumber,
+  donateFormCopy,
   fallbackHeroHeading,
 }: Props) {
   if (!blocks?.length) return null
@@ -71,6 +73,7 @@ export function RenderBlocks({
                 block={block as any}
                 defaultDonateUrl={defaultDonateUrl}
                 charityNumber={charityNumber}
+                formCopy={donateFormCopy}
               />
             )
           case 'richText':

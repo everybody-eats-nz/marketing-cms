@@ -113,11 +113,13 @@ export interface Config {
     'site-settings': SiteSetting;
     navigation: Navigation;
     footer: Footer;
+    'pay-settings': PaySetting;
   };
   globalsSelect: {
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
     navigation: NavigationSelect<false> | NavigationSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    'pay-settings': PaySettingsSelect<false> | PaySettingsSelect<true>;
   };
   locale: null;
   widgets: {
@@ -2226,6 +2228,220 @@ export interface Footer {
   createdAt?: string | null;
 }
 /**
+ * Copy and amounts for the /donate page and the pay-at-table flow. Blank fields use the built-in default shown as placeholder text.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pay-settings".
+ */
+export interface PaySetting {
+  id: number;
+  amounts?: {
+    /**
+     * The quick-pick amount tiles in the pay-at-table form. 2–4 work best in the grid.
+     */
+    presets?:
+      | {
+          /**
+           * Whole dollars, e.g. 25
+           */
+          amount: number;
+          /**
+           * e.g. "Covers tonight’s meal"
+           */
+          label: string;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Smallest custom ("Other") amount allowed, in whole dollars. Default 1.
+     */
+    minAmount?: number | null;
+    /**
+     * Largest custom amount allowed, in whole dollars. Default 100000.
+     */
+    maxAmount?: number | null;
+  };
+  picker?: {
+    eyebrow?: string | null;
+    /**
+     * Wrap a word in *asterisks* for italic.
+     */
+    heading?: string | null;
+    subheading?: string | null;
+    /**
+     * The dashed "special event" option at the bottom of the list.
+     */
+    specialEventsLabel?: string | null;
+    securityNote?: string | null;
+    /**
+     * Browser tab / SEO title.
+     */
+    metaTitle?: string | null;
+    /**
+     * SEO meta description.
+     */
+    metaDescription?: string | null;
+  };
+  payment?: {
+    /**
+     * Use {location} for the restaurant name.
+     */
+    eyebrowLocation?: string | null;
+    /**
+     * Eyebrow shown for the special-events / pop-up page.
+     */
+    eyebrowSpecial?: string | null;
+    /**
+     * Wrap a word in *asterisks* for italic.
+     */
+    heading?: string | null;
+    /**
+     * Wrap a phrase in *asterisks* to highlight it (e.g. *$25–$35*).
+     */
+    explanation?: string | null;
+    /**
+     * The "go back" link text (a ← arrow is added automatically).
+     */
+    changeRestaurant?: string | null;
+    /**
+     * Browser tab / SEO title. Use {location} for the restaurant name.
+     */
+    metaTitle?: string | null;
+    /**
+     * SEO meta description.
+     */
+    metaDescription?: string | null;
+  };
+  form?: {
+    /**
+     * Prompt above the amounts, pay-at-table flow.
+     */
+    payPrompt?: string | null;
+    /**
+     * Prompt above the amounts on the /donate page.
+     */
+    donationPrompt?: string | null;
+    otherPlaceholder?: string | null;
+    emailPlaceholder?: string | null;
+    /**
+     * First button. The chosen amount is appended automatically.
+     */
+    continueLabel?: string | null;
+    /**
+     * Shown on the button while starting payment.
+     */
+    oneMomentLabel?: string | null;
+    securityNote1?: string | null;
+    securityNote2?: string | null;
+    /**
+     * Pay-at-table only. Makes clear the payment is koha (a gift) — GST-free and not a tax-deductible donation receipt. Not shown on the /donate page.
+     */
+    kohaNote?: string | null;
+    /**
+     * Shown on the card step. Use {amount} for the chosen amount.
+     */
+    givingLabel?: string | null;
+    /**
+     * Link back to the amount step (← added automatically).
+     */
+    changeAmountLabel?: string | null;
+    /**
+     * Divider between the wallet buttons and the card form.
+     */
+    orPayByCard?: string | null;
+    /**
+     * Final pay button. Use {amount} for the chosen amount.
+     */
+    giveLabel?: string | null;
+    processingLabel?: string | null;
+    cardSecurityNote?: string | null;
+    /**
+     * Shown when no amount is selected.
+     */
+    chooseAmountError?: string | null;
+    /**
+     * Out-of-range error. Use {min} and {max} for the limits.
+     */
+    rangeError?: string | null;
+    /**
+     * Shown if Stripe isn’t configured (no publishable key).
+     */
+    notConfigured?: string | null;
+  };
+  thanks?: {
+    eyebrow?: string | null;
+    /**
+     * Wrap a word in *asterisks* for italic.
+     */
+    heading?: string | null;
+    /**
+     * Shown when we know the restaurant. Use {amount} and {location}; wrap {amount} in *asterisks* to highlight it.
+     */
+    messageWithLocation?: string | null;
+    /**
+     * Shown when we have the amount but not the restaurant. Use {amount}.
+     */
+    messageNoLocation?: string | null;
+    /**
+     * Shown when the amount can’t be confirmed.
+     */
+    messageFallback?: string | null;
+    /**
+     * Shown when a receipt email was given. Use {email}.
+     */
+    receiptNote?: string | null;
+    /**
+     * Pay-at-table only. Reiterates the payment is koha — GST-free and not a tax-deductible donation receipt. Not shown for /donate confirmations.
+     */
+    kohaNote?: string | null;
+    bookLabel?: string | null;
+    otherWaysLabel?: string | null;
+    /**
+     * The italic sign-off line at the bottom.
+     */
+    closing?: string | null;
+    /**
+     * Browser tab / SEO title.
+     */
+    metaTitle?: string | null;
+  };
+  feedback?: {
+    heading?: string | null;
+    /**
+     * Muted suffix after the heading.
+     */
+    optionalLabel?: string | null;
+    subtitle?: string | null;
+    /**
+     * Note textarea placeholder.
+     */
+    placeholder?: string | null;
+    /**
+     * Accessible label for the star rating.
+     */
+    ratingLabel?: string | null;
+    namePlaceholder?: string | null;
+    consentLabel?: string | null;
+    submitLabel?: string | null;
+    sendingLabel?: string | null;
+    /**
+     * Shown when the note is empty.
+     */
+    emptyError?: string | null;
+    doneTitle?: string | null;
+    /**
+     * Confirmation when the note may be shared publicly.
+     */
+    donePublished?: string | null;
+    /**
+     * Confirmation when the note is kept private.
+     */
+    doneUnpublished?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-settings_select".
  */
@@ -2357,6 +2573,104 @@ export interface FooterSelect<T extends boolean = true> {
         id?: T;
       };
   copyright?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pay-settings_select".
+ */
+export interface PaySettingsSelect<T extends boolean = true> {
+  amounts?:
+    | T
+    | {
+        presets?:
+          | T
+          | {
+              amount?: T;
+              label?: T;
+              id?: T;
+            };
+        minAmount?: T;
+        maxAmount?: T;
+      };
+  picker?:
+    | T
+    | {
+        eyebrow?: T;
+        heading?: T;
+        subheading?: T;
+        specialEventsLabel?: T;
+        securityNote?: T;
+        metaTitle?: T;
+        metaDescription?: T;
+      };
+  payment?:
+    | T
+    | {
+        eyebrowLocation?: T;
+        eyebrowSpecial?: T;
+        heading?: T;
+        explanation?: T;
+        changeRestaurant?: T;
+        metaTitle?: T;
+        metaDescription?: T;
+      };
+  form?:
+    | T
+    | {
+        payPrompt?: T;
+        donationPrompt?: T;
+        otherPlaceholder?: T;
+        emailPlaceholder?: T;
+        continueLabel?: T;
+        oneMomentLabel?: T;
+        securityNote1?: T;
+        securityNote2?: T;
+        kohaNote?: T;
+        givingLabel?: T;
+        changeAmountLabel?: T;
+        orPayByCard?: T;
+        giveLabel?: T;
+        processingLabel?: T;
+        cardSecurityNote?: T;
+        chooseAmountError?: T;
+        rangeError?: T;
+        notConfigured?: T;
+      };
+  thanks?:
+    | T
+    | {
+        eyebrow?: T;
+        heading?: T;
+        messageWithLocation?: T;
+        messageNoLocation?: T;
+        messageFallback?: T;
+        receiptNote?: T;
+        kohaNote?: T;
+        bookLabel?: T;
+        otherWaysLabel?: T;
+        closing?: T;
+        metaTitle?: T;
+      };
+  feedback?:
+    | T
+    | {
+        heading?: T;
+        optionalLabel?: T;
+        subtitle?: T;
+        placeholder?: T;
+        ratingLabel?: T;
+        namePlaceholder?: T;
+        consentLabel?: T;
+        submitLabel?: T;
+        sendingLabel?: T;
+        emptyError?: T;
+        doneTitle?: T;
+        donePublished?: T;
+        doneUnpublished?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

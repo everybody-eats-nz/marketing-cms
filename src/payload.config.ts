@@ -24,6 +24,7 @@ import { Feedback } from './collections/Feedback'
 import { SiteSettings } from './globals/SiteSettings'
 import { Navigation } from './globals/Navigation'
 import { Footer } from './globals/Footer'
+import { PaySettings } from './globals/PaySettings'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -100,7 +101,7 @@ export default buildConfig({
     Donations,
     Feedback,
   ],
-  globals: [SiteSettings, Navigation, Footer],
+  globals: [SiteSettings, Navigation, Footer, PaySettings],
   plugins: storagePlugins,
   editor: lexicalEditor(),
   email: resendAdapter({

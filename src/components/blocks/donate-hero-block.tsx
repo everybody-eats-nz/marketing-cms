@@ -1,5 +1,6 @@
 import { KawakawaPattern } from '@/components/kawakawa-pattern'
 import { DonateForm } from '@/app/(frontend)/dine-with-us/pay/donate-form'
+import type { FormCopy } from '@/lib/pay-copy'
 import { renderRichText } from './render-text'
 
 type Amount = { amount: number; label: string }
@@ -17,9 +18,10 @@ type Props = {
   }
   defaultDonateUrl?: string
   charityNumber?: string
+  formCopy?: FormCopy
 }
 
-export function DonateHeroBlock({ block, defaultDonateUrl, charityNumber }: Props) {
+export function DonateHeroBlock({ block, defaultDonateUrl, charityNumber, formCopy }: Props) {
   const donateUrl = block.ctaHref || defaultDonateUrl || '#'
   const amounts = block.amounts || []
   // An internal donate URL means this page IS the donation form (it points at
@@ -53,7 +55,7 @@ export function DonateHeroBlock({ block, defaultDonateUrl, charityNumber }: Prop
           <div className="bg-surface dark:bg-surface-3 rounded-[2rem] p-8 sm:p-10 shadow-xl dark:ring-1 dark:ring-line/15">
             {embed ? (
               // Embedded one-off donation — reads ?amount, takes payment on-site.
-              <DonateForm source="donation" presets={amounts} />
+              <DonateForm source="donation" presets={amounts} copy={formCopy} />
             ) : (
               <>
                 {block.panelLabel && <p className="eyebrow mb-3">{block.panelLabel}</p>}

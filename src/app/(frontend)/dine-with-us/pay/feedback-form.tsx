@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { DEFAULT_PAY_COPY, type FeedbackCopy } from '@/lib/pay-copy'
 
 // Optional comment step shown after a successful payment on the /thanks page.
 // Posts to /api/feedback, which classifies sentiment with AI and auto-publishes
@@ -9,10 +10,12 @@ export function FeedbackForm({
   stripePaymentIntentId,
   locationSlug,
   locationName,
+  copy = DEFAULT_PAY_COPY.feedback,
 }: {
   stripePaymentIntentId?: string
   locationSlug?: string
   locationName?: string
+  copy?: FeedbackCopy
 }) {
   const [message, setMessage] = useState('')
   const [name, setName] = useState('')
@@ -26,7 +29,7 @@ export function FeedbackForm({
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!message.trim()) {
-      setError('Write a few words first.')
+      setError(copy.emptyError)
       return
     }
     setSubmitting(true)
@@ -57,11 +60,9 @@ export function FeedbackForm({
   if (done) {
     return (
       <div className="rounded-[1.75rem] bg-surface text-content p-7 sm:p-9 text-center shadow-2xl">
-        <p className="display text-2xl font-light">Thank you for the kind words.</p>
+        <p className="display text-2xl font-light">{copy.doneTitle}</p>
         <p className="mt-3 text-sm text-muted leading-relaxed">
-          {done.published
-            ? 'With your blessing, your note may appear on our restaurant page and be shared with the team who cooked for you.'
-            : 'We’ve passed your note to the team who cooked for you tonight.'}
+          {done.published ? copy.donePublished : copy.doneUnpublished}
         </p>
       </div>
     )
@@ -72,10 +73,10 @@ export function FeedbackForm({
       onSubmit={handleSubmit}
       className="rounded-[1.75rem] bg-surface text-content p-7 sm:p-9 text-left shadow-2xl"
     >
-      <p className="eyebrow mb-1">Leave a note <span className="text-muted normal-case">— optional</span></p>
-      <p className="text-sm text-muted mb-5 leading-relaxed">
-        How was tonight? A line about your meal helps our volunteers and future diners.
+      <p className="eyebrow mb-1">
+        {copy.heading} <span className="text-muted normal-case">{copy.optionalLabel}</span>
       </p>
+      <p className="text-sm text-muted mb-5 leading-relaxed">{copy.subtitle}</p>
 
       <textarea
         value={message}
@@ -85,7 +86,7 @@ export function FeedbackForm({
         }}
         rows={3}
         maxLength={2000}
-        placeholder="The food, the welcome, the room…"
+        placeholder={copy.placeholder}
         className="w-full rounded-2xl border border-line/25 bg-surface-2 px-4 py-3 text-base outline-none focus:border-forest-500 transition-colors resize-none"
       />
 
@@ -94,7 +95,7 @@ export function FeedbackForm({
           <div
             className="flex items-center gap-1"
             role="radiogroup"
-            aria-label="Rating out of five"
+            aria-label={copy.ratingLabel}
             onMouseLeave={() => setHoverRating(null)}
           >
             {[1, 2, 3, 4, 5].map((star) => {
@@ -132,7 +133,7 @@ export function FeedbackForm({
           value={name}
           onChange={(e) => setName(e.target.value)}
           maxLength={100}
-          placeholder="First name (optional)"
+          placeholder={copy.namePlaceholder}
           className="flex-1 min-w-[10rem] rounded-2xl border border-line/25 bg-surface-2 px-4 py-2.5 text-sm outline-none focus:border-forest-500 transition-colors"
         />
       </div>
@@ -144,7 +145,7 @@ export function FeedbackForm({
           onChange={(e) => setConsent(e.target.checked)}
           className="mt-0.5 h-4 w-4 shrink-0 accent-forest-500"
         />
-        <span>OK to share my note publicly with my first name on the Everybody Eats website.</span>
+        <span>{copy.consentLabel}</span>
       </label>
 
       {error && <p className="mt-4 text-sm text-clay-300">{error}</p>}
@@ -154,7 +155,7 @@ export function FeedbackForm({
         disabled={submitting}
         className="btn-primary w-full justify-center mt-5 py-3.5 disabled:opacity-60"
       >
-        {submitting ? 'Sending…' : 'Share your note'}
+        {submitting ? copy.sendingLabel : copy.submitLabel}
       </button>
     </form>
   )
