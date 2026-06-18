@@ -57,6 +57,21 @@ export type FeedbackCopy = {
   doneUnpublished: string
 }
 
+export type NewsletterCopy = {
+  heading: string
+  subtitle: string
+  regionLabel: string
+  aucklandLabel: string
+  wellingtonLabel: string
+  emailPlaceholder: string
+  submitLabel: string
+  sendingLabel: string
+  regionError: string
+  errorMessage: string
+  successTitle: string
+  successMessage: string
+}
+
 export type PayCopy = {
   amounts: {
     presets: Preset[]
@@ -83,6 +98,7 @@ export type PayCopy = {
     changeRestaurant: string
   }
   form: FormCopy
+  newsletter: NewsletterCopy
   thanks: {
     metaTitle: string
     eyebrow: string
@@ -160,6 +176,20 @@ export const DEFAULT_PAY_COPY: PayCopy = {
     giveLabel: 'Give {amount} →',
     processingLabel: 'Processing…',
     cardSecurityNote: 'Secure payment by Stripe. Your card details never touch our servers.',
+  },
+  newsletter: {
+    heading: 'Stay in the *loop*',
+    subtitle: 'Get the occasional note about dinners, events and good news from your local Everybody Eats.',
+    regionLabel: 'Which newsletter?',
+    aucklandLabel: 'Auckland',
+    wellingtonLabel: 'Wellington',
+    emailPlaceholder: 'you@example.com',
+    submitLabel: 'Sign me up',
+    sendingLabel: 'Signing up…',
+    regionError: 'Choose Auckland or Wellington first.',
+    errorMessage: 'We couldn’t sign you up just now. Please try again later.',
+    successTitle: 'You’re on the list.',
+    successMessage: 'Thanks — keep an eye on your inbox for the next letter.',
   },
   thanks: {
     metaTitle: 'Thank you',
@@ -263,6 +293,20 @@ export function mergePayCopy(global: any): PayCopy {
       giveLabel: s(g.form?.giveLabel, d.form.giveLabel),
       processingLabel: s(g.form?.processingLabel, d.form.processingLabel),
       cardSecurityNote: s(g.form?.cardSecurityNote, d.form.cardSecurityNote),
+    },
+    newsletter: {
+      heading: s(g.newsletter?.heading, d.newsletter.heading),
+      subtitle: s(g.newsletter?.subtitle, d.newsletter.subtitle),
+      regionLabel: s(g.newsletter?.regionLabel, d.newsletter.regionLabel),
+      aucklandLabel: s(g.newsletter?.aucklandLabel, d.newsletter.aucklandLabel),
+      wellingtonLabel: s(g.newsletter?.wellingtonLabel, d.newsletter.wellingtonLabel),
+      emailPlaceholder: s(g.newsletter?.emailPlaceholder, d.newsletter.emailPlaceholder),
+      submitLabel: s(g.newsletter?.submitLabel, d.newsletter.submitLabel),
+      sendingLabel: s(g.newsletter?.sendingLabel, d.newsletter.sendingLabel),
+      regionError: s(g.newsletter?.regionError, d.newsletter.regionError),
+      errorMessage: s(g.newsletter?.errorMessage, d.newsletter.errorMessage),
+      successTitle: s(g.newsletter?.successTitle, d.newsletter.successTitle),
+      successMessage: s(g.newsletter?.successMessage, d.newsletter.successMessage),
     },
     thanks: {
       metaTitle: s(g.thanks?.metaTitle, d.thanks.metaTitle),
