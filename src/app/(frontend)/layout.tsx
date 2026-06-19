@@ -46,6 +46,14 @@ const mono = JetBrains_Mono({
   display: 'swap',
 })
 
+// Proves domain ownership to Meta Business (Brand Safety → Domains) so we keep
+// control of link-preview editing and ad attribution for everybodyeats.nz after
+// cutover. Bound to the domain, not the platform — the live Webflow site carries
+// the same tag, so emitting it here keeps the domain verified through the
+// migration. Override via FB_DOMAIN_VERIFICATION if the token is ever rotated.
+const FB_DOMAIN_VERIFICATION =
+  process.env.FB_DOMAIN_VERIFICATION || '6z6uw8wg97xmw4w0vekim8867qwn6a'
+
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings()
   const siteName = settings?.siteName || 'Everybody Eats'
@@ -67,6 +75,9 @@ export async function generateMetadata(): Promise<Metadata> {
     twitter: {
       card: 'summary_large_image',
     },
+    ...(FB_DOMAIN_VERIFICATION
+      ? { other: { 'facebook-domain-verification': FB_DOMAIN_VERIFICATION } }
+      : {}),
     // On the pre-launch preview deployment (SITE_NOINDEX set) keep the whole
     // site out of search indexes so it doesn't compete with the live www host.
     ...(SITE_NOINDEX ? { robots: { index: false, follow: false } } : {}),
