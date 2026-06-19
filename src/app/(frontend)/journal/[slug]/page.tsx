@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getPayloadClient } from '@/lib/payload'
+import { pageMetadata } from '@/lib/seo'
+import { JsonLd, buildBlogPosting, buildBreadcrumbs } from '@/components/structured-data'
 import { PayloadImage } from '@/components/payload-image'
 import { RichText } from '@/components/rich-text'
 
@@ -21,11 +23,14 @@ async function fetchPost(slug: string) {
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params
   const post: any = await fetchPost(slug)
-  if (!post) return { title: 'Not found' }
-  return {
+  if (!post) return { title: 'Not found', robots: { index: false, follow: false } }
+  return pageMetadata({
     title: post.title,
-    description: post.summary || undefined,
-  }
+    description: post.summary,
+    image: post.mainImage,
+    path: `/journal/${post.slug}`,
+    type: 'article',
+  })
 }
 
 export default async function JournalPost({ params }: Params) {
@@ -37,6 +42,14 @@ export default async function JournalPost({ params }: Params) {
 
   return (
     <>
+      <JsonLd data={buildBlogPosting(post)} />
+      <JsonLd
+        data={buildBreadcrumbs([
+          { name: 'Home', path: '/' },
+          { name: 'Journal', path: '/journal' },
+          { name: post.title, path: `/journal/${post.slug}` },
+        ])}
+      />
       <article className="container-tight pt-12 sm:pt-20 pb-12">
         <Link
           href="/journal"

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { fetchPageDoc, PageBody } from '@/components/blocks/page-body'
+import { pageMetadata } from '@/lib/seo'
 
 type Params = { params: Promise<{ slug: string[] }> }
 
@@ -10,12 +11,15 @@ function joinSlug(parts: string[] | undefined) {
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params
-  const { page } = await fetchPageDoc(joinSlug(slug))
-  if (!page) return { title: 'Not found' }
-  return {
+  const path = joinSlug(slug)
+  const { page } = await fetchPageDoc(path)
+  if (!page) return { title: 'Not found', robots: { index: false, follow: false } }
+  return pageMetadata({
     title: page.seo?.title || page.title,
-    description: page.seo?.description || undefined,
-  }
+    description: page.seo?.description,
+    image: page.seo?.image,
+    path: `/${path}`,
+  })
 }
 
 export default async function GenericPage({ params }: Params) {

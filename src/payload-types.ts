@@ -2374,18 +2374,12 @@ export interface PaySetting {
      */
     heading?: string | null;
     subtitle?: string | null;
-    /**
-     * Label above the Auckland / Wellington choice.
-     */
     regionLabel?: string | null;
     aucklandLabel?: string | null;
     wellingtonLabel?: string | null;
     emailPlaceholder?: string | null;
     submitLabel?: string | null;
     sendingLabel?: string | null;
-    /**
-     * Shown when no region is selected.
-     */
     regionError?: string | null;
     /**
      * Generic failure message.

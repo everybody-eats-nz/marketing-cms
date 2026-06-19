@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import { Plus_Jakarta_Sans, JetBrains_Mono } from 'next/font/google'
-import { getPayloadClient } from '@/lib/payload'
+import { getSiteSettings, SITE_URL, SITE_NOINDEX } from '@/lib/seo'
+import { JsonLd, buildOrganization } from '@/components/structured-data'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { ThemeScript } from '@/components/theme-script'
@@ -46,8 +47,7 @@ const mono = JetBrains_Mono({
 })
 
 export async function generateMetadata(): Promise<Metadata> {
-  const payload = await getPayloadClient()
-  const settings = await payload.findGlobal({ slug: 'site-settings' }).catch(() => null)
+  const settings = await getSiteSettings()
   const siteName = settings?.siteName || 'Everybody Eats'
   const tagline = settings?.tagline || 'Making a difference one plate at a time'
   return {
@@ -58,15 +58,23 @@ export async function generateMetadata(): Promise<Metadata> {
     description:
       settings?.description ||
       'Restaurant-quality meals from rescued ingredients, served on a pay-as-you-feel basis. A New Zealand registered charity.',
-    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
+    metadataBase: new URL(SITE_URL),
+    alternates: { canonical: '/' },
     openGraph: {
       siteName,
       type: 'website',
     },
+    twitter: {
+      card: 'summary_large_image',
+    },
+    // On the pre-launch preview deployment (SITE_NOINDEX set) keep the whole
+    // site out of search indexes so it doesn't compete with the live www host.
+    ...(SITE_NOINDEX ? { robots: { index: false, follow: false } } : {}),
   }
 }
 
 export default async function FrontendLayout({ children }: { children: React.ReactNode }) {
+  const settings = await getSiteSettings()
   return (
     <html
       lang="en"
@@ -75,6 +83,7 @@ export default async function FrontendLayout({ children }: { children: React.Rea
     >
       <head>
         <ThemeScript />
+        <JsonLd data={buildOrganization(settings)} />
       </head>
       <body>
         <SiteHeader />

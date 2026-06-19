@@ -1,13 +1,21 @@
 import type { Metadata } from 'next'
 import { fetchPageDoc, PageBody } from '@/components/blocks/page-body'
+import { getSiteSettings, pageMetadata } from '@/lib/seo'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { page } = await fetchPageDoc('home')
-  if (!page) return { title: 'Everybody Eats' }
-  return {
-    title: page.seo?.title || page.title,
-    description: page.seo?.description || undefined,
-  }
+  const [{ page }, settings] = await Promise.all([fetchPageDoc('home'), getSiteSettings()])
+  const siteName = settings?.siteName || 'Everybody Eats'
+  const tagline = settings?.tagline || 'Pay-as-you-feel restaurants in Aotearoa'
+  // The home page is in the same route segment as the layout, so the title
+  // template ('%s — Everybody Eats') does NOT apply here — supply the full,
+  // brand-led title explicitly.
+  return pageMetadata({
+    title: page?.seo?.title || `${siteName} — ${tagline}`,
+    absoluteTitle: true,
+    description: page?.seo?.description,
+    image: page?.seo?.image,
+    path: '/',
+  })
 }
 
 export default async function HomePage() {

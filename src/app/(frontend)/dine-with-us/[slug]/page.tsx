@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getPayloadClient } from '@/lib/payload'
+import { pageMetadata } from '@/lib/seo'
+import { JsonLd, buildRestaurant, buildBreadcrumbs } from '@/components/structured-data'
 import { BookingLocationLink } from '@/components/booking/booking-dialog'
 import { PayloadImage } from '@/components/payload-image'
 
@@ -82,12 +84,15 @@ function roughDate(iso?: string): string | null {
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params
-  const loc = await fetchLocation(slug)
-  if (!loc) return { title: 'Not found' }
-  return {
-    title: `${(loc as any).name} restaurant`,
-    description: (loc as any).tagline || undefined,
-  }
+  const loc: any = await fetchLocation(slug)
+  if (!loc) return { title: 'Not found', robots: { index: false, follow: false } }
+  return pageMetadata({
+    title: `${loc.name} restaurant`,
+    description: loc.seo?.description || loc.tagline || loc.intro,
+    image: loc.seo?.image || loc.heroImage,
+    path: `/dine-with-us/${loc.slug}`,
+    noindex: loc.seo?.noindex,
+  })
 }
 
 export default async function LocationPage({ params }: Params) {
@@ -124,6 +129,14 @@ export default async function LocationPage({ params }: Params) {
 
   return (
     <>
+      <JsonLd data={buildRestaurant(loc)} />
+      <JsonLd
+        data={buildBreadcrumbs([
+          { name: 'Home', path: '/' },
+          { name: 'Dine with us', path: '/dine-with-us' },
+          { name: loc.name, path: `/dine-with-us/${loc.slug}` },
+        ])}
+      />
       {/* Hero — full-bleed photo with overlay copy */}
       <section className="relative h-[80vh] min-h-[600px] bg-forest-700 overflow-hidden">
         {loc.heroImage ? (
