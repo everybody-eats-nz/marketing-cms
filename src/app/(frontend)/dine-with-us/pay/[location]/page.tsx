@@ -32,6 +32,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   return {
     title: fillTemplate(payment.metaTitle, { location: loc.name }),
     description: payment.metaDescription,
+    alternates: { canonical: `/dine-with-us/pay/${loc.slug}` },
   }
 }
 

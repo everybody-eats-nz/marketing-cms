@@ -67,7 +67,12 @@ export async function generateMetadata(): Promise<Metadata> {
       settings?.description ||
       'Restaurant-quality meals from rescued ingredients, served on a pay-as-you-feel basis. A New Zealand registered charity.',
     metadataBase: new URL(SITE_URL),
-    alternates: { canonical: '/' },
+    // NB: deliberately no `alternates.canonical` here. Next inherits canonical
+    // into every child route that doesn't set its own, so a default of '/' would
+    // make standalone routes (events, journal, impact, gala, pay/*) all declare
+    // the home page as their canonical and drop themselves from the index. The
+    // home page sets its own canonical in page.tsx; routes through pageMetadata()
+    // set theirs from the doc path; bare-metadata routes self-canonicalise.
     openGraph: {
       siteName,
       type: 'website',

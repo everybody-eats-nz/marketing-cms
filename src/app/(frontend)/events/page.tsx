@@ -6,6 +6,7 @@ import { PayloadImage } from '@/components/payload-image'
 export const metadata: Metadata = {
   title: 'Events',
   description: 'Special dining events, guest chefs and supper clubs across our three restaurants.',
+  alternates: { canonical: '/events' },
 }
 
 export default async function EventsPage() {

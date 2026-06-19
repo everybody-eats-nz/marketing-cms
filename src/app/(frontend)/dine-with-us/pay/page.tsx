@@ -8,7 +8,11 @@ import { SPECIAL_EVENTS } from './shared'
 
 export async function generateMetadata(): Promise<Metadata> {
   const { picker } = await getPayCopy()
-  return { title: picker.metaTitle, description: picker.metaDescription }
+  return {
+    title: picker.metaTitle,
+    description: picker.metaDescription,
+    alternates: { canonical: '/dine-with-us/pay' },
+  }
 }
 
 export default async function PayLocationPickerPage() {

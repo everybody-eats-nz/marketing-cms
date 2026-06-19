@@ -18,6 +18,7 @@ export const metadata: Metadata = {
   title: 'Our impact',
   description:
     'Six years of pay-as-you-feel dinners, in numbers — meals served from rescued food, neighbours welcomed, and the volunteers who make every night happen.',
+  alternates: { canonical: '/impact' },
 }
 
 /** "2020-06-28" → "Jun 2020". */
