@@ -56,7 +56,9 @@ async function fetchLocation(slug: string) {
   const payload = await getPayloadClient()
   const { docs } = await payload.find({
     collection: 'locations',
-    where: { slug: { equals: slug } },
+    // Only the published version: draft locations 404 publicly, which keeps the
+    // public route consistent with the sitemap (which filters on _status too).
+    where: { slug: { equals: slug }, _status: { equals: 'published' } },
     limit: 1,
     depth: 2,
   })
@@ -107,6 +109,7 @@ export default async function LocationPage({ params }: Params) {
       where: {
         'location.slug': { equals: slug },
         date: { greater_than: new Date().toISOString() },
+        _status: { equals: 'published' },
       },
       limit: 3,
       sort: 'date',

@@ -13,7 +13,8 @@ async function fetchPost(slug: string) {
   const payload = await getPayloadClient()
   const { docs } = await payload.find({
     collection: 'journal-posts',
-    where: { slug: { equals: slug } },
+    // Only the published version: draft posts 404 publicly, matching the sitemap.
+    where: { slug: { equals: slug }, _status: { equals: 'published' } },
     limit: 1,
     depth: 2,
   })
