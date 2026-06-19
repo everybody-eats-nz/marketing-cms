@@ -1,4 +1,5 @@
 import { RichText } from '@/components/rich-text'
+import { JsonLd, buildFaqPage } from '@/components/structured-data'
 
 type Props = {
   faqs: any[]
@@ -40,8 +41,11 @@ export function FaqsAccordionBlock({ faqs }: Props) {
       (CATEGORY_ORDER.indexOf(a) + 1 || 99) - (CATEGORY_ORDER.indexOf(b) + 1 || 99),
   )
 
+  const faqSchema = buildFaqPage(faqs)
+
   return (
     <section className="container-tight pb-32">
+      {faqSchema && <JsonLd data={faqSchema} />}
       {orderedGroups.map(([cat, items]) => (
         <div key={cat} className="mb-12">
           <h2 className="display text-2xl sm:text-3xl text-content font-medium mb-6">
