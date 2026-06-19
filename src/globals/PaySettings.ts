@@ -312,7 +312,7 @@ export const PaySettings: GlobalConfig = {
           name: 'newsletter',
           label: 'Newsletter sign-up',
           description:
-            'The Auckland / Wellington newsletter sign-up shown on the thank-you page. Subscribes via Campaign Monitor (needs CAMPAIGN_MONITOR_API_KEY set).',
+            'The newsletter sign-up shown on the thank-you page. Subscribes to the single website list via Campaign Monitor (needs CAMPAIGN_MONITOR_API_KEY set).',
           fields: [
             {
               name: 'heading',
@@ -330,27 +330,16 @@ export const PaySettings: GlobalConfig = {
                   'Get the occasional note about dinners, events and good news from your local Everybody Eats.',
               },
             },
-            {
-              name: 'regionLabel',
-              type: 'text',
-              admin: {
-                description: 'Label above the Auckland / Wellington choice.',
-                placeholder: 'Which newsletter?',
-              },
-            },
-            { name: 'aucklandLabel', type: 'text', admin: { placeholder: 'Auckland' } },
-            { name: 'wellingtonLabel', type: 'text', admin: { placeholder: 'Wellington' } },
+            // The website newsletter is a single list now (no region split), so
+            // these region fields are no longer used. Hidden rather than removed
+            // to avoid a DB migration; safe to drop in a future schema change.
+            { name: 'regionLabel', type: 'text', admin: { hidden: true } },
+            { name: 'aucklandLabel', type: 'text', admin: { hidden: true } },
+            { name: 'wellingtonLabel', type: 'text', admin: { hidden: true } },
             { name: 'emailPlaceholder', type: 'text', admin: { placeholder: 'you@example.com' } },
             { name: 'submitLabel', type: 'text', admin: { placeholder: 'Sign me up' } },
             { name: 'sendingLabel', type: 'text', admin: { placeholder: 'Signing up…' } },
-            {
-              name: 'regionError',
-              type: 'text',
-              admin: {
-                description: 'Shown when no region is selected.',
-                placeholder: 'Choose Auckland or Wellington first.',
-              },
-            },
+            { name: 'regionError', type: 'text', admin: { hidden: true } },
             {
               name: 'errorMessage',
               type: 'textarea',
