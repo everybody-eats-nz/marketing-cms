@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getPayloadClient } from '@/lib/payload'
+import { pageMetadata } from '@/lib/seo'
+import { JsonLd, buildEvent, buildBreadcrumbs } from '@/components/structured-data'
 import { PayloadImage } from '@/components/payload-image'
 import { RichText } from '@/components/rich-text'
 
@@ -21,11 +23,14 @@ async function fetchEvent(slug: string) {
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params
   const ev: any = await fetchEvent(slug)
-  if (!ev) return { title: 'Event not found' }
-  return {
+  if (!ev) return { title: 'Event not found', robots: { index: false, follow: false } }
+  return pageMetadata({
     title: ev.name,
-    description: ev.shortDescription || undefined,
-  }
+    description: ev.shortDescription,
+    image: ev.image,
+    path: `/events/${ev.slug}`,
+    type: 'article',
+  })
 }
 
 export default async function EventPage({ params }: Params) {
@@ -37,6 +42,14 @@ export default async function EventPage({ params }: Params) {
 
   return (
     <>
+      <JsonLd data={buildEvent(ev)} />
+      <JsonLd
+        data={buildBreadcrumbs([
+          { name: 'Home', path: '/' },
+          { name: 'Events', path: '/events' },
+          { name: ev.name, path: `/events/${ev.slug}` },
+        ])}
+      />
       <section className="container-wide pt-12 sm:pt-20 pb-16">
         <Link
           href="/events"
