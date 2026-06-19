@@ -75,9 +75,7 @@ export async function generateMetadata(): Promise<Metadata> {
     twitter: {
       card: 'summary_large_image',
     },
-    ...(FB_DOMAIN_VERIFICATION
-      ? { other: { 'facebook-domain-verification': FB_DOMAIN_VERIFICATION } }
-      : {}),
+    other: { 'facebook-domain-verification': FB_DOMAIN_VERIFICATION },
     // On the pre-launch preview deployment (SITE_NOINDEX set) keep the whole
     // site out of search indexes so it doesn't compete with the live www host.
     ...(SITE_NOINDEX ? { robots: { index: false, follow: false } } : {}),
