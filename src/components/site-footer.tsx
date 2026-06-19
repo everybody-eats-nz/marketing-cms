@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { getPayloadClient } from '@/lib/payload'
 import { resolveHref, type LinkValue } from '@/lib/types'
+import { DiningRoomMural } from '@/components/dining-room-mural'
 
 export async function SiteFooter() {
   const payload = await getPayloadClient()
@@ -19,6 +20,10 @@ export async function SiteFooter() {
 
   return (
     <footer className="relative bg-forest-700 text-cream-50 grain mt-32 overflow-hidden">
+      {/* The room we're all here for — a faint line-art watermark bled off the
+          bottom-right corner, tinted cream via currentColor. Hidden on small
+          screens where it would crowd the stacked link columns. */}
+      <DiningRoomMural className="hidden md:block absolute -bottom-12 -right-16 w-[48rem] lg:w-[60rem] aspect-[1280/759] text-cream-50/[0.06]" />
       <div className="relative container-wide pt-20 pb-12">
         <h2 className="display text-4xl sm:text-6xl lg:text-7xl font-light max-w-4xl leading-[1.02]">
           Make a difference{' '}

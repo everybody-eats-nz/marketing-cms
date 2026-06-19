@@ -443,6 +443,14 @@ async function main() {
               href: '/get-involved/cooking-sessions',
               color: 'forest100',
             },
+            {
+              number: '06',
+              title: 'Corporate giving',
+              copy: 'Payroll giving, matched donations and team volunteering — bring your business to the table.',
+              ctaLabel: 'Learn more',
+              href: '/get-involved/corporate-giving',
+              color: 'forest700',
+            },
           ],
         },
         {

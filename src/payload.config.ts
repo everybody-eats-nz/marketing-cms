@@ -120,8 +120,10 @@ export default buildConfig({
     // Drizzle schema push is dev-only. In production (and any non-TTY context)
     // push can prompt interactively on destructive changes and hang the deploy —
     // schema changes ship as checked-in migrations instead (pnpm migrate:create),
-    // run by docker-entrypoint.sh before the server starts.
-    push: process.env.NODE_ENV === 'development',
+    // run by docker-entrypoint.sh before the server starts. PAYLOAD_DISABLE_PUSH
+    // also opts out in dev (e.g. worktree previews against a drifted shared DB,
+    // where push would prompt on stale columns and block a non-TTY server).
+    push: process.env.NODE_ENV === 'development' && process.env.PAYLOAD_DISABLE_PUSH !== 'true',
   }),
   sharp,
   cors: [process.env.NEXT_PUBLIC_SITE_URL || ''].filter(Boolean),
