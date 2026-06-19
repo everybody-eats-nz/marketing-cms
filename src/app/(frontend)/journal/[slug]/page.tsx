@@ -7,6 +7,7 @@ import { pageMetadata } from '@/lib/seo'
 import { JsonLd, buildBlogPosting, buildBreadcrumbs } from '@/components/structured-data'
 import { PayloadImage } from '@/components/payload-image'
 import { RichText } from '@/components/rich-text'
+import { DiningRoomMural } from '@/components/dining-room-mural'
 
 type Params = { params: Promise<{ slug: string }> }
 
@@ -107,16 +108,20 @@ export default async function JournalPost({ params }: Params) {
       )}
 
       <section className="container-wide pb-32">
-        <div className="rounded-[2.5rem] bg-forest-700 grain text-cream-50 p-10 sm:p-16">
-          <p className="eyebrow text-cream-50/70 mb-4">Keep reading</p>
-          <h2 className="display text-3xl sm:text-5xl font-light max-w-3xl">
-            More <em className="text-sun-200">stories</em> from the table.
-          </h2>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link href="/journal" className="btn-accent">All stories</Link>
-            <Link href="/newsletter" className="btn border border-cream-50/40 text-cream-50 hover:bg-surface hover:text-content">
-              Subscribe →
-            </Link>
+        <div className="relative overflow-hidden rounded-[2.5rem] bg-forest-700 grain text-cream-50 p-10 sm:p-16">
+          {/* "stories from the table" → faint dining-room watermark. */}
+          <DiningRoomMural className="absolute -bottom-10 -right-10 w-[30rem] sm:w-[42rem] aspect-[1280/759] text-cream-50/[0.06]" />
+          <div className="relative z-10">
+            <p className="eyebrow text-cream-50/70 mb-4">Keep reading</p>
+            <h2 className="display text-3xl sm:text-5xl font-light max-w-3xl">
+              More <em className="text-sun-200">stories</em> from the table.
+            </h2>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link href="/journal" className="btn-accent">All stories</Link>
+              <Link href="/newsletter" className="btn border border-cream-50/40 text-cream-50 hover:bg-surface hover:text-content">
+                Subscribe →
+              </Link>
+            </div>
           </div>
         </div>
       </section>

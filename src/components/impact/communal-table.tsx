@@ -123,7 +123,7 @@ export function CommunalTable({ years }: { years: ImpactStoryYear[] }) {
   }
 
   return (
-    <div className="bg-forest-700 grain rounded-[2.5rem] text-cream-50 px-6 sm:px-10 py-9 sm:py-11 relative overflow-hidden">
+    <div className="bg-forest-700 grain rounded-[2.5rem] [clip-path:inset(0_round_2.5rem)] text-cream-50 px-6 sm:px-10 py-9 sm:py-11 relative overflow-hidden">
       <div className="absolute -bottom-32 -right-24 w-96 h-96 rounded-full bg-sun-200/15 blur-3xl" aria-hidden />
 
       <div className="relative z-10">

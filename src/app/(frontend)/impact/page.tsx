@@ -8,6 +8,7 @@ import { MealsGrowth } from '@/components/impact/meals-growth'
 import { VenueCards } from '@/components/impact/venue-cards'
 import { MilestoneLadder } from '@/components/impact/milestone-ladder'
 import { HeadlineStats } from '@/components/impact/headline-stats'
+import { DiningRoomMural } from '@/components/dining-room-mural'
 
 // Fetches the live impact story from the volunteer portal each request (with
 // Next data-cache revalidation inside the fetch). Inherits force-dynamic from
@@ -185,8 +186,11 @@ export default async function ImpactPage() {
 
       {/* The people */}
       <section className="container-wide pb-20 sm:pb-28">
-        <div className="bg-forest-700 grain rounded-[2.5rem] sm:rounded-[3rem] text-cream-50 px-7 sm:px-14 py-16 sm:py-20 relative overflow-hidden">
+        <div className="bg-forest-700 grain rounded-[2.5rem] sm:rounded-[3rem] [clip-path:inset(0_round_2.5rem)] sm:[clip-path:inset(0_round_3rem)] text-cream-50 px-7 sm:px-14 py-16 sm:py-20 relative overflow-hidden">
           <div className="absolute -top-24 -left-20 w-96 h-96 rounded-full bg-sun-200/10 blur-3xl" aria-hidden />
+          {/* The dining-room mural literally depicts the people this section is
+              about — a faint cream watermark bled off the bottom-right. */}
+          <DiningRoomMural className="absolute -bottom-12 -right-10 w-[34rem] sm:w-[46rem] aspect-[1280/759] text-cream-50/[0.06]" />
           <div className="relative z-10 max-w-5xl mx-auto">
             <p className="eyebrow flex items-center gap-3 text-sun-200/90">
               <span className="inline-block w-8 h-px bg-sun-200/50" />

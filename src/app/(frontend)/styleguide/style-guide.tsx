@@ -952,7 +952,7 @@ export function StyleGuide() {
                 </p>
               </div>
 
-              <div className="rounded-3xl bg-forest-700 grain p-10 text-cream-50 relative overflow-hidden">
+              <div className="rounded-3xl [clip-path:inset(0_round_1.5rem)] bg-forest-700 grain p-10 text-cream-50 relative overflow-hidden">
                 <div className="absolute -bottom-32 -right-32 w-96 h-96 rounded-full bg-sun-200/15 blur-3xl" aria-hidden />
                 <div className="relative">
                   <p className="eyebrow text-cream-50/70 mb-3">Forest panel</p>
