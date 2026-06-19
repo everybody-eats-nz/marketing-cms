@@ -18,6 +18,7 @@ export const metadata: Metadata = {
   title: 'The Gala',
   description:
     'The Everybody Eats Gala — a high-class drag cabaret evening at St Matthew-in-the-City, Auckland, on Friday 30 October 2026. Host a table, sponsor the night, or donate to the auction. Every dollar keeps our restaurant doors open.',
+  alternates: { canonical: '/gala' },
   openGraph: {
     title: 'The Everybody Eats Gala — 30 October 2026',
     description:

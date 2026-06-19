@@ -6,6 +6,7 @@ import { PayloadImage } from '@/components/payload-image'
 export const metadata: Metadata = {
   title: 'Journal',
   description: 'Stories, recipes and dispatches from Everybody Eats.',
+  alternates: { canonical: '/journal' },
 }
 
 export default async function JournalPage() {
