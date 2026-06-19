@@ -8,6 +8,7 @@ import * as migration_20260617_014949_add_user_email_verification from './202606
 import * as migration_20260617_081858_add_donations_and_feedback from './20260617_081858_add_donations_and_feedback';
 import * as migration_20260618_050316_add_pay_settings from './20260618_050316_add_pay_settings';
 import * as migration_20260618_224443_add_newsletter_pay_settings from './20260618_224443_add_newsletter_pay_settings';
+import * as migration_20260619_044721_add_gala_banner from './20260619_044721_add_gala_banner';
 
 export const migrations = [
   {
@@ -58,6 +59,11 @@ export const migrations = [
   {
     up: migration_20260618_224443_add_newsletter_pay_settings.up,
     down: migration_20260618_224443_add_newsletter_pay_settings.down,
-    name: '20260618_224443_add_newsletter_pay_settings'
+    name: '20260618_224443_add_newsletter_pay_settings',
+  },
+  {
+    up: migration_20260619_044721_add_gala_banner.up,
+    down: migration_20260619_044721_add_gala_banner.down,
+    name: '20260619_044721_add_gala_banner'
   },
 ];

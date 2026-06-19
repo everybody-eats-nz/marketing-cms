@@ -1,10 +1,10 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { GALA_TARGET_ISO } from '@/lib/gala'
 
-// The gala kicks off the evening of Friday 30 October 2026. NZ is on daylight
-// time (UTC+13) in late October.
-const TARGET = new Date('2026-10-30T18:30:00+13:00').getTime()
+// The gala kicks off the evening of Friday 30 October 2026.
+const TARGET = new Date(GALA_TARGET_ISO).getTime()
 
 type Remaining = { days: number; hours: number; minutes: number; seconds: number }
 

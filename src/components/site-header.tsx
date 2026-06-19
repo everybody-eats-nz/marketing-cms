@@ -31,6 +31,19 @@ export async function SiteHeader() {
   const shopUrl = (settings as any)?.shopUrl || '#'
   const volunteerUrl = (settings as any)?.volunteerUrl || 'https://volunteers.everybodyeats.nz'
 
+  // Gala banner (Site Settings → Gala banner tab). Format the date server-side
+  // so the client component doesn't risk a timezone-driven hydration mismatch.
+  const galaBanner = (settings as any)?.galaBanner || {}
+  const galaEventIso: string | undefined = galaBanner.eventDate || undefined
+  const galaDateLabel = galaEventIso
+    ? (() => {
+        const d = new Date(galaEventIso)
+        const part = (opts: Intl.DateTimeFormatOptions) =>
+          new Intl.DateTimeFormat('en-NZ', { timeZone: 'Pacific/Auckland', ...opts }).format(d)
+        return `${part({ weekday: 'short' })} ${part({ day: 'numeric' })} ${part({ month: 'short' })} ${part({ year: 'numeric' })}`
+      })()
+    : 'Fri 30 Oct 2026'
+
   const showVolunteer = ctas.showVolunteer !== false && Boolean(volunteerUrl)
   const showShop = Boolean(ctas.showShop && shopUrl && shopUrl !== '#')
 
@@ -73,7 +86,13 @@ export async function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 backdrop-blur-md bg-surface/85 border-b border-line/10">
-      <GalaCountdownBar />
+      <GalaCountdownBar
+        enabled={galaBanner.enabled}
+        label={galaBanner.label}
+        dateLabel={galaDateLabel}
+        eventDateIso={galaEventIso}
+        ctaLabel={galaBanner.ctaLabel}
+      />
       <div className="container-wide flex items-center justify-between h-16 sm:h-20">
         <Link
           href="/"

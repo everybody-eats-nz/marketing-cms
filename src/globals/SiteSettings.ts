@@ -80,6 +80,53 @@ export const SiteSettings: GlobalConfig = {
             },
           ],
         },
+        {
+          label: 'Gala banner',
+          fields: [
+            {
+              name: 'galaBanner',
+              type: 'group',
+              label: 'Header Gala banner',
+              admin: {
+                description:
+                  'The slim countdown strip at the top of the site header. It links to /gala and hides automatically on the Gala page itself and once the event date has passed.',
+              },
+              fields: [
+                {
+                  name: 'enabled',
+                  type: 'checkbox',
+                  defaultValue: true,
+                  label: 'Show the Gala banner',
+                  admin: {
+                    description: 'Untick to hide the countdown strip across the whole site.',
+                  },
+                },
+                {
+                  name: 'label',
+                  type: 'text',
+                  defaultValue: 'The Everybody Eats Gala',
+                  admin: { description: 'Headline text shown in the strip.' },
+                },
+                {
+                  name: 'eventDate',
+                  type: 'date',
+                  defaultValue: '2026-10-30T05:30:00.000Z',
+                  admin: {
+                    date: { pickerAppearance: 'dayAndTime' },
+                    description:
+                      'The date and time the countdown targets (also shown as the strip date). Stored in UTC — 6:30pm NZ daylight time is 5:30am UTC.',
+                  },
+                },
+                {
+                  name: 'ctaLabel',
+                  type: 'text',
+                  defaultValue: 'Book',
+                  admin: { description: 'Call-to-action label at the end of the strip.' },
+                },
+              ],
+            },
+          ],
+        },
       ],
     },
   ],

@@ -2102,6 +2102,27 @@ export interface SiteSetting {
         id?: string | null;
       }[]
     | null;
+  /**
+   * The slim countdown strip at the top of the site header. It links to /gala and hides automatically on the Gala page itself and once the event date has passed.
+   */
+  galaBanner?: {
+    /**
+     * Untick to hide the countdown strip across the whole site.
+     */
+    enabled?: boolean | null;
+    /**
+     * Headline text shown in the strip.
+     */
+    label?: string | null;
+    /**
+     * The date and time the countdown targets (also shown as the strip date). Stored in UTC — 6:30pm NZ daylight time is 5:30am UTC.
+     */
+    eventDate?: string | null;
+    /**
+     * Call-to-action label at the end of the strip.
+     */
+    ctaLabel?: string | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -2374,18 +2395,12 @@ export interface PaySetting {
      */
     heading?: string | null;
     subtitle?: string | null;
-    /**
-     * Label above the Auckland / Wellington choice.
-     */
     regionLabel?: string | null;
     aucklandLabel?: string | null;
     wellingtonLabel?: string | null;
     emailPlaceholder?: string | null;
     submitLabel?: string | null;
     sendingLabel?: string | null;
-    /**
-     * Shown when no region is selected.
-     */
     regionError?: string | null;
     /**
      * Generic failure message.
@@ -2505,6 +2520,14 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         liveMetric?: T;
         suffix?: T;
         id?: T;
+      };
+  galaBanner?:
+    | T
+    | {
+        enabled?: T;
+        label?: T;
+        eventDate?: T;
+        ctaLabel?: T;
       };
   updatedAt?: T;
   createdAt?: T;
