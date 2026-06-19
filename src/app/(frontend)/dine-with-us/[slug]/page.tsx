@@ -62,6 +62,7 @@ async function fetchLocation(slug: string) {
   const { docs } = await payload.find({
     collection: 'locations',
     draft: isEnabled,
+    overrideAccess: isEnabled,
     where: isEnabled
       ? { slug: { equals: slug } }
       : { slug: { equals: slug }, _status: { equals: 'published' } },

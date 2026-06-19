@@ -19,6 +19,7 @@ async function fetchEvent(slug: string) {
   const { docs } = await payload.find({
     collection: 'events',
     draft: isEnabled,
+    overrideAccess: isEnabled,
     where: isEnabled
       ? { slug: { equals: slug } }
       : { slug: { equals: slug }, _status: { equals: 'published' } },
