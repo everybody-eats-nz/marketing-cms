@@ -18,6 +18,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     title: page.seo?.title || page.title,
     description: page.seo?.description,
     image: page.seo?.image,
+    noindex: page.seo?.noindex,
     path: `/${path}`,
   })
 }
