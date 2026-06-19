@@ -777,6 +777,7 @@ export default function GalaPage() {
               <Image
                 src="/images/gala/illustration-meal.png"
                 alt=""
+                aria-hidden
                 width={217}
                 height={273}
                 className="h-16 w-auto mb-6 object-contain object-left transition-transform duration-500 group-hover:-rotate-2"
@@ -790,6 +791,7 @@ export default function GalaPage() {
               <Image
                 src="/images/gala/illustration-herbs.png"
                 alt=""
+                aria-hidden
                 width={173}
                 height={214}
                 className="h-16 w-auto mb-6 object-contain object-left transition-transform duration-500 group-hover:-rotate-2"
@@ -805,6 +807,7 @@ export default function GalaPage() {
               <Image
                 src="/images/gala/illustration-coins-ink.png"
                 alt=""
+                aria-hidden
                 width={465}
                 height={359}
                 className="h-16 w-auto mb-6 object-contain object-left transition-transform duration-500 group-hover:-rotate-2"
