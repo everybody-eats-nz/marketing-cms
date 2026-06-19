@@ -4,6 +4,7 @@ import { getPayloadClient } from '@/lib/payload'
 import { resolveHref, type LinkValue } from '@/lib/types'
 import { BookingDialog, BookingDialogTrigger, type BookingLocation } from './booking/booking-dialog'
 import { ExternalLinkIcon } from './external-link-icon'
+import { GalaCountdownBar } from './gala-countdown-bar'
 import { MobileMenu, type MenuAction } from './mobile-menu'
 import { ThemeToggle } from './theme-toggle'
 
@@ -72,6 +73,7 @@ export async function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 backdrop-blur-md bg-surface/85 border-b border-line/10">
+      <GalaCountdownBar />
       <div className="container-wide flex items-center justify-between h-16 sm:h-20">
         <Link
           href="/"
