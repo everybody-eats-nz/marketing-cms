@@ -17,6 +17,9 @@ type PageSpec = {
   title: string
   seo?: { title?: string; description?: string }
   layout: Layout
+  // When 'published', the doc is seeded live (not left as a draft). Use for
+  // pages the nav/footer link to that must be visible immediately.
+  status?: 'draft' | 'published'
 }
 
 async function main() {
@@ -259,28 +262,34 @@ async function main() {
     },
 
     {
-      slug: 'about/newsletter',
+      // Slug matches the footer + secondary-nav link (/newsletter). Published so
+      // it’s live the moment it’s seeded — the linked page used to be an empty draft.
+      slug: 'newsletter',
       title: 'Newsletter',
-      seo: { description: 'Stories from the table, monthly.' },
+      status: 'published',
+      seo: { description: 'Stories from the table, monthly. Sign up for the Everybody Eats letter.' },
       layout: [
         {
           blockType: 'hero',
           eyebrow: 'Newsletter',
-          heading: 'Stories, *monthly*.',
+          heading: 'Stories from the table,\n*monthly*.',
           subheading:
-            "A short letter once a month with what we've been cooking, what's coming up, and the people behind every plate. No spam, unsubscribe anytime.",
+            "A short letter once a month: what we've been cooking, what's coming up, and the people behind every plate. No spam, unsubscribe anytime.",
         },
         {
           blockType: 'newsletterForm',
           footnote:
-            'By subscribing you agree to receive a monthly email. We will never share your address.',
+            'By subscribing you agree to receive our newsletter by email — we will never share your address, and you can unsubscribe from any letter.',
         },
       ],
     },
 
     {
-      slug: 'about/contact-us',
+      // Slug matches the footer + secondary-nav link (/contact). Published on seed
+      // so the page that everything links to is no longer empty.
+      slug: 'contact',
       title: 'Contact',
+      status: 'published',
       seo: { description: 'Get in touch with the Everybody Eats team.' },
       layout: [
         {
@@ -288,25 +297,27 @@ async function main() {
           eyebrow: 'Contact',
           heading: 'Get in *touch*.',
           subheading:
-            "Whether you want to volunteer, donate, partner with us, or just say hello — we'd love to hear from you.",
+            "Whether you want to volunteer, donate, partner with us, or just say kia ora — we'd love to hear from you. Pick the right inbox below and we'll get back to you.",
         },
         {
           blockType: 'cardGrid',
+          eyebrow: 'Email us',
+          heading: 'Pick the right *inbox*.',
           columns: '3',
           cardStyle: 'soft',
           items: [
             {
               title: 'Say kia ora',
-              copy: 'Questions, suggestions, kind words.',
+              copy: 'General questions, suggestions and kind words.',
               email: 'hello@everybodyeats.nz',
             },
             {
               title: 'Press & media',
-              copy: 'Story pitches, interviews and photography.',
+              copy: 'Story pitches, interviews and photography requests.',
               email: 'press@everybodyeats.nz',
             },
             {
-              title: 'Get on the roster',
+              title: 'Volunteer with us',
               copy: 'Lend an evening — front of house or in the kitchen.',
               email: 'volunteer@everybodyeats.nz',
             },
@@ -314,6 +325,7 @@ async function main() {
         },
         {
           blockType: 'cardGrid',
+          eyebrow: 'Other ways to reach us',
           columns: '2',
           cardStyle: 'mixed',
           items: [
@@ -328,8 +340,27 @@ async function main() {
               title: 'Stories, monthly.',
               copy: 'Behind-the-scenes notes, event announcements and the occasional recipe.',
               ctaLabel: 'Subscribe →',
-              href: '/about/newsletter',
+              href: '/newsletter',
               color: 'sun',
+            },
+          ],
+        },
+        {
+          blockType: 'cardGrid',
+          columns: '2',
+          cardStyle: 'soft',
+          items: [
+            {
+              title: 'Catering & corporate events',
+              copy: 'Planning a catered event, venue hire or a team volunteering day? Start an enquiry and our events team will be in touch.',
+              ctaLabel: 'Start an enquiry →',
+              href: '/get-involved/catering-events',
+            },
+            {
+              title: 'Partner or sponsor',
+              copy: 'Food rescue partners, funders and sponsors keep every seat at the table free of judgment.',
+              ctaLabel: 'Partner with us →',
+              href: '/get-involved/partner',
             },
           ],
         },
@@ -1255,31 +1286,47 @@ async function main() {
     },
   ]
 
-  for (const spec of pages) {
+  // Optional slug filter: pass one or more slugs as CLI args to seed only those
+  // pages, e.g. `pnpm tsx scripts/seed-pages-layouts.ts contact newsletter`.
+  // With no args, every page above is seeded.
+  const onlySlugs = process.argv.slice(2).filter((a) => !a.startsWith('-'))
+  const toSeed = onlySlugs.length ? pages.filter((p) => onlySlugs.includes(p.slug)) : pages
+
+  if (onlySlugs.length) {
+    const missing = onlySlugs.filter((s) => !pages.some((p) => p.slug === s))
+    if (missing.length) {
+      console.warn(`⚠ No spec for slug(s): ${missing.join(', ')} (known slugs: ${pages.map((p) => p.slug).join(', ')})`)
+    }
+    if (!toSeed.length) {
+      console.error('Nothing to seed — none of the given slugs matched a page spec.')
+      process.exit(1)
+    }
+    console.log(`Seeding only: ${toSeed.map((p) => p.slug).join(', ')}\n`)
+  }
+
+  for (const spec of toSeed) {
     const found = existing.docs.find((d: any) => d.slug === spec.slug)
+    const data = {
+      title: spec.title,
+      slug: spec.slug,
+      ...(spec.seo ? { seo: spec.seo } : {}),
+      layout: spec.layout,
+      ...(spec.status ? { _status: spec.status } : {}),
+    } as any
     if (found) {
-      await payload.update({
-        collection: 'pages',
-        id: (found as any).id,
-        data: {
-          title: spec.title,
-          slug: spec.slug,
-          ...(spec.seo ? { seo: spec.seo } : {}),
-          layout: spec.layout,
-        } as any,
-      })
-      console.log(`✓ Updated  ${spec.slug.padEnd(30)} (${spec.layout.length} blocks)`)
+      await payload.update({ collection: 'pages', id: (found as any).id, data })
+      console.log(
+        `✓ Updated  ${spec.slug.padEnd(30)} (${spec.layout.length} blocks${
+          spec.status === 'published' ? ', published' : ''
+        })`,
+      )
     } else {
-      const created = await payload.create({
-        collection: 'pages',
-        data: {
-          title: spec.title,
-          slug: spec.slug,
-          ...(spec.seo ? { seo: spec.seo } : {}),
-          layout: spec.layout,
-        } as any,
-      })
-      console.log(`✓ Created  ${spec.slug.padEnd(30)} (id=${created.id}, ${spec.layout.length} blocks)`)
+      const created = await payload.create({ collection: 'pages', data })
+      console.log(
+        `✓ Created  ${spec.slug.padEnd(30)} (id=${created.id}, ${spec.layout.length} blocks${
+          spec.status === 'published' ? ', published' : ''
+        })`,
+      )
     }
   }
 
