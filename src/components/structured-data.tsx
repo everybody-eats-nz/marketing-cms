@@ -15,14 +15,6 @@ export function JsonLd({ data }: { data: Record<string, any> }) {
   )
 }
 
-const SOCIAL_BASE: Record<string, string> = {
-  instagram: 'https://instagram.com/',
-  facebook: 'https://facebook.com/',
-  linkedin: 'https://linkedin.com/',
-  tiktok: 'https://tiktok.com/',
-  youtube: 'https://youtube.com/',
-}
-
 function socialUrls(settings: any): string[] {
   const social: any[] = Array.isArray(settings?.social) ? settings.social : []
   return social
