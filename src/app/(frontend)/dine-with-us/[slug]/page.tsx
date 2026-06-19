@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { getPayloadClient } from '@/lib/payload'
 import { pageMetadata } from '@/lib/seo'
@@ -53,10 +54,18 @@ async function fetchTonightsMenu(locationName: string): Promise<TonightsMenu | n
 }
 
 async function fetchLocation(slug: string) {
+  // In Payload preview (draftMode) show the latest draft; otherwise only the
+  // published version, so draft locations 404 publicly and stay consistent with
+  // the sitemap. Mirrors page-body.tsx, ready for `livePreview` on locations.
+  const { isEnabled } = await draftMode()
   const payload = await getPayloadClient()
   const { docs } = await payload.find({
     collection: 'locations',
-    where: { slug: { equals: slug } },
+    draft: isEnabled,
+    overrideAccess: isEnabled,
+    where: isEnabled
+      ? { slug: { equals: slug } }
+      : { slug: { equals: slug }, _status: { equals: 'published' } },
     limit: 1,
     depth: 2,
   })
@@ -107,6 +116,7 @@ export default async function LocationPage({ params }: Params) {
       where: {
         'location.slug': { equals: slug },
         date: { greater_than: new Date().toISOString() },
+        _status: { equals: 'published' },
       },
       limit: 3,
       sort: 'date',

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { getPayloadClient } from '@/lib/payload'
 import { pageMetadata } from '@/lib/seo'
@@ -10,10 +11,18 @@ import { RichText } from '@/components/rich-text'
 type Params = { params: Promise<{ slug: string }> }
 
 async function fetchPost(slug: string) {
+  // In Payload preview (draftMode) show the latest draft; otherwise only the
+  // published version, so draft posts 404 publicly and match the sitemap. This
+  // mirrors page-body.tsx and is ready for `livePreview` on the journal collection.
+  const { isEnabled } = await draftMode()
   const payload = await getPayloadClient()
   const { docs } = await payload.find({
     collection: 'journal-posts',
-    where: { slug: { equals: slug } },
+    draft: isEnabled,
+    overrideAccess: isEnabled,
+    where: isEnabled
+      ? { slug: { equals: slug } }
+      : { slug: { equals: slug }, _status: { equals: 'published' } },
     limit: 1,
     depth: 2,
   })

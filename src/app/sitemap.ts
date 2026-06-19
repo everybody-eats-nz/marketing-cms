@@ -19,10 +19,14 @@ function entry(path: string, lastModified?: string | null, priority = 0.6): Entr
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  // Hand-rolled routes that aren't CMS pages.
+  // Hand-rolled routes that aren't CMS pages (file-system routes under
+  // src/app/(frontend)/, so they never show up in the `pages` collection query
+  // below and must be listed explicitly).
   const staticRoutes: Entry[] = [
     entry('/events', null, 0.7),
     entry('/journal', null, 0.7),
+    entry('/impact', null, 0.7),
+    entry('/gala', null, 0.7),
   ]
 
   try {
