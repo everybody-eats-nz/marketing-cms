@@ -1286,7 +1286,25 @@ async function main() {
     },
   ]
 
-  for (const spec of pages) {
+  // Optional slug filter: pass one or more slugs as CLI args to seed only those
+  // pages, e.g. `pnpm tsx scripts/seed-pages-layouts.ts contact newsletter`.
+  // With no args, every page above is seeded.
+  const onlySlugs = process.argv.slice(2).filter((a) => !a.startsWith('-'))
+  const toSeed = onlySlugs.length ? pages.filter((p) => onlySlugs.includes(p.slug)) : pages
+
+  if (onlySlugs.length) {
+    const missing = onlySlugs.filter((s) => !pages.some((p) => p.slug === s))
+    if (missing.length) {
+      console.warn(`⚠ No spec for slug(s): ${missing.join(', ')} (known slugs: ${pages.map((p) => p.slug).join(', ')})`)
+    }
+    if (!toSeed.length) {
+      console.error('Nothing to seed — none of the given slugs matched a page spec.')
+      process.exit(1)
+    }
+    console.log(`Seeding only: ${toSeed.map((p) => p.slug).join(', ')}\n`)
+  }
+
+  for (const spec of toSeed) {
     const found = existing.docs.find((d: any) => d.slug === spec.slug)
     const data = {
       title: spec.title,
