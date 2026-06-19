@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { KawakawaPattern } from '@/components/kawakawa-pattern'
+import { DiningRoomMural } from '@/components/dining-room-mural'
 import { renderRichText } from './render-text'
 
 type CTA = { label?: string; href?: string } | null | undefined
@@ -71,15 +72,18 @@ export function CtaStripBlock({ block }: Props) {
             </div>
           ) : null}
         </div>
-        {!isCentered && (
-          <KawakawaPattern
-            // The sun variant goes dark-surface in dark mode, where the green
-            // doodles are tone-on-tone — let them through stronger there.
-            className={`top-0 -right-8 w-80 sm:w-[26rem] ${
-              isSun ? 'opacity-25 dark:opacity-80' : ''
-            }`}
-          />
-        )}
+        {!isCentered &&
+          (isSun ? (
+            <KawakawaPattern
+              // The sun variant goes dark-surface in dark mode, where the green
+              // doodles are tone-on-tone — let them through stronger there.
+              className="top-0 -right-8 w-80 sm:w-[26rem] opacity-25 dark:opacity-80"
+            />
+          ) : (
+            // On the dark forest band the dining-room line-art reads in cream —
+            // bled off the bottom-right corner behind the copy.
+            <DiningRoomMural className="absolute -bottom-8 -right-10 w-[34rem] sm:w-[44rem] aspect-[1280/759] text-cream-50/[0.08]" />
+          ))}
       </div>
     </section>
   )
