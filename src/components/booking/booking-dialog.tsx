@@ -177,7 +177,7 @@ export function BookingDialog({ locations }: { locations: BookingLocation[] }) {
           role="dialog"
           aria-modal="true"
           aria-label="Book a table"
-          className={`pointer-events-auto relative flex h-full w-full flex-col overflow-hidden bg-forest-700 grain text-cream-50 transition-[transform,opacity] duration-500 ease-in-out-soft sm:h-auto sm:max-h-[calc(100dvh-3rem)] sm:max-w-2xl sm:rounded-[2.5rem] ${
+          className={`pointer-events-auto relative flex h-full w-full flex-col overflow-hidden bg-forest-700 grain text-cream-50 transition-[transform,opacity] duration-500 ease-in-out-soft sm:h-auto sm:max-h-[calc(100dvh-3rem)] sm:max-w-2xl sm:rounded-[2.5rem] sm:[clip-path:inset(0_round_2.5rem)] ${
             open ? 'translate-y-0 opacity-100 sm:scale-100' : 'translate-y-5 opacity-0 sm:translate-y-0 sm:scale-[0.97]'
           }`}
         >

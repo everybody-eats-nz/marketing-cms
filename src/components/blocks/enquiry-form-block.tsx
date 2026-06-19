@@ -26,7 +26,7 @@ export function EnquiryFormBlock({ block }: Props) {
   return (
     <section id="enquiry" className="container-wide scroll-mt-24 pt-12 pb-24">
       <div
-        className={`relative overflow-hidden rounded-[3rem] p-8 sm:p-14 grain ${
+        className={`relative overflow-hidden rounded-[3rem] [clip-path:inset(0_round_3rem)] p-8 sm:p-14 grain ${
           isForest
             ? 'bg-forest-700 text-cream-50'
             : 'bg-cream-100 text-forest-700 border border-forest-500/10 dark:bg-surface-2 dark:text-content dark:border-line/15'

@@ -7,6 +7,7 @@ import { pageMetadata } from '@/lib/seo'
 import { JsonLd, buildRestaurant, buildBreadcrumbs } from '@/components/structured-data'
 import { BookingLocationLink } from '@/components/booking/booking-dialog'
 import { PayloadImage } from '@/components/payload-image'
+import { DiningRoomMural } from '@/components/dining-room-mural'
 
 type Params = { params: Promise<{ slug: string }> }
 
@@ -407,19 +408,23 @@ export default async function LocationPage({ params }: Params) {
 
       {/* CTA */}
       <section className="container-wide py-16">
-        <div className="rounded-[3rem] bg-forest-700 grain text-cream-50 p-12 sm:p-20 text-center">
-          <h2 className="display text-4xl sm:text-6xl font-light max-w-3xl mx-auto">
-            Save us a seat at <em className="text-sun-200">{loc.name}</em>
-          </h2>
-          <div className="mt-10 flex flex-wrap gap-3 justify-center">
-            {loc.bookingUrl && (
-              <BookingLocationLink locationSlug={loc.slug} bookingUrl={loc.bookingUrl} className="btn-accent">
-                Book now
-              </BookingLocationLink>
-            )}
-            <Link href="/get-involved/donate" className="btn border border-cream-50/40 text-cream-50 hover:bg-surface hover:text-content">
-              Donate a meal
-            </Link>
+        <div className="relative overflow-hidden rounded-[3rem] bg-forest-700 grain text-cream-50 p-12 sm:p-20 text-center">
+          {/* "Save us a seat" → a faint watermark of a full dining room. */}
+          <DiningRoomMural className="absolute -bottom-12 -right-10 w-[32rem] sm:w-[46rem] aspect-[1280/759] text-cream-50/[0.06]" />
+          <div className="relative z-10">
+            <h2 className="display text-4xl sm:text-6xl font-light max-w-3xl mx-auto">
+              Save us a seat at <em className="text-sun-200">{loc.name}</em>
+            </h2>
+            <div className="mt-10 flex flex-wrap gap-3 justify-center">
+              {loc.bookingUrl && (
+                <BookingLocationLink locationSlug={loc.slug} bookingUrl={loc.bookingUrl} className="btn-accent">
+                  Book now
+                </BookingLocationLink>
+              )}
+              <Link href="/get-involved/donate" className="btn border border-cream-50/40 text-cream-50 hover:bg-surface hover:text-content">
+                Donate a meal
+              </Link>
+            </div>
           </div>
         </div>
       </section>

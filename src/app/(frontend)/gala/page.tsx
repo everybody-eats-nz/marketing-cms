@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
+import { KawakawaPattern } from '@/components/kawakawa-pattern'
+import { DiningRoomMural } from '@/components/dining-room-mural'
 import { GalaCountdown } from './gala-countdown'
 
 // Bespoke event landing page for the Everybody Eats fundraising Gala
@@ -361,11 +363,17 @@ export default function GalaPage() {
       {/* ── Who we are + impact ──────────────────────────────────────────── */}
       <section className="bg-surface text-content">
         <div className="container-wide pb-20 sm:pb-28">
-          <div className="rounded-[3rem] bg-forest-700 grain text-cream-50 px-8 sm:px-14 py-16 sm:py-20 relative overflow-hidden">
+          {/* clip-path (not just overflow-hidden) so the blurred sun-glow circle
+              below is clipped to the rounded corners — overflow-hidden alone
+              leaks filtered children past the radius (Chromium quirk). */}
+          <div className="rounded-[3rem] [clip-path:inset(0_round_3rem)] bg-forest-700 grain text-cream-50 px-8 sm:px-14 py-16 sm:py-20 relative overflow-hidden">
             <div
               className="absolute -bottom-32 -right-32 w-96 h-96 rounded-full bg-sun-200/15 blur-3xl"
               aria-hidden
             />
+            {/* Hand-drawn dining-room mural as a faint brand watermark — same
+                cream line-art idiom used on the footer and CTA strip. */}
+            <DiningRoomMural className="absolute -bottom-10 -right-8 w-[32rem] sm:w-[44rem] aspect-[1280/759] text-cream-50/[0.07]" />
             <div className="relative z-10">
               <Eyebrow className="text-sun-200">Who is Everybody Eats</Eyebrow>
               <h2 className="mt-6 display text-3xl sm:text-5xl font-light leading-tight max-w-4xl">
@@ -475,6 +483,9 @@ export default function GalaPage() {
           className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-sun-200/10 blur-3xl"
           aria-hidden
         />
+        {/* Food-doodle band reused from the home page's "Get involved" pillars,
+            tying the Gala's get-involved cluster back to the main site. */}
+        <KawakawaPattern className="top-0 -right-10 w-72 sm:w-[28rem]" />
         <div className="relative container-wide">
           <div className="max-w-3xl">
             <Eyebrow className="text-sun-200">Get involved · Headline the Gala</Eyebrow>
@@ -613,7 +624,7 @@ export default function GalaPage() {
           </div>
 
           {/* In-kind */}
-          <div className="mt-6 rounded-[2rem] bg-forest-700 grain text-cream-50 p-8 sm:p-12 relative overflow-hidden">
+          <div className="mt-6 rounded-[2rem] [clip-path:inset(0_round_2rem)] bg-forest-700 grain text-cream-50 p-8 sm:p-12 relative overflow-hidden">
             <div
               className="absolute -bottom-24 -right-24 w-80 h-80 rounded-full bg-sun-200/15 blur-3xl"
               aria-hidden
@@ -760,19 +771,44 @@ export default function GalaPage() {
             </p>
           </div>
           <div className="mt-12 grid sm:grid-cols-3 gap-6">
-            <div className="rounded-[2rem] bg-cream-50/10 ring-1 ring-cream-50/15 p-8">
+            <div className="group rounded-[2rem] bg-cream-50/10 ring-1 ring-cream-50/15 p-8">
+              {/* Hand-drawn line art reused from the home page's "Get involved"
+                  pillars — white variants read cleanly on the dark cards. */}
+              <Image
+                src="/images/gala/illustration-meal.png"
+                alt=""
+                width={217}
+                height={273}
+                className="h-16 w-auto mb-6 object-contain object-left transition-transform duration-500 group-hover:-rotate-2"
+              />
               <div className="display text-3xl font-light text-sun-200">One seat</div>
               <p className="mt-3 text-sm text-cream-50/80 leading-relaxed">
                 keeps a restaurant’s doors open for half a day.
               </p>
             </div>
-            <div className="rounded-[2rem] bg-cream-50/10 ring-1 ring-cream-50/15 p-8">
+            <div className="group rounded-[2rem] bg-cream-50/10 ring-1 ring-cream-50/15 p-8">
+              <Image
+                src="/images/gala/illustration-herbs.png"
+                alt=""
+                width={173}
+                height={214}
+                className="h-16 w-auto mb-6 object-contain object-left transition-transform duration-500 group-hover:-rotate-2"
+              />
               <div className="display text-3xl font-light text-sun-200">One table</div>
               <p className="mt-3 text-sm text-cream-50/80 leading-relaxed">
                 keeps a restaurant open for nearly a week.
               </p>
             </div>
-            <div className="rounded-[2rem] bg-sun-200 text-forest-700 p-8">
+            <div className="group rounded-[2rem] bg-sun-200 text-forest-700 p-8">
+              {/* Coins recoloured to forest ink so the line art stays legible on
+                  the bright sun-yellow emphasis card. */}
+              <Image
+                src="/images/gala/illustration-coins-ink.png"
+                alt=""
+                width={465}
+                height={359}
+                className="h-16 w-auto mb-6 object-contain object-left transition-transform duration-500 group-hover:-rotate-2"
+              />
               <div className="display text-3xl font-light">$150,000+</div>
               <p className="mt-3 text-sm text-forest-700/85 leading-relaxed">
                 raised in this room last year — six full months of one restaurant
