@@ -6,7 +6,10 @@ export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
   const path = searchParams.get('path') || '/'
 
-  if (!path.startsWith('/')) {
+  // Must be a same-site absolute path. Reject protocol-relative targets like
+  // `//evil.com` (and the `/\evil.com` variant browsers normalise to `//`),
+  // which would otherwise turn this into an open redirect.
+  if (!path.startsWith('/') || path.startsWith('//') || path.startsWith('/\\')) {
     return new Response('Invalid path', { status: 400 })
   }
 
