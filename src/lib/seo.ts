@@ -25,7 +25,7 @@ type PageMetaInput = {
   /** Canonical path, e.g. '/our-story'. */
   path: string
   absoluteTitle?: boolean
-  noindex?: boolean
+  noindex?: boolean | null
   type?: 'website' | 'article'
 }
 

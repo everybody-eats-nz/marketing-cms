@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { seoField } from '../fields/seo'
 import { Hero } from '../blocks/Hero'
 import { RichText } from '../blocks/RichText'
 import { Stats } from '../blocks/Stats'
@@ -88,14 +89,6 @@ export const Pages: CollectionConfig = {
         Downloads,
       ],
     },
-    {
-      name: 'seo',
-      type: 'group',
-      fields: [
-        { name: 'title', type: 'text' },
-        { name: 'description', type: 'textarea' },
-        { name: 'image', type: 'upload', relationTo: 'media' },
-      ],
-    },
+    seoField,
   ],
 }

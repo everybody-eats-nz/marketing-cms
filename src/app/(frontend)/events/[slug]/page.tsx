@@ -28,6 +28,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     title: ev.name,
     description: ev.shortDescription,
     image: ev.image,
+    noindex: ev.seo?.noindex,
     path: `/events/${ev.slug}`,
     type: 'article',
   })

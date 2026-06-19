@@ -762,9 +762,16 @@ export interface Page {
       )[]
     | null;
   seo?: {
+    /**
+     * Defaults to page title
+     */
     title?: string | null;
+    /**
+     * Aim for ~155 characters
+     */
     description?: string | null;
     image?: (number | null) | Media;
+    noindex?: boolean | null;
   };
   updatedAt: string;
   createdAt: string;
@@ -1765,6 +1772,7 @@ export interface PagesSelect<T extends boolean = true> {
         title?: T;
         description?: T;
         image?: T;
+        noindex?: T;
       };
   updatedAt?: T;
   createdAt?: T;

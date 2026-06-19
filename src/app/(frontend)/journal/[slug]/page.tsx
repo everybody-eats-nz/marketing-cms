@@ -28,6 +28,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     title: post.title,
     description: post.summary,
     image: post.mainImage,
+    noindex: post.seo?.noindex,
     path: `/journal/${post.slug}`,
     type: 'article',
   })
