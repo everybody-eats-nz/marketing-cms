@@ -17,6 +17,7 @@ import { existsSync } from 'node:fs'
 import path from 'node:path'
 import { getPayload } from 'payload'
 import config from '../src/payload.config'
+import { VOLUNTEER_LINKS } from '../src/lib/volunteer-links'
 
 const ROOT = path.resolve(process.cwd(), 'data/webflow')
 
@@ -470,6 +471,8 @@ async function seedGlobals(payload: any) {
           heading: 'Get involved',
           links: [
             { link: { label: 'Volunteer', type: 'internal', internalHref: '/get-involved/volunteer' } },
+            { link: { label: 'Volunteer in Wellington', type: 'external', externalHref: VOLUNTEER_LINKS.wellington, openInNewTab: true } },
+            { link: { label: 'Volunteer in Auckland', type: 'external', externalHref: VOLUNTEER_LINKS.auckland, openInNewTab: true } },
             { link: { label: 'Donate', type: 'internal', internalHref: '/get-involved/donate' } },
             { link: { label: 'Partner', type: 'internal', internalHref: '/get-involved/partner' } },
             { link: { label: 'Catering & events', type: 'internal', internalHref: '/get-involved/catering-events' } },

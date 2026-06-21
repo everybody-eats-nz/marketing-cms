@@ -9,6 +9,7 @@
 import 'dotenv/config'
 import { getPayload } from 'payload'
 import config from '../src/payload.config'
+import { VOLUNTEER_LINKS } from '../src/lib/volunteer-links'
 
 type Layout = any[]
 
@@ -817,8 +818,8 @@ async function main() {
               number: '02',
               title: 'Pick a shift',
               copy: 'Browse upcoming shifts at your nearest restaurant.',
-              ctaLabel: 'Open portal',
-              href: 'https://volunteers.everybodyeats.nz',
+              ctaLabel: 'Browse shifts',
+              href: VOLUNTEER_LINKS.index,
             },
             {
               number: '03',
@@ -826,6 +827,29 @@ async function main() {
               copy: "Arrive a little early. We'll show you the ropes and feed you after.",
               ctaLabel: 'Open portal',
               href: 'https://volunteers.everybodyeats.nz',
+            },
+          ],
+        },
+        {
+          blockType: 'cardGrid',
+          eyebrow: 'Where',
+          heading: 'Find shifts *near you*.',
+          columns: '2',
+          cardStyle: 'mixed',
+          items: [
+            {
+              title: 'Volunteer in Wellington',
+              copy: 'Lend a hand at our Te Aro restaurant on Dixon Street. See what shifts are coming up and book in.',
+              ctaLabel: 'See Wellington shifts',
+              href: VOLUNTEER_LINKS.wellington,
+              color: 'forest700',
+            },
+            {
+              title: 'Volunteer in Auckland',
+              copy: 'Join the crew at our Glen Innes and Onehunga restaurants — pick whichever is closest to you.',
+              ctaLabel: 'See Auckland shifts',
+              href: VOLUNTEER_LINKS.auckland,
+              color: 'sun',
             },
           ],
         },
