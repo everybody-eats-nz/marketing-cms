@@ -30,6 +30,8 @@ export type ImpactStoryLocation = {
   customers: number
   koha: number
   perHead: number | null
+  /** Share of this venue's diners who ate as our guests (paid nothing). */
+  nonPayingPercent: number | null
   avgCustomersPerNight: number
   weeknightPerHead: number | null
   weekendPerHead: number | null
@@ -129,9 +131,9 @@ export const MOCK_IMPACT_STORY: ImpactStory = {
     { year: 2026, nights: 264, customers: 24373, koha: 125092, perHead: 4.26, perPaying: 14.12, nonPayingPercent: 70, cashPercent: 14.8, eftposPercent: 60.5, digitalPercent: 24.6, partial: true },
   ],
   locations: [
-    { name: 'Wellington', firstYear: 2021, nights: 852, customers: 118475, koha: 591830, perHead: 4.47, avgCustomersPerNight: 139, weeknightPerHead: 5.1, weekendPerHead: 3.84 },
-    { name: 'Onehunga', firstYear: 2020, nights: 1255, customers: 106134, koha: 780240, perHead: 6.72, avgCustomersPerNight: 85, weeknightPerHead: 7.55, weekendPerHead: 5.33 },
-    { name: 'Glen Innes', firstYear: 2023, nights: 632, customers: 54941, koha: 281541, perHead: 4.54, avgCustomersPerNight: 87, weeknightPerHead: 5.04, weekendPerHead: 3.38 },
+    { name: 'Wellington', firstYear: 2021, nights: 852, customers: 118475, koha: 591830, perHead: 4.47, nonPayingPercent: 64, avgCustomersPerNight: 139, weeknightPerHead: 5.1, weekendPerHead: 3.84 },
+    { name: 'Onehunga', firstYear: 2020, nights: 1255, customers: 106134, koha: 780240, perHead: 6.72, nonPayingPercent: 55, avgCustomersPerNight: 85, weeknightPerHead: 7.55, weekendPerHead: 5.33 },
+    { name: 'Glen Innes', firstYear: 2023, nights: 632, customers: 54941, koha: 281541, perHead: 4.54, nonPayingPercent: 66, avgCustomersPerNight: 87, weeknightPerHead: 5.04, weekendPerHead: 3.38 },
   ],
   weekday: [
     { day: 0, label: 'Sun', weekend: true, perHead: 4.46, avgCustomersPerNight: 97 },
