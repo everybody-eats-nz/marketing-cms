@@ -86,7 +86,9 @@ export default async function ImpactPage() {
             stats={[
               { value: `${fmt(t.meals)}`, label: 'meals served', accent: 'text-content' },
               { value: `${fmt(tonnes)}t`, label: 'food rescued', accent: 'text-forest-400' },
-              { value: `${fmt(t.newVolunteers)}`, label: 'volunteers welcomed', accent: 'text-clay-300' },
+              ...(guestShare != null
+                ? [{ value: `${guestShare}%`, label: 'ate as our guests', accent: 'text-clay-300' }]
+                : []),
               { value: money(t.koha), label: 'given back in koha', accent: 'text-content' },
             ]}
           />
@@ -106,7 +108,9 @@ export default async function ImpactPage() {
           <p className="text-base text-content/80 mt-5 leading-relaxed">
             There&rsquo;s no price on the menu. Some pay it forward so the next person can eat; some
             sit down as our guests — no questions asked. Drag through the years and watch a typical
-            table of 100 change.
+            table of 100 change: each season, more neighbours arrive who need us, and the koha left
+            on each plate is stretching thinner. The welcome holds — but it&rsquo;s needed more than
+            ever.
           </p>
         </div>
         <CommunalTable years={story.yearly} />
@@ -207,9 +211,6 @@ export default async function ImpactPage() {
                   { value: `${fmt(t.volunteers)}`, label: 'volunteers in the door', accent: 'text-cream-50' },
                   { value: `${fmt(t.volunteerHours)}`, label: 'hours given', accent: 'text-sun-200' },
                   { value: `${fmt(t.nights)}`, label: 'nights cooked & served', accent: 'text-cream-50' },
-                  ...(guestShare != null
-                    ? [{ value: `${guestShare}%`, label: 'ate as our guests', accent: 'text-clay-200' }]
-                    : []),
                 ]}
               />
             </div>
