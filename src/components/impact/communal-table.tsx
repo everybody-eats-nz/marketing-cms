@@ -151,11 +151,16 @@ export function CommunalTable({ years }: { years: ImpactStoryYear[] }) {
   const y = years[safeIdx]
 
   // The rising-need arc: first year vs. most recent, held static so the trend is
-  // always legible regardless of where the scrubber sits.
+  // always legible regardless of where the scrubber sits. Each card only renders
+  // when both ends of its trend are present — a null (e.g. a sparse partial year)
+  // is "data unavailable", not a real zero, so we hide rather than show "0 → N".
   const base = years[0]
   const latest = years[years.length - 1]
-  const guestsBase = Math.round(base.nonPayingPercent ?? 0)
-  const guestsNow = Math.round(latest.nonPayingPercent ?? 0)
+  const guestsBase = base.nonPayingPercent != null ? Math.round(base.nonPayingPercent) : null
+  const guestsNow = latest.nonPayingPercent != null ? Math.round(latest.nonPayingPercent) : null
+  const showGuestsTrend = guestsBase != null && guestsNow != null
+  const showKohaTrend = base.perHead != null && latest.perHead != null
+  const showSqueeze = showGuestsTrend || showKohaTrend
 
   useEffect(() => {
     if (!playing) return
@@ -332,39 +337,45 @@ export function CommunalTable({ years }: { years: ImpactStoryYear[] }) {
         </div>
 
         {/* The rising-need takeaway — the squeeze since the first year, held static */}
-        <div className="mt-9 pt-7 border-t border-cream-50/[0.12]">
-          <p className="eyebrow text-cream-50/55 mb-4">The squeeze since {base.year}</p>
-          <div className="grid gap-3 sm:grid-cols-2">
-            <div className="rounded-2xl bg-clay-200/10 px-5 py-4">
-              <div className="flex items-center gap-2 text-xs text-cream-50/70">
-                <TrendUp className="w-4 h-4 text-clay-200" />
-                More of the table needs us
-              </div>
-              <div className="font-mono text-xl sm:text-2xl mt-2 tabular-nums">
-                <span className="text-cream-50/50">{guestsBase}</span>
-                <span className="text-cream-50/40 mx-1.5">&rarr;</span>
-                <span className="text-clay-200">{guestsNow}</span>
-                <span className="text-sm text-cream-50/60"> in 100 ate as guests</span>
-              </div>
-            </div>
-            <div className="rounded-2xl bg-sun-200/[0.08] px-5 py-4">
-              <div className="flex items-center gap-2 text-xs text-cream-50/70">
-                <TrendDown className="w-4 h-4 text-sun-200" />
-                And the koha stretches thinner
-              </div>
-              <div className="font-mono text-xl sm:text-2xl mt-2 tabular-nums">
-                <span className="text-cream-50/50">
-                  {base.perHead == null ? '—' : '$' + base.perHead.toFixed(2)}
-                </span>
-                <span className="text-cream-50/40 mx-1.5">&rarr;</span>
-                <span className="text-sun-200">
-                  {latest.perHead == null ? '—' : '$' + latest.perHead.toFixed(2)}
-                </span>
-                <span className="text-sm text-cream-50/60"> a head</span>
-              </div>
+        {showSqueeze && (
+          <div className="mt-9 pt-7 border-t border-cream-50/[0.12]">
+            <p className="eyebrow text-cream-50/55 mb-4">The squeeze since {base.year}</p>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {showGuestsTrend && (
+                <div className="rounded-2xl bg-clay-200/10 px-5 py-4">
+                  <div className="flex items-center gap-2 text-xs text-cream-50/70">
+                    <TrendUp className="w-4 h-4 text-clay-200" />
+                    More of the table needs us
+                  </div>
+                  <div className="font-mono text-xl sm:text-2xl mt-2 tabular-nums">
+                    <span className="text-cream-50/50">{guestsBase}</span>
+                    <span className="text-cream-50/40 mx-1.5">&rarr;</span>
+                    <span className="text-clay-200">{guestsNow}</span>
+                    <span className="text-sm text-cream-50/60"> in 100 ate as guests</span>
+                  </div>
+                </div>
+              )}
+              {showKohaTrend && (
+                <div className="rounded-2xl bg-sun-200/[0.08] px-5 py-4">
+                  <div className="flex items-center gap-2 text-xs text-cream-50/70">
+                    <TrendDown className="w-4 h-4 text-sun-200" />
+                    And the koha stretches thinner
+                  </div>
+                  <div className="font-mono text-xl sm:text-2xl mt-2 tabular-nums">
+                    <span className="text-cream-50/50">
+                      {'$' + (base.perHead as number).toFixed(2)}
+                    </span>
+                    <span className="text-cream-50/40 mx-1.5">&rarr;</span>
+                    <span className="text-sun-200">
+                      {'$' + (latest.perHead as number).toFixed(2)}
+                    </span>
+                    <span className="text-sm text-cream-50/60"> a head</span>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   )
