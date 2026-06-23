@@ -29,6 +29,21 @@ const nextConfig = {
       { source: '/hygiene/privacy-policy', destination: '/privacy', permanent: true },
     ]
   },
+  // Reverse-proxy PostHog ingestion through our own origin so it loads as a
+  // first-party request and isn't blocked by ad/tracker blockers — the browser
+  // SDK points at `/ingest` (see src/instrumentation-client.ts). US Cloud hosts
+  // are hard-coded here to match the server-side capture default in
+  // src/app/(frontend)/actions/enquiry.ts; switch to eu.i / eu-assets if the
+  // project ever moves regions.
+  async rewrites() {
+    return [
+      { source: '/ingest/static/:path*', destination: 'https://us-assets.i.posthog.com/static/:path*' },
+      { source: '/ingest/:path*', destination: 'https://us.i.posthog.com/:path*' },
+    ]
+  },
+  // PostHog's capture endpoints expect trailing slashes; let them through
+  // untouched instead of issuing Next's automatic trailing-slash redirect.
+  skipTrailingSlashRedirect: true,
 }
 
 export default withPayload(nextConfig, { devBundleServerPackages: false })
