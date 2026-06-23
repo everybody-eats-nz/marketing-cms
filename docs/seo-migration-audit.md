@@ -1,4 +1,4 @@
-# SEO Migration Audit — Squarespace → Payload/Next
+# SEO Migration Audit — Webflow → Payload/Next
 
 Source: Google Search Console export `everybodyeats.nz`, *Performance on Search*, last 12 months (pulled 2026-06-21). Web search type only.
 
