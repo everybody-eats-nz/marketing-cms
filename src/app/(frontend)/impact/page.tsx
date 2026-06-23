@@ -113,7 +113,9 @@ export default async function ImpactPage() {
             ever.
           </p>
         </div>
-        <CommunalTable years={story.yearly} />
+        {/* Pre-2020 was the pop-up era — too few, atypical nights that skew the
+            pay-it-forward split — so the table starts from 2020. */}
+        <CommunalTable years={story.yearly.filter((y) => y.year >= 2020)} />
       </section>
 
       {/* Meals growing each year */}
@@ -184,7 +186,11 @@ export default async function ImpactPage() {
           meal, and a seat for whoever walks in.
         </SectionHead>
         <div className="mt-10">
-          <VenueCards locations={story.locations} />
+          {/* Just the three flagship venues — the live feed also carries small
+              pop-up/one-off sites; rank by meals served and keep the top three. */}
+          <VenueCards
+            locations={[...story.locations].sort((a, b) => b.customers - a.customers).slice(0, 3)}
+          />
         </div>
       </section>
 
