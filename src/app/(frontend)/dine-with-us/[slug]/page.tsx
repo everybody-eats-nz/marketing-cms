@@ -97,7 +97,10 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const loc: any = await fetchLocation(slug)
   if (!loc) return { title: 'Not found', robots: { index: false, follow: false } }
   return pageMetadata({
-    title: `${loc.name} restaurant`,
+    // Honour a CMS-set SEO title; otherwise lead with the intent these pages
+    // actually rank for in Search Console ("<suburb> restaurant", "cheap eats",
+    // "pay what you can") rather than a bare "<name> restaurant".
+    title: loc.seo?.title || `${loc.name} Restaurant — Pay What You Can`,
     description: loc.seo?.description || loc.tagline || loc.intro,
     image: loc.seo?.image || loc.heroImage,
     path: `/dine-with-us/${loc.slug}`,

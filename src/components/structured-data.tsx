@@ -65,7 +65,7 @@ export function buildRestaurant(loc: any): Record<string, any> {
     name: `Everybody Eats — ${loc.name}`,
     url: absoluteUrl(`/dine-with-us/${loc.slug}`),
     description: loc.tagline || loc.intro || undefined,
-    servesCuisine: 'Pay-as-you-feel',
+    servesCuisine: 'New Zealand', // describes the food style, not the pricing model
     priceRange: 'Pay what you can',
     acceptsReservations: !!loc.bookingUrl,
     parentOrganization: { '@type': 'NGO', name: 'Everybody Eats', url: SITE_URL },
