@@ -21,7 +21,7 @@
     "seed": "tsx scripts/seed.ts"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.105.0",
+    "@anthropic-ai/sdk": "^0.106.0",
     "@payloadcms/db-postgres": "^3.85.1",
     "@payloadcms/email-resend": "^3.85.1",
     "@payloadcms/live-preview-react": "^3.85.1",
@@ -36,11 +36,11 @@
     "graphql": "^17.0.1",
     "next": "16.2.9",
     "payload": "^3.85.1",
-    "posthog-js": "^1.391.2",
+    "posthog-js": "^1.395.0",
     "react": "19.2.7",
     "react-dom": "19.2.7",
     "sharp": "0.35.2",
-    "stripe": "^22.2.2",
+    "stripe": "^22.3.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {

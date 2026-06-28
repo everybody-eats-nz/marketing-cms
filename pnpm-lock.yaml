@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@anthropic-ai/sdk':
-        specifier: ^0.105.0
-        version: 0.105.0(zod@4.4.3)
+        specifier: ^0.106.0
+        version: 0.106.0(zod@4.4.3)
       '@payloadcms/db-postgres':
         specifier: ^3.85.1
         version: 3.85.1(payload@3.85.1(graphql@17.0.1)(typescript@6.0.3))
@@ -54,8 +54,8 @@ importers:
         specifier: ^3.85.1
         version: 3.85.1(graphql@17.0.1)(typescript@6.0.3)
       posthog-js:
-        specifier: ^1.391.2
-        version: 1.391.2
+        specifier: ^1.395.0
+        version: 1.395.0
       react:
         specifier: 19.2.7
         version: 19.2.7
@@ -66,8 +66,8 @@ importers:
         specifier: 0.35.2
         version: 0.35.2
       stripe:
-        specifier: ^22.2.2
-        version: 22.2.2(@types/node@26.0.0)
+        specifier: ^22.3.0
+        version: 22.3.0(@types/node@26.0.0)
       zod:
         specifier: ^4.4.3
         version: 4.4.3
@@ -115,8 +115,8 @@ packages:
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
     engines: {node: '>=10'}
 
-  '@anthropic-ai/sdk@0.105.0':
-    resolution: {integrity: sha512-sDyu+aM9cE6uZE+HgRjjHRb+qqb87GHZOx+8bE0YlWetdL1YcVLxn8h9ltxGOflyChTe6PMEo50kMQV4cw0hfg==}
+  '@anthropic-ai/sdk@0.106.0':
+    resolution: {integrity: sha512-ufwVvYNDBj2dzOGupBCTaNzBLxqcTnGOzI4z8Wouxlt+mT3J3HuOmatgCy1VmwCHOUueqZ41ERhm0O99OUcbWA==}
     hasBin: true
     peerDependencies:
       zod: ^3.25.0 || ^4.0.0
@@ -1568,11 +1568,11 @@ packages:
   '@pinojs/redact@0.4.0':
     resolution: {integrity: sha512-k2ENnmBugE/rzQfEcdWHcCY+/FM3VLzH9cYEsbdsoqrvzAKRhUZeRNhAZvB8OitQJ1TBed3yqWtdjzS6wJKBwg==}
 
-  '@posthog/core@1.35.3':
-    resolution: {integrity: sha512-EsGPbSLl39Jgo2KZ+kI9UAxFnh5nddaN5bNm2rXvUwF+vGmam9eN1EXeNbxhRU7ulEeIiGdm7XjoU7pzavkgIQ==}
+  '@posthog/core@1.38.0':
+    resolution: {integrity: sha512-QLrJh0hMVpEJXHNyiJR9YhvIO5tzLDedw4UHdvB+ub4fXHMtHCA8H44qgl11HWR3ajpjxtJ8hs3HyOGVF3Zc1w==}
 
-  '@posthog/types@1.390.2':
-    resolution: {integrity: sha512-WcfKz2GNn2vfDX8vXmJYbKxegPxVWHuDQ/pHdAn0HoZDXDFnEp/+x3qBQA+fEvtbPjjtjgAt2wIgJMlM7asx7g==}
+  '@posthog/types@1.391.1':
+    resolution: {integrity: sha512-ASwd7Nf4pViqdYRYaNRyPYRVKWa1CcHUAUWR0XeQJLGdNnsWACBwe0sSieb/cHnKsRXjRwO/23KIY83lm/Ccpw==}
 
   '@preact/signals-core@1.14.2':
     resolution: {integrity: sha512-RZHdBj9ZF4n40Rp4jS052EHHjBWf96P9oNdXPfhQTovCuWY9iQn3Gq+gOTJSgBO9A/JBuPfMOWsSX/lIU9Pc/A==}
@@ -3607,11 +3607,11 @@ packages:
     resolution: {integrity: sha512-9ZhXKM/rw350N1ovuWHbGxnGh/SNJ4cnxHiM0rxE4VN41wsg8P8zWn9hv/buK00RP4WvlOyr/RBDiptyxVbkZQ==}
     engines: {node: '>=0.10.0'}
 
-  posthog-js@1.391.2:
-    resolution: {integrity: sha512-q0DZN6ljchSnAFJIXf+sQFTPlsLjTlRa+TvrL+QRb6413BGtib/MNiQy1bnwLKt8KR+f6xJYvkqdLyty9s4Aww==}
+  posthog-js@1.395.0:
+    resolution: {integrity: sha512-5iTb00CGt2eQUUiBQysQiX89RAbCN6wK2sDNzvs9zv0alaY8mJ0ZySrUD3LQ+XyLhgM5pCpacBuUwChqiYDLDw==}
 
-  preact@10.29.2:
-    resolution: {integrity: sha512-7tNmwg/7mzzAoB/8kSg6Hl37JraAZw3Z3A0JSY7VXlZwo82Xn0G7wKbNNs2qoF4ZEEsQGTwDAroNdqKs1ofJxQ==}
+  preact@10.29.3:
+    resolution: {integrity: sha512-D9NL1GAnJZhc3RndVs4gDdxEeU9TcHgywMrhhOsnpdlvFjdbx0gAsLUnH6JEhlJH5giL7Tx5biWPUSEXE/HPzw==}
 
   prelude-ls@1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
@@ -3944,8 +3944,8 @@ packages:
     resolution: {integrity: sha512-1tB5mhVo7U+ETBKNf92xT4hrQa3pm0MZ0PQvuDnWgAAGHDsfp4lPSpiS6psrSiet87wyGPh9ft6wmhOMQ0hDiw==}
     engines: {node: '>=14.16'}
 
-  stripe@22.2.2:
-    resolution: {integrity: sha512-lRXLiarjW/I2QVa6QuFfz1Ma7Dc2yBQ7vlYH6NEmp5htMJNQGfiWExmOv0McfqY5wMCGV8DLuCvsyVRIPJlUUQ==}
+  stripe@22.3.0:
+    resolution: {integrity: sha512-ypO6xjVrMWs9SmIMeHr8naCx3dAQ0clxMdUTxn7Ejd7hmY9meBGfE+N4pVHkf9sUNebAHp6uJo6mV3GxDIc2cA==}
     engines: {node: '>=18'}
     peerDependencies:
       '@types/node': '>=18'
@@ -4274,7 +4274,7 @@ snapshots:
 
   '@alloc/quick-lru@5.2.0': {}
 
-  '@anthropic-ai/sdk@0.105.0(zod@4.4.3)':
+  '@anthropic-ai/sdk@0.106.0(zod@4.4.3)':
     dependencies:
       json-schema-to-ts: 3.1.1
       standardwebhooks: 1.0.0
@@ -5881,11 +5881,11 @@ snapshots:
 
   '@pinojs/redact@0.4.0': {}
 
-  '@posthog/core@1.35.3':
+  '@posthog/core@1.38.0':
     dependencies:
-      '@posthog/types': 1.390.2
+      '@posthog/types': 1.391.1
 
-  '@posthog/types@1.390.2': {}
+  '@posthog/types@1.391.1': {}
 
   '@preact/signals-core@1.14.2': {}
 
@@ -8227,18 +8227,18 @@ snapshots:
     dependencies:
       xtend: 4.0.2
 
-  posthog-js@1.391.2:
+  posthog-js@1.395.0:
     dependencies:
-      '@posthog/core': 1.35.3
-      '@posthog/types': 1.390.2
+      '@posthog/core': 1.38.0
+      '@posthog/types': 1.391.1
       core-js: 3.49.0
       dompurify: 3.4.11
       fflate: 0.4.8
-      preact: 10.29.2
+      preact: 10.29.3
       query-selector-shadow-dom: 1.0.1
       web-vitals: 5.3.0
 
-  preact@10.29.2: {}
+  preact@10.29.3: {}
 
   prelude-ls@1.2.1: {}
 
@@ -8677,7 +8677,7 @@ snapshots:
 
   strip-json-comments@5.0.3: {}
 
-  stripe@22.2.2(@types/node@26.0.0):
+  stripe@22.3.0(@types/node@26.0.0):
     optionalDependencies:
       '@types/node': 26.0.0
 
