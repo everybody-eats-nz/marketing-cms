@@ -294,6 +294,9 @@ export interface Page {
              */
             highlightWord?: string | null;
             subheading?: string | null;
+            /**
+             * Optional. When set, this image replaces the built-in rotating photo carousel. Leave empty to keep the carousel.
+             */
             image?: (number | null) | Media;
             primaryCta?: {
               label?: string | null;
