@@ -50,7 +50,12 @@ export async function PageBody({ page, isDraft }: { page: any; isDraft: boolean 
           limit: 8,
           sort: '-date',
           depth: 1,
-          where: { date: { greater_than: new Date(0).toISOString() } },
+          // Outside preview, hide unpublished events so the list doesn't link to
+          // pages that 404 (events/[slug]/page.tsx only serves published docs).
+          where: {
+            date: { greater_than: new Date(0).toISOString() },
+            ...(isDraft ? {} : { _status: { equals: 'published' } }),
+          },
         })
       : Promise.resolve({ docs: [] as any[] }),
     needJournal
