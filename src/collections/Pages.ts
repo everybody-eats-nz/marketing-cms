@@ -46,6 +46,31 @@ export const Pages: CollectionConfig = {
   access: {
     read: () => true,
   },
+  hooks: {
+    // Stamp the acting admin user on every save so each version records who did
+    // what. Versions snapshot all fields, so these surface per-version in the
+    // Versions tab as an audit trail. All are only set when there's an
+    // authenticated user (seed/API writes with no req.user leave them null).
+    beforeChange: [
+      ({ req, data, operation }) => {
+        if (req.user) {
+          // Who last saved this version.
+          data.updatedBy = req.user.id
+          // Who originally created the page - set once on create, then preserved
+          // across every later edit (updatedBy would otherwise overwrite it).
+          if (operation === 'create') {
+            data.createdBy = req.user.id
+          }
+          // Who published - stamped only on a save that results in a published
+          // status, so it records the publisher rather than the drafter.
+          if (data._status === 'published') {
+            data.publishedBy = req.user.id
+          }
+        }
+        return data
+      },
+    ],
+  },
   versions: { drafts: true, maxPerDoc: 25 },
   fields: [
     { name: 'title', type: 'text', required: true },
@@ -56,6 +81,36 @@ export const Pages: CollectionConfig = {
       unique: true,
       index: true,
       admin: { description: 'URL path, e.g. "about" or "locations/wellington"' },
+    },
+    {
+      name: 'updatedBy',
+      type: 'relationship',
+      relationTo: 'users',
+      admin: {
+        position: 'sidebar',
+        readOnly: true,
+        description: 'The admin user who last saved this version.',
+      },
+    },
+    {
+      name: 'createdBy',
+      type: 'relationship',
+      relationTo: 'users',
+      admin: {
+        position: 'sidebar',
+        readOnly: true,
+        description: 'The admin user who originally created this page.',
+      },
+    },
+    {
+      name: 'publishedBy',
+      type: 'relationship',
+      relationTo: 'users',
+      admin: {
+        position: 'sidebar',
+        readOnly: true,
+        description: 'The admin user who published this version.',
+      },
     },
     {
       name: 'layout',
