@@ -1,4 +1,5 @@
 import React from 'react'
+import { PayloadImage } from '@/components/payload-image'
 import { HeroCarousel } from './hero-carousel'
 import { HERO_IMAGES } from './hero-images'
 
@@ -66,6 +67,9 @@ export function HeroBlock({ block, fallbackHeading }: Props) {
   const primary = block.primaryCta
   const secondary = block.secondaryCta
   const stickerLines = block.sticker?.text?.split('\n').filter((l) => l.trim().length > 0) || []
+  // A CMS-set image replaces the built-in carousel. Unpopulated relations
+  // (bare ids) fall through to the carousel rather than rendering nothing.
+  const cmsImage = block.image && typeof block.image === 'object' ? block.image : null
 
   return (
     <section className="relative overflow-hidden grain pt-12 sm:pt-20 pb-20 sm:pb-28">
@@ -103,7 +107,18 @@ export function HeroBlock({ block, fallbackHeading }: Props) {
 
         <div className="lg:col-span-5 relative">
           <div className="group relative aspect-[4/5] rounded-[3rem] overflow-hidden bg-surface-3 shadow-2xl">
-            <HeroCarousel images={HERO_IMAGES} />
+            {cmsImage ? (
+              <PayloadImage
+                media={cmsImage}
+                size="hero"
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 40vw"
+                className="object-cover object-center"
+              />
+            ) : (
+              <HeroCarousel images={HERO_IMAGES} />
+            )}
             {stickerLines.length > 0 && (
               <div
                 className="absolute -top-6 -right-6 sm:-top-8 sm:-right-8 w-32 h-32 sm:w-40 sm:h-40 grid place-items-center rounded-full bg-sun-200 text-forest-700 rotate-12 shadow-xl"

@@ -34,6 +34,13 @@ export function PayloadImage({
   const width = media.sizes?.[size]?.width || media.width || 1400
   const height = media.sizes?.[size]?.height || media.height || 900
 
+  // Honour the focal point picked in the admin so object-cover crops keep
+  // the subject in frame (Payload stores focalX/focalY as 0-100 percentages).
+  const style =
+    typeof media.focalX === 'number' || typeof media.focalY === 'number'
+      ? { objectPosition: `${media.focalX ?? 50}% ${media.focalY ?? 50}%` }
+      : undefined
+
   if (fill) {
     return (
       <Image
@@ -42,6 +49,7 @@ export function PayloadImage({
         fill
         sizes={sizes || '100vw'}
         className={className}
+        style={style}
         priority={priority}
       />
     )
@@ -55,6 +63,7 @@ export function PayloadImage({
       height={height}
       sizes={sizes}
       className={className}
+      style={style}
       priority={priority}
     />
   )
