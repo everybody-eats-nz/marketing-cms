@@ -32,7 +32,15 @@ export const JournalPosts: CollectionConfig = {
       ],
     },
     { name: 'summary', type: 'textarea', maxLength: 280 },
-    { name: 'mainImage', type: 'upload', relationTo: 'media' },
+    {
+      name: 'mainImage',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        description:
+          'Landscape, at least 2000px wide. Cropped to 16:9 on the post, 3:2 when featured and 4:5 portrait on cards, so keep the subject centred.',
+      },
+    },
     { name: 'author', type: 'text' },
     { name: 'authorMember', type: 'relationship', relationTo: 'team-members' },
     { name: 'publishedAt', type: 'date', admin: { date: { pickerAppearance: 'dayOnly' } } },

@@ -6,7 +6,16 @@ export const MediaBlock: Block = {
   imageURL: '/block-previews/media.jpg',
   imageAltText: 'Full-bleed media image band',
   fields: [
-    { name: 'image', type: 'upload', relationTo: 'media', required: true },
+    {
+      name: 'image',
+      type: 'upload',
+      relationTo: 'media',
+      required: true,
+      admin: {
+        description:
+          'At least 2000px wide — displayed full-bleed at the aspect ratio chosen below.',
+      },
+    },
     {
       name: 'aspect',
       type: 'select',
