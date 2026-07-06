@@ -24,7 +24,15 @@ export const Partners: CollectionConfig = {
         { label: 'Food partner', value: 'food' },
       ],
     },
-    { name: 'logo', type: 'upload', relationTo: 'media' },
+    {
+      name: 'logo',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        description:
+          'Logo on a transparent background, at least 800px wide. Shown uncropped on a cream card, so a dark or coloured version works best.',
+      },
+    },
     { name: 'url', type: 'text' },
     { name: 'description', type: 'textarea' },
     { name: 'displayOrder', type: 'number', defaultValue: 0 },

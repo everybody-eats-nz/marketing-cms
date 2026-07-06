@@ -38,7 +38,15 @@ export const TeamMembers: CollectionConfig = {
       defaultValue: 0,
       admin: { description: 'Lower numbers appear first' },
     },
-    { name: 'profilePicture', type: 'upload', relationTo: 'media' },
+    {
+      name: 'profilePicture',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        description:
+          'Portrait, at least 1400px wide. Shown as a 4:5 portrait card, so keep the face centred.',
+      },
+    },
     { name: 'bioSummary', type: 'textarea' },
     { name: 'bio', type: 'richText' },
     {

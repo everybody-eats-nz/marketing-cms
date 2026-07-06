@@ -179,6 +179,8 @@ export interface User {
   collection: 'users';
 }
 /**
+ * Uploads are converted to WebP and resized automatically (up to 2000px wide) — no need to compress beforehand. Photos should be at least 2000px on the long edge; each field says if it needs something more specific.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
@@ -294,6 +296,9 @@ export interface Page {
              */
             highlightWord?: string | null;
             subheading?: string | null;
+            /**
+             * Currently not displayed — the hero shows a built-in photo carousel. If wired up: portrait 4:5, at least 1400px wide.
+             */
             image?: (number | null) | Media;
             primaryCta?: {
               label?: string | null;
@@ -372,6 +377,9 @@ export interface Page {
             blockType: 'richText';
           }
         | {
+            /**
+             * At least 2000px wide — displayed full-bleed at the aspect ratio chosen below.
+             */
             image: number | Media;
             aspect?: ('16:8' | '16:9' | '4:3' | '1:1' | 'auto') | null;
             id?: string | null;
@@ -770,6 +778,9 @@ export interface Page {
      * Aim for ~155 characters
      */
     description?: string | null;
+    /**
+     * Social-share image — 1200×630px (or larger at the same 1.91:1 ratio)
+     */
     image?: (number | null) | Media;
     noindex?: boolean | null;
   };
@@ -809,6 +820,9 @@ export interface Location {
     };
     [k: string]: unknown;
   } | null;
+  /**
+   * Landscape, at least 2000px wide. Displayed full-width behind the location page header.
+   */
   heroImage?: (number | null) | Media;
   /**
    * Hand-drawn building sketch (ink on transparent) shown beside the location on listing pages.
@@ -820,6 +834,9 @@ export interface Location {
   illustrationWhite?: (number | null) | Media;
   gallery?:
     | {
+        /**
+         * At least 1400px wide. Cropped to a 4:5 portrait card, so keep the subject centred.
+         */
         image: number | Media;
         caption?: string | null;
         id?: string | null;
@@ -887,6 +904,9 @@ export interface Location {
      * Aim for ~155 characters
      */
     description?: string | null;
+    /**
+     * Social-share image — 1200×630px (or larger at the same 1.91:1 ratio)
+     */
     image?: (number | null) | Media;
     noindex?: boolean | null;
   };
@@ -930,6 +950,9 @@ export interface TeamMember {
    * Lower numbers appear first
    */
   displayOrder?: number | null;
+  /**
+   * Portrait, at least 1400px wide. Shown as a 4:5 portrait card, so keep the face centred.
+   */
   profilePicture?: (number | null) | Media;
   bioSummary?: string | null;
   bio?: {
@@ -972,6 +995,9 @@ export interface Event {
    */
   displayTime?: string | null;
   location?: (number | null) | Location;
+  /**
+   * Landscape, at least 2000px wide. Cropped to 5:4 on the event page and 5:6 portrait on cards, so keep the subject centred. Also used as the social-share image.
+   */
   image?: (number | null) | Media;
   shortDescription?: string | null;
   description?: {
@@ -1009,6 +1035,9 @@ export interface Event {
      * Aim for ~155 characters
      */
     description?: string | null;
+    /**
+     * Social-share image — 1200×630px (or larger at the same 1.91:1 ratio)
+     */
     image?: (number | null) | Media;
     noindex?: boolean | null;
   };
@@ -1026,6 +1055,9 @@ export interface JournalPost {
   slug: string;
   category?: ('story' | 'news' | 'recipe' | 'behind-the-scenes' | 'impact') | null;
   summary?: string | null;
+  /**
+   * Landscape, at least 2000px wide. Cropped to 16:9 on the post, 3:2 when featured and 4:5 portrait on cards, so keep the subject centred.
+   */
   mainImage?: (number | null) | Media;
   author?: string | null;
   authorMember?: (number | null) | TeamMember;
@@ -1054,6 +1086,9 @@ export interface JournalPost {
      * Aim for ~155 characters
      */
     description?: string | null;
+    /**
+     * Social-share image — 1200×630px (or larger at the same 1.91:1 ratio)
+     */
     image?: (number | null) | Media;
     noindex?: boolean | null;
   };
@@ -1097,6 +1132,9 @@ export interface Partner {
   name: string;
   slug: string;
   tier: 'platinum' | 'gold' | 'funding' | 'supporting' | 'hospitality' | 'food';
+  /**
+   * Logo on a transparent background, at least 800px wide. Shown uncropped on a cream card, so a dark or coloured version works best.
+   */
   logo?: (number | null) | Media;
   url?: string | null;
   description?: string | null;
@@ -2054,9 +2092,12 @@ export interface SiteSetting {
    * Logo for light backgrounds (dark version)
    */
   logoDark?: (number | null) | Media;
+  /**
+   * Square, at least 512×512px
+   */
   favicon?: (number | null) | Media;
   /**
-   * Default social-share image
+   * Default social-share image — 1200×630px (or larger at the same 1.91:1 ratio)
    */
   ogImage?: (number | null) | Media;
   contactEmail?: string | null;
@@ -2138,7 +2179,7 @@ export interface Navigation {
           openInNewTab?: boolean | null;
         };
         /**
-         * Shown on the right side of the overlay menu when this link is hovered (desktop only).
+         * Shown on the right side of the overlay menu when this link is hovered (desktop only). Fills the full height of the screen — portrait or square, at least 1600px wide, subject centred.
          */
         previewImage?: (number | null) | Media;
         id?: string | null;
