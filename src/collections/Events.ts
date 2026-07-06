@@ -37,7 +37,15 @@ export const Events: CollectionConfig = {
       type: 'relationship',
       relationTo: 'locations',
     },
-    { name: 'image', type: 'upload', relationTo: 'media' },
+    {
+      name: 'image',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        description:
+          'Landscape, at least 2000px wide. Cropped to 5:4 on the event page and 5:6 portrait on cards, so keep the subject centred. Also used as the social-share image.',
+      },
+    },
     { name: 'shortDescription', type: 'textarea' },
     { name: 'description', type: 'richText' },
     {

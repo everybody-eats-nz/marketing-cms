@@ -323,7 +323,7 @@ export default async function LocationPage({ params }: Params) {
           </p>
         ) : (
           <p className="display text-3xl sm:text-4xl font-light text-content leading-tight max-w-3xl">
-            A neighbourhood table, made from the day's rescue.{' '}
+            A neighbourhood table, made from the day&apos;s rescue.{' '}
             <em>{loc.name}</em> — strangers turning into regulars over a shared menu.
           </p>
         )}

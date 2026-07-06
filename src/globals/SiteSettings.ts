@@ -17,8 +17,8 @@ export const SiteSettings: GlobalConfig = {
             { name: 'description', type: 'textarea' },
             { name: 'logoLight', type: 'upload', relationTo: 'media', admin: { description: 'Logo for dark backgrounds (white version)' } },
             { name: 'logoDark', type: 'upload', relationTo: 'media', admin: { description: 'Logo for light backgrounds (dark version)' } },
-            { name: 'favicon', type: 'upload', relationTo: 'media' },
-            { name: 'ogImage', type: 'upload', relationTo: 'media', admin: { description: 'Default social-share image' } },
+            { name: 'favicon', type: 'upload', relationTo: 'media', admin: { description: 'Square, at least 512×512px' } },
+            { name: 'ogImage', type: 'upload', relationTo: 'media', admin: { description: 'Default social-share image — 1200×630px (or larger at the same 1.91:1 ratio)' } },
           ],
         },
         {

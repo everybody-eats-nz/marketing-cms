@@ -31,7 +31,7 @@ export const Hero: Block = {
       relationTo: 'media',
       admin: {
         description:
-          'Optional. When set, this image replaces the built-in rotating photo carousel. Leave empty to keep the carousel.',
+          'Optional. When set, this image replaces the built-in rotating photo carousel. Portrait 4:5, at least 1400px wide. Leave empty to keep the carousel.',
       },
     },
     {
