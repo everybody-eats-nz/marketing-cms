@@ -32,7 +32,6 @@ async function main() {
     depth: 0,
   })
 
-  const homeHeroImage = (existing.docs.find((d: any) => d.slug === 'home') as any)?.hero?.image
   const firstLocation = await payload.find({
     collection: 'locations',
     limit: 1,

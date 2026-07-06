@@ -12,7 +12,6 @@ export async function SiteFooter() {
 
   const columns: Array<{ heading: string; links: Array<{ link: LinkValue }> }> = (footer as any)?.columns || []
   const legal: Array<{ link: LinkValue }> = (footer as any)?.legalLinks || []
-  const tagline: string = (footer as any)?.tagline || 'Make a difference one plate at a time'
   const copyright: string = (footer as any)?.copyright || '© Everybody Eats'
   const charityNumber: string = (settings as any)?.charityNumber || ''
   const social: Array<{ platform: string; url: string }> = (settings as any)?.social || []

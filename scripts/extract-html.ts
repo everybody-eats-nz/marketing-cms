@@ -86,7 +86,7 @@ async function main() {
   const pages: Array<{ slug: string; title: string }> = pagesRaw.pages
 
   let saved = 0
-  let failed: string[] = []
+  const failed: string[] = []
 
   for (const page of pages) {
     const slug = page.slug
