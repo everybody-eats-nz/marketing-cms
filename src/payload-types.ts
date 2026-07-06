@@ -279,6 +279,18 @@ export interface Page {
    */
   slug: string;
   /**
+   * The admin user who last saved this version.
+   */
+  updatedBy?: (number | null) | User;
+  /**
+   * The admin user who originally created this page.
+   */
+  createdBy?: (number | null) | User;
+  /**
+   * The admin user who published this version.
+   */
+  publishedBy?: (number | null) | User;
+  /**
    * Page sections. Add a Hero first, then stack content blocks beneath.
    */
   layout?:
@@ -1426,6 +1438,9 @@ export interface DocumentsSelect<T extends boolean = true> {
 export interface PagesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  updatedBy?: T;
+  createdBy?: T;
+  publishedBy?: T;
   layout?:
     | T
     | {
