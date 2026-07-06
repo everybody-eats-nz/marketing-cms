@@ -13,6 +13,9 @@ export default async function JournalPage() {
   const payload = await getPayloadClient()
   const { docs: posts } = await payload.find({
     collection: 'journal-posts',
+    // Only published posts — unpublished/draft posts 404 on their detail page
+    // (see journal/[slug]/page.tsx), so they must not appear in the list either.
+    where: { _status: { equals: 'published' } },
     limit: 60,
     sort: '-publishedAt',
     depth: 1,

@@ -42,7 +42,15 @@ export async function PageBody({ page, isDraft }: { page: any; isDraft: boolean 
     needPayCopy ? getPayCopy() : Promise.resolve(null),
     isDraft || types.has('stats') ? fetchLiveImpactStats() : Promise.resolve(null),
     needLocations
-      ? payload.find({ collection: 'locations', limit: 20, sort: 'name', depth: 1 })
+      ? payload.find({
+          collection: 'locations',
+          limit: 20,
+          sort: 'name',
+          depth: 1,
+          // Outside preview, hide unpublished locations so grids don't link to
+          // pages that 404 (dine-with-us/[slug]/page.tsx only serves published docs).
+          ...(isDraft ? {} : { where: { _status: { equals: 'published' } } }),
+        })
       : Promise.resolve({ docs: [] as any[] }),
     needEvents
       ? payload.find({
@@ -59,7 +67,15 @@ export async function PageBody({ page, isDraft }: { page: any; isDraft: boolean 
         })
       : Promise.resolve({ docs: [] as any[] }),
     needJournal
-      ? payload.find({ collection: 'journal-posts', limit: 6, sort: '-createdAt', depth: 1 })
+      ? payload.find({
+          collection: 'journal-posts',
+          limit: 6,
+          sort: '-createdAt',
+          depth: 1,
+          // Outside preview, hide unpublished posts so lists don't link to pages
+          // that 404 (journal/[slug]/page.tsx only serves published docs).
+          ...(isDraft ? {} : { where: { _status: { equals: 'published' } } }),
+        })
       : Promise.resolve({ docs: [] as any[] }),
     needTeam
       ? payload.find({ collection: 'team-members', limit: 200, sort: 'displayOrder', depth: 1 })
