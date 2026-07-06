@@ -13,6 +13,9 @@ export default async function EventsPage() {
   const payload = await getPayloadClient()
   const { docs: events } = await payload.find({
     collection: 'events',
+    // Only published events — unpublished/draft events 404 on their detail page
+    // (see events/[slug]/page.tsx), so they must not appear in the list either.
+    where: { _status: { equals: 'published' } },
     limit: 50,
     sort: '-date',
     depth: 2,
