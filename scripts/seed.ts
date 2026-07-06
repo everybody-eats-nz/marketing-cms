@@ -289,8 +289,6 @@ async function seedFaqs(payload: any) {
   for (const item of items) {
     const f = item.fieldData || {}
     if (!f.slug) continue
-    // FAQs collection requires unique slug — synthesize from question
-    const slug = f.slug
     const existing = await payload.find({ collection: 'faqs', where: { question: { equals: f.name } }, limit: 1 })
     const data = {
       question: f.name,

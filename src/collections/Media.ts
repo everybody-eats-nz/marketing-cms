@@ -8,7 +8,11 @@ const mediaDir = path.resolve(process.cwd(), 'media')
 export const Media: CollectionConfig = {
   slug: 'media',
   access: { read: () => true },
-  admin: { useAsTitle: 'filename' },
+  admin: {
+    useAsTitle: 'filename',
+    description:
+      'Uploads are converted to WebP and resized automatically (up to 2000px wide) — no need to compress beforehand. Photos should be at least 2000px on the long edge; each field says if it needs something more specific.',
+  },
   upload: {
     staticDir: mediaDir,
     imageSizes: [

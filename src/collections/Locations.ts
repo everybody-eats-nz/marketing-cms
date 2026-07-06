@@ -40,7 +40,15 @@ export const Locations: CollectionConfig = {
             { name: 'tagline', type: 'text', admin: { description: 'One-line description shown on cards' } },
             { name: 'intro', type: 'textarea' },
             { name: 'body', type: 'richText' },
-            { name: 'heroImage', type: 'upload', relationTo: 'media' },
+            {
+              name: 'heroImage',
+              type: 'upload',
+              relationTo: 'media',
+              admin: {
+                description:
+                  'Landscape, at least 2000px wide. Displayed full-width behind the location page header.',
+              },
+            },
             {
               name: 'illustration',
               type: 'upload',
@@ -64,7 +72,16 @@ export const Locations: CollectionConfig = {
               name: 'gallery',
               type: 'array',
               fields: [
-                { name: 'image', type: 'upload', relationTo: 'media', required: true },
+                {
+                  name: 'image',
+                  type: 'upload',
+                  relationTo: 'media',
+                  required: true,
+                  admin: {
+                    description:
+                      'At least 1400px wide. Cropped to a 4:5 portrait card, so keep the subject centred.',
+                  },
+                },
                 { name: 'caption', type: 'text' },
               ],
             },

@@ -18,7 +18,8 @@ export const Navigation: GlobalConfig = {
           type: 'upload',
           relationTo: 'media',
           admin: {
-            description: 'Shown on the right side of the overlay menu when this link is hovered (desktop only).',
+            description:
+              'Shown on the right side of the overlay menu when this link is hovered (desktop only). Fills the full height of the screen — portrait or square, at least 1600px wide, subject centred.',
           },
         },
       ],

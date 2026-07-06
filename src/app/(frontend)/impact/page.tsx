@@ -58,8 +58,6 @@ export default async function ImpactPage() {
   const last = monthYear(t.lastNight)
   const range = first && last ? `${first} — ${last}` : null
   const firstYear = story.yearly[0]
-  const lastFullYear =
-    [...story.yearly].reverse().find((y) => !y.partial) ?? story.yearly[story.yearly.length - 1]
   const tonnes = Math.round(t.foodSavedKg / 1000)
   const guestShare = t.nonPayingPercent ?? null
 

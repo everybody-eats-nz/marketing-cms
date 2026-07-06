@@ -25,7 +25,15 @@ export const Hero: Block = {
       },
     },
     { name: 'subheading', type: 'textarea' },
-    { name: 'image', type: 'upload', relationTo: 'media' },
+    {
+      name: 'image',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        description:
+          'Currently not displayed — the hero shows a built-in photo carousel. If wired up: portrait 4:5, at least 1400px wide.',
+      },
+    },
     {
       name: 'primaryCta',
       type: 'group',
