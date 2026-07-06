@@ -144,7 +144,7 @@ async function dumpCollections(siteId: string) {
       // Download image assets referenced inside fieldData
       for (const item of items) {
         const fd = item.fieldData || {}
-        for (const [k, v] of Object.entries(fd)) {
+        for (const v of Object.values(fd)) {
           if (v && typeof v === 'object' && (v as any).url && (v as any).fileId) {
             const filename = await downloadAsset((v as any).url)
             if (filename) (v as any)._localFile = filename

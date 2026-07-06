@@ -36,6 +36,9 @@ jobs:
       - name: Typecheck
         run: pnpm typecheck
 
+      - name: Lint
+        run: pnpm lint
+
       # Loads the Payload config, which runs checkDependencies(). This is the
       # step that catches mismatched @payloadcms/* versions (the failure that
       # only surfaced at runtime on the host before). No database required.

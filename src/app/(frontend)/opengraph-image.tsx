@@ -9,7 +9,6 @@ export const contentType = 'image/png'
 
 // Brand palette (literals — this runs in the OG renderer, no Tailwind here).
 const FOREST = '#1D5337'
-const FOREST_DEEP = '#143B27'
 const CREAM = '#FBF7EF'
 const SUN = '#F8FB69'
 const INK = '#163F2A' // the logo's native fill, recoloured to cream below
@@ -115,7 +114,6 @@ export default async function OpengraphImage() {
           {/* Masthead — the real wordmark */}
           <div style={{ display: 'flex', position: 'relative' }}>
             {logo ? (
-              // eslint-disable-next-line @next/next/no-img-element
               <img src={logo} width={232} height={84} alt="Everybody Eats" />
             ) : (
               <div style={{ display: 'flex', fontSize: 32, letterSpacing: 0.5 }}>Everybody Eats</div>
@@ -166,7 +164,6 @@ export default async function OpengraphImage() {
         <div style={{ position: 'relative', display: 'flex', flexGrow: 1, height: '100%' }}>
           {photo ? (
             <img
-              // eslint-disable-next-line @next/next/no-img-element
               src={photo}
               alt=""
               width={size.width - PANEL}

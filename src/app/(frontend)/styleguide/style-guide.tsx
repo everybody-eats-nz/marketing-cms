@@ -758,7 +758,7 @@ export function StyleGuide() {
                   </div>
                   <div>
                     <p className="eyebrow mb-2">Mono — JetBrains Mono</p>
-                    <p className="font-mono text-sm text-content">// kickers · stat labels · code</p>
+                    <p className="font-mono text-sm text-content">{'// kickers · stat labels · code'}</p>
                   </div>
                 </div>
               </div>
