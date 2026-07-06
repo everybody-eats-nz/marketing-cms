@@ -9,6 +9,8 @@ export type Media = {
   mimeType?: string | null
   width?: number | null
   height?: number | null
+  focalX?: number | null
+  focalY?: number | null
   sizes?: Record<string, { url?: string; width?: number; height?: number }>
 }
 
