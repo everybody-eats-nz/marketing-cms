@@ -4,7 +4,7 @@ export const Partners: CollectionConfig = {
   slug: 'partners',
   admin: {
     useAsTitle: 'name',
-    defaultColumns: ['name', 'tier', 'displayOrder', 'updatedAt'],
+    defaultColumns: ['name', 'tier', 'friendCategory', 'displayOrder', 'updatedAt'],
     group: 'Supporters',
   },
   access: { read: () => true },
@@ -15,13 +15,27 @@ export const Partners: CollectionConfig = {
       name: 'tier',
       type: 'select',
       required: true,
+      admin: {
+        description:
+          'Major = large logo with a hover blurb. Supporting = medium logo. Friend = name-only link, grouped by the category below.',
+      },
       options: [
-        { label: 'Platinum partner', value: 'platinum' },
-        { label: 'Gold partner', value: 'gold' },
-        { label: 'Funding partner', value: 'funding' },
+        { label: 'Major partner', value: 'major' },
         { label: 'Supporting partner', value: 'supporting' },
-        { label: 'Hospitality partner', value: 'hospitality' },
-        { label: 'Food partner', value: 'food' },
+        { label: 'Friend of Everybody Eats', value: 'friend' },
+      ],
+    },
+    {
+      name: 'friendCategory',
+      type: 'select',
+      admin: {
+        description: 'Which Friends heading this sits under. Only used when the tier is Friend.',
+        condition: (data) => data?.tier === 'friend',
+      },
+      options: [
+        { label: 'Food & Hospitality', value: 'food-hospitality' },
+        { label: 'Community', value: 'community' },
+        { label: 'Business', value: 'business' },
       ],
     },
     {
@@ -30,11 +44,20 @@ export const Partners: CollectionConfig = {
       relationTo: 'media',
       admin: {
         description:
-          'Logo on a transparent background, at least 800px wide. Shown uncropped on a cream card, so a dark or coloured version works best.',
+          'Logo on a transparent background, at least 800px wide. Shown uncropped on a white card. Used for Major and Supporting partners; Friends are name-only.',
+        condition: (data) => data?.tier !== 'friend',
       },
     },
-    { name: 'url', type: 'text' },
-    { name: 'description', type: 'textarea' },
+    { name: 'url', type: 'text', admin: { description: 'Link through to the partner’s website.' } },
+    {
+      name: 'description',
+      type: 'textarea',
+      admin: {
+        description:
+          'Short blurb about the partnership. Shown in the hover/focus info box on Major partners.',
+        condition: (data) => data?.tier === 'major',
+      },
+    },
     { name: 'displayOrder', type: 'number', defaultValue: 0 },
   ],
 }
