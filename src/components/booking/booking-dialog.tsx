@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import Link from 'next/link'
+import { useMounted } from '@/lib/hooks'
 import { ExternalLinkIcon } from '../external-link-icon'
 
 export type BookingLocation = {
@@ -97,16 +98,12 @@ function themedBookingUrl(raw: string): string {
 }
 
 export function BookingDialog({ locations }: { locations: BookingLocation[] }) {
-  const [mounted, setMounted] = useState(false)
+  const mounted = useMounted()
   const [open, setOpen] = useState(false)
   const [selected, setSelected] = useState<BookingLocation | null>(null)
   const [widgetReady, setWidgetReady] = useState(false)
   const closeRef = useRef<HTMLButtonElement>(null)
   const restoreFocusRef = useRef<HTMLElement | null>(null)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
 
   useEffect(() => {
     const onOpen = (e: Event) => {

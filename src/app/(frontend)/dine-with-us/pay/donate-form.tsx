@@ -1,7 +1,8 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState, useSyncExternalStore } from 'react'
 import { useRouter } from 'next/navigation'
+import { useIsDark } from '@/lib/hooks'
 import { loadStripe } from '@stripe/stripe-js'
 import type { Appearance } from '@stripe/stripe-js'
 import {
@@ -66,21 +67,16 @@ const fonts = [
 ]
 
 // The site toggles dark mode by adding `.dark` to <html> (tailwind darkMode:
-// 'class'). The Stripe iframe can't observe that, so we watch it here and hand
-// Stripe the matching appearance — react-stripe-js applies it live (Stripe
-// supports updating appearance without remounting the Element).
-function useIsDark(): boolean {
-  const [dark, setDark] = useState(false)
-  useEffect(() => {
-    const el = document.documentElement
-    const update = () => setDark(el.classList.contains('dark'))
-    update()
-    const obs = new MutationObserver(update)
-    obs.observe(el, { attributes: true, attributeFilter: ['class'] })
-    return () => obs.disconnect()
-  }, [])
-  return dark
-}
+// 'class'). The Stripe iframe can't observe that, so useIsDark watches it and
+// hands Stripe the matching appearance — react-stripe-js applies it live
+// (Stripe supports updating appearance without remounting the Element).
+
+// The ?amount= query (e.g. /donate?amount=50), read from window rather than
+// useSearchParams to avoid a Suspense boundary requirement at build. Null on
+// the server and during hydration; fixed for the life of the page after that.
+const emptySubscribe = () => () => {}
+const getUrlAmount = () => new URLSearchParams(window.location.search).get('amount')
+const getServerUrlAmount = () => null
 
 export function DonateForm({
   locationSlug,
@@ -106,21 +102,23 @@ export function DonateForm({
   const isDark = useIsDark()
   const appearance = isDark ? darkAppearance : lightAppearance
 
-  // Prefill from a ?amount= query (e.g. /donate?amount=50): select it if it's a
-  // preset, otherwise drop it into the custom field. Read from window rather
-  // than useSearchParams to avoid a Suspense boundary requirement at build.
-  useEffect(() => {
-    const a = Number(new URLSearchParams(window.location.search).get('amount'))
-    if (!Number.isFinite(a) || a <= 0) return
-    if (presets.some((p) => p.amount === a)) {
-      setAmount(a)
-      setCustom('')
-    } else {
-      setCustom(String(a))
+  // Prefill from a ?amount= query: select it if it's a preset, otherwise drop
+  // it into the custom field. Applied once, during the first render where the
+  // URL is readable (right after hydration), then left to the user.
+  const urlAmount = useSyncExternalStore(emptySubscribe, getUrlAmount, getServerUrlAmount)
+  const [prefillDone, setPrefillDone] = useState(false)
+  if (urlAmount !== null && !prefillDone) {
+    setPrefillDone(true)
+    const a = Number(urlAmount)
+    if (Number.isFinite(a) && a > 0) {
+      if (presets.some((p) => p.amount === a)) {
+        setAmount(a)
+        setCustom('')
+      } else {
+        setCustom(String(a))
+      }
     }
-    // presets are static for a given mount; run once.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }
 
   const customActive = custom.trim() !== ''
   const effectiveAmount = customActive ? Number(custom) : amount

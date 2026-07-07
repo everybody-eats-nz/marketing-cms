@@ -1,22 +1,17 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useIsDark, useMounted } from '@/lib/hooks'
 
 // Light/dark switch. The actual theme is applied pre-paint by <ThemeScript>;
 // this component only reflects + flips the current state and persists the
 // explicit choice to localStorage (after which we stop following the OS).
 export function ThemeToggle({ className = '' }: { className?: string }) {
-  const [dark, setDark] = useState(false)
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setDark(document.documentElement.classList.contains('dark'))
-    setMounted(true)
-  }, [])
+  // `dark` tracks the class on <html>, so flipping it below re-renders us.
+  const dark = useIsDark()
+  const mounted = useMounted()
 
   function toggle() {
     const next = !dark
-    setDark(next)
     document.documentElement.classList.toggle('dark', next)
     try {
       localStorage.setItem('theme', next ? 'dark' : 'light')

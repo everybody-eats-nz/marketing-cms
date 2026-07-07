@@ -24,16 +24,14 @@ function useTween(value: number, duration = 460) {
     const from = curRef.current
     const to = value
     if (from === to) return
-    if (reducedMotion()) {
-      curRef.current = to
-      setDisplay(to)
-      return
-    }
+    // Under reduced motion the roll collapses to an instant swap — the same
+    // rAF path, just with zero duration so the first frame lands on `to`.
+    const ms = reducedMotion() ? 0 : duration
     let raf = 0
     let start = 0
     const step = (now: number) => {
       if (!start) start = now
-      const t = Math.min(1, (now - start) / duration)
+      const t = ms > 0 ? Math.min(1, (now - start) / ms) : 1
       const eased = 1 - Math.pow(1 - t, 3)
       const v = from + (to - from) * eased
       curRef.current = v
@@ -144,7 +142,6 @@ export function CommunalTable({ years }: { years: ImpactStoryYear[] }) {
   const [playing, setPlaying] = useState(false)
   const timer = useRef<ReturnType<typeof setInterval> | null>(null)
   const gridRef = useRef<HTMLDivElement>(null)
-  const prevPaidRef = useRef<number | null>(null)
 
   // Clamp once if the dataset is shorter than a stale index.
   const safeIdx = Math.min(idx, years.length - 1)
@@ -183,29 +180,30 @@ export function CommunalTable({ years }: { years: ImpactStoryYear[] }) {
   const diners = y.nights > 0 ? Math.round(y.customers / y.nights) : 0 // avg neighbours fed per night
   const seats = useMemo(() => Array.from({ length: 100 }, (_, i) => i < paid), [paid])
 
-  // The band of seats that just flipped (read the ref during render so the colour
-  // transition can stagger along the same wave the pulse animates below).
-  const prevPaid = prevPaidRef.current ?? paid
+  // The band of seats that just flipped. The previous `paid` is tracked in
+  // state, adjusted during render, so the colour transition can stagger along
+  // the same wave the pulse animates below.
+  const [paidHistory, setPaidHistory] = useState({ prev: paid, cur: paid })
+  if (paidHistory.cur !== paid) {
+    setPaidHistory({ prev: paidHistory.cur, cur: paid })
+  }
+  const prevPaid = paidHistory.cur === paid ? paidHistory.prev : paidHistory.cur
   const bandLo = Math.min(prevPaid, paid)
   const bandHi = Math.max(prevPaid, paid)
 
   // Ripple the flipped seats with a staggered scale pulse so the change is visible.
   useEffect(() => {
-    const prev = prevPaidRef.current
-    prevPaidRef.current = paid
-    if (prev == null || prev === paid || reducedMotion()) return
+    if (prevPaid === paid || reducedMotion()) return
     const grid = gridRef.current
     if (!grid) return
-    const lo = Math.min(prev, paid)
-    const hi = Math.max(prev, paid)
-    for (let i = lo; i < hi; i++) {
+    for (let i = bandLo; i < bandHi; i++) {
       const el = grid.children[i] as HTMLElement | undefined
       el?.animate(
         [{ transform: 'scale(1)' }, { transform: 'scale(1.5)' }, { transform: 'scale(1)' }],
-        { duration: 380, delay: (i - lo) * 7, easing: 'cubic-bezier(0.34,1.56,0.64,1)' },
+        { duration: 380, delay: (i - bandLo) * 7, easing: 'cubic-bezier(0.34,1.56,0.64,1)' },
       )
     }
-  }, [paid])
+  }, [paid, prevPaid, bandLo, bandHi])
 
   const play = () => {
     if (safeIdx >= years.length - 1) setIdx(0)

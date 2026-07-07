@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
+import { useIsDark, useMounted } from '@/lib/hooks'
 import { colors, fontSize, borderRadius } from '@/styles/brand-tokens'
 
 /* -------------------------------------------------------------------------- */
@@ -421,16 +422,11 @@ function TypePlayground() {
 /* -------------------------------------------------------------------------- */
 
 function ThemeSegmented() {
-  const [dark, setDark] = useState(false)
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setDark(document.documentElement.classList.contains('dark'))
-    setMounted(true)
-  }, [])
+  // `dark` tracks the class on <html>, so `set` below re-renders us.
+  const dark = useIsDark()
+  const mounted = useMounted()
 
   function set(next: boolean) {
-    setDark(next)
     document.documentElement.classList.toggle('dark', next)
     try {
       localStorage.setItem('theme', next ? 'dark' : 'light')
