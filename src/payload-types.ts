@@ -706,6 +706,10 @@ export interface Page {
              * Wrap a word in *asterisks* for italic.
              */
             heading?: string | null;
+            /**
+             * Intro paragraph under the heading. *Asterisks* for italic.
+             */
+            intro?: string | null;
             viewAllLabel?: string | null;
             viewAllHref?: string | null;
             id?: string | null;
@@ -1521,12 +1525,25 @@ export interface Partner {
   id: number;
   name: string;
   slug: string;
-  tier: 'platinum' | 'gold' | 'funding' | 'supporting' | 'hospitality' | 'food';
   /**
-   * Logo on a transparent background, at least 800px wide. Shown uncropped on a cream card, so a dark or coloured version works best.
+   * Major = large logo with a hover blurb. Supporting = medium logo. Friend = name-only link, grouped by the category below.
+   */
+  tier: 'major' | 'supporting' | 'friend';
+  /**
+   * Which Friends heading this sits under. Only used when the tier is Friend.
+   */
+  friendCategory?: ('food-hospitality' | 'community' | 'business') | null;
+  /**
+   * Logo on a transparent background, at least 800px wide. Shown uncropped on a white card. Used for Major and Supporting partners; Friends are name-only.
    */
   logo?: (number | null) | Media;
+  /**
+   * Link through to the partner’s website.
+   */
   url?: string | null;
+  /**
+   * Short blurb about the partnership. Shown in the hover/focus info box on Major partners.
+   */
   description?: string | null;
   displayOrder?: number | null;
   updatedAt: string;
@@ -2153,6 +2170,7 @@ export interface PagesSelect<T extends boolean = true> {
           | {
               eyebrow?: T;
               heading?: T;
+              intro?: T;
               viewAllLabel?: T;
               viewAllHref?: T;
               id?: T;
@@ -2651,6 +2669,7 @@ export interface PartnersSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
   tier?: T;
+  friendCategory?: T;
   logo?: T;
   url?: T;
   description?: T;

@@ -18,6 +18,7 @@ import path from 'node:path'
 import { getPayload } from 'payload'
 import config from '../src/payload.config'
 import { VOLUNTEER_LINKS } from '../src/lib/volunteer-links'
+import { seedPartners } from './seed-partners'
 
 const ROOT = path.resolve(process.cwd(), 'data/webflow')
 
@@ -305,33 +306,9 @@ async function seedFaqs(payload: any) {
   }
 }
 
-async function seedPartners(payload: any) {
-  console.log('\n→ Partners')
-  const groups: Array<[string, string]> = [
-    ['major-business-partners', 'platinum'],
-    ['minor-business-partners', 'gold'],
-    ['funding-partners', 'funding'],
-    ['supporting-partners', 'supporting'],
-  ]
-  for (const [collection, tier] of groups) {
-    const { items } = await loadCollection(collection)
-    let i = 0
-    for (const item of items) {
-      const f = item.fieldData || {}
-      if (!f.slug) continue
-      const logoId = await uploadMedia(payload, f['partner-logo']?._localFile, f.name)
-      await upsertBySlug(payload, 'partners', `${tier}-${f.slug}`, {
-        name: f.name,
-        tier,
-        logo: logoId,
-        url: f.link || undefined,
-        description: f.description || '',
-        displayOrder: i++,
-      })
-    }
-    console.log(`  ✓ ${items.length} ${tier}`)
-  }
-}
+// Partners are seeded from scripts/seed-partners.ts (imported above) so the
+// three-tier directory can also be re-run on its own via `pnpm tsx
+// scripts/seed-partners.ts` without needing the Webflow export.
 
 async function seedEvents(payload: any) {
   console.log('\n→ Events')

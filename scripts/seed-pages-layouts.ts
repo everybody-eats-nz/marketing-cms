@@ -882,51 +882,26 @@ async function main() {
 
     {
       slug: 'get-involved/partner',
-      title: 'Partner with us',
+      title: 'Partners',
+      status: 'published',
       seo: {
+        title: 'Our partners — Everybody Eats',
         description:
-          "Whether you supply food, fund our mission or bring your team to volunteer, we'd love to talk.",
+          "We couldn't do it alone. Meet the businesses, funders, food rescuers and friends who help keep every seat at our table free of judgment.",
       },
       layout: [
         {
-          blockType: 'hero',
-          eyebrow: 'Partnership',
-          heading: "Let's *partner up*.",
-          subheading:
-            "We're powered by businesses, funders and food rescuers who share the belief that food is a right, not a privilege.",
-        },
-        {
-          blockType: 'cardGrid',
-          columns: '2',
-          cardStyle: 'mixed',
-          items: [
-            {
-              title: 'Hospitality partners',
-              copy: 'Lend your venue, your chefs, or a portion of your covers to support a service night.',
-              color: 'clay',
-            },
-            {
-              title: 'Food partners',
-              copy: 'Donate surplus produce, dairy, dry goods or proteins. We rescue thousands of kilos every month.',
-              color: 'cream',
-            },
-            {
-              title: 'Funding partners',
-              copy: 'Sponsor a service, fund a restaurant, or back a specific programme. We measure and report impact.',
-              color: 'sun',
-            },
-            {
-              title: 'Supporting partners',
-              copy: 'Goods, services, expertise — anything that keeps our restaurants running and growing.',
-              color: 'forest100',
-            },
-          ],
+          blockType: 'partnersGrid',
+          eyebrow: 'Our supporters',
+          heading: "We couldn't do it *alone*.",
+          intro:
+            'Every plate we serve is made possible by the businesses, funders, food rescuers and friends who back us — from the produce on the pass to the roof over our restaurants. These are the people who help us keep every seat at the table free of judgment.',
         },
         {
           blockType: 'ctaStrip',
-          heading: "Let's *talk*.",
+          heading: 'Want a seat at *the table*?',
           body:
-            "Drop us an email and we'll come back to you with a coffee, a tour and a plan.",
+            "Whether you supply food, fund our mission or bring your team to volunteer, we'd love to talk. Drop us a line and we'll come back with a coffee, a tour and a plan.",
           variant: 'forest',
           align: 'center',
           primaryCta: {

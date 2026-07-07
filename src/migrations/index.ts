@@ -15,6 +15,7 @@ import * as migration_20260707_060127_add_menu_location_name from './20260707_06
 import * as migration_20260707_063527_add_hopper_blocks from './20260707_063527_add_hopper_blocks';
 import * as migration_20260707_211739_add_site_settings_announcement from './20260707_211739_add_site_settings_announcement';
 import * as migration_20260707_213408_add_cta_strip_tertiary_cta from './20260707_213408_add_cta_strip_tertiary_cta';
+import * as migration_20260707_224143_redesign_partners_tiers from './20260707_224143_redesign_partners_tiers';
 
 export const migrations = [
   {
@@ -101,5 +102,10 @@ export const migrations = [
     up: migration_20260707_213408_add_cta_strip_tertiary_cta.up,
     down: migration_20260707_213408_add_cta_strip_tertiary_cta.down,
     name: '20260707_213408_add_cta_strip_tertiary_cta',
+  },
+  {
+    up: migration_20260707_224143_redesign_partners_tiers.up,
+    down: migration_20260707_224143_redesign_partners_tiers.down,
+    name: '20260707_224143_redesign_partners_tiers'
   },
 ];

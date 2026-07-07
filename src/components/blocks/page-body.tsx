@@ -97,7 +97,7 @@ export async function PageBody({ page, isDraft }: { page: any; isDraft: boolean 
       ? payload.find({ collection: 'faqs', limit: 100, sort: 'displayOrder' })
       : Promise.resolve({ docs: [] as any[] }),
     needPartners
-      ? payload.find({ collection: 'partners', limit: 50, sort: 'displayOrder', depth: 1 })
+      ? payload.find({ collection: 'partners', limit: 300, sort: 'displayOrder', depth: 1 })
       : Promise.resolve({ docs: [] as any[] }),
   ])
 
