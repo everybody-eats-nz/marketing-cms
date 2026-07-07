@@ -811,6 +811,13 @@ export interface Location {
    * e.g. "wellington", "onehunga", "glen-innes"
    */
   slug: string;
+  /**
+   * Exact, case-sensitive location name in the volunteers portal used to pull "tonight's menu" (e.g. "Wellington", "Onehunga", "Glen Innes"). Leave blank to use this location's name. Set this so renaming the display name above never breaks the menu.
+   */
+  menuLocationName?: string | null;
+  /**
+   * Leave blank to show no status badge.
+   */
   openStatus?: ('open' | 'coming-soon' | 'closed') | null;
   /**
    * One-line description shown on cards
@@ -1838,6 +1845,7 @@ export interface PagesSelect<T extends boolean = true> {
 export interface LocationsSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
+  menuLocationName?: T;
   openStatus?: T;
   tagline?: T;
   intro?: T;

@@ -126,7 +126,9 @@ export default async function LocationPage({ params }: Params) {
       sort: 'date',
       depth: 1,
     }).catch(() => ({ docs: [] })),
-    fetchTonightsMenu(loc.name),
+    // Match the portal by the explicit menu-source name when set, so renaming
+    // the display name (e.g. adding a "Restaurant" suffix) never breaks the menu.
+    fetchTonightsMenu(loc.menuLocationName || loc.name),
     // Published diner feedback (positive + consented, auto-approved by the AI
     // classifier on submit, with staff override). Social proof, in diners' words.
     payload.find({
