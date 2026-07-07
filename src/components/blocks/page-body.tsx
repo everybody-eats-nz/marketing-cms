@@ -1,6 +1,7 @@
 import { draftMode } from 'next/headers'
 import { getPayloadClient } from '@/lib/payload'
 import { fetchLiveImpactStats } from '@/lib/impact-stats'
+import { fetchImpactStory, MOCK_IMPACT_STORY } from '@/lib/impact-story'
 import { getPayCopy } from '@/lib/pay-copy.server'
 import { RenderBlocks } from './render-blocks'
 import { PageLivePreview } from './page-live-preview'
@@ -32,25 +33,21 @@ export async function PageBody({ page, isDraft }: { page: any; isDraft: boolean 
   const needPartners = isDraft || types.has('partnersGrid')
   const needSettings = isDraft || types.has('stats') || types.has('donateHero')
   const needPayCopy = isDraft || types.has('donateHero')
+  const needImpactStory = isDraft || types.has('impactLanding')
 
   const payload = await getPayloadClient()
-  const [settings, payCopy, liveStats, locations, events, journal, team, faqs, partners] =
+  const [settings, payCopy, liveStats, impactStory, locations, events, journal, team, faqs, partners] =
     await Promise.all([
     needSettings
       ? payload.findGlobal({ slug: 'site-settings' }).catch(() => null)
       : Promise.resolve(null),
     needPayCopy ? getPayCopy() : Promise.resolve(null),
     isDraft || types.has('stats') ? fetchLiveImpactStats() : Promise.resolve(null),
+    needImpactStory
+      ? fetchImpactStory().then((s) => s ?? MOCK_IMPACT_STORY)
+      : Promise.resolve(null),
     needLocations
-      ? payload.find({
-          collection: 'locations',
-          limit: 20,
-          sort: 'name',
-          depth: 1,
-          // Outside preview, hide unpublished locations so grids don't link to
-          // pages that 404 (dine-with-us/[slug]/page.tsx only serves published docs).
-          ...(isDraft ? {} : { where: { _status: { equals: 'published' } } }),
-        })
+      ? payload.find({ collection: 'locations', limit: 20, sort: 'name', depth: 1 })
       : Promise.resolve({ docs: [] as any[] }),
     needEvents
       ? payload.find({
@@ -58,24 +55,11 @@ export async function PageBody({ page, isDraft }: { page: any; isDraft: boolean 
           limit: 8,
           sort: '-date',
           depth: 1,
-          // Outside preview, hide unpublished events so the list doesn't link to
-          // pages that 404 (events/[slug]/page.tsx only serves published docs).
-          where: {
-            date: { greater_than: new Date(0).toISOString() },
-            ...(isDraft ? {} : { _status: { equals: 'published' } }),
-          },
+          where: { date: { greater_than: new Date(0).toISOString() } },
         })
       : Promise.resolve({ docs: [] as any[] }),
     needJournal
-      ? payload.find({
-          collection: 'journal-posts',
-          limit: 6,
-          sort: '-createdAt',
-          depth: 1,
-          // Outside preview, hide unpublished posts so lists don't link to pages
-          // that 404 (journal/[slug]/page.tsx only serves published docs).
-          ...(isDraft ? {} : { where: { _status: { equals: 'published' } } }),
-        })
+      ? payload.find({ collection: 'journal-posts', limit: 6, sort: '-createdAt', depth: 1 })
       : Promise.resolve({ docs: [] as any[] }),
     needTeam
       ? payload.find({ collection: 'team-members', limit: 200, sort: 'displayOrder', depth: 1 })
@@ -91,6 +75,7 @@ export async function PageBody({ page, isDraft }: { page: any; isDraft: boolean 
   const extras = {
     globalStats: (settings as any)?.stats || [],
     liveStats,
+    impactStory,
     locations: locations.docs as any[],
     events: events.docs as any[],
     journal: journal.docs as any[],
