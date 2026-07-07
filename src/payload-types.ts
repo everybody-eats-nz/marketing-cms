@@ -779,6 +779,307 @@ export interface Page {
             blockName?: string | null;
             blockType: 'downloads';
           }
+        | {
+            /**
+             * Enquiry address used by every “host / sponsor / donate” button.
+             */
+            galaEmail: string;
+            majorGiftsEmail: string;
+            /**
+             * Drives the live countdown. Use the event start time.
+             */
+            galaDateTime?: string | null;
+            /**
+             * Optional. Falls back to the built-in image when left empty.
+             */
+            heroImage?: (number | null) | Media;
+            heroEyebrow?: string | null;
+            heroHeadingBefore?: string | null;
+            heroHeadingHighlight?: string | null;
+            heroHeadingAfter?: string | null;
+            heroIntro?: string | null;
+            heroDate?: string | null;
+            heroLocation?: string | null;
+            heroPrimaryCtaLabel?: string | null;
+            heroSecondaryCtaLabel?: string | null;
+            nightEyebrow?: string | null;
+            /**
+             * Wrap a word in *asterisks* for the light editorial italic.
+             */
+            nightHeading?: string | null;
+            nightBody?: string | null;
+            /**
+             * Optional. Falls back to the built-in image when left empty.
+             */
+            nightImage?: (number | null) | Media;
+            nightList?:
+              | {
+                  item: string;
+                  id?: string | null;
+                }[]
+              | null;
+            problemEyebrow?: string | null;
+            /**
+             * Wrap a word in *asterisks* for the light editorial italic.
+             */
+            problemHeading?: string | null;
+            problemStats?:
+              | {
+                  figure: string;
+                  body: string;
+                  id?: string | null;
+                }[]
+              | null;
+            problemFootnote?: string | null;
+            problemSources?: string | null;
+            whoEyebrow?: string | null;
+            /**
+             * Wrap a word in *asterisks* for the light editorial italic.
+             */
+            whoHeading?: string | null;
+            whoBody?: string | null;
+            impactStats?:
+              | {
+                  value: string;
+                  label: string;
+                  id?: string | null;
+                }[]
+              | null;
+            performersEyebrow?: string | null;
+            /**
+             * Wrap a word in *asterisks* for the light editorial italic.
+             */
+            performersHeading?: string | null;
+            performers?:
+              | {
+                  name: string;
+                  role: string;
+                  bio: string;
+                  /**
+                   * Optional. Falls back to the built-in image when left empty.
+                   */
+                  image?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            chefsEyebrow?: string | null;
+            /**
+             * Wrap a word in *asterisks* for the light editorial italic.
+             */
+            chefsHeading?: string | null;
+            chefs?:
+              | {
+                  name: string;
+                  location: string;
+                  bio: string;
+                  /**
+                   * Optional. Falls back to the built-in image when left empty.
+                   */
+                  image?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            sponsorEyebrow?: string | null;
+            /**
+             * Wrap a word in *asterisks* for the light editorial italic.
+             */
+            sponsorHeading?: string | null;
+            sponsorBody?: string | null;
+            tiers?:
+              | {
+                  eyebrow: string;
+                  badge: string;
+                  title: string;
+                  price: string;
+                  includes?:
+                    | {
+                        item: string;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Optional. Falls back to the built-in image when left empty.
+             */
+            tableImage?: (number | null) | Media;
+            tableEyebrow?: string | null;
+            /**
+             * Wrap a word in *asterisks* for the light editorial italic.
+             */
+            tableHeading?: string | null;
+            tableBody?: string | null;
+            tableList?:
+              | {
+                  item: string;
+                  id?: string | null;
+                }[]
+              | null;
+            tablePrice?: string | null;
+            tablePriceLabel?: string | null;
+            seatPrice?: string | null;
+            seatPriceLabel?: string | null;
+            tableCtaLabel?: string | null;
+            auctionEyebrow?: string | null;
+            /**
+             * Wrap a word in *asterisks* for the light editorial italic.
+             */
+            auctionHeading?: string | null;
+            auctionBody?: string | null;
+            auctionOptions?:
+              | {
+                  label: string;
+                  title: string;
+                  body: string;
+                  id?: string | null;
+                }[]
+              | null;
+            inKindEyebrow?: string | null;
+            /**
+             * Wrap a word in *asterisks* for the light editorial italic.
+             */
+            inKindHeading?: string | null;
+            inKindBody?: string | null;
+            inKindCtaLabel?: string | null;
+            /**
+             * Any email address is auto-linked. Use {majorGiftsEmail} / {galaEmail} to insert the contact addresses.
+             */
+            majorGiftsNote?: string | null;
+            partnershipEyebrow?: string | null;
+            /**
+             * Wrap a word in *asterisks* for the light editorial italic.
+             */
+            partnershipHeading?: string | null;
+            partnershipBody?: string | null;
+            /**
+             * Wrap a word in *asterisks* for the light editorial italic. Any email address is auto-linked; use {galaEmail} to insert the contact address.
+             */
+            partnershipNote?: string | null;
+            partnership?:
+              | {
+                  item: string;
+                  id?: string | null;
+                }[]
+              | null;
+            quotesEyebrow?: string | null;
+            /**
+             * Wrap a word in *asterisks* for the light editorial italic.
+             */
+            quotesHeading?: string | null;
+            quotes?:
+              | {
+                  quote: string;
+                  name: string;
+                  place?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Optional. Falls back to the built-in image when left empty.
+             */
+            moneyImage?: (number | null) | Media;
+            moneyEyebrow?: string | null;
+            /**
+             * Wrap a word in *asterisks* for the light editorial italic.
+             */
+            moneyHeading?: string | null;
+            moneyBody?: string | null;
+            /**
+             * Exactly three cards — each keeps its built-in illustration; the third is the highlighted card.
+             */
+            moneyCards?:
+              | {
+                  value: string;
+                  body: string;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Optional. Falls back to the built-in image when left empty.
+             */
+            closingImage?: (number | null) | Media;
+            closingEyebrow?: string | null;
+            /**
+             * Wrap a word in *asterisks* for the light editorial italic.
+             */
+            closingHeading?: string | null;
+            closingBody?: string | null;
+            closingSecondaryCtaLabel?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'galaLanding';
+          }
+        | {
+            eyebrowPrefix?: string | null;
+            /**
+             * Wrap a word in *asterisks* for the light editorial italic.
+             */
+            heading?: string | null;
+            /**
+             * Use {meals} for the live all-time meal count.
+             */
+            intro?: string | null;
+            statMealsLabel?: string | null;
+            statFoodLabel?: string | null;
+            statVolunteersLabel?: string | null;
+            statKohaLabel?: string | null;
+            payEyebrow?: string | null;
+            /**
+             * Wrap a word in *asterisks* for the light editorial italic.
+             */
+            payHeading?: string | null;
+            payBody?: string | null;
+            growthEyebrow?: string | null;
+            /**
+             * Wrap a word in *asterisks* for the light editorial italic.
+             */
+            growthHeading?: string | null;
+            growthBody?: string | null;
+            /**
+             * Use {firstYear} for the first year.
+             */
+            growthCaption?: string | null;
+            rescuedEyebrow?: string | null;
+            /**
+             * Wrap a word in *asterisks* for the light editorial italic.
+             */
+            rescuedHeading?: string | null;
+            rescuedBody?: string | null;
+            rescuedTonnesLabel?: string | null;
+            rescuedMealsLabel?: string | null;
+            venuesEyebrow?: string | null;
+            /**
+             * Wrap a word in *asterisks* for the light editorial italic.
+             */
+            venuesHeading?: string | null;
+            venuesBody?: string | null;
+            peopleEyebrow?: string | null;
+            /**
+             * Wrap a word in *asterisks* for the light editorial italic.
+             */
+            peopleHeading?: string | null;
+            peopleVolunteersLabel?: string | null;
+            peopleHoursLabel?: string | null;
+            peopleNightsLabel?: string | null;
+            peopleGuestsLabel?: string | null;
+            peopleSubheading?: string | null;
+            peopleSubbody?: string | null;
+            /**
+             * Wrap a word in *asterisks* for the light editorial italic.
+             */
+            ctaHeading?: string | null;
+            ctaBody?: string | null;
+            ctaPrimaryLabel?: string | null;
+            ctaSecondaryLabel?: string | null;
+            /**
+             * Use {nights}, {range} and {perMeal} for live figures.
+             */
+            footerNote?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'impactLanding';
+          }
       )[]
     | null;
   seo?: {
@@ -811,6 +1112,9 @@ export interface Location {
    * e.g. "wellington", "onehunga", "glen-innes"
    */
   slug: string;
+  /**
+   * Leave blank to show no status badge.
+   */
   openStatus?: ('open' | 'coming-soon' | 'closed') | null;
   /**
    * One-line description shown on cards
@@ -1815,6 +2119,204 @@ export interface PagesSelect<T extends boolean = true> {
                     description?: T;
                     id?: T;
                   };
+              id?: T;
+              blockName?: T;
+            };
+        galaLanding?:
+          | T
+          | {
+              galaEmail?: T;
+              majorGiftsEmail?: T;
+              galaDateTime?: T;
+              heroImage?: T;
+              heroEyebrow?: T;
+              heroHeadingBefore?: T;
+              heroHeadingHighlight?: T;
+              heroHeadingAfter?: T;
+              heroIntro?: T;
+              heroDate?: T;
+              heroLocation?: T;
+              heroPrimaryCtaLabel?: T;
+              heroSecondaryCtaLabel?: T;
+              nightEyebrow?: T;
+              nightHeading?: T;
+              nightBody?: T;
+              nightImage?: T;
+              nightList?:
+                | T
+                | {
+                    item?: T;
+                    id?: T;
+                  };
+              problemEyebrow?: T;
+              problemHeading?: T;
+              problemStats?:
+                | T
+                | {
+                    figure?: T;
+                    body?: T;
+                    id?: T;
+                  };
+              problemFootnote?: T;
+              problemSources?: T;
+              whoEyebrow?: T;
+              whoHeading?: T;
+              whoBody?: T;
+              impactStats?:
+                | T
+                | {
+                    value?: T;
+                    label?: T;
+                    id?: T;
+                  };
+              performersEyebrow?: T;
+              performersHeading?: T;
+              performers?:
+                | T
+                | {
+                    name?: T;
+                    role?: T;
+                    bio?: T;
+                    image?: T;
+                    id?: T;
+                  };
+              chefsEyebrow?: T;
+              chefsHeading?: T;
+              chefs?:
+                | T
+                | {
+                    name?: T;
+                    location?: T;
+                    bio?: T;
+                    image?: T;
+                    id?: T;
+                  };
+              sponsorEyebrow?: T;
+              sponsorHeading?: T;
+              sponsorBody?: T;
+              tiers?:
+                | T
+                | {
+                    eyebrow?: T;
+                    badge?: T;
+                    title?: T;
+                    price?: T;
+                    includes?:
+                      | T
+                      | {
+                          item?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              tableImage?: T;
+              tableEyebrow?: T;
+              tableHeading?: T;
+              tableBody?: T;
+              tableList?:
+                | T
+                | {
+                    item?: T;
+                    id?: T;
+                  };
+              tablePrice?: T;
+              tablePriceLabel?: T;
+              seatPrice?: T;
+              seatPriceLabel?: T;
+              tableCtaLabel?: T;
+              auctionEyebrow?: T;
+              auctionHeading?: T;
+              auctionBody?: T;
+              auctionOptions?:
+                | T
+                | {
+                    label?: T;
+                    title?: T;
+                    body?: T;
+                    id?: T;
+                  };
+              inKindEyebrow?: T;
+              inKindHeading?: T;
+              inKindBody?: T;
+              inKindCtaLabel?: T;
+              majorGiftsNote?: T;
+              partnershipEyebrow?: T;
+              partnershipHeading?: T;
+              partnershipBody?: T;
+              partnershipNote?: T;
+              partnership?:
+                | T
+                | {
+                    item?: T;
+                    id?: T;
+                  };
+              quotesEyebrow?: T;
+              quotesHeading?: T;
+              quotes?:
+                | T
+                | {
+                    quote?: T;
+                    name?: T;
+                    place?: T;
+                    id?: T;
+                  };
+              moneyImage?: T;
+              moneyEyebrow?: T;
+              moneyHeading?: T;
+              moneyBody?: T;
+              moneyCards?:
+                | T
+                | {
+                    value?: T;
+                    body?: T;
+                    id?: T;
+                  };
+              closingImage?: T;
+              closingEyebrow?: T;
+              closingHeading?: T;
+              closingBody?: T;
+              closingSecondaryCtaLabel?: T;
+              id?: T;
+              blockName?: T;
+            };
+        impactLanding?:
+          | T
+          | {
+              eyebrowPrefix?: T;
+              heading?: T;
+              intro?: T;
+              statMealsLabel?: T;
+              statFoodLabel?: T;
+              statVolunteersLabel?: T;
+              statKohaLabel?: T;
+              payEyebrow?: T;
+              payHeading?: T;
+              payBody?: T;
+              growthEyebrow?: T;
+              growthHeading?: T;
+              growthBody?: T;
+              growthCaption?: T;
+              rescuedEyebrow?: T;
+              rescuedHeading?: T;
+              rescuedBody?: T;
+              rescuedTonnesLabel?: T;
+              rescuedMealsLabel?: T;
+              venuesEyebrow?: T;
+              venuesHeading?: T;
+              venuesBody?: T;
+              peopleEyebrow?: T;
+              peopleHeading?: T;
+              peopleVolunteersLabel?: T;
+              peopleHoursLabel?: T;
+              peopleNightsLabel?: T;
+              peopleGuestsLabel?: T;
+              peopleSubheading?: T;
+              peopleSubbody?: T;
+              ctaHeading?: T;
+              ctaBody?: T;
+              ctaPrimaryLabel?: T;
+              ctaSecondaryLabel?: T;
+              footerNote?: T;
               id?: T;
               blockName?: T;
             };
