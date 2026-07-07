@@ -24,7 +24,7 @@ export const Locations: CollectionConfig = {
       name: 'openStatus',
       label: 'Status',
       type: 'select',
-      defaultValue: 'open',
+      admin: { description: 'Leave blank to show no status badge.' },
       options: [
         { label: 'Open', value: 'open' },
         { label: 'Coming soon', value: 'coming-soon' },

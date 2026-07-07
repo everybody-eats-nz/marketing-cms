@@ -34,10 +34,12 @@ export function LocationsMagazineBlock({ locations }: Props) {
                 ) : (
                   <div className="absolute inset-0 bg-gradient-to-br from-forest-300 to-forest-600" />
                 )}
-                <span className="absolute bottom-6 left-6 flex items-center gap-2 px-4 py-2 rounded-pill bg-surface/95 text-content text-xs uppercase tracking-[0.15em] font-medium">
-                  <span className="w-2 h-2 rounded-full bg-forest-500 animate-pulse" />
-                  {loc.openStatus === 'open' ? 'Open this week' : loc.openStatus}
-                </span>
+                {loc.openStatus && (
+                  <span className="absolute bottom-6 left-6 flex items-center gap-2 px-4 py-2 rounded-pill bg-surface/95 text-content text-xs uppercase tracking-[0.15em] font-medium">
+                    <span className="w-2 h-2 rounded-full bg-forest-500 animate-pulse" />
+                    {loc.openStatus === 'open' ? 'Open this week' : loc.openStatus}
+                  </span>
+                )}
               </Link>
             </div>
 
