@@ -23,6 +23,8 @@ import { Process } from '../blocks/Process'
 import { Values } from '../blocks/Values'
 import { Testimonials } from '../blocks/Testimonials'
 import { Downloads } from '../blocks/Downloads'
+import { GalaLanding } from '../blocks/GalaLanding'
+import { ImpactLanding } from '../blocks/ImpactLanding'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -142,6 +144,8 @@ export const Pages: CollectionConfig = {
         NewsletterFormBlock,
         EnquiryForm,
         Downloads,
+        GalaLanding,
+        ImpactLanding,
       ],
     },
     seoField,

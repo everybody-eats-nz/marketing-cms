@@ -10,6 +10,7 @@ import * as migration_20260618_050316_add_pay_settings from './20260618_050316_a
 import * as migration_20260618_224443_add_newsletter_pay_settings from './20260618_224443_add_newsletter_pay_settings';
 import * as migration_20260619_060311_add_pages_seo_noindex from './20260619_060311_add_pages_seo_noindex';
 import * as migration_20260706_210043_add_pages_audit_users from './20260706_210043_add_pages_audit_users';
+import * as migration_20260707_053614_add_gala_impact_landing_blocks from './20260707_053614_add_gala_impact_landing_blocks';
 import * as migration_20260707_055352_add_menu_location_name from './20260707_055352_add_menu_location_name';
 
 export const migrations = [
@@ -72,6 +73,11 @@ export const migrations = [
     up: migration_20260706_210043_add_pages_audit_users.up,
     down: migration_20260706_210043_add_pages_audit_users.down,
     name: '20260706_210043_add_pages_audit_users',
+  },
+  {
+    up: migration_20260707_053614_add_gala_impact_landing_blocks.up,
+    down: migration_20260707_053614_add_gala_impact_landing_blocks.down,
+    name: '20260707_053614_add_gala_impact_landing_blocks'
   },
   {
     up: migration_20260707_055352_add_menu_location_name.up,
