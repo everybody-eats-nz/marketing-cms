@@ -877,6 +877,11 @@ async function main() {
             },
           ],
         },
+        {
+          blockType: 'faqsAccordion',
+          title: 'Good to know',
+          category: 'volunteer-shifts',
+        },
       ],
     },
 

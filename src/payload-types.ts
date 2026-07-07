@@ -693,9 +693,24 @@ export interface Page {
           }
         | {
             /**
-             * Optional caption. The block renders all FAQs from the collection, grouped by category.
+             * Optional heading shown above the FAQs.
              */
-            caption?: string | null;
+            title?: string | null;
+            /**
+             * Optional. Show only FAQs in this category, as a single flat list. Leave empty to show all general FAQ categories grouped by heading.
+             */
+            category?:
+              | (
+                  | 'pay-as-you-feel'
+                  | 'about-us'
+                  | 'dining'
+                  | 'volunteering'
+                  | 'donating'
+                  | 'our-meals'
+                  | 'events'
+                  | 'volunteer-shifts'
+                )
+              | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'faqsAccordion';
@@ -1512,7 +1527,21 @@ export interface Faq {
     };
     [k: string]: unknown;
   };
-  category?: ('pay-as-you-feel' | 'about-us' | 'dining' | 'volunteering' | 'donating' | 'our-meals' | 'events') | null;
+  /**
+   * Groups the FAQ on the general FAQs page. "Volunteering on a shift" is page-specific: it only appears where a block explicitly filters to it (e.g. the Volunteer page), not on the general FAQs page.
+   */
+  category?:
+    | (
+        | 'pay-as-you-feel'
+        | 'about-us'
+        | 'dining'
+        | 'volunteering'
+        | 'donating'
+        | 'our-meals'
+        | 'events'
+        | 'volunteer-shifts'
+      )
+    | null;
   displayOrder?: number | null;
   updatedAt: string;
   createdAt: string;
@@ -2161,7 +2190,8 @@ export interface PagesSelect<T extends boolean = true> {
         faqsAccordion?:
           | T
           | {
-              caption?: T;
+              title?: T;
+              category?: T;
               id?: T;
               blockName?: T;
             };

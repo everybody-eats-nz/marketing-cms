@@ -22,7 +22,12 @@ export const Faqs: CollectionConfig = {
         { label: 'Partnering & donations', value: 'donating' },
         { label: 'About our meals', value: 'our-meals' },
         { label: 'Events', value: 'events' },
+        { label: 'Volunteering on a shift', value: 'volunteer-shifts' },
       ],
+      admin: {
+        description:
+          'Groups the FAQ on the general FAQs page. "Volunteering on a shift" is page-specific: it only appears where a block explicitly filters to it (e.g. the Volunteer page), not on the general FAQs page.',
+      },
     },
     { name: 'displayOrder', type: 'number', defaultValue: 0 },
   ],

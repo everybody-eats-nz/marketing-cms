@@ -159,6 +159,94 @@ const FAQS: Faq[] = [
       "We also buy additional ingredients if we don't have everything needed to make a complete three course meal. Please note, we do not use food scraps in any of our meals. All our food is good quality and complies with safety standards.",
     ),
   },
+
+  // ── Volunteering on a shift ────────────────────────────────────────────────
+  // Page-specific: shown only on /get-involved/volunteer (a faqsAccordion block
+  // filtered to 'volunteer-shifts'), not on the general /about/faqs page.
+  {
+    category: 'volunteer-shifts',
+    question: 'What age volunteers do you take?',
+    answer: richText(
+      'You need to be at least 16 to volunteer on a shift with us. If you’re between 12 and 15, you’re very welcome to join a shift as long as a parent or caregiver registers and volunteers alongside you for the whole shift.',
+      'This keeps everyone safe in what is a busy, working kitchen and dining room.',
+    ),
+  },
+  {
+    category: 'volunteer-shifts',
+    question: 'Can I volunteer with my friend(s)?',
+    answer: richText(
+      'Absolutely — it’s a lot more fun with a mate. Each of you just needs to create your own volunteer account and book onto the same shift, so we know to expect you both.',
+      'Shifts have a limited number of spots, so book in early to make sure you end up on the same night.',
+    ),
+  },
+  {
+    category: 'volunteer-shifts',
+    question: 'Can I volunteer with my team?',
+    answer: richText(
+      'Yes! Bringing your workplace or team along is a great way to give back together. Because each shift has a set number of spots, get in touch first at info@everybodyeats.nz and we’ll help find a night that suits your group and make sure there’s room for everyone.',
+    ),
+  },
+  {
+    category: 'volunteer-shifts',
+    question: 'Can I bring my friend/child/parent with me to volunteer?',
+    answer: richText(
+      'Everyone lending a hand on a shift needs to be registered and booked in themselves. That way we have the right number of people rostered on and everyone is covered while they’re helping — we can’t have extra people in the kitchen or dining room who aren’t booked in.',
+      'If they’d like to join in, ask them to sign up too (and check our age guidelines above for younger helpers).',
+    ),
+  },
+  {
+    category: 'volunteer-shifts',
+    question: 'Why haven’t I heard back about a requested shift yet?',
+    answer: richText(
+      'When you request a shift it isn’t confirmed straight away — you’ll get an email as soon as it’s approved. Popular shifts fill up fast and are sometimes waitlisted, so if you haven’t heard back it may still be pending or full.',
+      'You can check the status of any shift at any time in your account on the volunteer portal at volunteers.everybodyeats.nz.',
+    ),
+  },
+  {
+    category: 'volunteer-shifts',
+    question: 'What happens if I miss a registered shift?',
+    answer: richText(
+      'Life happens — but please let us know as early as you can by cancelling in the portal or getting in touch, so we can offer your spot to someone else. A no-show leaves the team short on a busy night.',
+      'If shifts are missed regularly without notice we may need to pause your bookings, but a quick heads up is all we ask.',
+    ),
+  },
+  {
+    category: 'volunteer-shifts',
+    question: 'What should I wear?',
+    answer: richText(
+      'Wear comfortable clothes you don’t mind getting a little messy, and closed-toe, non-slip shoes (no jandals or sandals — it’s a working kitchen). Tie back long hair and leave any loose jewellery at home.',
+      'We’ll give you an apron when you arrive. It can get warm near the kitchen, so dressing in layers is a good idea.',
+    ),
+  },
+  {
+    category: 'volunteer-shifts',
+    question: 'What to do if I’m late?',
+    answer: richText(
+      'Please still come along — we’d much rather have you for part of the shift than not at all. If you know you’re running late, let the shift coordinator know through the portal or give the restaurant a call so we can keep your spot and let you in.',
+    ),
+  },
+  {
+    category: 'volunteer-shifts',
+    question: 'Will you sign my DoE certificate?',
+    answer: richText(
+      'Yes — we’re happy to verify your volunteer hours for the Duke of Edinburgh’s Hillary Award or similar programmes. Let your shift coordinator know at the start of your shift and bring along whatever needs signing, or send us the details and we’ll sort it out.',
+    ),
+  },
+  {
+    category: 'volunteer-shifts',
+    question: 'Do you provide supported volunteering (for people with disabilities)?',
+    answer: richText(
+      'Yes. We want everyone to be able to get involved, and we welcome volunteers of all abilities. If you or someone you support would like to volunteer with a bit of extra support, get in touch at info@everybodyeats.nz before booking and we’ll talk through how to make a shift work for you.',
+    ),
+  },
+  {
+    category: 'volunteer-shifts',
+    question: 'Where can I get help with registration?',
+    answer: richText(
+      'If you get stuck signing up, we’re happy to help. Email us at info@everybodyeats.nz with what’s going wrong and we’ll walk you through it.',
+      'Most sign-up hiccups come down to a missed email verification step, so check your spam folder for our confirmation email first.',
+    ),
+  },
 ]
 
 const PAGE = {
