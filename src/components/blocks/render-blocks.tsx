@@ -23,6 +23,10 @@ import { TestimonialsBlock } from './testimonials-block'
 import { DownloadsBlock } from './downloads-block'
 import { GalaLandingBlock } from './gala-landing-block'
 import { ImpactLandingBlock } from './impact-landing-block'
+import { HopperHeroBlock } from './hopper/hopper-hero-block'
+import { HopperStatementBlock } from './hopper/hopper-statement-block'
+import { HopperMenuBlock } from './hopper/hopper-menu-block'
+import { HopperVisitBlock } from './hopper/hopper-visit-block'
 
 type AnyBlock = { blockType: string; id?: string; [k: string]: any }
 
@@ -135,6 +139,14 @@ export function RenderBlocks({
             return impactStory ? (
               <ImpactLandingBlock key={key} block={block as any} story={impactStory} />
             ) : null
+          case 'hopperHero':
+            return <HopperHeroBlock key={key} block={block as any} />
+          case 'hopperStatement':
+            return <HopperStatementBlock key={key} block={block as any} />
+          case 'hopperMenu':
+            return <HopperMenuBlock key={key} block={block as any} />
+          case 'hopperVisit':
+            return <HopperVisitBlock key={key} block={block as any} />
           default:
             return null
         }

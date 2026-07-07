@@ -1,0 +1,154 @@
+/*
+ * Hopper Cafe brand tokens + primitives.
+ *
+ * Hopper is a standalone concept-cafe brand: lilac paper, olive ink, a bubbly
+ * lowercase wordmark and monospaced everything else (from the launch poster).
+ * These tokens are DELIBERATELY separate from the Everybody Eats palette in
+ * src/styles/brand-tokens.ts / tailwind.config.ts — everything hangs off the
+ * .hopper-scope class so nothing here can leak into the main site, and no
+ * main-site token is used in here.
+ *
+ * The --font-hopper-* variables are provided by src/app/(hopper)/layout.tsx
+ * (next/font). Outside that layout the stacks below are the fallback.
+ */
+
+.hopper-scope {
+  --hopper-lilac: #e8cafe;
+  --hopper-ink: #3d3100;
+  --hopper-hairline: rgb(61 49 0 / 0.3);
+  --hopper-display: var(--font-hopper-display, 'Adigiana Toybox', 'Arial Rounded MT Bold', sans-serif);
+  --hopper-mono: var(--font-hopper-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+
+  background-color: var(--hopper-lilac);
+  color: var(--hopper-ink);
+  font-family: var(--hopper-mono);
+}
+
+.hopper-scope ::selection {
+  background-color: var(--hopper-ink);
+  color: var(--hopper-lilac);
+}
+
+.hopper-scope :focus-visible {
+  outline: 2px solid var(--hopper-ink);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+.hopper-display {
+  font-family: var(--hopper-display);
+  font-weight: 400;
+}
+
+.hopper-label {
+  font-family: var(--hopper-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.hopper-rule {
+  border-color: var(--hopper-hairline);
+}
+
+/*
+ * The Everybody Eats wordmark, recoloured to Hopper ink. The SVG asset is
+ * hard-coded forest green, so it's applied as a mask over the ink token
+ * instead of rendered directly.
+ */
+.hopper-ee-logo {
+  display: block;
+  background-color: var(--hopper-ink);
+  -webkit-mask: url('/everybody-eats-logo.svg') no-repeat center / contain;
+  mask: url('/everybody-eats-logo.svg') no-repeat center / contain;
+}
+
+.hopper-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid var(--hopper-ink);
+  border-radius: 9999px;
+  padding: 0.875rem 1.75rem;
+  font-family: var(--hopper-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease,
+    transform 150ms ease;
+}
+.hopper-btn:hover {
+  background-color: var(--hopper-ink);
+  color: var(--hopper-lilac);
+}
+.hopper-btn:active {
+  transform: scale(0.97);
+}
+
+/*
+ * The wordmark's bouncy baseline: each letter is a span carrying a small
+ * vertical offset + tilt (like the poster logotype), and pops in with a
+ * staggered spring on load. --i is set inline per letter.
+ */
+.hopper-wordmark span {
+  display: inline-block;
+  --dy: 0em;
+  --rot: 0deg;
+  --fs: 1em;
+  font-size: var(--fs);
+  transform: translateY(var(--dy)) rotate(var(--rot));
+  animation: hopper-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-delay: calc(var(--i, 0) * 70ms);
+}
+/* Tuned to the six letters of "hoPPer" in the brand logotype: per-letter
+   sizes (18.6 / 15.9 / 14.3 / 15.7 / 17.7 / 19.5, normalised to the r) and
+   tilts on only the second P and the e. */
+.hopper-wordmark span:nth-child(1) {
+  --fs: 0.954em;
+}
+.hopper-wordmark span:nth-child(2) {
+  --fs: 0.815em;
+}
+.hopper-wordmark span:nth-child(3) {
+  --fs: 0.733em;
+}
+.hopper-wordmark span:nth-child(4) {
+  --fs: 0.805em;
+  --rot: -3.8deg;
+}
+.hopper-wordmark span:nth-child(5) {
+  --fs: 0.908em;
+  --rot: -9.4deg;
+  /* The e sits looser against the r than the rest of the word. */
+  letter-spacing: -0.05em;
+}
+
+@keyframes hopper-pop {
+  0% {
+    opacity: 0;
+    transform: translateY(calc(var(--dy) + 0.4em)) rotate(var(--rot)) scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(var(--dy)) rotate(var(--rot)) scale(1);
+  }
+}
+
+/* Menu item names give a tiny playful tilt on hover. */
+.hopper-menu-item .hopper-display {
+  transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.hopper-menu-item:hover .hopper-display {
+  transform: rotate(-1.5deg) translateY(-0.04em);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hopper-wordmark span {
+    animation: none;
+  }
+  .hopper-menu-item:hover .hopper-display {
+    transform: none;
+  }
+}

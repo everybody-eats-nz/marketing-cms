@@ -25,6 +25,10 @@ import { Testimonials } from '../blocks/Testimonials'
 import { Downloads } from '../blocks/Downloads'
 import { GalaLanding } from '../blocks/GalaLanding'
 import { ImpactLanding } from '../blocks/ImpactLanding'
+import { HopperHero } from '../blocks/HopperHero'
+import { HopperStatement } from '../blocks/HopperStatement'
+import { HopperMenu } from '../blocks/HopperMenu'
+import { HopperVisit } from '../blocks/HopperVisit'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -146,6 +150,12 @@ export const Pages: CollectionConfig = {
         Downloads,
         GalaLanding,
         ImpactLanding,
+        // Hopper Cafe blocks — standalone brand, meant for the /hopper page
+        // (which renders chrome-free via src/app/(hopper)/).
+        HopperHero,
+        HopperStatement,
+        HopperMenu,
+        HopperVisit,
       ],
     },
     seoField,
