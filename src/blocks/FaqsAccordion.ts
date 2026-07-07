@@ -8,11 +8,28 @@ export const FaqsAccordion: Block = {
   admin: { group: 'Lists' },
   fields: [
     {
-      name: 'caption',
+      name: 'title',
       type: 'text',
       admin: {
+        description: 'Optional heading shown above the FAQs.',
+      },
+    },
+    {
+      name: 'category',
+      type: 'select',
+      options: [
+        { label: 'Paying at the restaurant', value: 'pay-as-you-feel' },
+        { label: 'About Everybody Eats', value: 'about-us' },
+        { label: 'Dining experience', value: 'dining' },
+        { label: 'Volunteering', value: 'volunteering' },
+        { label: 'Partnering & donations', value: 'donating' },
+        { label: 'About our meals', value: 'our-meals' },
+        { label: 'Events', value: 'events' },
+        { label: 'Volunteering on a shift', value: 'volunteer-shifts' },
+      ],
+      admin: {
         description:
-          'Optional caption. The block renders all FAQs from the collection, grouped by category.',
+          'Optional. Show only FAQs in this category, as a single flat list. Leave empty to show all general FAQ categories grouped by heading.',
       },
     },
   ],
