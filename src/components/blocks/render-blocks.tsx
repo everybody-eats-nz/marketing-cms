@@ -124,7 +124,7 @@ export function RenderBlocks({
           case 'teamGrid':
             return <TeamGridBlock key={key} team={team} />
           case 'faqsAccordion':
-            return <FaqsAccordionBlock key={key} faqs={faqs} />
+            return <FaqsAccordionBlock key={key} block={block as any} faqs={faqs} />
           case 'partnersGrid':
             return <PartnersGridBlock key={key} block={block as any} partners={partners} />
           case 'newsletterForm':
