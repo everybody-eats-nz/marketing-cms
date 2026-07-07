@@ -47,7 +47,15 @@ export async function PageBody({ page, isDraft }: { page: any; isDraft: boolean 
       ? fetchImpactStory().then((s) => s ?? MOCK_IMPACT_STORY)
       : Promise.resolve(null),
     needLocations
-      ? payload.find({ collection: 'locations', limit: 20, sort: 'name', depth: 1 })
+      ? payload.find({
+          collection: 'locations',
+          limit: 20,
+          sort: 'name',
+          depth: 1,
+          // Outside preview, hide unpublished locations so grids don't link to
+          // pages that 404 (dine-with-us/[slug]/page.tsx only serves published docs).
+          ...(isDraft ? {} : { where: { _status: { equals: 'published' } } }),
+        })
       : Promise.resolve({ docs: [] as any[] }),
     needEvents
       ? payload.find({
@@ -55,11 +63,24 @@ export async function PageBody({ page, isDraft }: { page: any; isDraft: boolean 
           limit: 8,
           sort: '-date',
           depth: 1,
-          where: { date: { greater_than: new Date(0).toISOString() } },
+          // Outside preview, hide unpublished events so the list doesn't link to
+          // pages that 404 (events/[slug]/page.tsx only serves published docs).
+          where: {
+            date: { greater_than: new Date(0).toISOString() },
+            ...(isDraft ? {} : { _status: { equals: 'published' } }),
+          },
         })
       : Promise.resolve({ docs: [] as any[] }),
     needJournal
-      ? payload.find({ collection: 'journal-posts', limit: 6, sort: '-createdAt', depth: 1 })
+      ? payload.find({
+          collection: 'journal-posts',
+          limit: 6,
+          sort: '-createdAt',
+          depth: 1,
+          // Outside preview, hide unpublished posts so lists don't link to pages
+          // that 404 (journal/[slug]/page.tsx only serves published docs).
+          ...(isDraft ? {} : { where: { _status: { equals: 'published' } } }),
+        })
       : Promise.resolve({ docs: [] as any[] }),
     needTeam
       ? payload.find({ collection: 'team-members', limit: 200, sort: 'displayOrder', depth: 1 })

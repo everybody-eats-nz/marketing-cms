@@ -7031,6 +7031,24 @@
           "primaryKey": false,
           "notNull": false
         },
+        "updated_by_id": {
+          "name": "updated_by_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_by_id": {
+          "name": "created_by_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "published_by_id": {
+          "name": "published_by_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
         "seo_title": {
           "name": "seo_title",
           "type": "varchar",
@@ -7091,6 +7109,51 @@
             }
           ],
           "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "pages_updated_by_idx": {
+          "name": "pages_updated_by_idx",
+          "columns": [
+            {
+              "expression": "updated_by_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "pages_created_by_idx": {
+          "name": "pages_created_by_idx",
+          "columns": [
+            {
+              "expression": "created_by_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "pages_published_by_idx": {
+          "name": "pages_published_by_idx",
+          "columns": [
+            {
+              "expression": "published_by_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
           "concurrently": false,
           "method": "btree",
           "with": {}
@@ -7157,6 +7220,45 @@
         }
       },
       "foreignKeys": {
+        "pages_updated_by_id_users_id_fk": {
+          "name": "pages_updated_by_id_users_id_fk",
+          "tableFrom": "pages",
+          "tableTo": "users",
+          "columnsFrom": [
+            "updated_by_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "pages_created_by_id_users_id_fk": {
+          "name": "pages_created_by_id_users_id_fk",
+          "tableFrom": "pages",
+          "tableTo": "users",
+          "columnsFrom": [
+            "created_by_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "pages_published_by_id_users_id_fk": {
+          "name": "pages_published_by_id_users_id_fk",
+          "tableFrom": "pages",
+          "tableTo": "users",
+          "columnsFrom": [
+            "published_by_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
         "pages_seo_image_id_media_id_fk": {
           "name": "pages_seo_image_id_media_id_fk",
           "tableFrom": "pages",
@@ -13750,6 +13852,24 @@
           "primaryKey": false,
           "notNull": false
         },
+        "version_updated_by_id": {
+          "name": "version_updated_by_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_created_by_id": {
+          "name": "version_created_by_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_published_by_id": {
+          "name": "version_published_by_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
         "version_seo_title": {
           "name": "version_seo_title",
           "type": "varchar",
@@ -13837,6 +13957,51 @@
           "columns": [
             {
               "expression": "version_slug",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_pages_v_version_version_updated_by_idx": {
+          "name": "_pages_v_version_version_updated_by_idx",
+          "columns": [
+            {
+              "expression": "version_updated_by_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_pages_v_version_version_created_by_idx": {
+          "name": "_pages_v_version_version_created_by_idx",
+          "columns": [
+            {
+              "expression": "version_created_by_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_pages_v_version_version_published_by_idx": {
+          "name": "_pages_v_version_version_published_by_idx",
+          "columns": [
+            {
+              "expression": "version_published_by_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -13960,6 +14125,45 @@
           "tableTo": "pages",
           "columnsFrom": [
             "parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "_pages_v_version_updated_by_id_users_id_fk": {
+          "name": "_pages_v_version_updated_by_id_users_id_fk",
+          "tableFrom": "_pages_v",
+          "tableTo": "users",
+          "columnsFrom": [
+            "version_updated_by_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "_pages_v_version_created_by_id_users_id_fk": {
+          "name": "_pages_v_version_created_by_id_users_id_fk",
+          "tableFrom": "_pages_v",
+          "tableTo": "users",
+          "columnsFrom": [
+            "version_created_by_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "_pages_v_version_published_by_id_users_id_fk": {
+          "name": "_pages_v_version_published_by_id_users_id_fk",
+          "tableFrom": "_pages_v",
+          "tableTo": "users",
+          "columnsFrom": [
+            "version_published_by_id"
           ],
           "columnsTo": [
             "id"
@@ -21269,6 +21473,6 @@
     "tables": {},
     "columns": {}
   },
-  "id": "c5ae47dc-412c-4617-8608-51fb32a73b63",
+  "id": "ae89edc5-627e-4b9e-8a46-9f859702edf6",
   "prevId": "00000000-0000-0000-0000-000000000000"
 }

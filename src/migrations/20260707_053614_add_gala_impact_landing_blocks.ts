@@ -444,24 +444,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"block_name" varchar
   );
   
-  ALTER TABLE "pages" DROP CONSTRAINT "pages_updated_by_id_users_id_fk";
-  
-  ALTER TABLE "pages" DROP CONSTRAINT "pages_created_by_id_users_id_fk";
-  
-  ALTER TABLE "pages" DROP CONSTRAINT "pages_published_by_id_users_id_fk";
-  
-  ALTER TABLE "_pages_v" DROP CONSTRAINT "_pages_v_version_updated_by_id_users_id_fk";
-  
-  ALTER TABLE "_pages_v" DROP CONSTRAINT "_pages_v_version_created_by_id_users_id_fk";
-  
-  ALTER TABLE "_pages_v" DROP CONSTRAINT "_pages_v_version_published_by_id_users_id_fk";
-  
-  DROP INDEX "pages_updated_by_idx";
-  DROP INDEX "pages_created_by_idx";
-  DROP INDEX "pages_published_by_idx";
-  DROP INDEX "_pages_v_version_version_updated_by_idx";
-  DROP INDEX "_pages_v_version_version_created_by_idx";
-  DROP INDEX "_pages_v_version_version_published_by_idx";
   ALTER TABLE "locations" ALTER COLUMN "open_status" DROP DEFAULT;
   ALTER TABLE "_locations_v" ALTER COLUMN "version_open_status" DROP DEFAULT;
   ALTER TABLE "pages_blocks_gala_landing_night_list" ADD CONSTRAINT "pages_blocks_gala_landing_night_list_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages_blocks_gala_landing"("id") ON DELETE cascade ON UPDATE no action;
@@ -579,13 +561,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "_pages_v_blocks_gala_landing_closing_image_idx" ON "_pages_v_blocks_gala_landing" USING btree ("closing_image_id");
   CREATE INDEX "_pages_v_blocks_impact_landing_order_idx" ON "_pages_v_blocks_impact_landing" USING btree ("_order");
   CREATE INDEX "_pages_v_blocks_impact_landing_parent_id_idx" ON "_pages_v_blocks_impact_landing" USING btree ("_parent_id");
-  CREATE INDEX "_pages_v_blocks_impact_landing_path_idx" ON "_pages_v_blocks_impact_landing" USING btree ("_path");
-  ALTER TABLE "pages" DROP COLUMN "updated_by_id";
-  ALTER TABLE "pages" DROP COLUMN "created_by_id";
-  ALTER TABLE "pages" DROP COLUMN "published_by_id";
-  ALTER TABLE "_pages_v" DROP COLUMN "version_updated_by_id";
-  ALTER TABLE "_pages_v" DROP COLUMN "version_created_by_id";
-  ALTER TABLE "_pages_v" DROP COLUMN "version_published_by_id";`)
+  CREATE INDEX "_pages_v_blocks_impact_landing_path_idx" ON "_pages_v_blocks_impact_landing" USING btree ("_path");`)
 }
 
 export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
@@ -647,23 +623,5 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "_pages_v_blocks_gala_landing" CASCADE;
   DROP TABLE "_pages_v_blocks_impact_landing" CASCADE;
   ALTER TABLE "locations" ALTER COLUMN "open_status" SET DEFAULT 'open';
-  ALTER TABLE "_locations_v" ALTER COLUMN "version_open_status" SET DEFAULT 'open';
-  ALTER TABLE "pages" ADD COLUMN "updated_by_id" integer;
-  ALTER TABLE "pages" ADD COLUMN "created_by_id" integer;
-  ALTER TABLE "pages" ADD COLUMN "published_by_id" integer;
-  ALTER TABLE "_pages_v" ADD COLUMN "version_updated_by_id" integer;
-  ALTER TABLE "_pages_v" ADD COLUMN "version_created_by_id" integer;
-  ALTER TABLE "_pages_v" ADD COLUMN "version_published_by_id" integer;
-  ALTER TABLE "pages" ADD CONSTRAINT "pages_updated_by_id_users_id_fk" FOREIGN KEY ("updated_by_id") REFERENCES "public"."users"("id") ON DELETE set null ON UPDATE no action;
-  ALTER TABLE "pages" ADD CONSTRAINT "pages_created_by_id_users_id_fk" FOREIGN KEY ("created_by_id") REFERENCES "public"."users"("id") ON DELETE set null ON UPDATE no action;
-  ALTER TABLE "pages" ADD CONSTRAINT "pages_published_by_id_users_id_fk" FOREIGN KEY ("published_by_id") REFERENCES "public"."users"("id") ON DELETE set null ON UPDATE no action;
-  ALTER TABLE "_pages_v" ADD CONSTRAINT "_pages_v_version_updated_by_id_users_id_fk" FOREIGN KEY ("version_updated_by_id") REFERENCES "public"."users"("id") ON DELETE set null ON UPDATE no action;
-  ALTER TABLE "_pages_v" ADD CONSTRAINT "_pages_v_version_created_by_id_users_id_fk" FOREIGN KEY ("version_created_by_id") REFERENCES "public"."users"("id") ON DELETE set null ON UPDATE no action;
-  ALTER TABLE "_pages_v" ADD CONSTRAINT "_pages_v_version_published_by_id_users_id_fk" FOREIGN KEY ("version_published_by_id") REFERENCES "public"."users"("id") ON DELETE set null ON UPDATE no action;
-  CREATE INDEX "pages_updated_by_idx" ON "pages" USING btree ("updated_by_id");
-  CREATE INDEX "pages_created_by_idx" ON "pages" USING btree ("created_by_id");
-  CREATE INDEX "pages_published_by_idx" ON "pages" USING btree ("published_by_id");
-  CREATE INDEX "_pages_v_version_version_updated_by_idx" ON "_pages_v" USING btree ("version_updated_by_id");
-  CREATE INDEX "_pages_v_version_version_created_by_idx" ON "_pages_v" USING btree ("version_created_by_id");
-  CREATE INDEX "_pages_v_version_version_published_by_idx" ON "_pages_v" USING btree ("version_published_by_id");`)
+  ALTER TABLE "_locations_v" ALTER COLUMN "version_open_status" SET DEFAULT 'open';`)
 }
