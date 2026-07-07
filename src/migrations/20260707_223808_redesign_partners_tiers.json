@@ -21099,6 +21099,81 @@
           "primaryKey": false,
           "notNull": false
         },
+        "announcement_enabled": {
+          "name": "announcement_enabled",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "announcement_campaign_id": {
+          "name": "announcement_campaign_id",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'hopper-launch'"
+        },
+        "announcement_eyebrow": {
+          "name": "announcement_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'an everybody eats cafe'"
+        },
+        "announcement_heading": {
+          "name": "announcement_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Now open in Te Aro.'"
+        },
+        "announcement_body": {
+          "name": "announcement_body",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Rescued food, accessible prices, and a genuine sense of belonging - a new cafe from the Everybody Eats team.'"
+        },
+        "announcement_link_label": {
+          "name": "announcement_link_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "announcement_link_type": {
+          "name": "announcement_link_type",
+          "type": "enum_site_settings_announcement_link_type",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'internal'"
+        },
+        "announcement_link_internal_href": {
+          "name": "announcement_link_internal_href",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "announcement_link_external_href": {
+          "name": "announcement_link_external_href",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "announcement_link_open_in_new_tab": {
+          "name": "announcement_link_open_in_new_tab",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "announcement_dismiss_label": {
+          "name": "announcement_dismiss_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Not now'"
+        },
         "updated_at": {
           "name": "updated_at",
           "type": "timestamp(3) with time zone",
@@ -22915,6 +22990,14 @@
         "foodSavedKg"
       ]
     },
+    "public.enum_site_settings_announcement_link_type": {
+      "name": "enum_site_settings_announcement_link_type",
+      "schema": "public",
+      "values": [
+        "internal",
+        "external"
+      ]
+    },
     "public.enum_navigation_primary_link_type": {
       "name": "enum_navigation_primary_link_type",
       "schema": "public",
@@ -22958,6 +23041,6 @@
     "tables": {},
     "columns": {}
   },
-  "id": "573b3727-d13f-4277-b5c2-dffc64a28776",
+  "id": "7fffbd49-e72b-4e26-bde3-f6696c1f2130",
   "prevId": "00000000-0000-0000-0000-000000000000"
 }
