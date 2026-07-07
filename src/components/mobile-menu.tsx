@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useMounted } from '@/lib/hooks'
 import { resolveHref, type LinkValue, type Media } from '@/lib/types'
 import { openBookingDialog } from './booking/booking-dialog'
 import { ExternalLinkIcon } from './external-link-icon'
@@ -38,12 +39,8 @@ const actionClasses: Record<MenuAction['variant'], string> = {
 
 export function MobileMenu({ primary, secondary, actions = [] }: Props) {
   const [open, setOpen] = useState(false)
-  const [mounted, setMounted] = useState(false)
+  const mounted = useMounted()
   const [activeIndex, setActiveIndex] = useState<number>(0)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
 
   useEffect(() => {
     if (!open) return
@@ -58,15 +55,20 @@ export function MobileMenu({ primary, secondary, actions = [] }: Props) {
     }
   }, [open])
 
-  // Find the first primary item that has a preview image — use it as the default
-  // shown on the right pane until the user hovers something else.
-  useEffect(() => {
-    if (!open) return
-    const firstWithImage = primary.findIndex(
-      (p) => p.previewImage && typeof p.previewImage === 'object',
-    )
-    setActiveIndex(firstWithImage >= 0 ? firstWithImage : 0)
-  }, [open, primary])
+  // Each time the overlay opens, reset the right pane to the first primary item
+  // that has a preview image — it stays until the user hovers something else.
+  // Adjusted during render (comparing against the previous `open`) rather than
+  // in an effect, so the pane never paints with the stale index.
+  const [prevOpen, setPrevOpen] = useState(open)
+  if (open !== prevOpen) {
+    setPrevOpen(open)
+    if (open) {
+      const firstWithImage = primary.findIndex(
+        (p) => p.previewImage && typeof p.previewImage === 'object',
+      )
+      setActiveIndex(firstWithImage >= 0 ? firstWithImage : 0)
+    }
+  }
 
   const overlay = (
     <div

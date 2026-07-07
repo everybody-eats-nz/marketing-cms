@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useId, useState } from 'react'
+import { useId, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { submitEnquiry, type EnquiryInput } from '@/app/(frontend)/actions/enquiry'
 import { renderRichText } from '@/components/blocks/render-text'
@@ -29,9 +29,13 @@ export function EnquiryForm({ tone, enquiryTypes, successMessage, recipientEmail
   const [selectedType, setSelectedType] = useState(() =>
     enquiryTypes.includes(paramType) ? paramType : enquiryTypes[0] || '',
   )
-  useEffect(() => {
+  // Follow later ?type= changes (e.g. client-side nav from another "Enquire"
+  // card) by adjusting state during render off the previous param value.
+  const [prevParamType, setPrevParamType] = useState(paramType)
+  if (paramType !== prevParamType) {
+    setPrevParamType(paramType)
     if (paramType && enquiryTypes.includes(paramType)) setSelectedType(paramType)
-  }, [paramType, enquiryTypes])
+  }
 
   const isForest = tone === 'forest'
 

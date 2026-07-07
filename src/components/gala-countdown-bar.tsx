@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useSyncExternalStore } from 'react'
 
 // Slim site-wide promo strip that counts down to the Gala and links to /gala.
 // Hides itself on the /gala page (the hero there has its own big countdown) and
@@ -11,27 +11,40 @@ const TARGET = new Date('2026-10-30T18:30:00+13:00').getTime()
 
 type Remaining = { d: number; h: number; m: number }
 
-function remaining(): Remaining | null {
+// Whole minutes until the gala, or -1 once it has passed. A primitive snapshot
+// keeps useSyncExternalStore re-rendering only when the clock actually moves.
+function getMinutesLeft(): number {
   const diff = TARGET - Date.now()
-  if (diff <= 0) return null
-  return {
-    d: Math.floor(diff / 86_400_000),
-    h: Math.floor((diff / 3_600_000) % 24),
-    m: Math.floor((diff / 60_000) % 60),
-  }
+  return diff <= 0 ? -1 : Math.floor(diff / 60_000)
 }
+
+function subscribeEvery30s(onTick: () => void) {
+  const id = setInterval(onTick, 30_000)
+  return () => clearInterval(id)
+}
+
+const serverSnapshot = () => null
 
 export function GalaCountdownBar() {
   const pathname = usePathname()
-  // `undefined` = not yet mounted (server + first client render match on a
-  // non-breaking-space placeholder, avoiding a hydration mismatch on the clock).
-  const [time, setTime] = useState<Remaining | null | undefined>(undefined)
-
-  useEffect(() => {
-    setTime(remaining())
-    const id = setInterval(() => setTime(remaining()), 30_000)
-    return () => clearInterval(id)
-  }, [])
+  // The server snapshot is null, so `time` is `undefined` = not yet mounted
+  // (server + first client render match on a non-breaking-space placeholder,
+  // avoiding a hydration mismatch on the clock) and `null` = event passed.
+  const minutesLeft = useSyncExternalStore<number | null>(
+    subscribeEvery30s,
+    getMinutesLeft,
+    serverSnapshot,
+  )
+  const time: Remaining | null | undefined =
+    minutesLeft === null
+      ? undefined
+      : minutesLeft < 0
+        ? null
+        : {
+            d: Math.floor(minutesLeft / 1_440),
+            h: Math.floor(minutesLeft / 60) % 24,
+            m: minutesLeft % 60,
+          }
 
   // Redundant with the hero countdown on the Gala page itself.
   if (pathname === '/gala') return null

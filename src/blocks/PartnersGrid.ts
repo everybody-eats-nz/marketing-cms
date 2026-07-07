@@ -13,6 +13,11 @@ export const PartnersGrid: Block = {
       type: 'textarea',
       admin: { description: 'Wrap a word in *asterisks* for italic.' },
     },
+    {
+      name: 'intro',
+      type: 'textarea',
+      admin: { description: 'Intro paragraph under the heading. *Asterisks* for italic.' },
+    },
     { name: 'viewAllLabel', type: 'text' },
     { name: 'viewAllHref', type: 'text' },
   ],

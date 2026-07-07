@@ -620,6 +620,10 @@ export interface Page {
               label?: string | null;
               href?: string | null;
             };
+            tertiaryCta?: {
+              label?: string | null;
+              href?: string | null;
+            };
             id?: string | null;
             blockName?: string | null;
             blockType: 'ctaStrip';
@@ -702,6 +706,10 @@ export interface Page {
              * Wrap a word in *asterisks* for italic.
              */
             heading?: string | null;
+            /**
+             * Intro paragraph under the heading. *Asterisks* for italic.
+             */
+            intro?: string | null;
             viewAllLabel?: string | null;
             viewAllHref?: string | null;
             id?: string | null;
@@ -1517,12 +1525,25 @@ export interface Partner {
   id: number;
   name: string;
   slug: string;
-  tier: 'platinum' | 'gold' | 'funding' | 'supporting' | 'hospitality' | 'food';
   /**
-   * Logo on a transparent background, at least 800px wide. Shown uncropped on a cream card, so a dark or coloured version works best.
+   * Major = large logo with a hover blurb. Supporting = medium logo. Friend = name-only link, grouped by the category below.
+   */
+  tier: 'major' | 'supporting' | 'friend';
+  /**
+   * Which Friends heading this sits under. Only used when the tier is Friend.
+   */
+  friendCategory?: ('food-hospitality' | 'community' | 'business') | null;
+  /**
+   * Logo on a transparent background, at least 800px wide. Shown uncropped on a white card. Used for Major and Supporting partners; Friends are name-only.
    */
   logo?: (number | null) | Media;
+  /**
+   * Link through to the partner’s website.
+   */
   url?: string | null;
+  /**
+   * Short blurb about the partnership. Shown in the hover/focus info box on Major partners.
+   */
   description?: string | null;
   displayOrder?: number | null;
   updatedAt: string;
@@ -2081,6 +2102,12 @@ export interface PagesSelect<T extends boolean = true> {
                     label?: T;
                     href?: T;
                   };
+              tertiaryCta?:
+                | T
+                | {
+                    label?: T;
+                    href?: T;
+                  };
               id?: T;
               blockName?: T;
             };
@@ -2143,6 +2170,7 @@ export interface PagesSelect<T extends boolean = true> {
           | {
               eyebrow?: T;
               heading?: T;
+              intro?: T;
               viewAllLabel?: T;
               viewAllHref?: T;
               id?: T;
@@ -2641,6 +2669,7 @@ export interface PartnersSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
   tier?: T;
+  friendCategory?: T;
   logo?: T;
   url?: T;
   description?: T;
@@ -2799,6 +2828,30 @@ export interface SiteSetting {
         id?: string | null;
       }[]
     | null;
+  announcement?: {
+    enabled?: boolean | null;
+    /**
+     * Visitors who dismiss the takeover won't see it again. Change this ID to reset that and show it to everyone once more.
+     */
+    campaignId?: string | null;
+    eyebrow?: string | null;
+    heading?: string | null;
+    body?: string | null;
+    link?: {
+      label?: string | null;
+      type?: ('internal' | 'external') | null;
+      /**
+       * Path on this site, e.g. /our-story
+       */
+      internalHref?: string | null;
+      /**
+       * Full URL incl. https://
+       */
+      externalHref?: string | null;
+      openInNewTab?: boolean | null;
+    };
+    dismissLabel?: string | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -3196,6 +3249,25 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         liveMetric?: T;
         suffix?: T;
         id?: T;
+      };
+  announcement?:
+    | T
+    | {
+        enabled?: T;
+        campaignId?: T;
+        eyebrow?: T;
+        heading?: T;
+        body?: T;
+        link?:
+          | T
+          | {
+              label?: T;
+              type?: T;
+              internalHref?: T;
+              externalHref?: T;
+              openInNewTab?: T;
+            };
+        dismissLabel?: T;
       };
   updatedAt?: T;
   createdAt?: T;

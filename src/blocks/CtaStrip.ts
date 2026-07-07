@@ -51,5 +51,14 @@ export const CtaStrip: Block = {
         { name: 'href', type: 'text' },
       ],
     },
+    {
+      name: 'tertiaryCta',
+      type: 'group',
+      admin: { hideGutter: true },
+      fields: [
+        { name: 'label', type: 'text' },
+        { name: 'href', type: 'text' },
+      ],
+    },
   ],
 }

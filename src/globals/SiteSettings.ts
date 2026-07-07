@@ -1,5 +1,6 @@
 import type { GlobalConfig } from 'payload'
 import { statItemFields } from '../fields/stat-item'
+import { linkGroup } from '../fields/link'
 
 export const SiteSettings: GlobalConfig = {
   slug: 'site-settings',
@@ -77,6 +78,70 @@ export const SiteSettings: GlobalConfig = {
               labels: { singular: 'Impact stat', plural: 'Impact stats' },
               admin: { description: 'Headline impact numbers used in the hero + footer' },
               fields: statItemFields,
+            },
+          ],
+        },
+        {
+          label: 'Announcement',
+          description:
+            'A full-screen takeover shown once per visitor on the home page, in the Hopper brand (lilac paper, bubbly "hopper" logotype). The logotype is fixed — this promotes Hopper specifically; the copy and link below are editable.',
+          fields: [
+            {
+              name: 'announcement',
+              type: 'group',
+              label: false,
+              fields: [
+                {
+                  name: 'enabled',
+                  type: 'checkbox',
+                  defaultValue: false,
+                  label: 'Show the homepage takeover',
+                },
+                {
+                  name: 'campaignId',
+                  type: 'text',
+                  defaultValue: 'hopper-launch',
+                  admin: {
+                    description:
+                      'Visitors who dismiss the takeover won\'t see it again. Change this ID to reset that and show it to everyone once more.',
+                    condition: (_, siblingData) => Boolean(siblingData?.enabled),
+                  },
+                },
+                {
+                  name: 'eyebrow',
+                  type: 'text',
+                  defaultValue: 'an everybody eats cafe',
+                  admin: { condition: (_, siblingData) => Boolean(siblingData?.enabled) },
+                },
+                {
+                  name: 'heading',
+                  type: 'text',
+                  defaultValue: 'Now open in Te Aro.',
+                  admin: { condition: (_, siblingData) => Boolean(siblingData?.enabled) },
+                },
+                {
+                  name: 'body',
+                  type: 'textarea',
+                  defaultValue:
+                    'Rescued food, accessible prices, and a genuine sense of belonging - a new cafe from the Everybody Eats team.',
+                  admin: { condition: (_, siblingData) => Boolean(siblingData?.enabled) },
+                },
+                linkGroup({
+                  name: 'link',
+                  label: 'Call to action',
+                  admin: {
+                    hideGutter: true,
+                    condition: (_, siblingData) => Boolean(siblingData?.enabled),
+                  },
+                  defaultValue: { type: 'internal', internalHref: '/hopper', label: 'Visit Hopper' },
+                }),
+                {
+                  name: 'dismissLabel',
+                  type: 'text',
+                  defaultValue: 'Not now',
+                  admin: { condition: (_, siblingData) => Boolean(siblingData?.enabled) },
+                },
+              ],
             },
           ],
         },

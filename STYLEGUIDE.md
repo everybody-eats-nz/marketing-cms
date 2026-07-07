@@ -122,7 +122,7 @@ On dark: swap to `bg-forest-600` wrapper, `text-cream-50`, `placeholder:text-cre
 
 ### Brand details
 
-- **Sun underline highlight** — the signature hero treatment. A sun-200 pill sits behind a single keyword. Wired through the `highlightWord` field in [hero-block.tsx](src/components/blocks/hero-block.tsx).
+- **Sun highlight** — the signature hero treatment. A marker-style sun-200 highlight sits behind the lower half of a single keyword. Wired through the `highlightWord` field in [hero-block.tsx](src/components/blocks/hero-block.tsx).
 - **Sun sticker** — rotated yellow disc overlapping hero imagery, also in `hero-block.tsx`.
 - **Grain** — apply the `grain` utility for the inline-SVG paper texture (5% multiply). Used on hero sections and most panels.
 - **Forest glow** — pair dark panels with `<div className="absolute -bottom-32 -right-32 w-96 h-96 rounded-full bg-sun-200/15 blur-3xl" aria-hidden />` for the signature warm glow.
