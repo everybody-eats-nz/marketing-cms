@@ -4,9 +4,10 @@ import { useState } from 'react'
 import { renderRichText } from '@/components/blocks/render-text'
 import { DEFAULT_PAY_COPY, type NewsletterCopy } from '@/lib/pay-copy'
 
-// Newsletter sign-up shown on the /thanks page. Subscribes a diner to the single
-// public website list via Campaign Monitor through /api/newsletter (no region
-// split — the Auckland/Wellington lists belong to the volunteer portal).
+// Newsletter sign-up shown on the /thanks page. Subscribes a diner to the
+// General Supporters list via Campaign Monitor through /api/newsletter (no
+// `lists` in the payload → the route defaults to the general audience; the
+// full three-option picker lives on the /newsletter page).
 export function NewsletterSignup({
   copy = DEFAULT_PAY_COPY.newsletter,
 }: {
