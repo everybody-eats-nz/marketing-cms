@@ -14,6 +14,7 @@ import * as migration_20260707_053614_add_gala_impact_landing_blocks from './202
 import * as migration_20260707_060127_add_menu_location_name from './20260707_060127_add_menu_location_name';
 import * as migration_20260707_063527_add_hopper_blocks from './20260707_063527_add_hopper_blocks';
 import * as migration_20260707_211739_add_site_settings_announcement from './20260707_211739_add_site_settings_announcement';
+import * as migration_20260707_213408_add_cta_strip_tertiary_cta from './20260707_213408_add_cta_strip_tertiary_cta';
 
 export const migrations = [
   {
@@ -94,6 +95,11 @@ export const migrations = [
   {
     up: migration_20260707_211739_add_site_settings_announcement.up,
     down: migration_20260707_211739_add_site_settings_announcement.down,
-    name: '20260707_211739_add_site_settings_announcement'
+    name: '20260707_211739_add_site_settings_announcement',
+  },
+  {
+    up: migration_20260707_213408_add_cta_strip_tertiary_cta.up,
+    down: migration_20260707_213408_add_cta_strip_tertiary_cta.down,
+    name: '20260707_213408_add_cta_strip_tertiary_cta',
   },
 ];

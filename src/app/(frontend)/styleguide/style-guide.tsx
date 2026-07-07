@@ -851,17 +851,17 @@ export function StyleGuide() {
               </div>
 
               <div>
-                <h3 className="display text-2xl text-content mb-2">Sun underline highlight</h3>
+                <h3 className="display text-2xl text-content mb-2">Sun highlight</h3>
                 <p className="text-sm text-content/70 mb-6 max-w-md">
-                  The signature hero treatment — a <Code>sun-200</Code> pill behind a keyword. Wired
-                  via <Code>highlightWord</Code> in <Code>hero-block.tsx</Code>.
+                  The signature hero treatment — a marker-style <Code>sun-200</Code> highlight behind
+                  a keyword. Wired via <Code>highlightWord</Code> in <Code>hero-block.tsx</Code>.
                 </p>
                 <h2 className="display text-4xl sm:text-6xl font-light text-content">
                   Restaurant-quality meals,{' '}
                   <span className="relative inline-block">
                     pay
                     <span
-                      className="absolute -bottom-2 sm:-bottom-3 left-0 right-0 h-2 sm:h-3 bg-sun-200 -z-10 rounded-full"
+                      className="absolute -inset-x-1 top-1/2 -bottom-0.5 bg-sun-200 -z-10 rounded-sm"
                       aria-hidden
                     />
                   </span>{' '}
