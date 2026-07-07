@@ -13,6 +13,7 @@ import * as migration_20260706_210043_add_pages_audit_users from './20260706_210
 import * as migration_20260707_053614_add_gala_impact_landing_blocks from './20260707_053614_add_gala_impact_landing_blocks';
 import * as migration_20260707_060127_add_menu_location_name from './20260707_060127_add_menu_location_name';
 import * as migration_20260707_063527_add_hopper_blocks from './20260707_063527_add_hopper_blocks';
+import * as migration_20260707_213408_add_cta_strip_tertiary_cta from './20260707_213408_add_cta_strip_tertiary_cta';
 
 export const migrations = [
   {
@@ -88,6 +89,11 @@ export const migrations = [
   {
     up: migration_20260707_063527_add_hopper_blocks.up,
     down: migration_20260707_063527_add_hopper_blocks.down,
-    name: '20260707_063527_add_hopper_blocks'
+    name: '20260707_063527_add_hopper_blocks',
+  },
+  {
+    up: migration_20260707_213408_add_cta_strip_tertiary_cta.up,
+    down: migration_20260707_213408_add_cta_strip_tertiary_cta.down,
+    name: '20260707_213408_add_cta_strip_tertiary_cta'
   },
 ];

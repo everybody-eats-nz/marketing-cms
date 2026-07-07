@@ -620,6 +620,10 @@ export interface Page {
               label?: string | null;
               href?: string | null;
             };
+            tertiaryCta?: {
+              label?: string | null;
+              href?: string | null;
+            };
             id?: string | null;
             blockName?: string | null;
             blockType: 'ctaStrip';
@@ -2076,6 +2080,12 @@ export interface PagesSelect<T extends boolean = true> {
                     href?: T;
                   };
               secondaryCta?:
+                | T
+                | {
+                    label?: T;
+                    href?: T;
+                  };
+              tertiaryCta?:
                 | T
                 | {
                     label?: T;

@@ -19,7 +19,7 @@ type Props = {
   fallbackHeading?: string
 }
 
-// Renders a chunk of plain text, optionally wrapping the first occurrence of `highlight` in the sun-underline span.
+// Renders a chunk of plain text, optionally wrapping the first occurrence of `highlight` in the sun-highlight span.
 function renderTextWithHighlight(text: string, highlight: string | undefined, keyBase: string) {
   if (!highlight) return <React.Fragment key={keyBase}>{text}</React.Fragment>
   const idx = text.indexOf(highlight)
@@ -32,7 +32,7 @@ function renderTextWithHighlight(text: string, highlight: string | undefined, ke
       <span className="relative inline-block">
         {highlight}
         <span
-          className="absolute -bottom-2 sm:-bottom-3 left-0 right-0 h-2 sm:h-3 bg-sun-200 -z-10 rounded-full"
+          className="absolute -inset-x-1 top-1/2 -bottom-0.5 bg-sun-200 -z-10 rounded-sm"
           aria-hidden
         />
       </span>
