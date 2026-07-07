@@ -21,12 +21,15 @@ import { ProcessBlock } from './process-block'
 import { ValuesBlock } from './values-block'
 import { TestimonialsBlock } from './testimonials-block'
 import { DownloadsBlock } from './downloads-block'
+import { GalaLandingBlock } from './gala-landing-block'
+import { ImpactLandingBlock } from './impact-landing-block'
 
 type AnyBlock = { blockType: string; id?: string; [k: string]: any }
 
 export type RenderExtras = {
   globalStats?: import('@/fields/stat-item').StatItem[]
   liveStats?: import('@/lib/impact-stats').LiveImpactStats | null
+  impactStory?: import('@/lib/impact-story').ImpactStory | null
   locations?: any[]
   events?: any[]
   journal?: any[]
@@ -47,6 +50,7 @@ export function RenderBlocks({
   blocks,
   globalStats = [],
   liveStats = null,
+  impactStory = null,
   locations = [],
   events = [],
   journal = [],
@@ -125,6 +129,12 @@ export function RenderBlocks({
             return <EnquiryFormBlock key={key} block={block as any} />
           case 'downloads':
             return <DownloadsBlock key={key} block={block as any} />
+          case 'galaLanding':
+            return <GalaLandingBlock key={key} block={block as any} />
+          case 'impactLanding':
+            return impactStory ? (
+              <ImpactLandingBlock key={key} block={block as any} story={impactStory} />
+            ) : null
           default:
             return null
         }

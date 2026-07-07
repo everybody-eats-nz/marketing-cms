@@ -1,6 +1,7 @@
 import { draftMode } from 'next/headers'
 import { getPayloadClient } from '@/lib/payload'
 import { fetchLiveImpactStats } from '@/lib/impact-stats'
+import { fetchImpactStory, MOCK_IMPACT_STORY } from '@/lib/impact-story'
 import { getPayCopy } from '@/lib/pay-copy.server'
 import { RenderBlocks } from './render-blocks'
 import { PageLivePreview } from './page-live-preview'
@@ -32,15 +33,19 @@ export async function PageBody({ page, isDraft }: { page: any; isDraft: boolean 
   const needPartners = isDraft || types.has('partnersGrid')
   const needSettings = isDraft || types.has('stats') || types.has('donateHero')
   const needPayCopy = isDraft || types.has('donateHero')
+  const needImpactStory = isDraft || types.has('impactLanding')
 
   const payload = await getPayloadClient()
-  const [settings, payCopy, liveStats, locations, events, journal, team, faqs, partners] =
+  const [settings, payCopy, liveStats, impactStory, locations, events, journal, team, faqs, partners] =
     await Promise.all([
     needSettings
       ? payload.findGlobal({ slug: 'site-settings' }).catch(() => null)
       : Promise.resolve(null),
     needPayCopy ? getPayCopy() : Promise.resolve(null),
     isDraft || types.has('stats') ? fetchLiveImpactStats() : Promise.resolve(null),
+    needImpactStory
+      ? fetchImpactStory().then((s) => s ?? MOCK_IMPACT_STORY)
+      : Promise.resolve(null),
     needLocations
       ? payload.find({
           collection: 'locations',
@@ -99,6 +104,7 @@ export async function PageBody({ page, isDraft }: { page: any; isDraft: boolean 
   const extras = {
     globalStats: (settings as any)?.stats || [],
     liveStats,
+    impactStory,
     locations: locations.docs as any[],
     events: events.docs as any[],
     journal: journal.docs as any[],
