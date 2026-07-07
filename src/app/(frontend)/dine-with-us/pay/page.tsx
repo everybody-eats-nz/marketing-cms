@@ -20,7 +20,12 @@ export default async function PayLocationPickerPage() {
   const [{ docs: locations }, copy] = await Promise.all([
     payload.find({
       collection: 'locations',
-      where: { openStatus: { equals: 'open' } },
+      // Show every location that isn't explicitly marked closed, including
+      // ones with a blank status. `not_equals` alone drops NULL rows in
+      // Postgres (NULL <> 'closed' is unknown), so pair it with `exists: false`.
+      where: {
+        or: [{ openStatus: { not_equals: 'closed' } }, { openStatus: { exists: false } }],
+      },
       sort: 'name',
       limit: 20,
       depth: 0,
