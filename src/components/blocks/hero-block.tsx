@@ -29,10 +29,13 @@ function renderTextWithHighlight(text: string, highlight: string | undefined, ke
   return (
     <React.Fragment key={keyBase}>
       {before}
-      <span className="relative inline-block">
+      <span className="relative inline-block dark:text-forest-700">
         {highlight}
+        {/* Marker highlight. On dark pages the keyword text goes forest-700 and
+            the band covers the full word, so it stays legible on the sun-200
+            fill (light text over the band would wash out). */}
         <span
-          className="absolute -inset-x-1 top-1/2 -bottom-0.5 bg-sun-200 -z-10 rounded-sm"
+          className="absolute -inset-x-1 top-1/2 dark:top-0 -bottom-0.5 bg-sun-200 -z-10 rounded-sm"
           aria-hidden
         />
       </span>
