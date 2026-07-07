@@ -26,7 +26,10 @@ export default async function HomePage() {
     fetchPageDoc('home'),
     getSiteSettings(),
   ])
-  const takeover = (
+  // Not in draft/live-preview: the takeover is a full-screen modal and would
+  // cover the entire preview iframe in the admin (and dismissing it there would
+  // permanently suppress it for that browser as a real visitor).
+  const takeover = !isDraft && (
     <HomeTakeover announcement={(settings as any)?.announcement} fontClassName={hopperFontVars} />
   )
   if (!page) {
