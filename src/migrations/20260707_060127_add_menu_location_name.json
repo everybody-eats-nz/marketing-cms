@@ -4846,6 +4846,2169 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
+    "public.pages_blocks_gala_landing_night_list": {
+      "name": "pages_blocks_gala_landing_night_list",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "item": {
+          "name": "item",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "pages_blocks_gala_landing_night_list_order_idx": {
+          "name": "pages_blocks_gala_landing_night_list_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "pages_blocks_gala_landing_night_list_parent_id_idx": {
+          "name": "pages_blocks_gala_landing_night_list_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "pages_blocks_gala_landing_night_list_parent_id_fk": {
+          "name": "pages_blocks_gala_landing_night_list_parent_id_fk",
+          "tableFrom": "pages_blocks_gala_landing_night_list",
+          "tableTo": "pages_blocks_gala_landing",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.pages_blocks_gala_landing_problem_stats": {
+      "name": "pages_blocks_gala_landing_problem_stats",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "figure": {
+          "name": "figure",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "body": {
+          "name": "body",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "pages_blocks_gala_landing_problem_stats_order_idx": {
+          "name": "pages_blocks_gala_landing_problem_stats_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "pages_blocks_gala_landing_problem_stats_parent_id_idx": {
+          "name": "pages_blocks_gala_landing_problem_stats_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "pages_blocks_gala_landing_problem_stats_parent_id_fk": {
+          "name": "pages_blocks_gala_landing_problem_stats_parent_id_fk",
+          "tableFrom": "pages_blocks_gala_landing_problem_stats",
+          "tableTo": "pages_blocks_gala_landing",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.pages_blocks_gala_landing_impact_stats": {
+      "name": "pages_blocks_gala_landing_impact_stats",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "value": {
+          "name": "value",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "label": {
+          "name": "label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "pages_blocks_gala_landing_impact_stats_order_idx": {
+          "name": "pages_blocks_gala_landing_impact_stats_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "pages_blocks_gala_landing_impact_stats_parent_id_idx": {
+          "name": "pages_blocks_gala_landing_impact_stats_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "pages_blocks_gala_landing_impact_stats_parent_id_fk": {
+          "name": "pages_blocks_gala_landing_impact_stats_parent_id_fk",
+          "tableFrom": "pages_blocks_gala_landing_impact_stats",
+          "tableTo": "pages_blocks_gala_landing",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.pages_blocks_gala_landing_performers": {
+      "name": "pages_blocks_gala_landing_performers",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "role": {
+          "name": "role",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bio": {
+          "name": "bio",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "image_id": {
+          "name": "image_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "pages_blocks_gala_landing_performers_order_idx": {
+          "name": "pages_blocks_gala_landing_performers_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "pages_blocks_gala_landing_performers_parent_id_idx": {
+          "name": "pages_blocks_gala_landing_performers_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "pages_blocks_gala_landing_performers_image_idx": {
+          "name": "pages_blocks_gala_landing_performers_image_idx",
+          "columns": [
+            {
+              "expression": "image_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "pages_blocks_gala_landing_performers_image_id_media_id_fk": {
+          "name": "pages_blocks_gala_landing_performers_image_id_media_id_fk",
+          "tableFrom": "pages_blocks_gala_landing_performers",
+          "tableTo": "media",
+          "columnsFrom": [
+            "image_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "pages_blocks_gala_landing_performers_parent_id_fk": {
+          "name": "pages_blocks_gala_landing_performers_parent_id_fk",
+          "tableFrom": "pages_blocks_gala_landing_performers",
+          "tableTo": "pages_blocks_gala_landing",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.pages_blocks_gala_landing_chefs": {
+      "name": "pages_blocks_gala_landing_chefs",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "location": {
+          "name": "location",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bio": {
+          "name": "bio",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "image_id": {
+          "name": "image_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "pages_blocks_gala_landing_chefs_order_idx": {
+          "name": "pages_blocks_gala_landing_chefs_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "pages_blocks_gala_landing_chefs_parent_id_idx": {
+          "name": "pages_blocks_gala_landing_chefs_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "pages_blocks_gala_landing_chefs_image_idx": {
+          "name": "pages_blocks_gala_landing_chefs_image_idx",
+          "columns": [
+            {
+              "expression": "image_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "pages_blocks_gala_landing_chefs_image_id_media_id_fk": {
+          "name": "pages_blocks_gala_landing_chefs_image_id_media_id_fk",
+          "tableFrom": "pages_blocks_gala_landing_chefs",
+          "tableTo": "media",
+          "columnsFrom": [
+            "image_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "pages_blocks_gala_landing_chefs_parent_id_fk": {
+          "name": "pages_blocks_gala_landing_chefs_parent_id_fk",
+          "tableFrom": "pages_blocks_gala_landing_chefs",
+          "tableTo": "pages_blocks_gala_landing",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.pages_blocks_gala_landing_tiers_includes": {
+      "name": "pages_blocks_gala_landing_tiers_includes",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "item": {
+          "name": "item",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "pages_blocks_gala_landing_tiers_includes_order_idx": {
+          "name": "pages_blocks_gala_landing_tiers_includes_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "pages_blocks_gala_landing_tiers_includes_parent_id_idx": {
+          "name": "pages_blocks_gala_landing_tiers_includes_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "pages_blocks_gala_landing_tiers_includes_parent_id_fk": {
+          "name": "pages_blocks_gala_landing_tiers_includes_parent_id_fk",
+          "tableFrom": "pages_blocks_gala_landing_tiers_includes",
+          "tableTo": "pages_blocks_gala_landing_tiers",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.pages_blocks_gala_landing_tiers": {
+      "name": "pages_blocks_gala_landing_tiers",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "eyebrow": {
+          "name": "eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "badge": {
+          "name": "badge",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "price": {
+          "name": "price",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "pages_blocks_gala_landing_tiers_order_idx": {
+          "name": "pages_blocks_gala_landing_tiers_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "pages_blocks_gala_landing_tiers_parent_id_idx": {
+          "name": "pages_blocks_gala_landing_tiers_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "pages_blocks_gala_landing_tiers_parent_id_fk": {
+          "name": "pages_blocks_gala_landing_tiers_parent_id_fk",
+          "tableFrom": "pages_blocks_gala_landing_tiers",
+          "tableTo": "pages_blocks_gala_landing",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.pages_blocks_gala_landing_table_list": {
+      "name": "pages_blocks_gala_landing_table_list",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "item": {
+          "name": "item",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "pages_blocks_gala_landing_table_list_order_idx": {
+          "name": "pages_blocks_gala_landing_table_list_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "pages_blocks_gala_landing_table_list_parent_id_idx": {
+          "name": "pages_blocks_gala_landing_table_list_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "pages_blocks_gala_landing_table_list_parent_id_fk": {
+          "name": "pages_blocks_gala_landing_table_list_parent_id_fk",
+          "tableFrom": "pages_blocks_gala_landing_table_list",
+          "tableTo": "pages_blocks_gala_landing",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.pages_blocks_gala_landing_auction_options": {
+      "name": "pages_blocks_gala_landing_auction_options",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "label": {
+          "name": "label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "body": {
+          "name": "body",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "pages_blocks_gala_landing_auction_options_order_idx": {
+          "name": "pages_blocks_gala_landing_auction_options_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "pages_blocks_gala_landing_auction_options_parent_id_idx": {
+          "name": "pages_blocks_gala_landing_auction_options_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "pages_blocks_gala_landing_auction_options_parent_id_fk": {
+          "name": "pages_blocks_gala_landing_auction_options_parent_id_fk",
+          "tableFrom": "pages_blocks_gala_landing_auction_options",
+          "tableTo": "pages_blocks_gala_landing",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.pages_blocks_gala_landing_partnership": {
+      "name": "pages_blocks_gala_landing_partnership",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "item": {
+          "name": "item",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "pages_blocks_gala_landing_partnership_order_idx": {
+          "name": "pages_blocks_gala_landing_partnership_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "pages_blocks_gala_landing_partnership_parent_id_idx": {
+          "name": "pages_blocks_gala_landing_partnership_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "pages_blocks_gala_landing_partnership_parent_id_fk": {
+          "name": "pages_blocks_gala_landing_partnership_parent_id_fk",
+          "tableFrom": "pages_blocks_gala_landing_partnership",
+          "tableTo": "pages_blocks_gala_landing",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.pages_blocks_gala_landing_quotes": {
+      "name": "pages_blocks_gala_landing_quotes",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "quote": {
+          "name": "quote",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "place": {
+          "name": "place",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "pages_blocks_gala_landing_quotes_order_idx": {
+          "name": "pages_blocks_gala_landing_quotes_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "pages_blocks_gala_landing_quotes_parent_id_idx": {
+          "name": "pages_blocks_gala_landing_quotes_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "pages_blocks_gala_landing_quotes_parent_id_fk": {
+          "name": "pages_blocks_gala_landing_quotes_parent_id_fk",
+          "tableFrom": "pages_blocks_gala_landing_quotes",
+          "tableTo": "pages_blocks_gala_landing",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.pages_blocks_gala_landing_money_cards": {
+      "name": "pages_blocks_gala_landing_money_cards",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "value": {
+          "name": "value",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "body": {
+          "name": "body",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "pages_blocks_gala_landing_money_cards_order_idx": {
+          "name": "pages_blocks_gala_landing_money_cards_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "pages_blocks_gala_landing_money_cards_parent_id_idx": {
+          "name": "pages_blocks_gala_landing_money_cards_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "pages_blocks_gala_landing_money_cards_parent_id_fk": {
+          "name": "pages_blocks_gala_landing_money_cards_parent_id_fk",
+          "tableFrom": "pages_blocks_gala_landing_money_cards",
+          "tableTo": "pages_blocks_gala_landing",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.pages_blocks_gala_landing": {
+      "name": "pages_blocks_gala_landing",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_path": {
+          "name": "_path",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "gala_email": {
+          "name": "gala_email",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'gala@everybodyeats.nz'"
+        },
+        "major_gifts_email": {
+          "name": "major_gifts_email",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'amy@everybodyeats.nz'"
+        },
+        "gala_date_time": {
+          "name": "gala_date_time",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'2026-10-30T18:30:00+13:00'"
+        },
+        "hero_image_id": {
+          "name": "hero_image_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "hero_eyebrow": {
+          "name": "hero_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Fundraising Gala · Auckland'"
+        },
+        "hero_heading_before": {
+          "name": "hero_heading_before",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'The '"
+        },
+        "hero_heading_highlight": {
+          "name": "hero_heading_highlight",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Everybody Eats'"
+        },
+        "hero_heading_after": {
+          "name": "hero_heading_after",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "' Gala'"
+        },
+        "hero_intro": {
+          "name": "hero_intro",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Auckland trades the boardroom for the ballroom — a high-class drag cabaret evening in support of dignity on every plate.'"
+        },
+        "hero_date": {
+          "name": "hero_date",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Friday 30 October 2026'"
+        },
+        "hero_location": {
+          "name": "hero_location",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'St Matthew-in-the-City, Auckland CBD'"
+        },
+        "hero_primary_cta_label": {
+          "name": "hero_primary_cta_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Host a table'"
+        },
+        "hero_secondary_cta_label": {
+          "name": "hero_secondary_cta_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Become a sponsor'"
+        },
+        "night_eyebrow": {
+          "name": "night_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'The night'"
+        },
+        "night_heading": {
+          "name": "night_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Our most *audacious* evening of the year'"
+        },
+        "night_body": {
+          "name": "night_body",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'The Everybody Eats Gala is our most audacious fundraising event — and this year, guests can expect a high-class drag cabaret evening where Auckland’s most influential names trade the boardroom for the ballroom.'"
+        },
+        "night_image_id": {
+          "name": "night_image_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "problem_eyebrow": {
+          "name": "problem_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'The problem'"
+        },
+        "problem_heading": {
+          "name": "problem_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Hunger in Aotearoa is closer than most of us think'"
+        },
+        "problem_footnote": {
+          "name": "problem_footnote",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'At the same time, 1.22 million tonnes of food are lost or wasted across the supply chain each year — 237 kg for every person in the country. Having a job is no longer a shield.'"
+        },
+        "problem_sources": {
+          "name": "problem_sources",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Sources: NZ Food Network 2025 Hunger Monitor · Ministry for the Environment · Ministry of Health'"
+        },
+        "who_eyebrow": {
+          "name": "who_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Who is Everybody Eats'"
+        },
+        "who_heading": {
+          "name": "who_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'A social enterprise turning rescued food into restaurant-quality, pay-what-you-can meals — served with *dignity*, no questions asked.'"
+        },
+        "who_body": {
+          "name": "who_body",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Founded in Auckland in 2017, we’ve grown from a single Monday-night pop-up into three permanent restaurants and nationwide pop-ups, built on manaakitanga, kaitiakitanga and whanaungatanga. Every service tackles three problems at once — food waste, food insecurity and social isolation — and proves dignity doesn’t have to cost more.'"
+        },
+        "performers_eyebrow": {
+          "name": "performers_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Meet the performers'"
+        },
+        "performers_heading": {
+          "name": "performers_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'The stars of the *cabaret*'"
+        },
+        "chefs_eyebrow": {
+          "name": "chefs_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Meet the chefs'"
+        },
+        "chefs_heading": {
+          "name": "chefs_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Three courses, cooked with *heart*'"
+        },
+        "sponsor_eyebrow": {
+          "name": "sponsor_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Get involved · Headline the Gala'"
+        },
+        "sponsor_heading": {
+          "name": "sponsor_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Put your brand at the *centre* of the night'"
+        },
+        "sponsor_body": {
+          "name": "sponsor_body",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Two ways to headline Auckland’s most talked-about evening — a room of just 200 decision-makers, business leaders, philanthropists and tastemakers you can’t buy your way into with ad spend.'"
+        },
+        "table_image_id": {
+          "name": "table_image_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "table_eyebrow": {
+          "name": "table_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Host a table'"
+        },
+        "table_heading": {
+          "name": "table_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Bring your team. Host your clients.'"
+        },
+        "table_body": {
+          "name": "table_body",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Reserve a table of ten in a room of just 200 — the kind of night your guests talk about long afterwards.'"
+        },
+        "table_price": {
+          "name": "table_price",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'$3,000'"
+        },
+        "table_price_label": {
+          "name": "table_price_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'per table of ten'"
+        },
+        "seat_price": {
+          "name": "seat_price",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'$320'"
+        },
+        "seat_price_label": {
+          "name": "seat_price_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'individual seat'"
+        },
+        "table_cta_label": {
+          "name": "table_cta_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Reserve your table'"
+        },
+        "auction_eyebrow": {
+          "name": "auction_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Donate items for auction'"
+        },
+        "auction_heading": {
+          "name": "auction_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'The auction is the *heart* of the night'"
+        },
+        "auction_body": {
+          "name": "auction_body",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Every item donated converts directly into meals served, and your generosity is named to a room of 200 of Auckland’s most influential guests.'"
+        },
+        "in_kind_eyebrow": {
+          "name": "in_kind_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'In-kind donations'"
+        },
+        "in_kind_heading": {
+          "name": "in_kind_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Pour into the night'"
+        },
+        "in_kind_body": {
+          "name": "in_kind_body",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Not everything that fuels the night comes as cash. Every bottle of wine, beer or spirits, every box of produce for the kitchen, every gifted service — printing, AV, photography, florals — is a dollar that goes to feeding people instead of running the event. We name your generosity in the room and in the programme.'"
+        },
+        "in_kind_cta_label": {
+          "name": "in_kind_cta_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Offer an in-kind gift'"
+        },
+        "major_gifts_note": {
+          "name": "major_gifts_note",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Prefer to give directly? Major gifts and event underwriting make the biggest single difference of all — talk to Amy at {majorGiftsEmail}.'"
+        },
+        "partnership_eyebrow": {
+          "name": "partnership_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'What your partnership gives you'"
+        },
+        "partnership_heading": {
+          "name": "partnership_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Support that *defends itself*'"
+        },
+        "partnership_body": {
+          "name": "partnership_body",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Your support converts straight into outcomes your board and ESG reporting can use: meals served with dignity, kilograms diverted from landfill, emissions avoided, community hours mobilised. We give you the figures and the human story behind them.'"
+        },
+        "partnership_note": {
+          "name": "partnership_note",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Partnering is simple — tell us what you can offer and we handle the rest, from listing to delivery on the night. Donations close *Tuesday 30 September*, giving us time to photograph, catalogue and showcase every item at its best. To offer an item, contact Jack at {galaEmail}.'"
+        },
+        "quotes_eyebrow": {
+          "name": "quotes_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Proven & unforgettable'"
+        },
+        "quotes_heading": {
+          "name": "quotes_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'A certified *can’t-miss* hoot'"
+        },
+        "money_image_id": {
+          "name": "money_image_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "money_eyebrow": {
+          "name": "money_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Where the money goes'"
+        },
+        "money_heading": {
+          "name": "money_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Every dollar keeps the *doors open*'"
+        },
+        "money_body": {
+          "name": "money_body",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'It costs $300,000 a year to keep one of our restaurants open — the rent, the kitchen, the food, the core team, the doors that stay open to anyone who walks in. Every dollar raised at the Gala goes straight back into keeping those doors open.'"
+        },
+        "closing_image_id": {
+          "name": "closing_image_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "closing_eyebrow": {
+          "name": "closing_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Get in touch'"
+        },
+        "closing_heading": {
+          "name": "closing_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Our work changes lives. We see it *every day.*'"
+        },
+        "closing_body": {
+          "name": "closing_body",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'We would be honoured to have your support on Friday 30 October. Host a table, headline the night, or donate to the auction — every gesture feeds people with dignity, long after the night ends.'"
+        },
+        "closing_secondary_cta_label": {
+          "name": "closing_secondary_cta_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'everybodyeats.nz'"
+        },
+        "block_name": {
+          "name": "block_name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "pages_blocks_gala_landing_order_idx": {
+          "name": "pages_blocks_gala_landing_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "pages_blocks_gala_landing_parent_id_idx": {
+          "name": "pages_blocks_gala_landing_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "pages_blocks_gala_landing_path_idx": {
+          "name": "pages_blocks_gala_landing_path_idx",
+          "columns": [
+            {
+              "expression": "_path",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "pages_blocks_gala_landing_hero_image_idx": {
+          "name": "pages_blocks_gala_landing_hero_image_idx",
+          "columns": [
+            {
+              "expression": "hero_image_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "pages_blocks_gala_landing_night_image_idx": {
+          "name": "pages_blocks_gala_landing_night_image_idx",
+          "columns": [
+            {
+              "expression": "night_image_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "pages_blocks_gala_landing_table_image_idx": {
+          "name": "pages_blocks_gala_landing_table_image_idx",
+          "columns": [
+            {
+              "expression": "table_image_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "pages_blocks_gala_landing_money_image_idx": {
+          "name": "pages_blocks_gala_landing_money_image_idx",
+          "columns": [
+            {
+              "expression": "money_image_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "pages_blocks_gala_landing_closing_image_idx": {
+          "name": "pages_blocks_gala_landing_closing_image_idx",
+          "columns": [
+            {
+              "expression": "closing_image_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "pages_blocks_gala_landing_hero_image_id_media_id_fk": {
+          "name": "pages_blocks_gala_landing_hero_image_id_media_id_fk",
+          "tableFrom": "pages_blocks_gala_landing",
+          "tableTo": "media",
+          "columnsFrom": [
+            "hero_image_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "pages_blocks_gala_landing_night_image_id_media_id_fk": {
+          "name": "pages_blocks_gala_landing_night_image_id_media_id_fk",
+          "tableFrom": "pages_blocks_gala_landing",
+          "tableTo": "media",
+          "columnsFrom": [
+            "night_image_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "pages_blocks_gala_landing_table_image_id_media_id_fk": {
+          "name": "pages_blocks_gala_landing_table_image_id_media_id_fk",
+          "tableFrom": "pages_blocks_gala_landing",
+          "tableTo": "media",
+          "columnsFrom": [
+            "table_image_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "pages_blocks_gala_landing_money_image_id_media_id_fk": {
+          "name": "pages_blocks_gala_landing_money_image_id_media_id_fk",
+          "tableFrom": "pages_blocks_gala_landing",
+          "tableTo": "media",
+          "columnsFrom": [
+            "money_image_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "pages_blocks_gala_landing_closing_image_id_media_id_fk": {
+          "name": "pages_blocks_gala_landing_closing_image_id_media_id_fk",
+          "tableFrom": "pages_blocks_gala_landing",
+          "tableTo": "media",
+          "columnsFrom": [
+            "closing_image_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "pages_blocks_gala_landing_parent_id_fk": {
+          "name": "pages_blocks_gala_landing_parent_id_fk",
+          "tableFrom": "pages_blocks_gala_landing",
+          "tableTo": "pages",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.pages_blocks_impact_landing": {
+      "name": "pages_blocks_impact_landing",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_path": {
+          "name": "_path",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "eyebrow_prefix": {
+          "name": "eyebrow_prefix",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Everybody Eats'"
+        },
+        "heading": {
+          "name": "heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Everybody got *a seat.*'"
+        },
+        "intro": {
+          "name": "intro",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Six years ago we set one long table and asked people to pay what they feel. Since then, {meals} dinners have been served from rescued food — no one turned away, everyone welcome. Here’s the story in numbers.'"
+        },
+        "stat_meals_label": {
+          "name": "stat_meals_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'meals served'"
+        },
+        "stat_food_label": {
+          "name": "stat_food_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'food rescued'"
+        },
+        "stat_volunteers_label": {
+          "name": "stat_volunteers_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'volunteers welcomed'"
+        },
+        "stat_koha_label": {
+          "name": "stat_koha_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'given back in koha'"
+        },
+        "pay_eyebrow": {
+          "name": "pay_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Pay as you feel'"
+        },
+        "pay_heading": {
+          "name": "pay_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Everyone eats. *However* much you can give.'"
+        },
+        "pay_body": {
+          "name": "pay_body",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'There’s no price on the menu. Some pay it forward so the next person can eat; some sit down as our guests — no questions asked. Drag through the years and watch a typical table of 100 change.'"
+        },
+        "growth_eyebrow": {
+          "name": "growth_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'More neighbours, every year'"
+        },
+        "growth_heading": {
+          "name": "growth_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'A table that keeps *growing.*'"
+        },
+        "growth_body": {
+          "name": "growth_body",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'From a single pop-up dinner to a standing welcome across three cities — the number of meals served has climbed year on year as more neighbours find a seat.'"
+        },
+        "growth_caption": {
+          "name": "growth_caption",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Meals served per year. {firstYear} and the current year are partial (marked *).'"
+        },
+        "rescued_eyebrow": {
+          "name": "rescued_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Good food, not landfill'"
+        },
+        "rescued_heading": {
+          "name": "rescued_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Every plate starts as *rescued* food.'"
+        },
+        "rescued_body": {
+          "name": "rescued_body",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Our kitchens take surplus ingredients that would otherwise be thrown away and turn them into restaurant-quality meals. Good food finds a plate instead of a bin.'"
+        },
+        "rescued_tonnes_label": {
+          "name": "rescued_tonnes_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'of food rescued from landfill'"
+        },
+        "rescued_meals_label": {
+          "name": "rescued_meals_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'meals cooked from that surplus'"
+        },
+        "venues_eyebrow": {
+          "name": "venues_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Where we serve'"
+        },
+        "venues_heading": {
+          "name": "venues_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Three cities, one *open* table.'"
+        },
+        "venues_body": {
+          "name": "venues_body",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'From Onehunga to Wellington, every location runs the same welcome — a warm room, a good meal, and a seat for whoever walks in.'"
+        },
+        "people_eyebrow": {
+          "name": "people_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'The people who show up'"
+        },
+        "people_heading": {
+          "name": "people_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Every plate is carried by a *volunteer.*'"
+        },
+        "people_volunteers_label": {
+          "name": "people_volunteers_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'volunteers in the door'"
+        },
+        "people_hours_label": {
+          "name": "people_hours_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'hours given'"
+        },
+        "people_nights_label": {
+          "name": "people_nights_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'nights cooked & served'"
+        },
+        "people_guests_label": {
+          "name": "people_guests_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'ate as our guests'"
+        },
+        "people_subheading": {
+          "name": "people_subheading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'The regulars who keep coming back.'"
+        },
+        "people_subbody": {
+          "name": "people_subbody",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Most volunteers start with a single shift — and then they keep showing up. Here’s how many have served each milestone of nights.'"
+        },
+        "cta_heading": {
+          "name": "cta_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Pull up *a chair.*'"
+        },
+        "cta_body": {
+          "name": "cta_body",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Come for dinner and pay what you feel — or join the team that makes every night happen.'"
+        },
+        "cta_primary_label": {
+          "name": "cta_primary_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Find a dinner'"
+        },
+        "cta_secondary_label": {
+          "name": "cta_secondary_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Volunteer with us'"
+        },
+        "footer_note": {
+          "name": "footer_note",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Figures are drawn from Everybody Eats’ service records across {nights} dinners {range} and refresh automatically. Food rescued is estimated at {perMeal} kg per meal served. The opening and current years are partial. “Paid it forward” and “ate as our guests” reflect how many diners chose to leave koha on a typical night — everyone is welcome either way.'"
+        },
+        "block_name": {
+          "name": "block_name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "pages_blocks_impact_landing_order_idx": {
+          "name": "pages_blocks_impact_landing_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "pages_blocks_impact_landing_parent_id_idx": {
+          "name": "pages_blocks_impact_landing_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "pages_blocks_impact_landing_path_idx": {
+          "name": "pages_blocks_impact_landing_path_idx",
+          "columns": [
+            {
+              "expression": "_path",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "pages_blocks_impact_landing_parent_id_fk": {
+          "name": "pages_blocks_impact_landing_parent_id_fk",
+          "tableFrom": "pages_blocks_impact_landing",
+          "tableTo": "pages",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.pages": {
       "name": "pages",
       "schema": "",
@@ -9397,6 +11560,2253 @@
         "_pages_v_blocks_downloads_parent_id_fk": {
           "name": "_pages_v_blocks_downloads_parent_id_fk",
           "tableFrom": "_pages_v_blocks_downloads",
+          "tableTo": "_pages_v",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public._pages_v_blocks_gala_landing_night_list": {
+      "name": "_pages_v_blocks_gala_landing_night_list",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "item": {
+          "name": "item",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "_uuid": {
+          "name": "_uuid",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "_pages_v_blocks_gala_landing_night_list_order_idx": {
+          "name": "_pages_v_blocks_gala_landing_night_list_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_pages_v_blocks_gala_landing_night_list_parent_id_idx": {
+          "name": "_pages_v_blocks_gala_landing_night_list_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "_pages_v_blocks_gala_landing_night_list_parent_id_fk": {
+          "name": "_pages_v_blocks_gala_landing_night_list_parent_id_fk",
+          "tableFrom": "_pages_v_blocks_gala_landing_night_list",
+          "tableTo": "_pages_v_blocks_gala_landing",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public._pages_v_blocks_gala_landing_problem_stats": {
+      "name": "_pages_v_blocks_gala_landing_problem_stats",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "figure": {
+          "name": "figure",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "body": {
+          "name": "body",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "_uuid": {
+          "name": "_uuid",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "_pages_v_blocks_gala_landing_problem_stats_order_idx": {
+          "name": "_pages_v_blocks_gala_landing_problem_stats_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_pages_v_blocks_gala_landing_problem_stats_parent_id_idx": {
+          "name": "_pages_v_blocks_gala_landing_problem_stats_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "_pages_v_blocks_gala_landing_problem_stats_parent_id_fk": {
+          "name": "_pages_v_blocks_gala_landing_problem_stats_parent_id_fk",
+          "tableFrom": "_pages_v_blocks_gala_landing_problem_stats",
+          "tableTo": "_pages_v_blocks_gala_landing",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public._pages_v_blocks_gala_landing_impact_stats": {
+      "name": "_pages_v_blocks_gala_landing_impact_stats",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "value": {
+          "name": "value",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "label": {
+          "name": "label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "_uuid": {
+          "name": "_uuid",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "_pages_v_blocks_gala_landing_impact_stats_order_idx": {
+          "name": "_pages_v_blocks_gala_landing_impact_stats_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_pages_v_blocks_gala_landing_impact_stats_parent_id_idx": {
+          "name": "_pages_v_blocks_gala_landing_impact_stats_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "_pages_v_blocks_gala_landing_impact_stats_parent_id_fk": {
+          "name": "_pages_v_blocks_gala_landing_impact_stats_parent_id_fk",
+          "tableFrom": "_pages_v_blocks_gala_landing_impact_stats",
+          "tableTo": "_pages_v_blocks_gala_landing",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public._pages_v_blocks_gala_landing_performers": {
+      "name": "_pages_v_blocks_gala_landing_performers",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "role": {
+          "name": "role",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bio": {
+          "name": "bio",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "image_id": {
+          "name": "image_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "_uuid": {
+          "name": "_uuid",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "_pages_v_blocks_gala_landing_performers_order_idx": {
+          "name": "_pages_v_blocks_gala_landing_performers_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_pages_v_blocks_gala_landing_performers_parent_id_idx": {
+          "name": "_pages_v_blocks_gala_landing_performers_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_pages_v_blocks_gala_landing_performers_image_idx": {
+          "name": "_pages_v_blocks_gala_landing_performers_image_idx",
+          "columns": [
+            {
+              "expression": "image_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "_pages_v_blocks_gala_landing_performers_image_id_media_id_fk": {
+          "name": "_pages_v_blocks_gala_landing_performers_image_id_media_id_fk",
+          "tableFrom": "_pages_v_blocks_gala_landing_performers",
+          "tableTo": "media",
+          "columnsFrom": [
+            "image_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "_pages_v_blocks_gala_landing_performers_parent_id_fk": {
+          "name": "_pages_v_blocks_gala_landing_performers_parent_id_fk",
+          "tableFrom": "_pages_v_blocks_gala_landing_performers",
+          "tableTo": "_pages_v_blocks_gala_landing",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public._pages_v_blocks_gala_landing_chefs": {
+      "name": "_pages_v_blocks_gala_landing_chefs",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "location": {
+          "name": "location",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bio": {
+          "name": "bio",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "image_id": {
+          "name": "image_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "_uuid": {
+          "name": "_uuid",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "_pages_v_blocks_gala_landing_chefs_order_idx": {
+          "name": "_pages_v_blocks_gala_landing_chefs_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_pages_v_blocks_gala_landing_chefs_parent_id_idx": {
+          "name": "_pages_v_blocks_gala_landing_chefs_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_pages_v_blocks_gala_landing_chefs_image_idx": {
+          "name": "_pages_v_blocks_gala_landing_chefs_image_idx",
+          "columns": [
+            {
+              "expression": "image_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "_pages_v_blocks_gala_landing_chefs_image_id_media_id_fk": {
+          "name": "_pages_v_blocks_gala_landing_chefs_image_id_media_id_fk",
+          "tableFrom": "_pages_v_blocks_gala_landing_chefs",
+          "tableTo": "media",
+          "columnsFrom": [
+            "image_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "_pages_v_blocks_gala_landing_chefs_parent_id_fk": {
+          "name": "_pages_v_blocks_gala_landing_chefs_parent_id_fk",
+          "tableFrom": "_pages_v_blocks_gala_landing_chefs",
+          "tableTo": "_pages_v_blocks_gala_landing",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public._pages_v_blocks_gala_landing_tiers_includes": {
+      "name": "_pages_v_blocks_gala_landing_tiers_includes",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "item": {
+          "name": "item",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "_uuid": {
+          "name": "_uuid",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "_pages_v_blocks_gala_landing_tiers_includes_order_idx": {
+          "name": "_pages_v_blocks_gala_landing_tiers_includes_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_pages_v_blocks_gala_landing_tiers_includes_parent_id_idx": {
+          "name": "_pages_v_blocks_gala_landing_tiers_includes_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "_pages_v_blocks_gala_landing_tiers_includes_parent_id_fk": {
+          "name": "_pages_v_blocks_gala_landing_tiers_includes_parent_id_fk",
+          "tableFrom": "_pages_v_blocks_gala_landing_tiers_includes",
+          "tableTo": "_pages_v_blocks_gala_landing_tiers",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public._pages_v_blocks_gala_landing_tiers": {
+      "name": "_pages_v_blocks_gala_landing_tiers",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "eyebrow": {
+          "name": "eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "badge": {
+          "name": "badge",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "price": {
+          "name": "price",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "_uuid": {
+          "name": "_uuid",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "_pages_v_blocks_gala_landing_tiers_order_idx": {
+          "name": "_pages_v_blocks_gala_landing_tiers_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_pages_v_blocks_gala_landing_tiers_parent_id_idx": {
+          "name": "_pages_v_blocks_gala_landing_tiers_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "_pages_v_blocks_gala_landing_tiers_parent_id_fk": {
+          "name": "_pages_v_blocks_gala_landing_tiers_parent_id_fk",
+          "tableFrom": "_pages_v_blocks_gala_landing_tiers",
+          "tableTo": "_pages_v_blocks_gala_landing",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public._pages_v_blocks_gala_landing_table_list": {
+      "name": "_pages_v_blocks_gala_landing_table_list",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "item": {
+          "name": "item",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "_uuid": {
+          "name": "_uuid",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "_pages_v_blocks_gala_landing_table_list_order_idx": {
+          "name": "_pages_v_blocks_gala_landing_table_list_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_pages_v_blocks_gala_landing_table_list_parent_id_idx": {
+          "name": "_pages_v_blocks_gala_landing_table_list_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "_pages_v_blocks_gala_landing_table_list_parent_id_fk": {
+          "name": "_pages_v_blocks_gala_landing_table_list_parent_id_fk",
+          "tableFrom": "_pages_v_blocks_gala_landing_table_list",
+          "tableTo": "_pages_v_blocks_gala_landing",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public._pages_v_blocks_gala_landing_auction_options": {
+      "name": "_pages_v_blocks_gala_landing_auction_options",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "label": {
+          "name": "label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "body": {
+          "name": "body",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "_uuid": {
+          "name": "_uuid",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "_pages_v_blocks_gala_landing_auction_options_order_idx": {
+          "name": "_pages_v_blocks_gala_landing_auction_options_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_pages_v_blocks_gala_landing_auction_options_parent_id_idx": {
+          "name": "_pages_v_blocks_gala_landing_auction_options_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "_pages_v_blocks_gala_landing_auction_options_parent_id_fk": {
+          "name": "_pages_v_blocks_gala_landing_auction_options_parent_id_fk",
+          "tableFrom": "_pages_v_blocks_gala_landing_auction_options",
+          "tableTo": "_pages_v_blocks_gala_landing",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public._pages_v_blocks_gala_landing_partnership": {
+      "name": "_pages_v_blocks_gala_landing_partnership",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "item": {
+          "name": "item",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "_uuid": {
+          "name": "_uuid",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "_pages_v_blocks_gala_landing_partnership_order_idx": {
+          "name": "_pages_v_blocks_gala_landing_partnership_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_pages_v_blocks_gala_landing_partnership_parent_id_idx": {
+          "name": "_pages_v_blocks_gala_landing_partnership_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "_pages_v_blocks_gala_landing_partnership_parent_id_fk": {
+          "name": "_pages_v_blocks_gala_landing_partnership_parent_id_fk",
+          "tableFrom": "_pages_v_blocks_gala_landing_partnership",
+          "tableTo": "_pages_v_blocks_gala_landing",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public._pages_v_blocks_gala_landing_quotes": {
+      "name": "_pages_v_blocks_gala_landing_quotes",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "quote": {
+          "name": "quote",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "place": {
+          "name": "place",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "_uuid": {
+          "name": "_uuid",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "_pages_v_blocks_gala_landing_quotes_order_idx": {
+          "name": "_pages_v_blocks_gala_landing_quotes_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_pages_v_blocks_gala_landing_quotes_parent_id_idx": {
+          "name": "_pages_v_blocks_gala_landing_quotes_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "_pages_v_blocks_gala_landing_quotes_parent_id_fk": {
+          "name": "_pages_v_blocks_gala_landing_quotes_parent_id_fk",
+          "tableFrom": "_pages_v_blocks_gala_landing_quotes",
+          "tableTo": "_pages_v_blocks_gala_landing",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public._pages_v_blocks_gala_landing_money_cards": {
+      "name": "_pages_v_blocks_gala_landing_money_cards",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "value": {
+          "name": "value",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "body": {
+          "name": "body",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "_uuid": {
+          "name": "_uuid",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "_pages_v_blocks_gala_landing_money_cards_order_idx": {
+          "name": "_pages_v_blocks_gala_landing_money_cards_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_pages_v_blocks_gala_landing_money_cards_parent_id_idx": {
+          "name": "_pages_v_blocks_gala_landing_money_cards_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "_pages_v_blocks_gala_landing_money_cards_parent_id_fk": {
+          "name": "_pages_v_blocks_gala_landing_money_cards_parent_id_fk",
+          "tableFrom": "_pages_v_blocks_gala_landing_money_cards",
+          "tableTo": "_pages_v_blocks_gala_landing",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public._pages_v_blocks_gala_landing": {
+      "name": "_pages_v_blocks_gala_landing",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_path": {
+          "name": "_path",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "gala_email": {
+          "name": "gala_email",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'gala@everybodyeats.nz'"
+        },
+        "major_gifts_email": {
+          "name": "major_gifts_email",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'amy@everybodyeats.nz'"
+        },
+        "gala_date_time": {
+          "name": "gala_date_time",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'2026-10-30T18:30:00+13:00'"
+        },
+        "hero_image_id": {
+          "name": "hero_image_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "hero_eyebrow": {
+          "name": "hero_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Fundraising Gala · Auckland'"
+        },
+        "hero_heading_before": {
+          "name": "hero_heading_before",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'The '"
+        },
+        "hero_heading_highlight": {
+          "name": "hero_heading_highlight",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Everybody Eats'"
+        },
+        "hero_heading_after": {
+          "name": "hero_heading_after",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "' Gala'"
+        },
+        "hero_intro": {
+          "name": "hero_intro",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Auckland trades the boardroom for the ballroom — a high-class drag cabaret evening in support of dignity on every plate.'"
+        },
+        "hero_date": {
+          "name": "hero_date",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Friday 30 October 2026'"
+        },
+        "hero_location": {
+          "name": "hero_location",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'St Matthew-in-the-City, Auckland CBD'"
+        },
+        "hero_primary_cta_label": {
+          "name": "hero_primary_cta_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Host a table'"
+        },
+        "hero_secondary_cta_label": {
+          "name": "hero_secondary_cta_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Become a sponsor'"
+        },
+        "night_eyebrow": {
+          "name": "night_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'The night'"
+        },
+        "night_heading": {
+          "name": "night_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Our most *audacious* evening of the year'"
+        },
+        "night_body": {
+          "name": "night_body",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'The Everybody Eats Gala is our most audacious fundraising event — and this year, guests can expect a high-class drag cabaret evening where Auckland’s most influential names trade the boardroom for the ballroom.'"
+        },
+        "night_image_id": {
+          "name": "night_image_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "problem_eyebrow": {
+          "name": "problem_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'The problem'"
+        },
+        "problem_heading": {
+          "name": "problem_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Hunger in Aotearoa is closer than most of us think'"
+        },
+        "problem_footnote": {
+          "name": "problem_footnote",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'At the same time, 1.22 million tonnes of food are lost or wasted across the supply chain each year — 237 kg for every person in the country. Having a job is no longer a shield.'"
+        },
+        "problem_sources": {
+          "name": "problem_sources",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Sources: NZ Food Network 2025 Hunger Monitor · Ministry for the Environment · Ministry of Health'"
+        },
+        "who_eyebrow": {
+          "name": "who_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Who is Everybody Eats'"
+        },
+        "who_heading": {
+          "name": "who_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'A social enterprise turning rescued food into restaurant-quality, pay-what-you-can meals — served with *dignity*, no questions asked.'"
+        },
+        "who_body": {
+          "name": "who_body",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Founded in Auckland in 2017, we’ve grown from a single Monday-night pop-up into three permanent restaurants and nationwide pop-ups, built on manaakitanga, kaitiakitanga and whanaungatanga. Every service tackles three problems at once — food waste, food insecurity and social isolation — and proves dignity doesn’t have to cost more.'"
+        },
+        "performers_eyebrow": {
+          "name": "performers_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Meet the performers'"
+        },
+        "performers_heading": {
+          "name": "performers_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'The stars of the *cabaret*'"
+        },
+        "chefs_eyebrow": {
+          "name": "chefs_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Meet the chefs'"
+        },
+        "chefs_heading": {
+          "name": "chefs_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Three courses, cooked with *heart*'"
+        },
+        "sponsor_eyebrow": {
+          "name": "sponsor_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Get involved · Headline the Gala'"
+        },
+        "sponsor_heading": {
+          "name": "sponsor_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Put your brand at the *centre* of the night'"
+        },
+        "sponsor_body": {
+          "name": "sponsor_body",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Two ways to headline Auckland’s most talked-about evening — a room of just 200 decision-makers, business leaders, philanthropists and tastemakers you can’t buy your way into with ad spend.'"
+        },
+        "table_image_id": {
+          "name": "table_image_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "table_eyebrow": {
+          "name": "table_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Host a table'"
+        },
+        "table_heading": {
+          "name": "table_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Bring your team. Host your clients.'"
+        },
+        "table_body": {
+          "name": "table_body",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Reserve a table of ten in a room of just 200 — the kind of night your guests talk about long afterwards.'"
+        },
+        "table_price": {
+          "name": "table_price",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'$3,000'"
+        },
+        "table_price_label": {
+          "name": "table_price_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'per table of ten'"
+        },
+        "seat_price": {
+          "name": "seat_price",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'$320'"
+        },
+        "seat_price_label": {
+          "name": "seat_price_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'individual seat'"
+        },
+        "table_cta_label": {
+          "name": "table_cta_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Reserve your table'"
+        },
+        "auction_eyebrow": {
+          "name": "auction_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Donate items for auction'"
+        },
+        "auction_heading": {
+          "name": "auction_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'The auction is the *heart* of the night'"
+        },
+        "auction_body": {
+          "name": "auction_body",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Every item donated converts directly into meals served, and your generosity is named to a room of 200 of Auckland’s most influential guests.'"
+        },
+        "in_kind_eyebrow": {
+          "name": "in_kind_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'In-kind donations'"
+        },
+        "in_kind_heading": {
+          "name": "in_kind_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Pour into the night'"
+        },
+        "in_kind_body": {
+          "name": "in_kind_body",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Not everything that fuels the night comes as cash. Every bottle of wine, beer or spirits, every box of produce for the kitchen, every gifted service — printing, AV, photography, florals — is a dollar that goes to feeding people instead of running the event. We name your generosity in the room and in the programme.'"
+        },
+        "in_kind_cta_label": {
+          "name": "in_kind_cta_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Offer an in-kind gift'"
+        },
+        "major_gifts_note": {
+          "name": "major_gifts_note",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Prefer to give directly? Major gifts and event underwriting make the biggest single difference of all — talk to Amy at {majorGiftsEmail}.'"
+        },
+        "partnership_eyebrow": {
+          "name": "partnership_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'What your partnership gives you'"
+        },
+        "partnership_heading": {
+          "name": "partnership_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Support that *defends itself*'"
+        },
+        "partnership_body": {
+          "name": "partnership_body",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Your support converts straight into outcomes your board and ESG reporting can use: meals served with dignity, kilograms diverted from landfill, emissions avoided, community hours mobilised. We give you the figures and the human story behind them.'"
+        },
+        "partnership_note": {
+          "name": "partnership_note",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Partnering is simple — tell us what you can offer and we handle the rest, from listing to delivery on the night. Donations close *Tuesday 30 September*, giving us time to photograph, catalogue and showcase every item at its best. To offer an item, contact Jack at {galaEmail}.'"
+        },
+        "quotes_eyebrow": {
+          "name": "quotes_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Proven & unforgettable'"
+        },
+        "quotes_heading": {
+          "name": "quotes_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'A certified *can’t-miss* hoot'"
+        },
+        "money_image_id": {
+          "name": "money_image_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "money_eyebrow": {
+          "name": "money_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Where the money goes'"
+        },
+        "money_heading": {
+          "name": "money_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Every dollar keeps the *doors open*'"
+        },
+        "money_body": {
+          "name": "money_body",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'It costs $300,000 a year to keep one of our restaurants open — the rent, the kitchen, the food, the core team, the doors that stay open to anyone who walks in. Every dollar raised at the Gala goes straight back into keeping those doors open.'"
+        },
+        "closing_image_id": {
+          "name": "closing_image_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "closing_eyebrow": {
+          "name": "closing_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Get in touch'"
+        },
+        "closing_heading": {
+          "name": "closing_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Our work changes lives. We see it *every day.*'"
+        },
+        "closing_body": {
+          "name": "closing_body",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'We would be honoured to have your support on Friday 30 October. Host a table, headline the night, or donate to the auction — every gesture feeds people with dignity, long after the night ends.'"
+        },
+        "closing_secondary_cta_label": {
+          "name": "closing_secondary_cta_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'everybodyeats.nz'"
+        },
+        "_uuid": {
+          "name": "_uuid",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "block_name": {
+          "name": "block_name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "_pages_v_blocks_gala_landing_order_idx": {
+          "name": "_pages_v_blocks_gala_landing_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_pages_v_blocks_gala_landing_parent_id_idx": {
+          "name": "_pages_v_blocks_gala_landing_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_pages_v_blocks_gala_landing_path_idx": {
+          "name": "_pages_v_blocks_gala_landing_path_idx",
+          "columns": [
+            {
+              "expression": "_path",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_pages_v_blocks_gala_landing_hero_image_idx": {
+          "name": "_pages_v_blocks_gala_landing_hero_image_idx",
+          "columns": [
+            {
+              "expression": "hero_image_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_pages_v_blocks_gala_landing_night_image_idx": {
+          "name": "_pages_v_blocks_gala_landing_night_image_idx",
+          "columns": [
+            {
+              "expression": "night_image_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_pages_v_blocks_gala_landing_table_image_idx": {
+          "name": "_pages_v_blocks_gala_landing_table_image_idx",
+          "columns": [
+            {
+              "expression": "table_image_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_pages_v_blocks_gala_landing_money_image_idx": {
+          "name": "_pages_v_blocks_gala_landing_money_image_idx",
+          "columns": [
+            {
+              "expression": "money_image_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_pages_v_blocks_gala_landing_closing_image_idx": {
+          "name": "_pages_v_blocks_gala_landing_closing_image_idx",
+          "columns": [
+            {
+              "expression": "closing_image_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "_pages_v_blocks_gala_landing_hero_image_id_media_id_fk": {
+          "name": "_pages_v_blocks_gala_landing_hero_image_id_media_id_fk",
+          "tableFrom": "_pages_v_blocks_gala_landing",
+          "tableTo": "media",
+          "columnsFrom": [
+            "hero_image_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "_pages_v_blocks_gala_landing_night_image_id_media_id_fk": {
+          "name": "_pages_v_blocks_gala_landing_night_image_id_media_id_fk",
+          "tableFrom": "_pages_v_blocks_gala_landing",
+          "tableTo": "media",
+          "columnsFrom": [
+            "night_image_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "_pages_v_blocks_gala_landing_table_image_id_media_id_fk": {
+          "name": "_pages_v_blocks_gala_landing_table_image_id_media_id_fk",
+          "tableFrom": "_pages_v_blocks_gala_landing",
+          "tableTo": "media",
+          "columnsFrom": [
+            "table_image_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "_pages_v_blocks_gala_landing_money_image_id_media_id_fk": {
+          "name": "_pages_v_blocks_gala_landing_money_image_id_media_id_fk",
+          "tableFrom": "_pages_v_blocks_gala_landing",
+          "tableTo": "media",
+          "columnsFrom": [
+            "money_image_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "_pages_v_blocks_gala_landing_closing_image_id_media_id_fk": {
+          "name": "_pages_v_blocks_gala_landing_closing_image_id_media_id_fk",
+          "tableFrom": "_pages_v_blocks_gala_landing",
+          "tableTo": "media",
+          "columnsFrom": [
+            "closing_image_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "_pages_v_blocks_gala_landing_parent_id_fk": {
+          "name": "_pages_v_blocks_gala_landing_parent_id_fk",
+          "tableFrom": "_pages_v_blocks_gala_landing",
+          "tableTo": "_pages_v",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public._pages_v_blocks_impact_landing": {
+      "name": "_pages_v_blocks_impact_landing",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_path": {
+          "name": "_path",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "eyebrow_prefix": {
+          "name": "eyebrow_prefix",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Everybody Eats'"
+        },
+        "heading": {
+          "name": "heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Everybody got *a seat.*'"
+        },
+        "intro": {
+          "name": "intro",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Six years ago we set one long table and asked people to pay what they feel. Since then, {meals} dinners have been served from rescued food — no one turned away, everyone welcome. Here’s the story in numbers.'"
+        },
+        "stat_meals_label": {
+          "name": "stat_meals_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'meals served'"
+        },
+        "stat_food_label": {
+          "name": "stat_food_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'food rescued'"
+        },
+        "stat_volunteers_label": {
+          "name": "stat_volunteers_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'volunteers welcomed'"
+        },
+        "stat_koha_label": {
+          "name": "stat_koha_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'given back in koha'"
+        },
+        "pay_eyebrow": {
+          "name": "pay_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Pay as you feel'"
+        },
+        "pay_heading": {
+          "name": "pay_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Everyone eats. *However* much you can give.'"
+        },
+        "pay_body": {
+          "name": "pay_body",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'There’s no price on the menu. Some pay it forward so the next person can eat; some sit down as our guests — no questions asked. Drag through the years and watch a typical table of 100 change.'"
+        },
+        "growth_eyebrow": {
+          "name": "growth_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'More neighbours, every year'"
+        },
+        "growth_heading": {
+          "name": "growth_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'A table that keeps *growing.*'"
+        },
+        "growth_body": {
+          "name": "growth_body",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'From a single pop-up dinner to a standing welcome across three cities — the number of meals served has climbed year on year as more neighbours find a seat.'"
+        },
+        "growth_caption": {
+          "name": "growth_caption",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Meals served per year. {firstYear} and the current year are partial (marked *).'"
+        },
+        "rescued_eyebrow": {
+          "name": "rescued_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Good food, not landfill'"
+        },
+        "rescued_heading": {
+          "name": "rescued_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Every plate starts as *rescued* food.'"
+        },
+        "rescued_body": {
+          "name": "rescued_body",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Our kitchens take surplus ingredients that would otherwise be thrown away and turn them into restaurant-quality meals. Good food finds a plate instead of a bin.'"
+        },
+        "rescued_tonnes_label": {
+          "name": "rescued_tonnes_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'of food rescued from landfill'"
+        },
+        "rescued_meals_label": {
+          "name": "rescued_meals_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'meals cooked from that surplus'"
+        },
+        "venues_eyebrow": {
+          "name": "venues_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Where we serve'"
+        },
+        "venues_heading": {
+          "name": "venues_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Three cities, one *open* table.'"
+        },
+        "venues_body": {
+          "name": "venues_body",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'From Onehunga to Wellington, every location runs the same welcome — a warm room, a good meal, and a seat for whoever walks in.'"
+        },
+        "people_eyebrow": {
+          "name": "people_eyebrow",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'The people who show up'"
+        },
+        "people_heading": {
+          "name": "people_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Every plate is carried by a *volunteer.*'"
+        },
+        "people_volunteers_label": {
+          "name": "people_volunteers_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'volunteers in the door'"
+        },
+        "people_hours_label": {
+          "name": "people_hours_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'hours given'"
+        },
+        "people_nights_label": {
+          "name": "people_nights_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'nights cooked & served'"
+        },
+        "people_guests_label": {
+          "name": "people_guests_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'ate as our guests'"
+        },
+        "people_subheading": {
+          "name": "people_subheading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'The regulars who keep coming back.'"
+        },
+        "people_subbody": {
+          "name": "people_subbody",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Most volunteers start with a single shift — and then they keep showing up. Here’s how many have served each milestone of nights.'"
+        },
+        "cta_heading": {
+          "name": "cta_heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Pull up *a chair.*'"
+        },
+        "cta_body": {
+          "name": "cta_body",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Come for dinner and pay what you feel — or join the team that makes every night happen.'"
+        },
+        "cta_primary_label": {
+          "name": "cta_primary_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Find a dinner'"
+        },
+        "cta_secondary_label": {
+          "name": "cta_secondary_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Volunteer with us'"
+        },
+        "footer_note": {
+          "name": "footer_note",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Figures are drawn from Everybody Eats’ service records across {nights} dinners {range} and refresh automatically. Food rescued is estimated at {perMeal} kg per meal served. The opening and current years are partial. “Paid it forward” and “ate as our guests” reflect how many diners chose to leave koha on a typical night — everyone is welcome either way.'"
+        },
+        "_uuid": {
+          "name": "_uuid",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "block_name": {
+          "name": "block_name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "_pages_v_blocks_impact_landing_order_idx": {
+          "name": "_pages_v_blocks_impact_landing_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_pages_v_blocks_impact_landing_parent_id_idx": {
+          "name": "_pages_v_blocks_impact_landing_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_pages_v_blocks_impact_landing_path_idx": {
+          "name": "_pages_v_blocks_impact_landing_path_idx",
+          "columns": [
+            {
+              "expression": "_path",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "_pages_v_blocks_impact_landing_parent_id_fk": {
+          "name": "_pages_v_blocks_impact_landing_parent_id_fk",
+          "tableFrom": "_pages_v_blocks_impact_landing",
           "tableTo": "_pages_v",
           "columnsFrom": [
             "_parent_id"
@@ -17075,6 +21485,6 @@
     "tables": {},
     "columns": {}
   },
-  "id": "bf846da2-f45a-4096-b33d-3b1fe81c035c",
+  "id": "ea97adba-224d-4311-8e54-bf2e4b494ea3",
   "prevId": "00000000-0000-0000-0000-000000000000"
 }
