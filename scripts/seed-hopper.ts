@@ -53,7 +53,7 @@ async function main() {
       blockType: 'hopperVisit',
       eyebrow: 'Find us',
       address: '11 Hopper St\nTe Aro, Wellington',
-      note: 'Tucked between Kaibosh and Cahoots.',
+      note: 'Tucked between [Kaibosh](https://kaibosh.org.nz) and [Cahoots](https://www.cahoots.nz).',
       hours: [
         { days: 'Monday', times: '9am – 2pm' },
         { days: 'Tuesday', times: '9am – 2pm' },
