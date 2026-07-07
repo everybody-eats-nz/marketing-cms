@@ -101,6 +101,97 @@
 }
 
 /*
+ * Homepage takeover: a full-screen Hopper panel over a dimmed Everybody Eats
+ * home page. The backdrop sits outside .hopper-scope; the panel carries it, so
+ * it picks up the lilac paper, ink, and mono type.
+ */
+.hopper-takeover-backdrop {
+  position: fixed;
+  inset: 0;
+  /* Above the site header (z-40) and the closed nav/mega-menu overlays (z-100/110)
+     so the takeover covers all page chrome — a true takeover, not a panel. */
+  z-index: 120;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background-color: rgb(0 0 0 / 0.55);
+  animation: hopper-takeover-fade 200ms ease both;
+}
+.hopper-takeover-panel {
+  position: relative;
+  width: 100%;
+  max-width: 44rem;
+  max-height: calc(100svh - 2rem);
+  overflow-y: auto;
+  border-radius: 28px;
+  padding: clamp(2.75rem, 6vw, 4.5rem) clamp(1.5rem, 5vw, 4rem);
+  text-align: center;
+  box-shadow: 0 40px 120px -24px rgb(0 0 0 / 0.55);
+  animation: hopper-takeover-pop 380ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.hopper-takeover-close {
+  position: absolute;
+  top: 1.1rem;
+  right: 1.1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--hopper-hairline);
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  line-height: 1;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
+}
+.hopper-takeover-close:hover {
+  background-color: var(--hopper-ink);
+  color: var(--hopper-lilac);
+}
+.hopper-takeover-dismiss {
+  margin-top: 1.25rem;
+  font-family: var(--hopper-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  opacity: 0.55;
+  transition: opacity 150ms ease;
+}
+.hopper-takeover-dismiss:hover {
+  opacity: 1;
+}
+
+@keyframes hopper-takeover-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes hopper-takeover-pop {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hopper-takeover-backdrop,
+  .hopper-takeover-panel {
+    animation: none;
+  }
+}
+
+/*
  * The wordmark's bouncy baseline: each letter is a span carrying a small
  * vertical offset + tilt (like the poster logotype), and pops in with a
  * staggered spring on load. --i is set inline per letter.

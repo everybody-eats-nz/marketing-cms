@@ -2799,6 +2799,30 @@ export interface SiteSetting {
         id?: string | null;
       }[]
     | null;
+  announcement?: {
+    enabled?: boolean | null;
+    /**
+     * Visitors who dismiss the takeover won't see it again. Change this ID to reset that and show it to everyone once more.
+     */
+    campaignId?: string | null;
+    eyebrow?: string | null;
+    heading?: string | null;
+    body?: string | null;
+    link?: {
+      label?: string | null;
+      type?: ('internal' | 'external') | null;
+      /**
+       * Path on this site, e.g. /our-story
+       */
+      internalHref?: string | null;
+      /**
+       * Full URL incl. https://
+       */
+      externalHref?: string | null;
+      openInNewTab?: boolean | null;
+    };
+    dismissLabel?: string | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -3196,6 +3220,25 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         liveMetric?: T;
         suffix?: T;
         id?: T;
+      };
+  announcement?:
+    | T
+    | {
+        enabled?: T;
+        campaignId?: T;
+        eyebrow?: T;
+        heading?: T;
+        body?: T;
+        link?:
+          | T
+          | {
+              label?: T;
+              type?: T;
+              internalHref?: T;
+              externalHref?: T;
+              openInNewTab?: T;
+            };
+        dismissLabel?: T;
       };
   updatedAt?: T;
   createdAt?: T;
