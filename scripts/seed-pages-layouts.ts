@@ -225,6 +225,7 @@ async function main() {
           align: 'center',
           primaryCta: { label: 'Donate', href: '/get-involved/donate' },
           secondaryCta: { label: 'Volunteer', href: '/get-involved/volunteer' },
+          tertiaryCta: { label: 'Dine', href: '/dine-with-us' },
         },
       ].filter(Boolean) as Layout,
     },

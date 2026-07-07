@@ -1,5 +1,12 @@
 import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
 
+// Partners-only migration. migrate:create also re-emitted the site_settings
+// announcement columns because main's cta_strip migration carries a snapshot
+// from before the announcement migration landed; those columns already exist
+// (added by 20260707_211739_add_site_settings_announcement), so re-adding them
+// here would fail on any DB that ran that migration. They are dropped from the
+// SQL below — the paired .json snapshot still records the full schema, which
+// realigns the snapshot baseline going forward.
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
    CREATE TYPE "public"."enum_partners_friend_category" AS ENUM('food-hospitality', 'community', 'business');
