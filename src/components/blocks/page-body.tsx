@@ -78,7 +78,15 @@ export async function PageBody({ page, isDraft }: { page: any; isDraft: boolean 
         })
       : Promise.resolve({ docs: [] as any[] }),
     needTeam
-      ? payload.find({ collection: 'team-members', limit: 200, sort: 'displayOrder', depth: 1 })
+      ? payload.find({
+          collection: 'team-members',
+          limit: 200,
+          sort: 'displayOrder',
+          depth: 1,
+          // Outside preview, hide unpublished team members so the grid only
+          // shows people who've been published.
+          ...(isDraft ? {} : { where: { _status: { equals: 'published' } } }),
+        })
       : Promise.resolve({ docs: [] as any[] }),
     needFaqs
       ? payload.find({ collection: 'faqs', limit: 100, sort: 'displayOrder' })
