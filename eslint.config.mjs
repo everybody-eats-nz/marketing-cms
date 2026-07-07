@@ -12,11 +12,12 @@ export default defineConfig([
       '@typescript-eslint/no-explicit-any': 'off',
       // Allow the destructure-to-omit pattern ({ omitted, ...rest }).
       '@typescript-eslint/no-unused-vars': ['warn', { ignoreRestSiblings: true }],
-      // New in eslint-plugin-react-hooks v7. Most hits are the intentional
-      // hydration "mounted" pattern or render-time ref reads that ship with an
-      // explanatory comment (e.g. communal-table.tsx). Surface, don't block.
-      'react-hooks/set-state-in-effect': 'warn',
-      'react-hooks/refs': 'warn',
+      // New in eslint-plugin-react-hooks v7. The codebase is clean of both:
+      // hydration "mounted" flags go through useSyncExternalStore (see
+      // src/lib/hooks.ts) and previous-value tracking adjusts state during
+      // render instead of reading refs. Keep it that way.
+      'react-hooks/set-state-in-effect': 'error',
+      'react-hooks/refs': 'error',
     },
   },
   globalIgnores([
