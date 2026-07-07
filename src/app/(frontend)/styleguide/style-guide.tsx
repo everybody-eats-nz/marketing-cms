@@ -858,10 +858,10 @@ export function StyleGuide() {
                 </p>
                 <h2 className="display text-4xl sm:text-6xl font-light text-content">
                   Restaurant-quality meals,{' '}
-                  <span className="relative inline-block">
+                  <span className="relative inline-block dark:text-forest-700">
                     pay
                     <span
-                      className="absolute -inset-x-1 top-1/2 -bottom-0.5 bg-sun-200 -z-10 rounded-sm"
+                      className="absolute -inset-x-1 top-1/2 dark:top-0 -bottom-0.5 bg-sun-200 -z-10 rounded-sm"
                       aria-hidden
                     />
                   </span>{' '}
