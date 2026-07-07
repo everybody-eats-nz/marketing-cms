@@ -21,6 +21,10 @@ import { ProcessBlock } from './process-block'
 import { ValuesBlock } from './values-block'
 import { TestimonialsBlock } from './testimonials-block'
 import { DownloadsBlock } from './downloads-block'
+import { HopperHeroBlock } from './hopper/hopper-hero-block'
+import { HopperStatementBlock } from './hopper/hopper-statement-block'
+import { HopperMenuBlock } from './hopper/hopper-menu-block'
+import { HopperVisitBlock } from './hopper/hopper-visit-block'
 
 type AnyBlock = { blockType: string; id?: string; [k: string]: any }
 
@@ -125,6 +129,14 @@ export function RenderBlocks({
             return <EnquiryFormBlock key={key} block={block as any} />
           case 'downloads':
             return <DownloadsBlock key={key} block={block as any} />
+          case 'hopperHero':
+            return <HopperHeroBlock key={key} block={block as any} />
+          case 'hopperStatement':
+            return <HopperStatementBlock key={key} block={block as any} />
+          case 'hopperMenu':
+            return <HopperMenuBlock key={key} block={block as any} />
+          case 'hopperVisit':
+            return <HopperVisitBlock key={key} block={block as any} />
           default:
             return null
         }

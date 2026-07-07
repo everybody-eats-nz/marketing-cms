@@ -23,6 +23,10 @@ import { Process } from '../blocks/Process'
 import { Values } from '../blocks/Values'
 import { Testimonials } from '../blocks/Testimonials'
 import { Downloads } from '../blocks/Downloads'
+import { HopperHero } from '../blocks/HopperHero'
+import { HopperStatement } from '../blocks/HopperStatement'
+import { HopperMenu } from '../blocks/HopperMenu'
+import { HopperVisit } from '../blocks/HopperVisit'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -142,6 +146,12 @@ export const Pages: CollectionConfig = {
         NewsletterFormBlock,
         EnquiryForm,
         Downloads,
+        // Hopper Cafe blocks — standalone brand, meant for the /hopper page
+        // (which renders chrome-free via src/app/(hopper)/).
+        HopperHero,
+        HopperStatement,
+        HopperMenu,
+        HopperVisit,
       ],
     },
     seoField,
