@@ -80,6 +80,82 @@ export const SiteSettings: GlobalConfig = {
             },
           ],
         },
+        {
+          label: 'Announcement',
+          description:
+            'A full-screen takeover shown once per visitor on the home page — built for launches like Hopper. Uses the Hopper brand (lilac / bubbly wordmark).',
+          fields: [
+            {
+              name: 'announcement',
+              type: 'group',
+              label: false,
+              fields: [
+                {
+                  name: 'enabled',
+                  type: 'checkbox',
+                  defaultValue: false,
+                  label: 'Show the homepage takeover',
+                },
+                {
+                  name: 'campaignId',
+                  type: 'text',
+                  defaultValue: 'hopper-launch',
+                  admin: {
+                    description:
+                      'Visitors who dismiss the takeover won\'t see it again. Change this ID to reset that and show it to everyone once more.',
+                    condition: (_, siblingData) => Boolean(siblingData?.enabled),
+                  },
+                },
+                {
+                  name: 'eyebrow',
+                  type: 'text',
+                  defaultValue: 'an everybody eats cafe',
+                  admin: { condition: (_, siblingData) => Boolean(siblingData?.enabled) },
+                },
+                {
+                  name: 'wordmark',
+                  type: 'text',
+                  defaultValue: 'hOPPer',
+                  admin: {
+                    description: 'Shown huge in the Hopper logotype, exactly as typed.',
+                    condition: (_, siblingData) => Boolean(siblingData?.enabled),
+                  },
+                },
+                {
+                  name: 'heading',
+                  type: 'text',
+                  defaultValue: 'Now open in Te Aro.',
+                  admin: { condition: (_, siblingData) => Boolean(siblingData?.enabled) },
+                },
+                {
+                  name: 'body',
+                  type: 'textarea',
+                  defaultValue:
+                    'Rescued food, accessible prices, and a genuine sense of belonging - a new cafe from the Everybody Eats team.',
+                  admin: { condition: (_, siblingData) => Boolean(siblingData?.enabled) },
+                },
+                {
+                  name: 'ctaLabel',
+                  type: 'text',
+                  defaultValue: 'Visit Hopper',
+                  admin: { condition: (_, siblingData) => Boolean(siblingData?.enabled) },
+                },
+                {
+                  name: 'ctaHref',
+                  type: 'text',
+                  defaultValue: '/hopper',
+                  admin: { condition: (_, siblingData) => Boolean(siblingData?.enabled) },
+                },
+                {
+                  name: 'dismissLabel',
+                  type: 'text',
+                  defaultValue: 'Not now',
+                  admin: { condition: (_, siblingData) => Boolean(siblingData?.enabled) },
+                },
+              ],
+            },
+          ],
+        },
       ],
     },
   ],

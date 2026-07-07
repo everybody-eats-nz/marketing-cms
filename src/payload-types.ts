@@ -2799,6 +2799,23 @@ export interface SiteSetting {
         id?: string | null;
       }[]
     | null;
+  announcement?: {
+    enabled?: boolean | null;
+    /**
+     * Visitors who dismiss the takeover won't see it again. Change this ID to reset that and show it to everyone once more.
+     */
+    campaignId?: string | null;
+    eyebrow?: string | null;
+    /**
+     * Shown huge in the Hopper logotype, exactly as typed.
+     */
+    wordmark?: string | null;
+    heading?: string | null;
+    body?: string | null;
+    ctaLabel?: string | null;
+    ctaHref?: string | null;
+    dismissLabel?: string | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -3196,6 +3213,19 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         liveMetric?: T;
         suffix?: T;
         id?: T;
+      };
+  announcement?:
+    | T
+    | {
+        enabled?: T;
+        campaignId?: T;
+        eyebrow?: T;
+        wordmark?: T;
+        heading?: T;
+        body?: T;
+        ctaLabel?: T;
+        ctaHref?: T;
+        dismissLabel?: T;
       };
   updatedAt?: T;
   createdAt?: T;

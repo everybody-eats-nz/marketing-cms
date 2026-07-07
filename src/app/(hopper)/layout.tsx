@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import localFont from 'next/font/local'
-import { Roboto_Mono } from 'next/font/google'
 import { SITE_URL, SITE_NOINDEX } from '@/lib/seo'
+import { hopperDisplay, hopperMono } from '@/lib/hopper-fonts'
 import '../(frontend)/globals.css'
 import '@/components/blocks/hopper/hopper.css'
 
@@ -11,22 +10,6 @@ import '@/components/blocks/hopper/hopper.css'
 // and its own typefaces. The page content itself still comes from the Pages
 // collection (slug `hopper`) via the shared blocks pipeline.
 export const dynamic = 'force-dynamic'
-
-// Adigiana Toybox — the Hopper logotype face (self-hosted, same pattern as
-// Fraunces on the main site).
-const hopperDisplay = localFont({
-  src: '../../../public/fonts/AdigianaToybox.ttf',
-  variable: '--font-hopper-display',
-  display: 'swap',
-})
-
-// Everything else on the poster is monospaced caps.
-const hopperMono = Roboto_Mono({
-  subsets: ['latin'],
-  weight: ['400', '700'],
-  variable: '--font-hopper-mono',
-  display: 'swap',
-})
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

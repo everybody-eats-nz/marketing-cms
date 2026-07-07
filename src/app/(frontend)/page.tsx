@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { fetchPageDoc, PageBody } from '@/components/blocks/page-body'
 import { getSiteSettings, pageMetadata } from '@/lib/seo'
+import { HomeTakeover } from '@/components/home-takeover'
+import { hopperFontVars } from '@/lib/hopper-fonts'
 
 export async function generateMetadata(): Promise<Metadata> {
   const [{ page }, settings] = await Promise.all([fetchPageDoc('home'), getSiteSettings()])
@@ -20,19 +22,33 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
-  const { page, isDraft } = await fetchPageDoc('home')
+  const [{ page, isDraft }, settings] = await Promise.all([
+    fetchPageDoc('home'),
+    getSiteSettings(),
+  ])
+  const takeover = (
+    <HomeTakeover announcement={(settings as any)?.announcement} fontClassName={hopperFontVars} />
+  )
   if (!page) {
     // Home doc missing — render an empty fallback rather than 404 so dev environments still boot.
     return (
-      <section className="container-wide pt-32 pb-32 text-center">
-        <h1 className="display text-4xl text-content">
-          No <em>home</em> page yet
-        </h1>
-        <p className="mt-4 text-content/80">
-          Create a Page with slug <code>home</code> in the admin to populate this route.
-        </p>
-      </section>
+      <>
+        {takeover}
+        <section className="container-wide pt-32 pb-32 text-center">
+          <h1 className="display text-4xl text-content">
+            No <em>home</em> page yet
+          </h1>
+          <p className="mt-4 text-content/80">
+            Create a Page with slug <code>home</code> in the admin to populate this route.
+          </p>
+        </section>
+      </>
     )
   }
-  return <PageBody page={page} isDraft={isDraft} />
+  return (
+    <>
+      {takeover}
+      <PageBody page={page} isDraft={isDraft} />
+    </>
+  )
 }
