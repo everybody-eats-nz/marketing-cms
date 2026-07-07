@@ -21101,13 +21101,6 @@
           "notNull": false,
           "default": "'an everybody eats cafe'"
         },
-        "announcement_wordmark": {
-          "name": "announcement_wordmark",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "'hOPPer'"
-        },
         "announcement_heading": {
           "name": "announcement_heading",
           "type": "varchar",
@@ -21122,19 +21115,38 @@
           "notNull": false,
           "default": "'Rescued food, accessible prices, and a genuine sense of belonging - a new cafe from the Everybody Eats team.'"
         },
-        "announcement_cta_label": {
-          "name": "announcement_cta_label",
+        "announcement_link_label": {
+          "name": "announcement_link_label",
           "type": "varchar",
           "primaryKey": false,
-          "notNull": false,
-          "default": "'Visit Hopper'"
+          "notNull": false
         },
-        "announcement_cta_href": {
-          "name": "announcement_cta_href",
-          "type": "varchar",
+        "announcement_link_type": {
+          "name": "announcement_link_type",
+          "type": "enum_site_settings_announcement_link_type",
+          "typeSchema": "public",
           "primaryKey": false,
           "notNull": false,
-          "default": "'/hopper'"
+          "default": "'internal'"
+        },
+        "announcement_link_internal_href": {
+          "name": "announcement_link_internal_href",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "announcement_link_external_href": {
+          "name": "announcement_link_external_href",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "announcement_link_open_in_new_tab": {
+          "name": "announcement_link_open_in_new_tab",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
         },
         "announcement_dismiss_label": {
           "name": "announcement_dismiss_label",
@@ -22953,6 +22965,14 @@
         "foodSavedKg"
       ]
     },
+    "public.enum_site_settings_announcement_link_type": {
+      "name": "enum_site_settings_announcement_link_type",
+      "schema": "public",
+      "values": [
+        "internal",
+        "external"
+      ]
+    },
     "public.enum_navigation_primary_link_type": {
       "name": "enum_navigation_primary_link_type",
       "schema": "public",
@@ -22996,6 +23016,6 @@
     "tables": {},
     "columns": {}
   },
-  "id": "33526977-b39e-42d7-999d-a7dc00f81140",
+  "id": "1a21c2e5-548d-45df-991e-306ddd67982a",
   "prevId": "00000000-0000-0000-0000-000000000000"
 }

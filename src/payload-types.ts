@@ -2806,14 +2806,21 @@ export interface SiteSetting {
      */
     campaignId?: string | null;
     eyebrow?: string | null;
-    /**
-     * Shown huge in the Hopper logotype, exactly as typed.
-     */
-    wordmark?: string | null;
     heading?: string | null;
     body?: string | null;
-    ctaLabel?: string | null;
-    ctaHref?: string | null;
+    link?: {
+      label?: string | null;
+      type?: ('internal' | 'external') | null;
+      /**
+       * Path on this site, e.g. /our-story
+       */
+      internalHref?: string | null;
+      /**
+       * Full URL incl. https://
+       */
+      externalHref?: string | null;
+      openInNewTab?: boolean | null;
+    };
     dismissLabel?: string | null;
   };
   updatedAt?: string | null;
@@ -3220,11 +3227,17 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         enabled?: T;
         campaignId?: T;
         eyebrow?: T;
-        wordmark?: T;
         heading?: T;
         body?: T;
-        ctaLabel?: T;
-        ctaHref?: T;
+        link?:
+          | T
+          | {
+              label?: T;
+              type?: T;
+              internalHref?: T;
+              externalHref?: T;
+              openInNewTab?: T;
+            };
         dismissLabel?: T;
       };
   updatedAt?: T;

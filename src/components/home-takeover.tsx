@@ -2,7 +2,14 @@
 
 import { useCallback, useEffect, useRef, useSyncExternalStore } from 'react'
 import Link from 'next/link'
+import { resolveHref, type LinkValue } from '@/lib/types'
 import './blocks/hopper/hopper.css'
+
+// The takeover is the Hopper brand, and the wordmark's per-letter sizes/tilts
+// are hand-tuned in hopper.css (.hopper-wordmark span:nth-child(...)) to the six
+// characters of "hOPPer". It's fixed here rather than CMS-editable so a future
+// campaign can't feed in a word that renders with mismatched letters.
+const WORDMARK = 'hOPPer'
 
 // Fires when a visitor dismisses the takeover, so useSyncExternalStore re-reads.
 const CHANGE_EVENT = 'ee-hopper-takeover-change'
@@ -21,11 +28,9 @@ export type Announcement = {
   enabled?: boolean | null
   campaignId?: string | null
   eyebrow?: string | null
-  wordmark?: string | null
   heading?: string | null
   body?: string | null
-  ctaLabel?: string | null
-  ctaHref?: string | null
+  link?: LinkValue | null
   dismissLabel?: string | null
 }
 
@@ -117,12 +122,14 @@ export function HomeTakeover({ announcement, fontClassName = '' }: Props) {
 
   if (!enabled || !open) return null
 
-  const word = announcement?.wordmark || 'hOPPer'
   const eyebrow = announcement?.eyebrow
   const heading = announcement?.heading
   const bodyText = announcement?.body
-  const ctaLabel = announcement?.ctaLabel || 'Visit Hopper'
-  const ctaHref = announcement?.ctaHref || '/hopper'
+  const link = announcement?.link
+  const resolved = resolveHref(link)
+  const ctaHref = resolved === '#' ? '/hopper' : resolved
+  const ctaLabel = link?.label || 'Visit Hopper'
+  const ctaNewTab = Boolean(link?.openInNewTab)
   const dismissLabel = announcement?.dismissLabel || 'Not now'
 
   return (
@@ -156,10 +163,10 @@ export function HomeTakeover({ announcement, fontClassName = '' }: Props) {
 
         <p
           id="hopper-takeover-title"
-          aria-label={word}
+          aria-label={WORDMARK}
           className="hopper-display hopper-wordmark mt-6 leading-none tracking-[-0.1em] text-[clamp(3.25rem,16vw,7rem)]"
         >
-          {[...word].map((letter, i) => (
+          {[...WORDMARK].map((letter, i) => (
             <span key={i} aria-hidden style={{ '--i': i } as React.CSSProperties}>
               {letter}
             </span>
@@ -182,12 +189,12 @@ export function HomeTakeover({ announcement, fontClassName = '' }: Props) {
           <Link
             href={ctaHref}
             className="hopper-btn"
-            target="_blank"
-            rel="noopener noreferrer"
+            target={ctaNewTab ? '_blank' : undefined}
+            rel={ctaNewTab ? 'noopener noreferrer' : undefined}
             onClick={dismiss}
           >
-            {ctaLabel} <span aria-hidden>↗</span>
-            <span className="sr-only">(opens in a new tab)</span>
+            {ctaLabel} <span aria-hidden>{ctaNewTab ? '↗' : '→'}</span>
+            {ctaNewTab && <span className="sr-only">(opens in a new tab)</span>}
           </Link>
         </div>
 

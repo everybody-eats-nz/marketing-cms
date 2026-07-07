@@ -1,5 +1,6 @@
 import type { GlobalConfig } from 'payload'
 import { statItemFields } from '../fields/stat-item'
+import { linkGroup } from '../fields/link'
 
 export const SiteSettings: GlobalConfig = {
   slug: 'site-settings',
@@ -83,7 +84,7 @@ export const SiteSettings: GlobalConfig = {
         {
           label: 'Announcement',
           description:
-            'A full-screen takeover shown once per visitor on the home page — built for launches like Hopper. Uses the Hopper brand (lilac / bubbly wordmark).',
+            'A full-screen takeover shown once per visitor on the home page, in the Hopper brand (lilac paper, bubbly "hopper" logotype). The logotype is fixed — this promotes Hopper specifically; the copy and link below are editable.',
           fields: [
             {
               name: 'announcement',
@@ -113,15 +114,6 @@ export const SiteSettings: GlobalConfig = {
                   admin: { condition: (_, siblingData) => Boolean(siblingData?.enabled) },
                 },
                 {
-                  name: 'wordmark',
-                  type: 'text',
-                  defaultValue: 'hOPPer',
-                  admin: {
-                    description: 'Shown huge in the Hopper logotype, exactly as typed.',
-                    condition: (_, siblingData) => Boolean(siblingData?.enabled),
-                  },
-                },
-                {
                   name: 'heading',
                   type: 'text',
                   defaultValue: 'Now open in Te Aro.',
@@ -134,18 +126,15 @@ export const SiteSettings: GlobalConfig = {
                     'Rescued food, accessible prices, and a genuine sense of belonging - a new cafe from the Everybody Eats team.',
                   admin: { condition: (_, siblingData) => Boolean(siblingData?.enabled) },
                 },
-                {
-                  name: 'ctaLabel',
-                  type: 'text',
-                  defaultValue: 'Visit Hopper',
-                  admin: { condition: (_, siblingData) => Boolean(siblingData?.enabled) },
-                },
-                {
-                  name: 'ctaHref',
-                  type: 'text',
-                  defaultValue: '/hopper',
-                  admin: { condition: (_, siblingData) => Boolean(siblingData?.enabled) },
-                },
+                linkGroup({
+                  name: 'link',
+                  label: 'Call to action',
+                  admin: {
+                    hideGutter: true,
+                    condition: (_, siblingData) => Boolean(siblingData?.enabled),
+                  },
+                  defaultValue: { type: 'internal', internalHref: '/hopper', label: 'Visit Hopper' },
+                }),
                 {
                   name: 'dismissLabel',
                   type: 'text',
