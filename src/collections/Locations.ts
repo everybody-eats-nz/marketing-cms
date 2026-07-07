@@ -21,6 +21,15 @@ export const Locations: CollectionConfig = {
       admin: { description: 'e.g. "wellington", "onehunga", "glen-innes"' },
     },
     {
+      name: 'menuLocationName',
+      label: 'Menu source name',
+      type: 'text',
+      admin: {
+        description:
+          'Exact, case-sensitive location name in the volunteers portal used to pull "tonight\'s menu" (e.g. "Wellington", "Onehunga", "Glen Innes"). Leave blank to use this location\'s name. Set this so renaming the display name above never breaks the menu.',
+      },
+    },
+    {
       name: 'openStatus',
       label: 'Status',
       type: 'select',

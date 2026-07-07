@@ -1080,6 +1080,72 @@ export interface Page {
             blockName?: string | null;
             blockType: 'impactLanding';
           }
+        | {
+            /**
+             * Accessible label for the Everybody Eats logo shown above the wordmark (links back to the main site).
+             */
+            kicker?: string | null;
+            kickerHref?: string | null;
+            /**
+             * Rendered huge in the Hopper logotype face, exactly as typed.
+             */
+            wordmark: string;
+            label?: string | null;
+            addressLine?: string | null;
+            hoursLine?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'hopperHero';
+          }
+        | {
+            eyebrow?: string | null;
+            heading: string;
+            body?: string | null;
+            cta?: {
+              label?: string | null;
+              href?: string | null;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'hopperStatement';
+          }
+        | {
+            eyebrow?: string | null;
+            items?:
+              | {
+                  name: string;
+                  /**
+                   * Optional aside, e.g. "changes daily".
+                   */
+                  note?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            footnote?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'hopperMenu';
+          }
+        | {
+            eyebrow?: string | null;
+            address?: string | null;
+            /**
+             * e.g. neighbours / how to spot the door.
+             */
+            note?: string | null;
+            hours?:
+              | {
+                  days: string;
+                  times: string;
+                  id?: string | null;
+                }[]
+              | null;
+            mapLabel?: string | null;
+            mapHref?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'hopperVisit';
+          }
       )[]
     | null;
   seo?: {
@@ -1112,6 +1178,10 @@ export interface Location {
    * e.g. "wellington", "onehunga", "glen-innes"
    */
   slug: string;
+  /**
+   * Exact, case-sensitive location name in the volunteers portal used to pull "tonight's menu" (e.g. "Wellington", "Onehunga", "Glen Innes"). Leave blank to use this location's name. Set this so renaming the display name above never breaks the menu.
+   */
+  menuLocationName?: string | null;
   /**
    * Leave blank to show no status badge.
    */
@@ -2320,6 +2390,66 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        hopperHero?:
+          | T
+          | {
+              kicker?: T;
+              kickerHref?: T;
+              wordmark?: T;
+              label?: T;
+              addressLine?: T;
+              hoursLine?: T;
+              id?: T;
+              blockName?: T;
+            };
+        hopperStatement?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              body?: T;
+              cta?:
+                | T
+                | {
+                    label?: T;
+                    href?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        hopperMenu?:
+          | T
+          | {
+              eyebrow?: T;
+              items?:
+                | T
+                | {
+                    name?: T;
+                    note?: T;
+                    id?: T;
+                  };
+              footnote?: T;
+              id?: T;
+              blockName?: T;
+            };
+        hopperVisit?:
+          | T
+          | {
+              eyebrow?: T;
+              address?: T;
+              note?: T;
+              hours?:
+                | T
+                | {
+                    days?: T;
+                    times?: T;
+                    id?: T;
+                  };
+              mapLabel?: T;
+              mapHref?: T;
+              id?: T;
+              blockName?: T;
+            };
       };
   seo?:
     | T
@@ -2340,6 +2470,7 @@ export interface PagesSelect<T extends boolean = true> {
 export interface LocationsSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
+  menuLocationName?: T;
   openStatus?: T;
   tagline?: T;
   intro?: T;
