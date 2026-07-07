@@ -23,6 +23,8 @@ import { Process } from '../blocks/Process'
 import { Values } from '../blocks/Values'
 import { Testimonials } from '../blocks/Testimonials'
 import { Downloads } from '../blocks/Downloads'
+import { GalaLanding } from '../blocks/GalaLanding'
+import { ImpactLanding } from '../blocks/ImpactLanding'
 import { HopperHero } from '../blocks/HopperHero'
 import { HopperStatement } from '../blocks/HopperStatement'
 import { HopperMenu } from '../blocks/HopperMenu'
@@ -146,6 +148,8 @@ export const Pages: CollectionConfig = {
         NewsletterFormBlock,
         EnquiryForm,
         Downloads,
+        GalaLanding,
+        ImpactLanding,
         // Hopper Cafe blocks — standalone brand, meant for the /hopper page
         // (which renders chrome-free via src/app/(hopper)/).
         HopperHero,

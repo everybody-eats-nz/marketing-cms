@@ -9,7 +9,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"id" varchar PRIMARY KEY NOT NULL,
   	"kicker" varchar DEFAULT 'an everybody eats cafe',
   	"kicker_href" varchar DEFAULT '/',
-  	"wordmark" varchar DEFAULT 'hopper',
+  	"wordmark" varchar DEFAULT 'hOPPer',
   	"label" varchar DEFAULT 'cafe',
   	"address_line" varchar DEFAULT '11 Hopper St, Te Aro',
   	"hours_line" varchar DEFAULT 'Mon + Tues · 9am–2pm',
@@ -76,7 +76,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"id" serial PRIMARY KEY NOT NULL,
   	"kicker" varchar DEFAULT 'an everybody eats cafe',
   	"kicker_href" varchar DEFAULT '/',
-  	"wordmark" varchar DEFAULT 'hopper',
+  	"wordmark" varchar DEFAULT 'hOPPer',
   	"label" varchar DEFAULT 'cafe',
   	"address_line" varchar DEFAULT '11 Hopper St, Te Aro',
   	"hours_line" varchar DEFAULT 'Mon + Tues · 9am–2pm',
@@ -142,8 +142,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"block_name" varchar
   );
   
-  ALTER TABLE "locations" ALTER COLUMN "open_status" DROP DEFAULT;
-  ALTER TABLE "_locations_v" ALTER COLUMN "version_open_status" DROP DEFAULT;
   ALTER TABLE "pages_blocks_hopper_hero" ADD CONSTRAINT "pages_blocks_hopper_hero_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages_blocks_hopper_statement" ADD CONSTRAINT "pages_blocks_hopper_statement_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages_blocks_hopper_menu_items" ADD CONSTRAINT "pages_blocks_hopper_menu_items_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages_blocks_hopper_menu"("id") ON DELETE cascade ON UPDATE no action;
@@ -192,19 +190,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
 
 export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
   await db.execute(sql`
-   ALTER TABLE "pages_blocks_hopper_hero" DISABLE ROW LEVEL SECURITY;
-  ALTER TABLE "pages_blocks_hopper_statement" DISABLE ROW LEVEL SECURITY;
-  ALTER TABLE "pages_blocks_hopper_menu_items" DISABLE ROW LEVEL SECURITY;
-  ALTER TABLE "pages_blocks_hopper_menu" DISABLE ROW LEVEL SECURITY;
-  ALTER TABLE "pages_blocks_hopper_visit_hours" DISABLE ROW LEVEL SECURITY;
-  ALTER TABLE "pages_blocks_hopper_visit" DISABLE ROW LEVEL SECURITY;
-  ALTER TABLE "_pages_v_blocks_hopper_hero" DISABLE ROW LEVEL SECURITY;
-  ALTER TABLE "_pages_v_blocks_hopper_statement" DISABLE ROW LEVEL SECURITY;
-  ALTER TABLE "_pages_v_blocks_hopper_menu_items" DISABLE ROW LEVEL SECURITY;
-  ALTER TABLE "_pages_v_blocks_hopper_menu" DISABLE ROW LEVEL SECURITY;
-  ALTER TABLE "_pages_v_blocks_hopper_visit_hours" DISABLE ROW LEVEL SECURITY;
-  ALTER TABLE "_pages_v_blocks_hopper_visit" DISABLE ROW LEVEL SECURITY;
-  DROP TABLE "pages_blocks_hopper_hero" CASCADE;
+   DROP TABLE "pages_blocks_hopper_hero" CASCADE;
   DROP TABLE "pages_blocks_hopper_statement" CASCADE;
   DROP TABLE "pages_blocks_hopper_menu_items" CASCADE;
   DROP TABLE "pages_blocks_hopper_menu" CASCADE;
@@ -215,7 +201,5 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "_pages_v_blocks_hopper_menu_items" CASCADE;
   DROP TABLE "_pages_v_blocks_hopper_menu" CASCADE;
   DROP TABLE "_pages_v_blocks_hopper_visit_hours" CASCADE;
-  DROP TABLE "_pages_v_blocks_hopper_visit" CASCADE;
-  ALTER TABLE "locations" ALTER COLUMN "open_status" SET DEFAULT 'open';
-  ALTER TABLE "_locations_v" ALTER COLUMN "version_open_status" SET DEFAULT 'open';`)
+  DROP TABLE "_pages_v_blocks_hopper_visit" CASCADE;`)
 }

@@ -3,13 +3,14 @@
 import { useEffect, useState } from 'react'
 
 // The gala kicks off the evening of Friday 30 October 2026. NZ is on daylight
-// time (UTC+13) in late October.
-const TARGET = new Date('2026-10-30T18:30:00+13:00').getTime()
+// time (UTC+13) in late October. The target is editable via the Gala block, so
+// it's passed in; this constant is the fallback when none is set.
+const DEFAULT_TARGET = '2026-10-30T18:30:00+13:00'
 
 type Remaining = { days: number; hours: number; minutes: number; seconds: number }
 
-function remaining(): Remaining {
-  const diff = Math.max(0, TARGET - Date.now())
+function remaining(target: number): Remaining {
+  const diff = Math.max(0, target - Date.now())
   return {
     days: Math.floor(diff / 86_400_000),
     hours: Math.floor((diff / 3_600_000) % 24),
@@ -25,16 +26,19 @@ const UNITS: Array<[keyof Remaining, string]> = [
   ['seconds', 'Sec'],
 ]
 
-export function GalaCountdown() {
+export function GalaCountdown({ target }: { target?: string | null }) {
+  const parsed = new Date(target || DEFAULT_TARGET).getTime()
+  const targetMs = Number.isNaN(parsed) ? new Date(DEFAULT_TARGET).getTime() : parsed
+
   // Render nothing on the server / first paint so the client clock is the only
   // source of truth (avoids a hydration mismatch on the ticking values).
   const [time, setTime] = useState<Remaining | null>(null)
 
   useEffect(() => {
-    setTime(remaining())
-    const id = setInterval(() => setTime(remaining()), 1000)
+    setTime(remaining(targetMs))
+    const id = setInterval(() => setTime(remaining(targetMs)), 1000)
     return () => clearInterval(id)
-  }, [])
+  }, [targetMs])
 
   return (
     <div
