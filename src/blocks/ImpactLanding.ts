@@ -23,7 +23,6 @@ export const IMPACT_DEFAULTS = {
   statMealsLabel: 'meals served',
   statFoodLabel: 'food rescued',
   statVolunteersLabel: 'volunteers welcomed',
-  statKohaLabel: 'given back in koha',
 
   payEyebrow: 'Pay as you feel',
   payHeading: 'Everyone eats. *However* much you can give.',
@@ -53,7 +52,6 @@ export const IMPACT_DEFAULTS = {
   peopleVolunteersLabel: 'volunteers in the door',
   peopleHoursLabel: 'hours given',
   peopleNightsLabel: 'nights cooked & served',
-  peopleGuestsLabel: 'ate as our guests',
   peopleSubheading: 'The regulars who keep coming back.',
   peopleSubbody:
     'Most volunteers start with a single shift — and then they keep showing up. Here’s how many have served each milestone of nights.',
@@ -102,23 +100,50 @@ export const ImpactLanding: Block = {
             text('statFoodLabel', IMPACT_DEFAULTS.statFoodLabel),
           ],
         },
-        {
-          type: 'row',
-          fields: [
-            text('statVolunteersLabel', IMPACT_DEFAULTS.statVolunteersLabel),
-            text('statKohaLabel', IMPACT_DEFAULTS.statKohaLabel),
-          ],
-        },
+        text('statVolunteersLabel', IMPACT_DEFAULTS.statVolunteersLabel),
       ],
     },
     {
       type: 'collapsible',
-      label: 'Pay as you feel',
-      admin: { initCollapsed: true },
+      label: 'Impact stories',
+      admin: {
+        initCollapsed: true,
+        description: 'Optional featured stories shown just under the header. Leave empty to hide.',
+      },
       fields: [
-        text('payEyebrow', IMPACT_DEFAULTS.payEyebrow),
-        area('payHeading', IMPACT_DEFAULTS.payHeading, EM_HINT),
-        area('payBody', IMPACT_DEFAULTS.payBody),
+        {
+          name: 'stories',
+          type: 'array',
+          labels: { singular: 'Story', plural: 'Stories' },
+          admin: { description: 'Each renders as a compact card with an image.' },
+          fields: [
+            {
+              name: 'image',
+              type: 'upload',
+              relationTo: 'media',
+              required: true,
+            },
+            { name: 'kicker', type: 'text', defaultValue: 'Story' },
+            {
+              name: 'heading',
+              type: 'text',
+              required: true,
+              admin: { description: EM_HINT },
+            },
+            { name: 'body', type: 'textarea' },
+            {
+              type: 'row',
+              fields: [
+                { name: 'ctaLabel', type: 'text', defaultValue: 'Read the story' },
+                {
+                  name: 'href',
+                  type: 'text',
+                  admin: { description: 'Where the card links, e.g. /journal/my-story' },
+                },
+              ],
+            },
+          ],
+        },
       ],
     },
     {
@@ -151,16 +176,6 @@ export const ImpactLanding: Block = {
     },
     {
       type: 'collapsible',
-      label: 'Where we serve',
-      admin: { initCollapsed: true },
-      fields: [
-        text('venuesEyebrow', IMPACT_DEFAULTS.venuesEyebrow),
-        area('venuesHeading', IMPACT_DEFAULTS.venuesHeading, EM_HINT),
-        area('venuesBody', IMPACT_DEFAULTS.venuesBody),
-      ],
-    },
-    {
-      type: 'collapsible',
       label: 'The people',
       admin: { initCollapsed: true },
       fields: [
@@ -173,15 +188,29 @@ export const ImpactLanding: Block = {
             text('peopleHoursLabel', IMPACT_DEFAULTS.peopleHoursLabel),
           ],
         },
-        {
-          type: 'row',
-          fields: [
-            text('peopleNightsLabel', IMPACT_DEFAULTS.peopleNightsLabel),
-            text('peopleGuestsLabel', IMPACT_DEFAULTS.peopleGuestsLabel),
-          ],
-        },
+        text('peopleNightsLabel', IMPACT_DEFAULTS.peopleNightsLabel),
         text('peopleSubheading', IMPACT_DEFAULTS.peopleSubheading),
         area('peopleSubbody', IMPACT_DEFAULTS.peopleSubbody),
+      ],
+    },
+    {
+      type: 'collapsible',
+      label: 'Pay as you feel',
+      admin: { initCollapsed: true },
+      fields: [
+        text('payEyebrow', IMPACT_DEFAULTS.payEyebrow),
+        area('payHeading', IMPACT_DEFAULTS.payHeading, EM_HINT),
+        area('payBody', IMPACT_DEFAULTS.payBody),
+      ],
+    },
+    {
+      type: 'collapsible',
+      label: 'Where we serve',
+      admin: { initCollapsed: true },
+      fields: [
+        text('venuesEyebrow', IMPACT_DEFAULTS.venuesEyebrow),
+        area('venuesHeading', IMPACT_DEFAULTS.venuesHeading, EM_HINT),
+        area('venuesBody', IMPACT_DEFAULTS.venuesBody),
       ],
     },
     {

@@ -1046,13 +1046,26 @@ export interface Page {
             statMealsLabel?: string | null;
             statFoodLabel?: string | null;
             statVolunteersLabel?: string | null;
-            statKohaLabel?: string | null;
-            payEyebrow?: string | null;
             /**
-             * Wrap a word in *asterisks* for the light editorial italic.
+             * Each renders as a compact card with an image.
              */
-            payHeading?: string | null;
-            payBody?: string | null;
+            stories?:
+              | {
+                  image: number | Media;
+                  kicker?: string | null;
+                  /**
+                   * Wrap a word in *asterisks* for the light editorial italic.
+                   */
+                  heading: string;
+                  body?: string | null;
+                  ctaLabel?: string | null;
+                  /**
+                   * Where the card links, e.g. /journal/my-story
+                   */
+                  href?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
             growthEyebrow?: string | null;
             /**
              * Wrap a word in *asterisks* for the light editorial italic.
@@ -1071,12 +1084,6 @@ export interface Page {
             rescuedBody?: string | null;
             rescuedTonnesLabel?: string | null;
             rescuedMealsLabel?: string | null;
-            venuesEyebrow?: string | null;
-            /**
-             * Wrap a word in *asterisks* for the light editorial italic.
-             */
-            venuesHeading?: string | null;
-            venuesBody?: string | null;
             peopleEyebrow?: string | null;
             /**
              * Wrap a word in *asterisks* for the light editorial italic.
@@ -1085,9 +1092,20 @@ export interface Page {
             peopleVolunteersLabel?: string | null;
             peopleHoursLabel?: string | null;
             peopleNightsLabel?: string | null;
-            peopleGuestsLabel?: string | null;
             peopleSubheading?: string | null;
             peopleSubbody?: string | null;
+            payEyebrow?: string | null;
+            /**
+             * Wrap a word in *asterisks* for the light editorial italic.
+             */
+            payHeading?: string | null;
+            payBody?: string | null;
+            venuesEyebrow?: string | null;
+            /**
+             * Wrap a word in *asterisks* for the light editorial italic.
+             */
+            venuesHeading?: string | null;
+            venuesBody?: string | null;
             /**
              * Wrap a word in *asterisks* for the light editorial italic.
              */
@@ -2416,10 +2434,17 @@ export interface PagesSelect<T extends boolean = true> {
               statMealsLabel?: T;
               statFoodLabel?: T;
               statVolunteersLabel?: T;
-              statKohaLabel?: T;
-              payEyebrow?: T;
-              payHeading?: T;
-              payBody?: T;
+              stories?:
+                | T
+                | {
+                    image?: T;
+                    kicker?: T;
+                    heading?: T;
+                    body?: T;
+                    ctaLabel?: T;
+                    href?: T;
+                    id?: T;
+                  };
               growthEyebrow?: T;
               growthHeading?: T;
               growthBody?: T;
@@ -2429,17 +2454,19 @@ export interface PagesSelect<T extends boolean = true> {
               rescuedBody?: T;
               rescuedTonnesLabel?: T;
               rescuedMealsLabel?: T;
-              venuesEyebrow?: T;
-              venuesHeading?: T;
-              venuesBody?: T;
               peopleEyebrow?: T;
               peopleHeading?: T;
               peopleVolunteersLabel?: T;
               peopleHoursLabel?: T;
               peopleNightsLabel?: T;
-              peopleGuestsLabel?: T;
               peopleSubheading?: T;
               peopleSubbody?: T;
+              payEyebrow?: T;
+              payHeading?: T;
+              payBody?: T;
+              venuesEyebrow?: T;
+              venuesHeading?: T;
+              venuesBody?: T;
               ctaHeading?: T;
               ctaBody?: T;
               ctaPrimaryLabel?: T;

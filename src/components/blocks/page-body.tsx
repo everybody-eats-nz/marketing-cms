@@ -6,6 +6,12 @@ import { getPayCopy } from '@/lib/pay-copy.server'
 import { RenderBlocks } from './render-blocks'
 import { PageLivePreview } from './page-live-preview'
 
+// The restaurants grid/magazine only lists our three permanent venues, by name,
+// regardless of open status or whether a menu is wired up. Other Location docs
+// (pop-ups, one-off sites) exist in the CMS but shouldn't appear in this list.
+// If a venue is ever renamed in the CMS, update it here too.
+const MAIN_LOCATIONS = ['Wellington', 'Onehunga', 'Glen Innes']
+
 export async function fetchPageDoc(slug: string) {
   const payload = await getPayloadClient()
   const { isEnabled } = await draftMode()
@@ -52,9 +58,13 @@ export async function PageBody({ page, isDraft }: { page: any; isDraft: boolean 
           limit: 20,
           sort: 'name',
           depth: 1,
-          // Outside preview, hide unpublished locations so grids don't link to
-          // pages that 404 (dine-with-us/[slug]/page.tsx only serves published docs).
-          ...(isDraft ? {} : { where: { _status: { equals: 'published' } } }),
+          // Only our three permanent venues, by name. Outside preview we also
+          // hide unpublished docs so grids don't link to pages that 404
+          // (dine-with-us/[slug]/page.tsx only serves published docs).
+          where: {
+            name: { in: MAIN_LOCATIONS },
+            ...(isDraft ? {} : { _status: { equals: 'published' } }),
+          },
         })
       : Promise.resolve({ docs: [] as any[] }),
     needEvents
