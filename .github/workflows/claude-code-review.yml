@@ -12,6 +12,10 @@ concurrency:
 jobs:
   claude-review:
     name: Automated PR review
+    # claude-code-action refuses PRs from non-human actors, so bot PRs
+    # (Dependabot's dependency bumps) fail the check instead of skipping it.
+    # There's nothing for Claude to review in a lockfile bump - skip cleanly.
+    if: github.event.pull_request.user.type != 'Bot'
     runs-on: ubuntu-latest
     permissions:
       contents: read
