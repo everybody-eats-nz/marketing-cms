@@ -52,7 +52,17 @@ function SectionHead({
   )
 }
 
-export function ImpactLandingBlock({ block, story }: { block: Block; story: ImpactStory }) {
+export function ImpactLandingBlock({
+  block,
+  story,
+  cmsLocations = [],
+}: {
+  block: Block
+  story: ImpactStory
+  /** Published CMS locations flagged "show in main grids" — our permanent
+   *  restaurants. Used to split the venue cards from pop-ups. */
+  cmsLocations?: any[]
+}) {
   const b = block
   const t = story.totals
   const first = monthYear(t.firstNight)
@@ -60,6 +70,18 @@ export function ImpactLandingBlock({ block, story }: { block: Block; story: Impa
   const range = first && last ? `${first} — ${last}` : null
   const firstYear = story.yearly[0]
   const tonnes = Math.round(t.foodSavedKg / 1000)
+
+  // Permanent restaurants vs. pop-ups. A venue is "permanent" when its portal
+  // name matches a CMS location flagged showInMainGrids, keyed the same way the
+  // tonight's-menu lookup is (menuLocationName || name) so a display-name change
+  // can't misclassify it. If either group is empty (e.g. only permanent venues,
+  // or the flag isn't set) we fall back to one ungrouped grid.
+  const permanentNames = new Set(
+    cmsLocations.map((l) => (l?.menuLocationName || l?.name || '').toLowerCase()).filter(Boolean),
+  )
+  const permanentVenues = story.locations.filter((v) => permanentNames.has(v.name?.toLowerCase()))
+  const popupVenues = story.locations.filter((v) => !permanentNames.has(v.name?.toLowerCase()))
+  const groupVenues = permanentVenues.length > 0 && popupVenues.length > 0
 
   const vars = {
     meals: fmt(t.meals),
@@ -271,9 +293,22 @@ export function ImpactLandingBlock({ block, story }: { block: Block; story: Impa
         <SectionHead kicker={b.venuesEyebrow} title={renderRichText(b.venuesHeading)}>
           {b.venuesBody}
         </SectionHead>
-        <div className="mt-10">
-          <VenueCards locations={story.locations} />
-        </div>
+        {groupVenues ? (
+          <div className="mt-10 space-y-10">
+            <div>
+              <p className="eyebrow text-clay-300 mb-5">Permanent restaurants</p>
+              <VenueCards locations={permanentVenues} />
+            </div>
+            <div className="border-t border-line/10 pt-10">
+              <p className="eyebrow text-muted/70 mb-5">Pop-ups</p>
+              <VenueCards locations={popupVenues} />
+            </div>
+          </div>
+        ) : (
+          <div className="mt-10">
+            <VenueCards locations={story.locations} />
+          </div>
+        )}
       </section>
 
       {/* CTA */}
