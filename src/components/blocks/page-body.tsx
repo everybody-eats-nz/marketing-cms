@@ -25,7 +25,13 @@ export async function PageBody({ page, isDraft }: { page: any; isDraft: boolean 
   const layout: any[] = Array.isArray(page.layout) ? page.layout : []
   const types = new Set(layout.map((b) => b.blockType))
   // In draft/preview mode we fetch all extras so newly-added blocks render immediately.
-  const needLocations = isDraft || types.has('locationsGrid') || types.has('locationsMagazine')
+  // The impact "Where we serve" section also needs the CMS locations, to tell
+  // permanent restaurants apart from pop-ups (by the showInMainGrids flag).
+  const needLocations =
+    isDraft ||
+    types.has('locationsGrid') ||
+    types.has('locationsMagazine') ||
+    types.has('impactLanding')
   const needEvents = isDraft || types.has('eventsList')
   const needJournal = isDraft || types.has('journalList')
   const needTeam = isDraft || types.has('teamGrid')

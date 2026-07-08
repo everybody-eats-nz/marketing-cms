@@ -137,7 +137,12 @@ export function RenderBlocks({
             return <GalaLandingBlock key={key} block={block as any} />
           case 'impactLanding':
             return impactStory ? (
-              <ImpactLandingBlock key={key} block={block as any} story={impactStory} />
+              <ImpactLandingBlock
+                key={key}
+                block={block as any}
+                story={impactStory}
+                cmsLocations={locations}
+              />
             ) : null
           case 'hopperHero':
             return <HopperHeroBlock key={key} block={block as any} />
