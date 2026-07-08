@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import './hopper.css'
+import { HopperWordmark } from './hopper-wordmark'
 
 type Props = {
   block: {
@@ -28,16 +29,7 @@ export function HopperHeroBlock({ block }: Props) {
         </div>
 
         <div className="flex flex-1 flex-col items-center justify-center py-16 text-center">
-          <h1
-            aria-label={`${word} ${block.label || ''}`.trim()}
-            className="hopper-display hopper-wordmark leading-none tracking-[-0.12em] text-[clamp(4rem,24vw,21rem)]"
-          >
-            {[...word].map((letter, i) => (
-              <span key={i} aria-hidden style={{ '--i': i } as React.CSSProperties}>
-                {letter}
-              </span>
-            ))}
-          </h1>
+          <HopperWordmark word={word} ariaLabel={`${word} ${block.label || ''}`.trim()} />
           {block.label && (
             <p className="hopper-label mt-8 !tracking-[0.6em] pl-[0.6em] sm:text-sm">{block.label}</p>
           )}

@@ -195,14 +195,28 @@
  * The wordmark's bouncy baseline: each letter is a span carrying a small
  * vertical offset + tilt (like the poster logotype), and pops in with a
  * staggered spring on load. --i is set inline per letter.
+ *
+ * --hopper-mag is the dock-style hover magnification, set per letter from
+ * hopper-wordmark.tsx. It's a registered property so the transition below
+ * interpolates it — the JS just writes raw targets. It also appears inside
+ * the hopper-pop 100% keyframe: the animation fills forwards, so a scale on
+ * the base transform alone would never win against it.
  */
+@property --hopper-mag {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 1;
+}
 .hopper-wordmark span {
   display: inline-block;
   --dy: 0em;
   --rot: 0deg;
   --fs: 1em;
   font-size: var(--fs);
-  transform: translateY(var(--dy)) rotate(var(--rot));
+  transform: translateY(var(--dy)) rotate(var(--rot)) scale(var(--hopper-mag, 1));
+  /* Grow up out of the baseline like dock icons, not out from the middle. */
+  transform-origin: 50% 85%;
+  transition: --hopper-mag 150ms ease-out;
   animation: hopper-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
   animation-delay: calc(var(--i, 0) * 70ms);
 }
@@ -236,7 +250,7 @@
   }
   100% {
     opacity: 1;
-    transform: translateY(var(--dy)) rotate(var(--rot)) scale(1);
+    transform: translateY(var(--dy)) rotate(var(--rot)) scale(var(--hopper-mag, 1));
   }
 }
 
