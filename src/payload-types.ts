@@ -1089,7 +1089,7 @@ export interface Page {
              * Wrap a word in *asterisks* for the light editorial italic.
              */
             peopleHeading?: string | null;
-            peopleVolunteersLabel?: string | null;
+            peopleCo2Label?: string | null;
             peopleHoursLabel?: string | null;
             peopleNightsLabel?: string | null;
             peopleSubheading?: string | null;
@@ -2473,7 +2473,7 @@ export interface PagesSelect<T extends boolean = true> {
               rescuedMealsLabel?: T;
               peopleEyebrow?: T;
               peopleHeading?: T;
-              peopleVolunteersLabel?: T;
+              peopleCo2Label?: T;
               peopleHoursLabel?: T;
               peopleNightsLabel?: T;
               peopleSubheading?: T;

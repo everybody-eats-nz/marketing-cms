@@ -69,7 +69,15 @@ export function ImpactLandingBlock({
   const last = monthYear(t.lastNight)
   const range = first && last ? `${first} — ${last}` : null
   const firstYear = story.yearly[0]
-  const tonnes = Math.round(t.foodSavedKg / 1000)
+  // Food rescued is estimated at a fixed rate per meal served (Everybody Eats'
+  // agreed figure), applied to the live meal count so the story stays consistent
+  // whether the data is live or the fallback.
+  const FOOD_KG_PER_MEAL = 0.75
+  const foodSavedKg = Math.round(t.meals * FOOD_KG_PER_MEAL)
+  const tonnes = Math.round(foodSavedKg / 1000)
+  // CO₂ emissions avoided by diverting that surplus food from landfill. Each kg of
+  // rescued food ≈ 1 / 1.28458781 kg of CO₂ saved (Everybody Eats' agreed factor).
+  const co2Kg = Math.round(foodSavedKg / 1.28458781)
 
   // Permanent restaurants vs. pop-ups. A venue is "permanent" when its portal
   // name matches a CMS location flagged showInMainGrids, keyed the same way the
@@ -88,7 +96,7 @@ export function ImpactLandingBlock({
     firstYear: String(firstYear?.year ?? ''),
     nights: fmt(t.nights),
     range: range ? `(${range})` : '',
-    perMeal: String(t.foodSavedKgPerMeal),
+    perMeal: String(FOOD_KG_PER_MEAL),
   }
 
   return (
@@ -244,8 +252,8 @@ export function ImpactLandingBlock({
                 onDark
                 stats={[
                   {
-                    value: `${fmt(t.volunteers)}`,
-                    label: b.peopleVolunteersLabel,
+                    value: `${fmt(co2Kg)}`,
+                    label: b.peopleCo2Label,
                     accent: 'text-cream-50',
                   },
                   {
