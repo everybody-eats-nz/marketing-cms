@@ -10,8 +10,9 @@ import { useRef } from 'react'
  * keyframe shares the same transform so the two never fight.
  */
 
-const BOOST = 0.32 // peak extra scale directly under the pointer
+const BOOST = 0.24 // peak extra scale directly under the pointer
 const REACH = 1.5 // falloff width, in letter-widths
+const PUSH = 0.5 // how far neighbours slide away from the pointer, in em
 
 type Props = {
   word: string
@@ -33,12 +34,17 @@ export function HopperWordmark({ word, ariaLabel }: Props) {
       const span = child as HTMLElement
       if (clientX === null) {
         span.style.removeProperty('--hopper-mag')
+        span.style.removeProperty('--hopper-push')
         continue
       }
       const dist = clientX - (originLeft + span.offsetLeft + span.offsetWidth / 2)
       const sigma = span.offsetWidth * REACH
-      const mag = 1 + BOOST * Math.exp(-(dist * dist) / (2 * sigma * sigma))
-      span.style.setProperty('--hopper-mag', mag.toFixed(3))
+      const falloff = Math.exp(-(dist * dist) / (2 * sigma * sigma))
+      // Neighbours slide away from the pointer so the swollen letter has room —
+      // the dock's displacement, not just its bulge. sign(dist) picks the side.
+      const push = Math.sign(dist) * -PUSH * falloff * (1 - falloff)
+      span.style.setProperty('--hopper-mag', (1 + BOOST * falloff).toFixed(3))
+      span.style.setProperty('--hopper-push', `${push.toFixed(3)}em`)
     }
   }
 
