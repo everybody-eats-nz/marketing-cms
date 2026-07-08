@@ -41,6 +41,16 @@ export const Locations: CollectionConfig = {
       ],
     },
     {
+      name: 'showInMainGrids',
+      label: 'Show in restaurant grids',
+      type: 'checkbox',
+      defaultValue: false,
+      admin: {
+        description:
+          'When on, this venue appears in the main "restaurants" grids (e.g. /dine-with-us). Turn on for our permanent restaurants; leave off for pop-ups or one-off sites.',
+      },
+    },
+    {
       type: 'tabs',
       tabs: [
         {

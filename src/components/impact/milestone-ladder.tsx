@@ -15,6 +15,15 @@ export function MilestoneLadder({ milestones }: { milestones: ImpactStoryMilesto
 
   return (
     <InView as="div" threshold={0.3}>
+      <div className="flex items-center gap-4 mb-4">
+        <span className="w-24 sm:w-28 shrink-0 font-mono text-[10px] uppercase tracking-[0.14em] text-cream-50/45">
+          service nights
+        </span>
+        <span className="flex-1" />
+        <span className="w-16 text-right font-mono text-[10px] uppercase tracking-[0.14em] text-cream-50/45">
+          volunteers
+        </span>
+      </div>
       <ul className="space-y-4">
         {rungs.map((m, i) => (
           <li key={m.threshold} className="flex items-center gap-4">

@@ -18,8 +18,9 @@ export function HeadlineStats({
   stats: HeadlineStat[]
   onDark?: boolean
 }) {
+  const lgCols = stats.length >= 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-3'
   return (
-    <dl className="grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-10">
+    <dl className={`grid grid-cols-2 ${lgCols} gap-x-8 gap-y-10`}>
       {stats.map((s, i) => (
         <div key={i}>
           <dd

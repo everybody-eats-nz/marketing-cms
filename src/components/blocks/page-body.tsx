@@ -52,9 +52,14 @@ export async function PageBody({ page, isDraft }: { page: any; isDraft: boolean 
           limit: 20,
           sort: 'name',
           depth: 1,
-          // Outside preview, hide unpublished locations so grids don't link to
+          // Only venues flagged "Show in restaurant grids" (our permanent
+          // restaurants), so pop-ups / one-off sites stay out of the list.
+          // Outside preview we also hide unpublished docs so grids don't link to
           // pages that 404 (dine-with-us/[slug]/page.tsx only serves published docs).
-          ...(isDraft ? {} : { where: { _status: { equals: 'published' } } }),
+          where: {
+            showInMainGrids: { equals: true },
+            ...(isDraft ? {} : { _status: { equals: 'published' } }),
+          },
         })
       : Promise.resolve({ docs: [] as any[] }),
     needEvents

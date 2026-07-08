@@ -46,10 +46,6 @@ function useTween(value: number, duration = 460) {
 }
 
 const TweenInt = ({ value }: { value: number }) => <>{fmt(Math.round(useTween(value)))}</>
-const TweenMoney = ({ value }: { value: number | null }) => {
-  const v = useTween(value ?? 0)
-  return <>{value == null ? '—' : '$' + v.toFixed(2)}</>
-}
 
 /**
  * One diner at the table, drawn as a place setting: a plate flanked by a fork
@@ -94,44 +90,10 @@ function PlaceSetting({ paid, delayMs = 0 }: { paid: boolean; delayMs?: number }
   )
 }
 
-const TrendUp = ({ className = '' }: { className?: string }) => (
-  <svg
-    viewBox="0 0 24 24"
-    className={className}
-    fill="none"
-    stroke="currentColor"
-    strokeWidth={2}
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    aria-hidden
-  >
-    <path d="M3 17l6-6 4 4 8-8" />
-    <path d="M14 7h7v7" />
-  </svg>
-)
-
-const TrendDown = ({ className = '' }: { className?: string }) => (
-  <svg
-    viewBox="0 0 24 24"
-    className={className}
-    fill="none"
-    stroke="currentColor"
-    strokeWidth={2}
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    aria-hidden
-  >
-    <path d="M3 7l6 6 4-4 8 8" />
-    <path d="M14 17h7v-7" />
-  </svg>
-)
-
 /**
  * The signature interactive: a typical 100-guest service night, drawn as 100
  * place settings. Scrub or play through the years and the balance shifts — more
- * neighbours arriving who eat as our guests while the koha left on each plate
- * stretches thinner. The two "since {first}" cards hold that trend on screen so
- * the rising need reads even without dragging.
+ * neighbours arriving who eat as our guests, fewer leaving koha on the plate.
  *
  * When the year changes, the seats that *flip* ripple across in a wave (a brief
  * scale pulse staggered along the changed band) and the figures tween. All of it
@@ -146,18 +108,6 @@ export function CommunalTable({ years }: { years: ImpactStoryYear[] }) {
   // Clamp once if the dataset is shorter than a stale index.
   const safeIdx = Math.min(idx, years.length - 1)
   const y = years[safeIdx]
-
-  // The rising-need arc: first year vs. most recent, held static so the trend is
-  // always legible regardless of where the scrubber sits. Each card only renders
-  // when both ends of its trend are present — a null (e.g. a sparse partial year)
-  // is "data unavailable", not a real zero, so we hide rather than show "0 → N".
-  const base = years[0]
-  const latest = years[years.length - 1]
-  const guestsBase = base.nonPayingPercent != null ? Math.round(base.nonPayingPercent) : null
-  const guestsNow = latest.nonPayingPercent != null ? Math.round(latest.nonPayingPercent) : null
-  const showGuestsTrend = guestsBase != null && guestsNow != null
-  const showKohaTrend = base.perHead != null && latest.perHead != null
-  const showSqueeze = showGuestsTrend || showKohaTrend
 
   useEffect(() => {
     if (!playing) return
@@ -177,7 +127,6 @@ export function CommunalTable({ years }: { years: ImpactStoryYear[] }) {
 
   const guests = Math.round(y.nonPayingPercent ?? 0) // seats out of 100 who ate as guests
   const paid = 100 - guests // seats that paid it forward
-  const diners = y.nights > 0 ? Math.round(y.customers / y.nights) : 0 // avg neighbours fed per night
   const seats = useMemo(() => Array.from({ length: 100 }, (_, i) => i < paid), [paid])
 
   // The band of seats that just flipped. The previous `paid` is tracked in
@@ -233,8 +182,8 @@ export function CommunalTable({ years }: { years: ImpactStoryYear[] }) {
               <span className="font-mono text-sun-200 text-base">
                 <TweenInt value={paid} />
               </span>{' '}
-              paid it forward
-              <span className="block text-xs text-cream-50/55">left koha on the plate</span>
+              left a koha
+              <span className="block text-xs text-cream-50/55">paid it forward</span>
             </span>
           </div>
           <div className="flex items-center gap-2.5 rounded-pill bg-clay-200/10 ring-1 ring-clay-200/30 pl-2 pr-4 py-1.5">
@@ -245,7 +194,7 @@ export function CommunalTable({ years }: { years: ImpactStoryYear[] }) {
               <span className="font-mono text-clay-200 text-base">
                 <TweenInt value={guests} />
               </span>{' '}
-              ate as our guests
+              needed a koha
               <span className="block text-xs text-cream-50/55">no charge, no questions</span>
             </span>
           </div>
@@ -255,7 +204,7 @@ export function CommunalTable({ years }: { years: ImpactStoryYear[] }) {
         <div
           ref={gridRef}
           role="img"
-          aria-label={`In ${y.year}, ${paid} of every 100 diners left koha and ${guests} ate as our guests.`}
+          aria-label={`In ${y.year}, ${paid} of every 100 diners left a koha and ${guests} needed a koha.`}
           className="grid [grid-template-columns:repeat(10,minmax(0,1fr))] sm:[grid-template-columns:repeat(20,minmax(0,1fr))] gap-[min(1.4vw,9px)] my-7"
         >
           {seats.map((didPay, i) => {
@@ -268,21 +217,7 @@ export function CommunalTable({ years }: { years: ImpactStoryYear[] }) {
           })}
         </div>
 
-        <div className="flex flex-wrap items-center justify-between gap-4 mt-6">
-          <div className="flex gap-8">
-            <div>
-              <div className="font-mono text-2xl sm:text-3xl text-cream-50 tabular-nums">
-                <TweenInt value={diners} />
-              </div>
-              <div className="text-xs text-cream-50/60 mt-1">neighbours fed that night</div>
-            </div>
-            <div>
-              <div className="font-mono text-2xl sm:text-3xl text-sun-200 tabular-nums">
-                <TweenMoney value={y.perHead} />
-              </div>
-              <div className="text-xs text-cream-50/60 mt-1">left in koha, on average</div>
-            </div>
-          </div>
+        <div className="flex items-center justify-end mt-6">
           <button
             type="button"
             onClick={play}
@@ -333,47 +268,6 @@ export function CommunalTable({ years }: { years: ImpactStoryYear[] }) {
             </button>
           ))}
         </div>
-
-        {/* The rising-need takeaway — the squeeze since the first year, held static */}
-        {showSqueeze && (
-          <div className="mt-9 pt-7 border-t border-cream-50/[0.12]">
-            <p className="eyebrow text-cream-50/55 mb-4">The squeeze since {base.year}</p>
-            <div className="grid gap-3 sm:grid-cols-2">
-              {showGuestsTrend && (
-                <div className="rounded-2xl bg-clay-200/10 px-5 py-4">
-                  <div className="flex items-center gap-2 text-xs text-cream-50/70">
-                    <TrendUp className="w-4 h-4 text-clay-200" />
-                    More of the table needs us
-                  </div>
-                  <div className="font-mono text-xl sm:text-2xl mt-2 tabular-nums">
-                    <span className="text-cream-50/50">{guestsBase}</span>
-                    <span className="text-cream-50/40 mx-1.5">&rarr;</span>
-                    <span className="text-clay-200">{guestsNow}</span>
-                    <span className="text-sm text-cream-50/60"> in 100 ate as guests</span>
-                  </div>
-                </div>
-              )}
-              {showKohaTrend && (
-                <div className="rounded-2xl bg-sun-200/[0.08] px-5 py-4">
-                  <div className="flex items-center gap-2 text-xs text-cream-50/70">
-                    <TrendDown className="w-4 h-4 text-sun-200" />
-                    And the koha stretches thinner
-                  </div>
-                  <div className="font-mono text-xl sm:text-2xl mt-2 tabular-nums">
-                    <span className="text-cream-50/50">
-                      {'$' + (base.perHead as number).toFixed(2)}
-                    </span>
-                    <span className="text-cream-50/40 mx-1.5">&rarr;</span>
-                    <span className="text-sun-200">
-                      {'$' + (latest.perHead as number).toFixed(2)}
-                    </span>
-                    <span className="text-sm text-cream-50/60"> a head</span>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
       </div>
     </div>
   )

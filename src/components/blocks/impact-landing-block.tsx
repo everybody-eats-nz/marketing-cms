@@ -1,13 +1,14 @@
 import Link from 'next/link'
 import type { ImpactStory } from '@/lib/impact-story'
 import { CountUp } from '@/components/count-up'
-import { fmt, money } from '@/components/impact/format'
+import { fmt } from '@/components/impact/format'
 import { CommunalTable } from '@/components/impact/communal-table'
 import { MealsGrowth } from '@/components/impact/meals-growth'
 import { VenueCards } from '@/components/impact/venue-cards'
 import { MilestoneLadder } from '@/components/impact/milestone-ladder'
 import { HeadlineStats } from '@/components/impact/headline-stats'
 import { DiningRoomMural } from '@/components/dining-room-mural'
+import { PayloadImage } from '@/components/payload-image'
 import { renderRichText } from './render-text'
 
 // Renders the `/impact` data story from CMS copy + LIVE portal figures. The
@@ -59,7 +60,6 @@ export function ImpactLandingBlock({ block, story }: { block: Block; story: Impa
   const range = first && last ? `${first} — ${last}` : null
   const firstYear = story.yearly[0]
   const tonnes = Math.round(t.foodSavedKg / 1000)
-  const guestShare = t.nonPayingPercent ?? null
 
   const vars = {
     meals: fmt(t.meals),
@@ -96,26 +96,58 @@ export function ImpactLandingBlock({ block, story }: { block: Block; story: Impa
                 label: b.statVolunteersLabel,
                 accent: 'text-clay-300',
               },
-              { value: money(t.koha), label: b.statKohaLabel, accent: 'text-content' },
             ]}
           />
         </div>
       </div>
 
-      {/* Pay-as-you-feel — the communal table */}
-      <section className="container-tight pb-4">
-        <div className="max-w-2xl mb-9">
-          <p className="eyebrow flex items-center gap-3 text-clay-300">
-            <span className="inline-block w-8 h-px bg-clay-300/60" />
-            {b.payEyebrow}
-          </p>
-          <h2 className="display text-3xl sm:text-5xl font-light text-content mt-4">
-            {renderRichText(b.payHeading)}
-          </h2>
-          <p className="text-base text-content/80 mt-5 leading-relaxed">{b.payBody}</p>
-        </div>
-        <CommunalTable years={story.yearly} />
-      </section>
+      {/* Impact stories — optional featured cards just under the header */}
+      {Array.isArray(b.stories) && b.stories.length > 0 && (
+        <section className="container-tight pb-16 sm:pb-20">
+          <div className="space-y-5">
+            {b.stories.map((s: Block, i: number) => {
+              const card = (
+                <article className="group grid overflow-hidden rounded-[1.75rem] border border-line/10 bg-surface-2 card-hover sm:grid-cols-[minmax(0,0.8fr)_1fr]">
+                  <div className="relative aspect-[4/3] bg-surface-3 sm:aspect-auto sm:min-h-[15rem]">
+                    <PayloadImage
+                      media={s.image}
+                      fill
+                      size="card"
+                      className="object-cover"
+                      sizes="(max-width: 640px) 100vw, 40vw"
+                    />
+                  </div>
+                  <div className="flex flex-col justify-center p-7 sm:p-9">
+                    {s.kicker && <p className="eyebrow text-clay-300">{s.kicker}</p>}
+                    <h3 className="display text-2xl sm:text-3xl font-light text-content mt-3">
+                      {renderRichText(s.heading)}
+                    </h3>
+                    {s.body && <p className="text-base text-content/75 mt-3 leading-relaxed">{s.body}</p>}
+                    {s.href && (
+                      <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-content">
+                        {s.ctaLabel || 'Read the story'}
+                        <span
+                          aria-hidden
+                          className="transition-transform duration-200 group-hover:translate-x-0.5"
+                        >
+                          &rarr;
+                        </span>
+                      </span>
+                    )}
+                  </div>
+                </article>
+              )
+              return s.href ? (
+                <Link key={i} href={s.href} className="block">
+                  {card}
+                </Link>
+              ) : (
+                <div key={i}>{card}</div>
+              )
+            })}
+          </div>
+        </section>
+      )}
 
       {/* Meals growing each year */}
       <section className="container-tight py-16 sm:py-24">
@@ -168,16 +200,6 @@ export function ImpactLandingBlock({ block, story }: { block: Block; story: Impa
         </div>
       </section>
 
-      {/* Where we serve */}
-      <section className="container-tight pb-16 sm:pb-24">
-        <SectionHead kicker={b.venuesEyebrow} title={renderRichText(b.venuesHeading)}>
-          {b.venuesBody}
-        </SectionHead>
-        <div className="mt-10">
-          <VenueCards locations={story.locations} />
-        </div>
-      </section>
-
       {/* The people */}
       <section className="container-wide pb-20 sm:pb-28">
         <div className="bg-forest-700 grain rounded-[2.5rem] sm:rounded-[3rem] [clip-path:inset(0_round_2.5rem)] sm:[clip-path:inset(0_round_3rem)] text-cream-50 px-7 sm:px-14 py-16 sm:py-20 relative overflow-hidden">
@@ -214,15 +236,6 @@ export function ImpactLandingBlock({ block, story }: { block: Block; story: Impa
                     label: b.peopleNightsLabel,
                     accent: 'text-cream-50',
                   },
-                  ...(guestShare != null
-                    ? [
-                        {
-                          value: `${guestShare}%`,
-                          label: b.peopleGuestsLabel,
-                          accent: 'text-clay-200',
-                        },
-                      ]
-                    : []),
                 ]}
               />
             </div>
@@ -235,6 +248,31 @@ export function ImpactLandingBlock({ block, story }: { block: Block; story: Impa
               <MilestoneLadder milestones={story.milestones} />
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Pay-as-you-feel — the communal table */}
+      <section className="container-tight pb-16 sm:pb-24">
+        <div className="max-w-2xl mb-9">
+          <p className="eyebrow flex items-center gap-3 text-clay-300">
+            <span className="inline-block w-8 h-px bg-clay-300/60" />
+            {b.payEyebrow}
+          </p>
+          <h2 className="display text-3xl sm:text-5xl font-light text-content mt-4">
+            {renderRichText(b.payHeading)}
+          </h2>
+          <p className="text-base text-content/80 mt-5 leading-relaxed">{b.payBody}</p>
+        </div>
+        <CommunalTable years={story.yearly} />
+      </section>
+
+      {/* Where we serve */}
+      <section className="container-tight pb-16 sm:pb-24">
+        <SectionHead kicker={b.venuesEyebrow} title={renderRichText(b.venuesHeading)}>
+          {b.venuesBody}
+        </SectionHead>
+        <div className="mt-10">
+          <VenueCards locations={story.locations} />
         </div>
       </section>
 

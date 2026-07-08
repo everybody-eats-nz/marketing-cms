@@ -17,6 +17,8 @@ import * as migration_20260707_211739_add_site_settings_announcement from './202
 import * as migration_20260707_213408_add_cta_strip_tertiary_cta from './20260707_213408_add_cta_strip_tertiary_cta';
 import * as migration_20260707_224143_redesign_partners_tiers from './20260707_224143_redesign_partners_tiers';
 import * as migration_20260707_230204_add_volunteer_faqs_block_fields from './20260707_230204_add_volunteer_faqs_block_fields';
+import * as migration_20260708_042844_add_impact_stories_block from './20260708_042844_add_impact_stories_block';
+import * as migration_20260708_044728_add_location_show_in_main_grids from './20260708_044728_add_location_show_in_main_grids';
 
 export const migrations = [
   {
@@ -112,6 +114,16 @@ export const migrations = [
   {
     up: migration_20260707_230204_add_volunteer_faqs_block_fields.up,
     down: migration_20260707_230204_add_volunteer_faqs_block_fields.down,
-    name: '20260707_230204_add_volunteer_faqs_block_fields'
+    name: '20260707_230204_add_volunteer_faqs_block_fields',
+  },
+  {
+    up: migration_20260708_042844_add_impact_stories_block.up,
+    down: migration_20260708_042844_add_impact_stories_block.down,
+    name: '20260708_042844_add_impact_stories_block',
+  },
+  {
+    up: migration_20260708_044728_add_location_show_in_main_grids.up,
+    down: migration_20260708_044728_add_location_show_in_main_grids.down,
+    name: '20260708_044728_add_location_show_in_main_grids'
   },
 ];
