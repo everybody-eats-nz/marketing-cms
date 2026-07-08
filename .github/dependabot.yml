@@ -14,6 +14,12 @@ updates:
     open-pull-requests-limit: 10
     labels:
       - dependencies
+    # CI enforces pnpm's minimumReleaseAge supply-chain policy (24h), which
+    # Dependabot's own resolver ignores - without a cooldown it proposes
+    # hours-old releases that CI then rejects (see PR #111). Two days keeps
+    # proposals comfortably past the policy window.
+    cooldown:
+      default-days: 2
     # Group related updates into a single PR to cut review noise.
     groups:
       payload:
