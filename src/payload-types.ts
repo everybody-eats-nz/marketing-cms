@@ -1228,6 +1228,10 @@ export interface Location {
    */
   openStatus?: ('open' | 'coming-soon' | 'closed') | null;
   /**
+   * When on, this venue appears in the main "restaurants" grids (e.g. /dine-with-us). Turn on for our permanent restaurants; leave off for pop-ups or one-off sites.
+   */
+  showInMainGrids?: boolean | null;
+  /**
    * One-line description shown on cards
    */
   tagline?: string | null;
@@ -2557,6 +2561,7 @@ export interface LocationsSelect<T extends boolean = true> {
   slug?: T;
   menuLocationName?: T;
   openStatus?: T;
+  showInMainGrids?: T;
   tagline?: T;
   intro?: T;
   body?: T;

@@ -63,7 +63,7 @@ export const IMPACT_DEFAULTS = {
   ctaSecondaryLabel: 'Volunteer with us',
 
   footerNote:
-    'Figures are drawn from Everybody Eats’ service records across {nights} dinners {range} and refresh automatically. Food rescued is estimated at {perMeal} kg per meal served. The opening and current years are partial. “Paid it forward” and “ate as our guests” reflect how many diners chose to leave koha on a typical night — everyone is welcome either way.',
+    'Figures are drawn from Everybody Eats’ service records across {nights} dinners {range} and refresh automatically. Food rescued is estimated at {perMeal} kg per meal served. The opening and current years are partial. “Left a koha” and “needed a koha” reflect how many diners chose to leave koha on a typical night — everyone is welcome either way.',
 }
 
 const text = (name: string, defaultValue: string) => ({

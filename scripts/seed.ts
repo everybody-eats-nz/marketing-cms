@@ -180,6 +180,7 @@ async function seedLocations(payload: any) {
         'https://bookings.nowbookit.com/?accountid=42c3d92b-6e94-405b-8f94-e52d98c2c9ec&venueid=14234&theme=light&colors=hex,0d3a23',
       payAtTableUrl: '/dine-with-us/pay/onehunga',
       openStatus: 'open',
+      showInMainGrids: true,
       hours: [{ label: 'Sun – Thu', times: '6pm – 8pm', note: 'Kitchen closes 8pm' }],
       heroImageFile: '6722e909b25b8836ac4fb3e8_IMG20240911130916.jpg',
     },
@@ -197,6 +198,7 @@ async function seedLocations(payload: any) {
         'https://bookings.nowbookit.com/?accountid=42c3d92b-6e94-405b-8f94-e52d98c2c9ec&venueid=14209&theme=light&colors=hex,0d3a23',
       payAtTableUrl: '/dine-with-us/pay/glen-innes',
       openStatus: 'open',
+      showInMainGrids: true,
       hours: [
         { label: 'Sun – Thu', times: '6pm – 8pm', note: 'Final sitting 7:45pm, kitchen closes 8pm' },
       ],
@@ -215,6 +217,7 @@ async function seedLocations(payload: any) {
         'https://bookings.nowbookit.com/?accountid=42c3d92b-6e94-405b-8f94-e52d98c2c9ec&venueid=14201&theme=light&colors=hex,0d3a23',
       payAtTableUrl: '/dine-with-us/pay/wellington',
       openStatus: 'open',
+      showInMainGrids: true,
       hours: [
         { label: 'Sun – Wed', times: '6pm – 8pm', note: 'Kitchen closes 8pm' },
         { label: 'Thu', times: 'Private bookings & events' },
