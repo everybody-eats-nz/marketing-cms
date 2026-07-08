@@ -1305,6 +1305,19 @@ export interface Location {
         id?: string | null;
       }[]
     | null;
+  /**
+   * The "How it works" column shown in the info strip near the top of the location page. Leave both blank to use the default wording.
+   */
+  howItWorks?: {
+    /**
+     * Emphasised first line, e.g. "One three-course menu nightly."
+     */
+    lead?: string | null;
+    /**
+     * Muted supporting line, e.g. "Pay what feels right when you leave."
+     */
+    detail?: string | null;
+  };
   phone?: string | null;
   email?: string | null;
   /**
@@ -2590,6 +2603,12 @@ export interface LocationsSelect<T extends boolean = true> {
         times?: T;
         note?: T;
         id?: T;
+      };
+  howItWorks?:
+    | T
+    | {
+        lead?: T;
+        detail?: T;
       };
   phone?: T;
   email?: T;

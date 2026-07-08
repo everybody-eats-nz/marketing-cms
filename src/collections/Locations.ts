@@ -130,6 +130,28 @@ export const Locations: CollectionConfig = {
                 { name: 'note', type: 'text', admin: { description: 'e.g. "Last seating 8.30pm"' } },
               ],
             },
+            {
+              name: 'howItWorks',
+              label: 'How it works',
+              type: 'group',
+              admin: {
+                description:
+                  'The "How it works" column shown in the info strip near the top of the location page. Leave both blank to use the default wording.',
+                hideGutter: true,
+              },
+              fields: [
+                {
+                  name: 'lead',
+                  type: 'text',
+                  admin: { description: 'Emphasised first line, e.g. "One three-course menu nightly."' },
+                },
+                {
+                  name: 'detail',
+                  type: 'text',
+                  admin: { description: 'Muted supporting line, e.g. "Pay what feels right when you leave."' },
+                },
+              ],
+            },
             { name: 'phone', type: 'text' },
             { name: 'email', type: 'email' },
             {

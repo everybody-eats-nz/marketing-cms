@@ -240,9 +240,9 @@ export default async function LocationPage({ params }: Params) {
           <div className="p-8 sm:p-10">
             <p className="eyebrow mb-2">How it works</p>
             <p className="text-content text-lg">
-              One three-course menu nightly.{' '}
+              {loc.howItWorks?.lead || 'One three-course menu nightly.'}{' '}
               <span className="text-muted/85">
-                Pay what feels right when you leave.
+                {loc.howItWorks?.detail || 'Pay what feels right when you leave.'}
               </span>
             </p>
           </div>
