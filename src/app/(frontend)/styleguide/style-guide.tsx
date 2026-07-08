@@ -153,7 +153,7 @@ function CopyChip({
   const base =
     tone === 'dark'
       ? 'text-sun-200 bg-cream-50/10 hover:bg-cream-50/20'
-      : 'text-content bg-forest-500/8 hover:bg-forest-500/16'
+      : 'text-content bg-forest-500/[0.08] hover:bg-forest-500/[0.16]'
 
   return (
     <button
@@ -182,7 +182,7 @@ function Code({ children, tone = 'light' }: { children: React.ReactNode; tone?: 
   return (
     <code
       className={`font-mono text-[0.72rem] px-1.5 py-0.5 rounded ${
-        tone === 'dark' ? 'text-sun-200 bg-cream-50/10' : 'text-content bg-forest-500/8'
+        tone === 'dark' ? 'text-sun-200 bg-cream-50/10' : 'text-content bg-forest-500/[0.08]'
       }`}
     >
       {children}
@@ -303,7 +303,7 @@ function ContrastChecker() {
                 <span
                   key={c.label}
                   className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium ${
-                    pass ? 'bg-forest-500/12 text-content' : 'bg-clay-300/15 text-content/55'
+                    pass ? 'bg-forest-500/[0.12] text-content' : 'bg-clay-300/15 text-content/55'
                   }`}
                 >
                   <span aria-hidden>{pass ? '✓' : '✕'}</span>
@@ -387,7 +387,7 @@ function TypePlayground() {
             className={`rounded-full px-3 py-1 text-xs font-mono transition-colors ${
               sizeKey === s.key
                 ? 'bg-content text-surface'
-                : 'bg-forest-500/8 text-content/70 hover:bg-forest-500/16'
+                : 'bg-forest-500/[0.08] text-content/70 hover:bg-forest-500/[0.16]'
             }`}
           >
             {s.key}
@@ -996,7 +996,7 @@ export function StyleGuide() {
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
                 {RADII.map((r) => (
                   <div key={r.cls} className="text-center">
-                    <div className={`${r.cls} h-24 bg-forest-500/12 border border-line/15 mb-2`} />
+                    <div className={`${r.cls} h-24 bg-forest-500/[0.12] border border-line/15 mb-2`} />
                     <CopyChip value={r.cls}>{r.label}</CopyChip>
                     <p className="mt-1 font-mono text-[0.65rem] text-content/45">{r.value}</p>
                   </div>
