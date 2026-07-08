@@ -3,3 +3,12 @@ allowBuilds:
   esbuild: true
   sharp: true
   unrs-resolver: true
+
+# Security overrides for vulnerable transitive dependencies (Dependabot):
+# - dompurify < 3.4.11: XSS/sanitization bypasses (pinned 3.2.7 by monaco-editor)
+# - postcss < 8.5.10: XSS via unescaped </style> (pinned 8.4.31 by next)
+# - esbuild < 0.25.0: dev server request forgery (pinned ~0.18.20 by @esbuild-kit under drizzle-kit)
+overrides:
+  dompurify@<3.4.11: ^3.4.11
+  postcss@<8.5.10: ^8.5.16
+  esbuild@<0.25.0: ^0.25.12
