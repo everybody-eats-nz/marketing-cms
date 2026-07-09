@@ -49,7 +49,7 @@ export const IMPACT_DEFAULTS = {
 
   peopleEyebrow: 'The people who show up',
   peopleHeading: 'Every plate is carried by a *volunteer.*',
-  peopleVolunteersLabel: 'volunteers in the door',
+  peopleCo2Label: 'kg of CO₂ saved',
   peopleHoursLabel: 'hours given',
   peopleNightsLabel: 'nights cooked & served',
   peopleSubheading: 'The regulars who keep coming back.',
@@ -184,7 +184,7 @@ export const ImpactLanding: Block = {
         {
           type: 'row',
           fields: [
-            text('peopleVolunteersLabel', IMPACT_DEFAULTS.peopleVolunteersLabel),
+            text('peopleCo2Label', IMPACT_DEFAULTS.peopleCo2Label),
             text('peopleHoursLabel', IMPACT_DEFAULTS.peopleHoursLabel),
           ],
         },
