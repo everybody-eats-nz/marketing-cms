@@ -1045,7 +1045,7 @@ export interface Page {
             intro?: string | null;
             statMealsLabel?: string | null;
             statFoodLabel?: string | null;
-            statVolunteersLabel?: string | null;
+            statCo2Label?: string | null;
             /**
              * Each renders as a compact card with an image.
              */
@@ -1089,7 +1089,7 @@ export interface Page {
              * Wrap a word in *asterisks* for the light editorial italic.
              */
             peopleHeading?: string | null;
-            peopleCo2Label?: string | null;
+            peopleVolunteersLabel?: string | null;
             peopleHoursLabel?: string | null;
             peopleNightsLabel?: string | null;
             peopleSubheading?: string | null;
@@ -2467,7 +2467,7 @@ export interface PagesSelect<T extends boolean = true> {
               intro?: T;
               statMealsLabel?: T;
               statFoodLabel?: T;
-              statVolunteersLabel?: T;
+              statCo2Label?: T;
               stories?:
                 | T
                 | {
@@ -2490,7 +2490,7 @@ export interface PagesSelect<T extends boolean = true> {
               rescuedMealsLabel?: T;
               peopleEyebrow?: T;
               peopleHeading?: T;
-              peopleCo2Label?: T;
+              peopleVolunteersLabel?: T;
               peopleHoursLabel?: T;
               peopleNightsLabel?: T;
               peopleSubheading?: T;
