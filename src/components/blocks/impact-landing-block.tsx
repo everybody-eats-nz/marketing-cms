@@ -124,8 +124,8 @@ export function ImpactLandingBlock({
               { value: `${fmt(t.meals)}`, label: b.statMealsLabel, accent: 'text-content' },
               { value: `${fmt(tonnes)}t`, label: b.statFoodLabel, accent: 'text-forest-400' },
               {
-                value: `${fmt(t.newVolunteers)}`,
-                label: b.statVolunteersLabel,
+                value: `${fmt(co2Kg)}`,
+                label: b.statCo2Label,
                 accent: 'text-clay-300',
               },
             ]}
@@ -254,8 +254,8 @@ export function ImpactLandingBlock({
                 onDark
                 stats={[
                   {
-                    value: `${fmt(co2Kg)}`,
-                    label: b.peopleCo2Label,
+                    value: `${fmt(t.volunteers)}`,
+                    label: b.peopleVolunteersLabel,
                     accent: 'text-cream-50',
                   },
                   {
