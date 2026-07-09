@@ -22,7 +22,7 @@ export const IMPACT_DEFAULTS = {
 
   statMealsLabel: 'meals served',
   statFoodLabel: 'food rescued',
-  statVolunteersLabel: 'volunteers welcomed',
+  statCo2Label: 'kg of CO₂ saved',
 
   payEyebrow: 'Pay as you feel',
   payHeading: 'Everyone eats. *However* much you can give.',
@@ -49,7 +49,7 @@ export const IMPACT_DEFAULTS = {
 
   peopleEyebrow: 'The people who show up',
   peopleHeading: 'Every plate is carried by a *volunteer.*',
-  peopleCo2Label: 'kg of CO₂ saved',
+  peopleVolunteersLabel: 'volunteers in the door',
   peopleHoursLabel: 'hours given',
   peopleNightsLabel: 'nights cooked & served',
   peopleSubheading: 'The regulars who keep coming back.',
@@ -100,7 +100,7 @@ export const ImpactLanding: Block = {
             text('statFoodLabel', IMPACT_DEFAULTS.statFoodLabel),
           ],
         },
-        text('statVolunteersLabel', IMPACT_DEFAULTS.statVolunteersLabel),
+        text('statCo2Label', IMPACT_DEFAULTS.statCo2Label),
       ],
     },
     {
@@ -184,7 +184,7 @@ export const ImpactLanding: Block = {
         {
           type: 'row',
           fields: [
-            text('peopleCo2Label', IMPACT_DEFAULTS.peopleCo2Label),
+            text('peopleVolunteersLabel', IMPACT_DEFAULTS.peopleVolunteersLabel),
             text('peopleHoursLabel', IMPACT_DEFAULTS.peopleHoursLabel),
           ],
         },
