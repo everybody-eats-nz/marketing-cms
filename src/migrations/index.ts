@@ -22,6 +22,7 @@ import * as migration_20260708_044728_add_location_show_in_main_grids from './20
 import * as migration_20260708_214350_add_location_how_it_works from './20260708_214350_add_location_how_it_works';
 import * as migration_20260708_223723_rename_impact_people_co2_label from './20260708_223723_rename_impact_people_co2_label';
 import * as migration_20260709_025244_swap_impact_co2_to_header from './20260709_025244_swap_impact_co2_to_header';
+import * as migration_20260709_025314_add_location_list_buttons from './20260709_025314_add_location_list_buttons';
 
 export const migrations = [
   {
@@ -142,6 +143,11 @@ export const migrations = [
   {
     up: migration_20260709_025244_swap_impact_co2_to_header.up,
     down: migration_20260709_025244_swap_impact_co2_to_header.down,
-    name: '20260709_025244_swap_impact_co2_to_header'
+    name: '20260709_025244_swap_impact_co2_to_header',
+  },
+  {
+    up: migration_20260709_025314_add_location_list_buttons.up,
+    down: migration_20260709_025314_add_location_list_buttons.down,
+    name: '20260709_025314_add_location_list_buttons',
   },
 ];
