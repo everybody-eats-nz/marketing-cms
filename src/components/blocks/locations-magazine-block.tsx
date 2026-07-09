@@ -97,12 +97,16 @@ export function LocationsMagazineBlock({ locations }: Props) {
                 </div>
               )}
               <div className="mt-8 flex flex-wrap gap-3">
-                <Link href={`/dine-with-us/${loc.slug}`} className="btn-primary">
-                  Visit {loc.name}
+                <Link
+                  href={loc.listButtons?.visitHref || `/dine-with-us/${loc.slug}`}
+                  className="btn-primary"
+                >
+                  {loc.listButtons?.visitLabel?.replace('{name}', loc.name) ||
+                    `Visit ${loc.name}`}
                 </Link>
                 {loc.bookingUrl && (
                   <a href={loc.bookingUrl} target="_blank" rel="noreferrer" className="btn-ghost">
-                    Book a table →
+                    {loc.listButtons?.bookLabel || 'Book a table →'}
                   </a>
                 )}
               </div>

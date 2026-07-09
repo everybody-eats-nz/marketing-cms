@@ -164,6 +164,41 @@ export const Locations: CollectionConfig = {
               type: 'text',
               admin: { description: 'Stripe / payment link' },
             },
+            {
+              name: 'listButtons',
+              label: 'Restaurant list buttons',
+              type: 'group',
+              admin: {
+                hideGutter: true,
+                description:
+                  'The two buttons shown for this restaurant on the /dine-with-us list. Leave any field blank to use the default. The "Book a table" button only appears when a Booking link is set above.',
+              },
+              fields: [
+                {
+                  name: 'visitLabel',
+                  type: 'text',
+                  admin: {
+                    description:
+                      'Primary button text. Use {name} for the restaurant name. Default: "Visit {name}".',
+                  },
+                },
+                {
+                  name: 'visitHref',
+                  type: 'text',
+                  admin: {
+                    description:
+                      'Where the primary button links. Default: this restaurant\'s page (/dine-with-us/<slug>).',
+                  },
+                },
+                {
+                  name: 'bookLabel',
+                  type: 'text',
+                  admin: {
+                    description: 'Secondary (booking) button text. Default: "Book a table →".',
+                  },
+                },
+              ],
+            },
           ],
         },
         {

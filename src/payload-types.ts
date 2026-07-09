@@ -1328,6 +1328,23 @@ export interface Location {
    * Stripe / payment link
    */
   payAtTableUrl?: string | null;
+  /**
+   * The two buttons shown for this restaurant on the /dine-with-us list. Leave any field blank to use the default. The "Book a table" button only appears when a Booking link is set above.
+   */
+  listButtons?: {
+    /**
+     * Primary button text. Use {name} for the restaurant name. Default: "Visit {name}".
+     */
+    visitLabel?: string | null;
+    /**
+     * Where the primary button links. Default: this restaurant's page (/dine-with-us/<slug>).
+     */
+    visitHref?: string | null;
+    /**
+     * Secondary (booking) button text. Default: "Book a table →".
+     */
+    bookLabel?: string | null;
+  };
   quotes?: (number | Quote)[] | null;
   highlights?:
     | {
@@ -2614,6 +2631,13 @@ export interface LocationsSelect<T extends boolean = true> {
   email?: T;
   bookingUrl?: T;
   payAtTableUrl?: T;
+  listButtons?:
+    | T
+    | {
+        visitLabel?: T;
+        visitHref?: T;
+        bookLabel?: T;
+      };
   quotes?: T;
   highlights?:
     | T
