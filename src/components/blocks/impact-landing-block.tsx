@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import type { ImpactStory } from '@/lib/impact-story'
+import { FOOD_KG_PER_MEAL, type ImpactStory } from '@/lib/impact-story'
 import { CountUp } from '@/components/count-up'
 import { fmt } from '@/components/impact/format'
 import { CommunalTable } from '@/components/impact/communal-table'
@@ -14,6 +14,10 @@ import { renderRichText } from './render-text'
 // Renders the `/impact` data story from CMS copy + LIVE portal figures. The
 // numbers and charts come from `story` (fetched in page-body.tsx); this block
 // only owns the prose around them. See src/blocks/ImpactLanding.ts.
+//
+// Exception: the food-rescued weight and the CO₂ saved from it are derived from
+// the live meal count × FOOD_KG_PER_MEAL (Everybody Eats' agreed estimate), not
+// the portal's own foodSavedKg/foodSavedKgPerMeal — see the constant's doc.
 
 type Block = Record<string, any>
 
@@ -69,10 +73,8 @@ export function ImpactLandingBlock({
   const last = monthYear(t.lastNight)
   const range = first && last ? `${first} — ${last}` : null
   const firstYear = story.yearly[0]
-  // Food rescued is estimated at a fixed rate per meal served (Everybody Eats'
-  // agreed figure), applied to the live meal count so the story stays consistent
-  // whether the data is live or the fallback.
-  const FOOD_KG_PER_MEAL = 0.75
+  // Food rescued = live meals × the agreed per-meal estimate (see FOOD_KG_PER_MEAL),
+  // so the story stays consistent whether the data is live or the fallback.
   const foodSavedKg = Math.round(t.meals * FOOD_KG_PER_MEAL)
   const tonnes = Math.round(foodSavedKg / 1000)
   // CO₂ emissions avoided by diverting that surplus food from landfill. Each kg of

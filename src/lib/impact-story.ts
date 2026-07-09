@@ -74,6 +74,16 @@ export type ImpactStory = {
 }
 
 /**
+ * Everybody Eats' agreed estimate of food rescued per meal served, in kilograms.
+ * The `/impact` page derives its food-rescued weight (and the CO₂ saved from it)
+ * from this rate × the live meal count, rather than the portal's own
+ * `foodSavedKg`/`foodSavedKgPerMeal`, so the headline uses the charity's agreed
+ * public figure regardless of how the portal happens to compute it. Single
+ * source of truth — the mock below and the renderer both read it.
+ */
+export const FOOD_KG_PER_MEAL = 0.75
+
+/**
  * Fetches the live impact story from the volunteer portal. Returns `null` on any
  * failure so callers fall back to {@link MOCK_IMPACT_STORY}. The frontend is
  * force-dynamic, so we cache in Next's data cache for an hour to avoid hitting
@@ -113,8 +123,8 @@ export const MOCK_IMPACT_STORY: ImpactStory = {
     newVolunteers: 5535,
     volunteers: 6842,
     volunteerHours: 174774,
-    foodSavedKg: 209741,
-    foodSavedKgPerMeal: 0.75,
+    foodSavedKg: Math.round(279655 * FOOD_KG_PER_MEAL),
+    foodSavedKgPerMeal: FOOD_KG_PER_MEAL,
     perHead: 5.92,
     perPaying: 15.31,
     nonPayingPercent: 62,
