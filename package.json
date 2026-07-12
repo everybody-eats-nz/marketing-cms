@@ -34,7 +34,7 @@
     "cross-env": "^10.1.0",
     "graphql": "^17.0.2",
     "next": "16.2.10",
-    "payload": "^3.85.2",
+    "payload": "^3.86.0",
     "posthog-js": "^1.396.7",
     "react": "19.2.7",
     "react-dom": "19.2.7",
