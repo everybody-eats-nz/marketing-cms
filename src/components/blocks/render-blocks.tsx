@@ -22,6 +22,21 @@ import { ValuesBlock } from './values-block'
 import { TestimonialsBlock } from './testimonials-block'
 import { DownloadsBlock } from './downloads-block'
 import { GalaLandingBlock } from './gala-landing-block'
+import {
+  GalaNoirHeroBlock,
+  GalaNoirProblemBlock,
+  GalaNoirAboutBlock,
+  GalaNoirNightBlock,
+  GalaNoirPerformersBlock,
+  GalaNoirChefsBlock,
+  GalaNoirCalculatorBlock,
+  GalaNoirTiersBlock,
+  GalaNoirTableBlock,
+  GalaNoirAuctionBlock,
+  GalaNoirInKindBlock,
+  GalaNoirQuotesBlock,
+  GalaNoirClosingBlock,
+} from './gala-noir-blocks'
 import { ImpactLandingBlock } from './impact-landing-block'
 import { HopperHeroBlock } from './hopper/hopper-hero-block'
 import { HopperStatementBlock } from './hopper/hopper-statement-block'
@@ -135,6 +150,32 @@ export function RenderBlocks({
             return <DownloadsBlock key={key} block={block as any} />
           case 'galaLanding':
             return <GalaLandingBlock key={key} block={block as any} />
+          case 'galaNoirHero':
+            return <GalaNoirHeroBlock key={key} block={block as any} />
+          case 'galaNoirProblem':
+            return <GalaNoirProblemBlock key={key} block={block as any} />
+          case 'galaNoirAbout':
+            return <GalaNoirAboutBlock key={key} block={block as any} />
+          case 'galaNoirNight':
+            return <GalaNoirNightBlock key={key} block={block as any} />
+          case 'galaNoirPerformers':
+            return <GalaNoirPerformersBlock key={key} block={block as any} />
+          case 'galaNoirChefs':
+            return <GalaNoirChefsBlock key={key} block={block as any} />
+          case 'galaNoirCalculator':
+            return <GalaNoirCalculatorBlock key={key} block={block as any} />
+          case 'galaNoirTiers':
+            return <GalaNoirTiersBlock key={key} block={block as any} />
+          case 'galaNoirTable':
+            return <GalaNoirTableBlock key={key} block={block as any} />
+          case 'galaNoirAuction':
+            return <GalaNoirAuctionBlock key={key} block={block as any} />
+          case 'galaNoirInKind':
+            return <GalaNoirInKindBlock key={key} block={block as any} />
+          case 'galaNoirQuotes':
+            return <GalaNoirQuotesBlock key={key} block={block as any} />
+          case 'galaNoirClosing':
+            return <GalaNoirClosingBlock key={key} block={block as any} />
           case 'impactLanding':
             return impactStory ? (
               <ImpactLandingBlock
