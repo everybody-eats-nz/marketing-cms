@@ -1151,7 +1151,7 @@ export interface Page {
             primaryCtaLabel?: string | null;
             secondaryCtaLabel?: string | null;
             /**
-             * Used by the primary CTA.
+             * Fallback for the hero buttons when the Sponsor or Host-a-table section is not on the page.
              */
             galaEmail: string;
             /**
@@ -1275,6 +1275,10 @@ export interface Page {
             blockType: 'galaNoirPerformers';
           }
         | {
+            /**
+             * Defaults to the silk texture.
+             */
+            image?: (number | null) | Media;
             eyebrow?: string | null;
             /**
              * Wrap a word in *asterisks* for the editorial italic.
@@ -2968,6 +2972,7 @@ export interface PagesSelect<T extends boolean = true> {
         galaNoirChefs?:
           | T
           | {
+              image?: T;
               eyebrow?: T;
               heading?: T;
               chefs?:

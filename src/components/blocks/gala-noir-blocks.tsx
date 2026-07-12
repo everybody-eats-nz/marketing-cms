@@ -1,5 +1,4 @@
 import React from 'react'
-import Image from 'next/image'
 import { FillImage } from '@/components/media-with-fallback'
 import { GalaCountdown } from '@/components/gala-countdown'
 import { renderRichText } from './render-text'
@@ -181,10 +180,31 @@ function SectionBackdrop({
 
 // ── Hero ─────────────────────────────────────────────────────────────────────
 
-export function GalaNoirHeroBlock({ block }: { block: Block }) {
+export function GalaNoirHeroBlock({
+  block,
+  pageBlockTypes,
+}: {
+  block: Block
+  pageBlockTypes?: Set<string>
+}) {
   const b = block
   const word: string = (b.word || 'GALA').trim()
   const ribbon: { item: string }[] = b.ribbon || []
+  const galaEmail: string = b.galaEmail || 'gala@everybodyeats.nz'
+
+  // The CTAs scroll to the Tiers (#sponsor) and Table (#table) sections, which
+  // are independently droppable blocks. When a target section isn't on the
+  // page, fall back to a mailto so the button never becomes a dead anchor.
+  // Without page context (pageBlockTypes undefined) keep the anchors — the
+  // seeded page ships with both sections.
+  const primaryHref =
+    !pageBlockTypes || pageBlockTypes.has('galaNoirTiers')
+      ? '#sponsor'
+      : mailto(galaEmail, 'Sponsorship — Everybody Eats Gala')
+  const secondaryHref =
+    !pageBlockTypes || pageBlockTypes.has('galaNoirTable')
+      ? '#table'
+      : mailto(galaEmail, 'Host a table — Everybody Eats Gala')
 
   return (
     <div className="gala-noir">
@@ -214,7 +234,7 @@ export function GalaNoirHeroBlock({ block }: { block: Block }) {
         </div>
 
         <div className="relative z-10 flex flex-1 flex-col">
-          <HeroBody b={b} word={word} />
+          <HeroBody b={b} word={word} primaryHref={primaryHref} secondaryHref={secondaryHref} />
         </div>
       </header>
 
@@ -241,7 +261,17 @@ export function GalaNoirHeroBlock({ block }: { block: Block }) {
 
 // Client HeroWord carries the pointer-parallax letters; script line above,
 // intro + countdown + CTAs below.
-function HeroBody({ b, word }: { b: Block; word: string }) {
+function HeroBody({
+  b,
+  word,
+  primaryHref,
+  secondaryHref,
+}: {
+  b: Block
+  word: string
+  primaryHref: string
+  secondaryHref: string
+}) {
   const ariaLabel = [b.scriptLine, word].filter(Boolean).join(' ')
   return (
     <HeroWord
@@ -268,12 +298,12 @@ function HeroBody({ b, word }: { b: Block; word: string }) {
           ) : null}
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             {b.primaryCtaLabel ? (
-              <a href="#sponsor" className="gn-btn gn-btn--gradient">
+              <a href={primaryHref} className="gn-btn gn-btn--gradient">
                 {b.primaryCtaLabel}
               </a>
             ) : null}
             {b.secondaryCtaLabel ? (
-              <a href="#table" className="gn-btn gn-btn--ghost">
+              <a href={secondaryHref} className="gn-btn gn-btn--ghost">
                 {b.secondaryCtaLabel}
               </a>
             ) : null}
@@ -501,16 +531,7 @@ export function GalaNoirChefsBlock({ block }: { block: Block }) {
   return (
     <div className="gala-noir">
       <section className="gn-section gn-grain overflow-hidden">
-        <div className="absolute inset-0" aria-hidden="true">
-          <Image
-            src={IMG.chefsBg}
-            alt=""
-            fill
-            sizes="100vw"
-            className="object-cover opacity-55"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-[var(--noir)] via-transparent to-[var(--noir)]" />
-        </div>
+        <SectionBackdrop media={b.image} fallback={IMG.chefsBg} opacity="opacity-55" />
         <div className="gn-container relative">
           <Reveal className="text-center">
             <Eyebrow>{b.eyebrow}</Eyebrow>

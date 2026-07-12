@@ -379,7 +379,11 @@ export const GalaNoirHero: Block = {
         text('secondaryCtaLabel', D.hero.secondaryCtaLabel),
       ],
     },
-    email('galaEmail', D.hero.galaEmail, 'Used by the primary CTA.'),
+    email(
+      'galaEmail',
+      D.hero.galaEmail,
+      'Fallback for the hero buttons when the Sponsor or Host-a-table section is not on the page.',
+    ),
     {
       name: 'showCountdown',
       type: 'checkbox' as const,
@@ -496,6 +500,7 @@ export const GalaNoirChefs: Block = {
   slug: 'galaNoirChefs',
   labels: { singular: 'Gala 2026 — Chefs', plural: 'Gala 2026 — Chefs' },
   fields: [
+    upload('image', 'Background image', 'Defaults to the silk texture.'),
     text('eyebrow', D.chefs.eyebrow),
     text('heading', D.chefs.heading, EM_HINT),
     {

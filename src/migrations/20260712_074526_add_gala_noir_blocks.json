@@ -8666,6 +8666,12 @@
           "primaryKey": true,
           "notNull": true
         },
+        "image_id": {
+          "name": "image_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
         "eyebrow": {
           "name": "eyebrow",
           "type": "varchar",
@@ -8732,9 +8738,37 @@
           "concurrently": false,
           "method": "btree",
           "with": {}
+        },
+        "pages_blocks_gala_noir_chefs_image_idx": {
+          "name": "pages_blocks_gala_noir_chefs_image_idx",
+          "columns": [
+            {
+              "expression": "image_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
         }
       },
       "foreignKeys": {
+        "pages_blocks_gala_noir_chefs_image_id_media_id_fk": {
+          "name": "pages_blocks_gala_noir_chefs_image_id_media_id_fk",
+          "tableFrom": "pages_blocks_gala_noir_chefs",
+          "tableTo": "media",
+          "columnsFrom": [
+            "image_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
         "pages_blocks_gala_noir_chefs_parent_id_fk": {
           "name": "pages_blocks_gala_noir_chefs_parent_id_fk",
           "tableFrom": "pages_blocks_gala_noir_chefs",
@@ -19704,6 +19738,12 @@
           "primaryKey": true,
           "notNull": true
         },
+        "image_id": {
+          "name": "image_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
         "eyebrow": {
           "name": "eyebrow",
           "type": "varchar",
@@ -19776,9 +19816,37 @@
           "concurrently": false,
           "method": "btree",
           "with": {}
+        },
+        "_pages_v_blocks_gala_noir_chefs_image_idx": {
+          "name": "_pages_v_blocks_gala_noir_chefs_image_idx",
+          "columns": [
+            {
+              "expression": "image_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
         }
       },
       "foreignKeys": {
+        "_pages_v_blocks_gala_noir_chefs_image_id_media_id_fk": {
+          "name": "_pages_v_blocks_gala_noir_chefs_image_id_media_id_fk",
+          "tableFrom": "_pages_v_blocks_gala_noir_chefs",
+          "tableTo": "media",
+          "columnsFrom": [
+            "image_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
         "_pages_v_blocks_gala_noir_chefs_parent_id_fk": {
           "name": "_pages_v_blocks_gala_noir_chefs_parent_id_fk",
           "tableFrom": "_pages_v_blocks_gala_noir_chefs",

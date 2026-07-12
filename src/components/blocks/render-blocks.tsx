@@ -82,6 +82,9 @@ export function RenderBlocks({
   fallbackHeroHeading,
 }: Props) {
   if (!blocks?.length) return null
+  // Lets a block adapt to which sibling sections are on the page (e.g. the
+  // gala hero only links to #sponsor / #table when those sections exist).
+  const pageBlockTypes = new Set(blocks.map((b) => b.blockType))
   return (
     <>
       {blocks.map((block, i) => {
@@ -151,7 +154,9 @@ export function RenderBlocks({
           case 'galaLanding':
             return <GalaLandingBlock key={key} block={block as any} />
           case 'galaNoirHero':
-            return <GalaNoirHeroBlock key={key} block={block as any} />
+            return (
+              <GalaNoirHeroBlock key={key} block={block as any} pageBlockTypes={pageBlockTypes} />
+            )
           case 'galaNoirProblem':
             return <GalaNoirProblemBlock key={key} block={block as any} />
           case 'galaNoirAbout':
