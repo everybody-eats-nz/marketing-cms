@@ -40,6 +40,22 @@ export const CardGrid: Block = {
       ],
     },
     {
+      name: 'download',
+      type: 'upload',
+      relationTo: 'documents',
+      admin: {
+        description: 'Optional. Attach a document (PDF) to render a download bar under the cards.',
+      },
+    },
+    {
+      name: 'downloadLabel',
+      type: 'text',
+      admin: {
+        description: "Overrides the document's title on the download bar. Leave blank to use it.",
+        condition: (_, siblingData) => Boolean(siblingData?.download),
+      },
+    },
+    {
       name: 'items',
       type: 'array',
       labels: { singular: 'Card', plural: 'Cards' },
