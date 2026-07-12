@@ -19,8 +19,16 @@ jobs:
         uses: actions/checkout@v7
 
       # Reads the pinned version from package.json "packageManager".
+      # standalone: true downloads that exact binary from GitHub releases.
+      # Without it, the action npm-installs its bundled pnpm which then
+      # self-switches via the npm registry - and that switch crashes
+      # ("Cannot use 'in' operator to search for 'integrity' in undefined")
+      # whenever the pinned version is younger than pnpm's default 24h
+      # minimumReleaseAge quarantine.
       - name: Setup pnpm
         uses: pnpm/action-setup@v6
+        with:
+          standalone: true
 
       - name: Setup Node
         uses: actions/setup-node@v6
