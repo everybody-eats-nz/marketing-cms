@@ -1115,6 +1115,10 @@ export interface Page {
             venuesHeading?: string | null;
             venuesBody?: string | null;
             /**
+             * Restaurant names to hide from the venue cards below. Matched against the live portal name as a case-insensitive regular expression, so "Glen Innes" also hides "Glen Innes Community" — enter a partial name to survive renames. Aggregate totals and charts above are unaffected (they come pre-aggregated from the portal).
+             */
+            excludedVenues?: string[] | null;
+            /**
              * Wrap a word in *asterisks* for the light editorial italic.
              */
             ctaHeading?: string | null;
@@ -2865,6 +2869,7 @@ export interface PagesSelect<T extends boolean = true> {
               venuesEyebrow?: T;
               venuesHeading?: T;
               venuesBody?: T;
+              excludedVenues?: T;
               ctaHeading?: T;
               ctaBody?: T;
               ctaPrimaryLabel?: T;

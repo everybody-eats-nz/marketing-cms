@@ -211,6 +211,15 @@ export const ImpactLanding: Block = {
         text('venuesEyebrow', IMPACT_DEFAULTS.venuesEyebrow),
         area('venuesHeading', IMPACT_DEFAULTS.venuesHeading, EM_HINT),
         area('venuesBody', IMPACT_DEFAULTS.venuesBody),
+        {
+          name: 'excludedVenues',
+          type: 'text',
+          hasMany: true,
+          admin: {
+            description:
+              'Restaurant names to hide from the venue cards below. Matched against the live portal name as a case-insensitive regular expression, so "Glen Innes" also hides "Glen Innes Community" — enter a partial name to survive renames. Aggregate totals and charts above are unaffected (they come pre-aggregated from the portal).',
+          },
+        },
       ],
     },
     {

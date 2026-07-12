@@ -25,6 +25,7 @@ import * as migration_20260709_025244_swap_impact_co2_to_header from './20260709
 import * as migration_20260709_025314_add_location_list_buttons from './20260709_025314_add_location_list_buttons';
 import * as migration_20260709_055347_add_card_grid_download from './20260709_055347_add_card_grid_download';
 import * as migration_20260712_074526_add_gala_noir_blocks from './20260712_074526_add_gala_noir_blocks';
+import * as migration_20260712_233042_add_impact_excluded_venues from './20260712_233042_add_impact_excluded_venues';
 
 export const migrations = [
   {
@@ -160,6 +161,11 @@ export const migrations = [
   {
     up: migration_20260712_074526_add_gala_noir_blocks.up,
     down: migration_20260712_074526_add_gala_noir_blocks.down,
-    name: '20260712_074526_add_gala_noir_blocks'
+    name: '20260712_074526_add_gala_noir_blocks',
+  },
+  {
+    up: migration_20260712_233042_add_impact_excluded_venues.up,
+    down: migration_20260712_233042_add_impact_excluded_venues.down,
+    name: '20260712_233042_add_impact_excluded_venues'
   },
 ];

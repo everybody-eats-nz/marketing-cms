@@ -81,6 +81,26 @@ export function ImpactLandingBlock({
   // rescued food ≈ 1 / 1.28458781 kg of CO₂ saved (Everybody Eats' agreed factor).
   const co2Kg = Math.round(foodSavedKg / 1.28458781)
 
+  // Editor-controlled exclusions: each entry is matched against the live portal
+  // venue name as a case-insensitive regex, so a partial name survives a rename
+  // (e.g. "Glen Innes" hides "Glen Innes Community"). An entry that isn't valid
+  // regex falls back to a literal case-insensitive substring match, so a stray
+  // character can never crash the page. Only affects the venue cards below.
+  const excludeMatchers = (Array.isArray(b.excludedVenues) ? b.excludedVenues : [])
+    .map((raw: any) => String(raw ?? '').trim())
+    .filter(Boolean)
+    .map((pattern: string) => {
+      try {
+        return new RegExp(pattern, 'i')
+      } catch {
+        const literal = pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+        return new RegExp(literal, 'i')
+      }
+    })
+  const visibleLocations = story.locations.filter(
+    (v) => !excludeMatchers.some((re: RegExp) => re.test(v.name || '')),
+  )
+
   // Permanent restaurants vs. pop-ups. A venue is "permanent" when its portal
   // name matches a CMS location flagged showInMainGrids, keyed the same way the
   // tonight's-menu lookup is (menuLocationName || name) so a display-name change
@@ -89,8 +109,8 @@ export function ImpactLandingBlock({
   const permanentNames = new Set(
     cmsLocations.map((l) => (l?.menuLocationName || l?.name || '').toLowerCase()).filter(Boolean),
   )
-  const permanentVenues = story.locations.filter((v) => permanentNames.has(v.name?.toLowerCase()))
-  const popupVenues = story.locations.filter((v) => !permanentNames.has(v.name?.toLowerCase()))
+  const permanentVenues = visibleLocations.filter((v) => permanentNames.has(v.name?.toLowerCase()))
+  const popupVenues = visibleLocations.filter((v) => !permanentNames.has(v.name?.toLowerCase()))
   const groupVenues = permanentVenues.length > 0 && popupVenues.length > 0
 
   const vars = {
@@ -316,7 +336,7 @@ export function ImpactLandingBlock({
           </div>
         ) : (
           <div className="mt-10">
-            <VenueCards locations={story.locations} />
+            <VenueCards locations={visibleLocations} />
           </div>
         )}
       </section>

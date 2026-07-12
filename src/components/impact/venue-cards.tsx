@@ -12,13 +12,20 @@ export function VenueCards({ locations }: { locations: ImpactStoryLocation[] }) 
   return (
     <InView className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {locations.map((v) => (
-        <div key={v.name} className="bg-surface-2 border border-line/10 rounded-3xl p-7 card-hover">
+        <div
+          key={v.name}
+          className="flex flex-col bg-surface-2 border border-line/10 rounded-3xl p-6 sm:p-7 card-hover"
+        >
           <div className="flex items-baseline justify-between gap-3">
-            <h3 className="display text-2xl font-light text-content">{v.name}</h3>
-            <span className="eyebrow">since {v.firstYear}</span>
+            <h3 className="display text-2xl font-light leading-[1.1] text-balance text-content">
+              {v.name}
+            </h3>
+            <span className="eyebrow shrink-0 whitespace-nowrap">since {v.firstYear}</span>
           </div>
 
-          <div className="mt-7 flex items-end justify-between gap-4">
+          {/* mt-auto pins the figures to the card's bottom so every card in a row
+              baseline-aligns, however many lines the venue name wraps to. */}
+          <div className="mt-auto flex items-end justify-between gap-4 pt-8">
             <div>
               <div className="display text-4xl font-light text-content tabular-nums leading-none">
                 <CountUp value={fmt(v.customers)} />
