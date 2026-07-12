@@ -551,6 +551,14 @@ export interface Page {
              * Visual treatment for the card backgrounds
              */
             cardStyle?: ('soft' | 'tile' | 'mixed') | null;
+            /**
+             * Optional. Attach a document (PDF) to render a download bar under the cards.
+             */
+            download?: (number | null) | Document;
+            /**
+             * Overrides the document's title on the download bar. Leave blank to use it.
+             */
+            downloadLabel?: string | null;
             items?:
               | {
                   /**
@@ -2129,6 +2137,8 @@ export interface PagesSelect<T extends boolean = true> {
               viewAllHref?: T;
               columns?: T;
               cardStyle?: T;
+              download?: T;
+              downloadLabel?: T;
               items?:
                 | T
                 | {
