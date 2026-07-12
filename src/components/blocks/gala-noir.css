@@ -1,0 +1,583 @@
+/* ============================================================
+   Gala 2026 "noir" — page-scoped design system for the gala-noir
+   blocks (see src/blocks/GalaNoir.ts). The art direction comes
+   from the 2026 sponsorship deck: black silk, candlelight ivory
+   serif, hot magenta, and the pink→peach→gold GALA gradient.
+
+   Deliberately NOT part of brand-tokens.ts: this is a campaign
+   art direction scoped to one page, so its tokens live here,
+   namespaced under .gala-noir, instead of leaking into the
+   site-wide Tailwind theme.
+   ============================================================ */
+
+.gala-noir {
+  /* -- tokens ------------------------------------------------ */
+  --noir: #0b0910;
+  --noir-raised: #16121c;
+  --ivory: #f5eedf;
+  --ivory-dim: rgba(245, 238, 223, 0.72);
+  --ivory-faint: rgba(245, 238, 223, 0.45);
+  --hairline: rgba(245, 238, 223, 0.16);
+  --magenta: #e81f7b;
+  --magenta-bright: #f14e96;
+  --magenta-deep: #d91e6e;
+  --grad-pink: #f06fa4;
+  --grad-peach: #f8a87d;
+  --grad-gold: #f3ce6f;
+  --gala-gradient: linear-gradient(
+    98deg,
+    var(--grad-pink) 8%,
+    var(--grad-peach) 52%,
+    var(--grad-gold) 92%
+  );
+
+  background: var(--noir);
+  color: var(--ivory);
+  overflow-x: clip;
+}
+
+.gala-noir ::selection {
+  background: var(--magenta);
+  color: #fff;
+}
+
+.gala-noir :focus-visible {
+  outline: 2px solid var(--grad-gold);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* -- type roles ---------------------------------------------- */
+
+.gn-display {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-optical-sizing: auto;
+  font-weight: 380;
+  letter-spacing: -0.015em;
+}
+
+.gn-display em,
+.gn-italic {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-style: italic;
+  font-weight: 330;
+}
+
+.gn-label {
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ivory-dim);
+}
+
+.gn-label--magenta {
+  color: var(--magenta-bright);
+}
+
+.gn-body {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--ivory-dim);
+}
+
+.gn-gradient-text {
+  background-image: var(--gala-gradient);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* -- layout -------------------------------------------------- */
+
+.gn-container {
+  width: 100%;
+  max-width: 78rem;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 3rem);
+}
+
+.gn-section {
+  position: relative;
+  padding-block: clamp(4.5rem, 10vw, 8.5rem);
+}
+
+.gn-rule {
+  border: 0;
+  border-top: 1px solid var(--hairline);
+}
+
+/* film grain over photographic sections */
+.gn-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ============================================================
+   Hero
+   ============================================================ */
+
+.gn-hero-word {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  line-height: 0.82;
+  user-select: none;
+}
+
+.gn-hero-letter {
+  display: inline-block;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 340;
+  font-size: clamp(7rem, 24.5vw, 23rem);
+  background-image: var(--gala-gradient);
+  background-size: 420% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 10px 60px rgba(11, 9, 16, 0.55));
+}
+
+.gn-hero-kicker {
+  text-shadow: 0 1px 18px rgba(11, 9, 16, 0.8);
+}
+
+@keyframes gn-kenburns {
+  from {
+    transform: scale(1.04) translateY(0);
+  }
+  to {
+    transform: scale(1.12) translateY(-1.5%);
+  }
+}
+
+.gn-hero-photo {
+  animation: gn-kenburns 26s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes gn-scrollcue {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translateY(8px);
+    opacity: 0.4;
+  }
+}
+
+.gn-scrollcue {
+  animation: gn-scrollcue 2.2s ease-in-out infinite;
+}
+
+/* ============================================================
+   Marquee ribbon
+   ============================================================ */
+
+.gn-marquee {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.gn-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: gn-marquee var(--marquee-speed, 30s) linear infinite;
+}
+
+.gn-marquee:hover .gn-marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes gn-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ============================================================
+   Stat figures
+   ============================================================ */
+
+.gn-stat-figure {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 330;
+  font-size: clamp(3rem, 6.5vw, 5.2rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.gn-impact-figure {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 350;
+  font-size: clamp(2.6rem, 6vw, 5rem);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============================================================
+   Feature list (the deck's underlined magenta lines)
+   ============================================================ */
+
+.gn-feature-line {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(1.25rem, 2.6vw, 1.9rem);
+  line-height: 1.2;
+  color: var(--magenta-bright);
+  padding-block: 0.85rem;
+  border-bottom: 1px solid var(--hairline);
+}
+
+/* ============================================================
+   Portrait cards
+   ============================================================ */
+
+.gn-portrait-card {
+  position: relative;
+  transform-style: preserve-3d;
+  border-radius: 0.35rem;
+  overflow: hidden;
+  background: var(--noir-raised);
+}
+
+.gn-portrait-card img {
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.gn-portrait-card:hover img {
+  transform: scale(1.045);
+}
+
+.gn-portrait-sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    520px circle at var(--mx, 50%) var(--my, 40%),
+    rgba(245, 238, 223, 0.14),
+    transparent 65%
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.gn-portrait-card:hover .gn-portrait-sheen {
+  opacity: 1;
+}
+
+/* chefs: b&w that warms to magenta on hover */
+.gn-chef-photo {
+  filter: grayscale(1);
+  transition: filter 0.6s ease;
+}
+
+.gn-chef-card:hover .gn-chef-photo,
+.gn-chef-card:focus-within .gn-chef-photo {
+  filter: grayscale(0.15) sepia(0.14) hue-rotate(-24deg) saturate(1.3);
+}
+
+/* ============================================================
+   Sponsorship tiers
+   ============================================================ */
+
+.gn-tier {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  border: 1px solid var(--hairline);
+  border-radius: 0.5rem;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  background: linear-gradient(180deg, rgba(245, 238, 223, 0.035), rgba(245, 238, 223, 0.008));
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.45s ease,
+    background 0.45s ease;
+}
+
+.gn-tier:hover {
+  transform: translateY(-6px);
+  border-color: rgba(245, 238, 223, 0.32);
+}
+
+.gn-tier--gold {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(180deg, #1a1420, #120e18) padding-box,
+    var(--gala-gradient) border-box;
+  overflow: hidden;
+}
+
+.gn-tier--gold::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(243, 206, 111, 0.14) 48%,
+    rgba(240, 111, 164, 0.12) 52%,
+    transparent 70%
+  );
+  transform: translateX(-120%);
+  transition: transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.gn-tier--gold:hover::before {
+  transform: translateX(120%);
+}
+
+.gn-tier-price {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 380;
+  font-size: clamp(2.2rem, 4vw, 3rem);
+  line-height: 1;
+  color: var(--magenta-bright);
+}
+
+.gn-scarcity {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.28rem 0.7rem;
+  border-radius: 999px;
+  background: #f9ee79;
+  color: #241d05;
+  font-size: 0.65rem;
+  font-weight: 750;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+
+.gn-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  min-height: 2.9rem;
+  padding: 0.7rem 1.5rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition:
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.25s ease,
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.gn-btn:active {
+  transform: scale(0.97);
+}
+
+.gn-btn--primary {
+  background: var(--magenta);
+  color: #fff;
+}
+
+.gn-btn--primary:hover {
+  background: var(--magenta-bright);
+  box-shadow: 0 8px 32px rgba(232, 31, 123, 0.4);
+  transform: translateY(-2px);
+}
+
+.gn-btn--gradient {
+  background: var(--gala-gradient);
+  color: #2b1210;
+}
+
+.gn-btn--gradient:hover {
+  box-shadow: 0 10px 36px rgba(243, 206, 111, 0.35);
+  transform: translateY(-2px);
+}
+
+.gn-btn--ghost {
+  border: 1px solid rgba(245, 238, 223, 0.35);
+  color: var(--ivory);
+  background: transparent;
+}
+
+.gn-btn--ghost:hover {
+  border-color: var(--ivory);
+  background: rgba(245, 238, 223, 0.07);
+  transform: translateY(-2px);
+}
+
+/* ============================================================
+   Seat calculator
+   ============================================================ */
+
+.gn-room-grid {
+  display: grid;
+  grid-template-columns: repeat(20, 1fr);
+  gap: clamp(3px, 0.5vw, 7px);
+}
+
+@media (max-width: 640px) {
+  .gn-room-grid {
+    grid-template-columns: repeat(10, 1fr);
+  }
+}
+
+.gn-room-dot {
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background: rgba(245, 238, 223, 0.12);
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+
+.gn-room-dot--lit {
+  background: var(--dot-color, var(--grad-peach));
+  box-shadow: 0 0 10px rgba(248, 168, 125, 0.55);
+  transform: scale(1.12);
+}
+
+.gn-range {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    var(--grad-pink) 0%,
+    var(--grad-gold) var(--fill, 50%),
+    rgba(245, 238, 223, 0.15) var(--fill, 50%)
+  );
+  cursor: pointer;
+}
+
+.gn-range::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: var(--ivory);
+  border: 3px solid var(--magenta);
+  box-shadow: 0 2px 14px rgba(232, 31, 123, 0.55);
+  transition: transform 0.15s ease;
+}
+
+.gn-range::-webkit-slider-thumb:hover {
+  transform: scale(1.12);
+}
+
+.gn-range::-moz-range-thumb {
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: var(--ivory);
+  border: 3px solid var(--magenta);
+  box-shadow: 0 2px 14px rgba(232, 31, 123, 0.55);
+}
+
+.gn-chip {
+  padding: 0.45rem 0.95rem;
+  border-radius: 999px;
+  border: 1px solid var(--hairline);
+  font-size: 0.75rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ivory-dim);
+  background: transparent;
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.gn-chip:hover {
+  border-color: rgba(245, 238, 223, 0.4);
+  color: var(--ivory);
+}
+
+.gn-chip--active {
+  background: var(--magenta);
+  border-color: var(--magenta);
+  color: #fff;
+}
+
+/* ============================================================
+   Testimonials
+   ============================================================ */
+
+.gn-quote-card {
+  width: clamp(18rem, 28vw, 24rem);
+  flex-shrink: 0;
+  white-space: normal;
+  border: 1px solid var(--hairline);
+  border-radius: 0.5rem;
+  padding: 1.4rem 1.6rem;
+  background: rgba(11, 9, 16, 0.72);
+  backdrop-filter: blur(6px);
+}
+
+/* ============================================================
+   Duotone photo treatment
+   ============================================================ */
+
+.gn-duotone {
+  isolation: isolate;
+  background: var(--magenta-deep);
+}
+
+.gn-duotone img {
+  filter: grayscale(1) contrast(1.05) brightness(1.5);
+  mix-blend-mode: multiply;
+}
+
+.gn-duotone::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(217, 30, 110, 0.18);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+/* ============================================================
+   Reduced motion
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .gala-noir *,
+  .gala-noir *::before,
+  .gala-noir *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .gn-marquee-track {
+    animation: none !important;
+    width: auto;
+    flex-wrap: wrap;
+  }
+
+  .gn-hero-photo {
+    animation: none !important;
+  }
+}

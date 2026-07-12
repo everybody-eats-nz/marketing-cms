@@ -552,7 +552,7 @@ export interface Page {
              */
             cardStyle?: ('soft' | 'tile' | 'mixed') | null;
             /**
-             * Optional. Attach a document (PDF) to render a download bar under the cards.
+             * Optional. Attach a document (PDF) to render a download bar at the top of the section, above the cards.
              */
             download?: (number | null) | Document;
             /**
@@ -1128,6 +1128,360 @@ export interface Page {
             id?: string | null;
             blockName?: string | null;
             blockType: 'impactLanding';
+          }
+        | {
+            /**
+             * Full-screen backdrop. Defaults to the peacock feathers.
+             */
+            image?: (number | null) | Media;
+            eyebrow?: string | null;
+            /**
+             * Top-right label. Wrap a word in *asterisks* for the editorial italic.
+             */
+            kitLine?: string | null;
+            /**
+             * The italic script line above the big word.
+             */
+            scriptLine?: string | null;
+            /**
+             * The giant gradient word. Keep it short — every letter is huge.
+             */
+            word?: string | null;
+            intro?: string | null;
+            primaryCtaLabel?: string | null;
+            secondaryCtaLabel?: string | null;
+            /**
+             * Fallback for the hero buttons when the Sponsor or Host-a-table section is not on the page.
+             */
+            galaEmail: string;
+            /**
+             * Show the live countdown to the event.
+             */
+            showCountdown?: boolean | null;
+            /**
+             * Drives the countdown. Use the event start time.
+             */
+            galaDateTime?: string | null;
+            ribbon?:
+              | {
+                  item: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'galaNoirHero';
+          }
+        | {
+            /**
+             * Faint full-bleed backdrop. Defaults to the dinner plate.
+             */
+            image?: (number | null) | Media;
+            eyebrow?: string | null;
+            /**
+             * Wrap a word in *asterisks* for the editorial italic.
+             */
+            heading?: string | null;
+            stats?:
+              | {
+                  /**
+                   * Numbers count up on scroll — e.g. “1 in 3”, “30%”, “1.22m”.
+                   */
+                  figure: string;
+                  body: string;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Wrap a word in *asterisks* for the editorial italic.
+             */
+            pullQuote?: string | null;
+            sources?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'galaNoirProblem';
+          }
+        | {
+            /**
+             * Wrap a word in *asterisks* for the editorial italic.
+             */
+            heading?: string | null;
+            tagline?: string | null;
+            bodyLeft?: string | null;
+            bodyRight?: string | null;
+            linkLabel?: string | null;
+            linkUrl?: string | null;
+            impactStats?:
+              | {
+                  /**
+                   * Counts up on scroll — e.g. “332,234+”.
+                   */
+                  value: string;
+                  label: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'galaNoirAbout';
+          }
+        | {
+            /**
+             * Defaults to the performers at the dinner table.
+             */
+            image?: (number | null) | Media;
+            imageCaption?: string | null;
+            eyebrow?: string | null;
+            /**
+             * Wrap a word in *asterisks* for the editorial italic.
+             */
+            heading?: string | null;
+            body?: string | null;
+            features?:
+              | {
+                  item: string;
+                  id?: string | null;
+                }[]
+              | null;
+            dresscode?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'galaNoirNight';
+          }
+        | {
+            /**
+             * Defaults to the iridescent texture.
+             */
+            image?: (number | null) | Media;
+            eyebrow?: string | null;
+            /**
+             * Wrap a word in *asterisks* for the editorial italic.
+             */
+            heading?: string | null;
+            performers?:
+              | {
+                  name: string;
+                  role: string;
+                  bio: string;
+                  /**
+                   * Optional. Falls back to the built-in image when left empty.
+                   */
+                  image?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'galaNoirPerformers';
+          }
+        | {
+            /**
+             * Defaults to the silk texture.
+             */
+            image?: (number | null) | Media;
+            eyebrow?: string | null;
+            /**
+             * Wrap a word in *asterisks* for the editorial italic.
+             */
+            heading?: string | null;
+            chefs?:
+              | {
+                  name: string;
+                  role: string;
+                  bio: string;
+                  /**
+                   * Optional. Falls back to the built-in image when left empty.
+                   */
+                  image?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'galaNoirChefs';
+          }
+        | {
+            eyebrow?: string | null;
+            /**
+             * Wrap a word in *asterisks* for the editorial italic.
+             */
+            heading?: string | null;
+            /**
+             * Wrap a word in *asterisks* for the editorial italic.
+             */
+            body?: string | null;
+            roomSeats?: number | null;
+            seatPrice?: number | null;
+            tablePrice?: number | null;
+            /**
+             * Annual cost of running one restaurant — drives the “days of open doors” maths.
+             */
+            annualCost?: number | null;
+            roomLabel?: string | null;
+            sliderLabel?: string | null;
+            footnote?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'galaNoirCalculator';
+          }
+        | {
+            eyebrow?: string | null;
+            /**
+             * Wrap a word in *asterisks* for the editorial italic.
+             */
+            heading?: string | null;
+            body?: string | null;
+            /**
+             * Enquiry address for every tier CTA.
+             */
+            galaEmail: string;
+            tiers?:
+              | {
+                  tier: string;
+                  /**
+                   * Scarcity chip — e.g. “One only”.
+                   */
+                  badge: string;
+                  title: string;
+                  price: string;
+                  /**
+                   * Gives the card the gradient “gold” treatment.
+                   */
+                  featured?: boolean | null;
+                  perks?:
+                    | {
+                        item: string;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'galaNoirTiers';
+          }
+        | {
+            /**
+             * Defaults to the table setting.
+             */
+            image?: (number | null) | Media;
+            imageCaption?: string | null;
+            eyebrow?: string | null;
+            /**
+             * Wrap a word in *asterisks* for the editorial italic.
+             */
+            heading?: string | null;
+            includes?:
+              | {
+                  item: string;
+                  id?: string | null;
+                }[]
+              | null;
+            price?: string | null;
+            priceLabel?: string | null;
+            seatNote?: string | null;
+            ctaLabel?: string | null;
+            secondaryCtaLabel?: string | null;
+            galaEmail: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'galaNoirTable';
+          }
+        | {
+            /**
+             * Defaults to the auctioneer on stage.
+             */
+            image?: (number | null) | Media;
+            imageCaption?: string | null;
+            eyebrow?: string | null;
+            /**
+             * Wrap a word in *asterisks* for the editorial italic.
+             */
+            heading?: string | null;
+            body?: string | null;
+            options?:
+              | {
+                  label: string;
+                  title: string;
+                  body: string;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Wrap a word in *asterisks* for the editorial italic. Any email address is auto-linked; {galaEmail} inserts the contact address.
+             */
+            note?: string | null;
+            galaEmail: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'galaNoirAuction';
+          }
+        | {
+            /**
+             * Wrap a word in *asterisks* for the editorial italic.
+             */
+            heading?: string | null;
+            body?: string | null;
+            benefits?:
+              | {
+                  item: string;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Any email address is auto-linked; {galaEmail} / {majorGiftsEmail} insert the contact addresses.
+             */
+            note?: string | null;
+            galaEmail: string;
+            majorGiftsEmail: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'galaNoirInKind';
+          }
+        | {
+            /**
+             * Rendered as a magenta duotone. Defaults to the gala room.
+             */
+            image?: (number | null) | Media;
+            /**
+             * The big display-caps title.
+             */
+            capsTitle?: string | null;
+            eyebrow?: string | null;
+            quotes?:
+              | {
+                  quote: string;
+                  name: string;
+                  place?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'galaNoirQuotes';
+          }
+        | {
+            /**
+             * Defaults to the volunteers at the gala.
+             */
+            image?: (number | null) | Media;
+            /**
+             * Wrap a word in *asterisks* for the editorial italic.
+             */
+            heading?: string | null;
+            body?: string | null;
+            /**
+             * The primary CTA is a mailto to this address.
+             */
+            galaEmail: string;
+            secondaryCtaLabel?: string | null;
+            secondaryCtaUrl?: string | null;
+            footerLeft?: string | null;
+            footerRight?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'galaNoirClosing';
           }
         | {
             /**
@@ -2516,6 +2870,253 @@ export interface PagesSelect<T extends boolean = true> {
               ctaPrimaryLabel?: T;
               ctaSecondaryLabel?: T;
               footerNote?: T;
+              id?: T;
+              blockName?: T;
+            };
+        galaNoirHero?:
+          | T
+          | {
+              image?: T;
+              eyebrow?: T;
+              kitLine?: T;
+              scriptLine?: T;
+              word?: T;
+              intro?: T;
+              primaryCtaLabel?: T;
+              secondaryCtaLabel?: T;
+              galaEmail?: T;
+              showCountdown?: T;
+              galaDateTime?: T;
+              ribbon?:
+                | T
+                | {
+                    item?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        galaNoirProblem?:
+          | T
+          | {
+              image?: T;
+              eyebrow?: T;
+              heading?: T;
+              stats?:
+                | T
+                | {
+                    figure?: T;
+                    body?: T;
+                    id?: T;
+                  };
+              pullQuote?: T;
+              sources?: T;
+              id?: T;
+              blockName?: T;
+            };
+        galaNoirAbout?:
+          | T
+          | {
+              heading?: T;
+              tagline?: T;
+              bodyLeft?: T;
+              bodyRight?: T;
+              linkLabel?: T;
+              linkUrl?: T;
+              impactStats?:
+                | T
+                | {
+                    value?: T;
+                    label?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        galaNoirNight?:
+          | T
+          | {
+              image?: T;
+              imageCaption?: T;
+              eyebrow?: T;
+              heading?: T;
+              body?: T;
+              features?:
+                | T
+                | {
+                    item?: T;
+                    id?: T;
+                  };
+              dresscode?: T;
+              id?: T;
+              blockName?: T;
+            };
+        galaNoirPerformers?:
+          | T
+          | {
+              image?: T;
+              eyebrow?: T;
+              heading?: T;
+              performers?:
+                | T
+                | {
+                    name?: T;
+                    role?: T;
+                    bio?: T;
+                    image?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        galaNoirChefs?:
+          | T
+          | {
+              image?: T;
+              eyebrow?: T;
+              heading?: T;
+              chefs?:
+                | T
+                | {
+                    name?: T;
+                    role?: T;
+                    bio?: T;
+                    image?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        galaNoirCalculator?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              body?: T;
+              roomSeats?: T;
+              seatPrice?: T;
+              tablePrice?: T;
+              annualCost?: T;
+              roomLabel?: T;
+              sliderLabel?: T;
+              footnote?: T;
+              id?: T;
+              blockName?: T;
+            };
+        galaNoirTiers?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              body?: T;
+              galaEmail?: T;
+              tiers?:
+                | T
+                | {
+                    tier?: T;
+                    badge?: T;
+                    title?: T;
+                    price?: T;
+                    featured?: T;
+                    perks?:
+                      | T
+                      | {
+                          item?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        galaNoirTable?:
+          | T
+          | {
+              image?: T;
+              imageCaption?: T;
+              eyebrow?: T;
+              heading?: T;
+              includes?:
+                | T
+                | {
+                    item?: T;
+                    id?: T;
+                  };
+              price?: T;
+              priceLabel?: T;
+              seatNote?: T;
+              ctaLabel?: T;
+              secondaryCtaLabel?: T;
+              galaEmail?: T;
+              id?: T;
+              blockName?: T;
+            };
+        galaNoirAuction?:
+          | T
+          | {
+              image?: T;
+              imageCaption?: T;
+              eyebrow?: T;
+              heading?: T;
+              body?: T;
+              options?:
+                | T
+                | {
+                    label?: T;
+                    title?: T;
+                    body?: T;
+                    id?: T;
+                  };
+              note?: T;
+              galaEmail?: T;
+              id?: T;
+              blockName?: T;
+            };
+        galaNoirInKind?:
+          | T
+          | {
+              heading?: T;
+              body?: T;
+              benefits?:
+                | T
+                | {
+                    item?: T;
+                    id?: T;
+                  };
+              note?: T;
+              galaEmail?: T;
+              majorGiftsEmail?: T;
+              id?: T;
+              blockName?: T;
+            };
+        galaNoirQuotes?:
+          | T
+          | {
+              image?: T;
+              capsTitle?: T;
+              eyebrow?: T;
+              quotes?:
+                | T
+                | {
+                    quote?: T;
+                    name?: T;
+                    place?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        galaNoirClosing?:
+          | T
+          | {
+              image?: T;
+              heading?: T;
+              body?: T;
+              galaEmail?: T;
+              secondaryCtaLabel?: T;
+              secondaryCtaUrl?: T;
+              footerLeft?: T;
+              footerRight?: T;
               id?: T;
               blockName?: T;
             };
