@@ -1,8 +1,8 @@
 /**
  * Move the cooking-sessions page's PDF downloads out of the standalone
  * Downloads block and into the experience sections they belong to, using the
- * card grid `download` field (rendered as a download bar under each section's
- * cards).
+ * card grid `download` field (rendered as a download bar at the top of each
+ * section, above its cards).
  *
  * Matching is by title: each Downloads item (its override title, or the
  * document's own) is matched against the card grid headings on the same page
@@ -11,7 +11,9 @@
  * that match nothing leave the Downloads block in place (trimmed to just the
  * unmatched leftovers) so no file ever disappears from the page.
  *
- * Idempotent: re-running when the Downloads block is gone is a no-op.
+ * Idempotent: re-running when the Downloads block is gone is a no-op. Operates
+ * on the page's latest version and preserves its status — a published page is
+ * republished, a page with pending draft edits stays a draft.
  *
  * Run AFTER deploying the code (the migration adding `download_id` must have
  * run). NODE_ENV=production keeps Payload from schema-pushing:
@@ -45,6 +47,9 @@ async function main() {
     where: { slug: { equals: PAGE_SLUG } },
     limit: 1,
     depth: 0,
+    // Operate on the latest version — a pending draft if one exists — so we
+    // move the downloads inside it rather than off the stale published copy.
+    draft: true,
   })
   const page = found.docs[0] as any
   if (!page) throw new Error(`Page not found: ${PAGE_SLUG}`)
@@ -93,12 +98,16 @@ async function main() {
     console.log('✓ removed the Downloads block')
   }
 
+  // Preserve the page's current status: republish only if it was already
+  // published, otherwise keep it a draft so we never publish someone's
+  // in-progress edits.
+  const status: 'published' | 'draft' = page._status === 'published' ? 'published' : 'draft'
   await payload.update({
     collection: 'pages',
     id: page.id,
-    data: { layout, _status: 'published' },
+    data: { layout, _status: status },
   })
-  console.log(`\nDone — /${PAGE_SLUG} updated and published.`)
+  console.log(`\nDone — /${PAGE_SLUG} updated (${status}).`)
   process.exit(0)
 }
 

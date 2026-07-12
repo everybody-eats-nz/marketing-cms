@@ -44,7 +44,8 @@ export const CardGrid: Block = {
       type: 'upload',
       relationTo: 'documents',
       admin: {
-        description: 'Optional. Attach a document (PDF) to render a download bar under the cards.',
+        description:
+          'Optional. Attach a document (PDF) to render a download bar at the top of the section, above the cards.',
       },
     },
     {
