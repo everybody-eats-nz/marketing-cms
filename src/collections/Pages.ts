@@ -24,6 +24,7 @@ import { Values } from '../blocks/Values'
 import { Testimonials } from '../blocks/Testimonials'
 import { Downloads } from '../blocks/Downloads'
 import { GalaLanding } from '../blocks/GalaLanding'
+import { GALA_NOIR_BLOCKS } from '../blocks/GalaNoir'
 import { ImpactLanding } from '../blocks/ImpactLanding'
 import { HopperHero } from '../blocks/HopperHero'
 import { HopperStatement } from '../blocks/HopperStatement'
@@ -150,6 +151,9 @@ export const Pages: CollectionConfig = {
         Downloads,
         GalaLanding,
         ImpactLanding,
+        // Gala 2026 "noir" sections - one block per section so the sponsorship
+        // page can be reordered and edited piecewise (see src/blocks/GalaNoir.ts).
+        ...GALA_NOIR_BLOCKS,
         // Hopper Cafe blocks — standalone brand, meant for the /hopper page
         // (which renders chrome-free via src/app/(hopper)/).
         HopperHero,
