@@ -18,17 +18,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
 
-      # Reads the pinned version from package.json "packageManager".
-      # standalone: true downloads that exact binary from GitHub releases.
-      # Without it, the action npm-installs its bundled pnpm which then
-      # self-switches via the npm registry - and that switch crashes
-      # ("Cannot use 'in' operator to search for 'integrity' in undefined")
-      # whenever the pinned version is younger than pnpm's default 24h
-      # minimumReleaseAge quarantine.
+      # Install the exact pnpm version pinned in package.json "packageManager"
+      # via npm rather than pnpm/action-setup. The action lets an older
+      # bundled pnpm self-switch to the pinned version through the registry,
+      # which crashes whenever the pin is younger than pnpm's 24h
+      # minimumReleaseAge quarantine ("Cannot use 'in' operator to search for
+      # 'integrity' in undefined"), and its standalone mode leaves a broken
+      # placeholder binary. npm applies no release-age quarantine, and because
+      # the installed version matches the pin, pnpm never tries to switch.
       - name: Setup pnpm
-        uses: pnpm/action-setup@v6
-        with:
-          standalone: true
+        run: npm install -g "pnpm@$(node -p "require('./package.json').packageManager.match(/pnpm@([^+]+)/)[1]")"
 
       - name: Setup Node
         uses: actions/setup-node@v6
