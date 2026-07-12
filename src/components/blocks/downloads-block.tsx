@@ -1,13 +1,5 @@
 import { renderRichText } from './render-text'
-
-type DocFile = {
-  url?: string
-  filename?: string
-  filesize?: number
-  mimeType?: string
-  title?: string
-  description?: string
-}
+import { type DocFile, formatBytes, fileLabel } from './file-meta'
 
 type Item = {
   file?: DocFile | string | null
@@ -29,18 +21,6 @@ const COLUMN_CLASSES: Record<string, string> = {
   '1': '',
   '2': 'sm:grid-cols-2',
   '3': 'sm:grid-cols-2 lg:grid-cols-3',
-}
-
-function formatBytes(bytes?: number) {
-  if (!bytes || bytes <= 0) return null
-  const mb = bytes / (1024 * 1024)
-  if (mb >= 1) return `${mb.toFixed(1)} MB`
-  return `${Math.max(1, Math.round(bytes / 1024))} KB`
-}
-
-function fileLabel(mimeType?: string) {
-  if (mimeType === 'application/pdf') return 'PDF'
-  return mimeType?.split('/')[1]?.toUpperCase() || 'FILE'
 }
 
 export function DownloadsBlock({ block }: Props) {

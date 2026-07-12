@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { renderRichText } from './render-text'
+import { type DocFile, formatBytes, fileLabel } from './file-meta'
 
 type Card = {
   number?: string
@@ -19,6 +20,8 @@ type Props = {
     viewAllHref?: string
     columns?: '2' | '3' | '4'
     cardStyle?: 'soft' | 'tile' | 'mixed'
+    download?: DocFile | string | null
+    downloadLabel?: string
     items?: Card[]
   }
 }
@@ -42,11 +45,79 @@ export function CardGridBlock({ block }: Props) {
   if (!items.length) return null
   const colClass = COLUMN_CLASSES[block.columns || '3']
   const style = block.cardStyle || 'soft'
+  // Only a populated (object) upload with a URL is renderable.
+  const download =
+    typeof block.download === 'object' && block.download?.url ? block.download : null
 
   const wrapperClasses =
     style === 'tile'
       ? `grid gap-px bg-line/15 rounded-3xl overflow-hidden ${colClass}`
       : `grid gap-6 ${colClass}`
+
+  const downloadBar = download && (
+    <a
+      href={download.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      download={download.filename}
+      className="group grain mb-6 flex items-center gap-5 rounded-[1.75rem] bg-surface-2 p-6 sm:px-8 transition-colors hover:bg-surface-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forest-500 focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+    >
+      <span
+        className="shrink-0 grid place-items-center size-12 rounded-2xl bg-forest-700 text-cream-50"
+        aria-hidden
+      >
+        <svg
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+          <path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2Z" />
+          <path d="M12 11v6" />
+          <path d="m9.5 14.5 2.5 2.5 2.5-2.5" />
+        </svg>
+      </span>
+
+      <span className="min-w-0 flex-1">
+        <span className="flex items-center gap-2 mb-0.5 font-mono text-[0.7rem] uppercase tracking-[0.18em] text-muted/70">
+          {fileLabel(download.mimeType)}
+          {formatBytes(download.filesize) && (
+            <>
+              <span aria-hidden>·</span>
+              <span>{formatBytes(download.filesize)}</span>
+            </>
+          )}
+        </span>
+        <span className="block display text-lg sm:text-xl font-medium text-content leading-snug">
+          {block.downloadLabel || download.title || download.filename || 'Download'}
+        </span>
+      </span>
+
+      <span className="shrink-0 inline-flex items-center gap-1.5 text-sm font-medium text-forest-500 dark:text-forest-200 group-hover:gap-2.5 transition-all">
+        <span className="hidden sm:inline">Download</span>
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden
+        >
+          <path d="M12 4v12" />
+          <path d="m6 12 6 6 6-6" />
+          <path d="M5 20h14" />
+        </svg>
+      </span>
+    </a>
+  )
 
   return (
     <section className="container-wide py-16 sm:py-24">
@@ -67,6 +138,8 @@ export function CardGridBlock({ block }: Props) {
           )}
         </div>
       )}
+
+      {downloadBar}
 
       <div className={wrapperClasses}>
         {items.map((c, i) => {
