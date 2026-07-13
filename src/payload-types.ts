@@ -1102,6 +1102,10 @@ export interface Page {
             peopleNightsLabel?: string | null;
             peopleSubheading?: string | null;
             peopleSubbody?: string | null;
+            /**
+             * Hide this whole section, including the interactive drag-through-the-years table.
+             */
+            hidePayTable?: boolean | null;
             payEyebrow?: string | null;
             /**
              * Wrap a word in *asterisks* for the light editorial italic.
@@ -2871,6 +2875,7 @@ export interface PagesSelect<T extends boolean = true> {
               peopleNightsLabel?: T;
               peopleSubheading?: T;
               peopleSubbody?: T;
+              hidePayTable?: T;
               payEyebrow?: T;
               payHeading?: T;
               payBody?: T;
