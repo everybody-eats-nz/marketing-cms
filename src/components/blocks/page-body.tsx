@@ -69,18 +69,37 @@ export async function PageBody({ page, isDraft }: { page: any; isDraft: boolean 
         })
       : Promise.resolve({ docs: [] as any[] }),
     needEvents
-      ? payload.find({
-          collection: 'events',
-          limit: 8,
-          sort: '-date',
-          depth: 1,
+      ? (async () => {
+          const nowIso = new Date().toISOString()
           // Outside preview, hide unpublished events so the list doesn't link to
           // pages that 404 (events/[slug]/page.tsx only serves published docs).
-          where: {
-            date: { greater_than: new Date(0).toISOString() },
-            ...(isDraft ? {} : { _status: { equals: 'published' } }),
-          },
-        })
+          // Lead with upcoming events (soonest first) and fill the remaining
+          // slots with the most recent past events. A single -date sort can't
+          // express this split around "now", so we run one query per side.
+          const [upcoming, past] = await Promise.all([
+            payload.find({
+              collection: 'events',
+              limit: 8,
+              sort: 'date',
+              depth: 1,
+              where: {
+                date: { greater_than_equal: nowIso },
+                ...(isDraft ? {} : { _status: { equals: 'published' } }),
+              },
+            }),
+            payload.find({
+              collection: 'events',
+              limit: 8,
+              sort: '-date',
+              depth: 1,
+              where: {
+                date: { less_than: nowIso },
+                ...(isDraft ? {} : { _status: { equals: 'published' } }),
+              },
+            }),
+          ])
+          return { docs: [...upcoming.docs, ...past.docs] }
+        })()
       : Promise.resolve({ docs: [] as any[] }),
     needJournal
       ? payload.find({
