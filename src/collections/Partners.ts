@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { slugField } from '../fields/slug'
 
 export const Partners: CollectionConfig = {
   slug: 'partners',
@@ -10,7 +11,7 @@ export const Partners: CollectionConfig = {
   access: { read: () => true },
   fields: [
     { name: 'name', type: 'text', required: true },
-    { name: 'slug', type: 'text', required: true, unique: true, index: true },
+    slugField({ from: 'name' }),
     {
       name: 'tier',
       type: 'select',

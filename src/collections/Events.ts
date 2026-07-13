@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { seoField } from '../fields/seo'
+import { slugField } from '../fields/slug'
 
 export const Events: CollectionConfig = {
   slug: 'events',
@@ -12,13 +13,7 @@ export const Events: CollectionConfig = {
   versions: { drafts: true },
   fields: [
     { name: 'name', type: 'text', required: true },
-    {
-      name: 'slug',
-      type: 'text',
-      required: true,
-      unique: true,
-      index: true,
-    },
+    slugField({ from: 'name' }),
     {
       name: 'date',
       type: 'date',

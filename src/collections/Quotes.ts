@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { slugField } from '../fields/slug'
 
 export const Quotes: CollectionConfig = {
   slug: 'quotes',
@@ -8,7 +9,7 @@ export const Quotes: CollectionConfig = {
   },
   access: { read: () => true },
   fields: [
-    { name: 'slug', type: 'text', required: true, unique: true, index: true, admin: { description: 'Stable identifier — e.g. "wellington-diner-2024"' } },
+    slugField({ from: 'attribution', description: 'Stable identifier — e.g. "wellington-diner-2024"' }),
     { name: 'quote', type: 'textarea', required: true },
     {
       name: 'attribution',

@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { seoField } from '../fields/seo'
+import { slugField } from '../fields/slug'
 import { Hero } from '../blocks/Hero'
 import { RichText } from '../blocks/RichText'
 import { Stats } from '../blocks/Stats'
@@ -81,14 +82,11 @@ export const Pages: CollectionConfig = {
   versions: { drafts: true, maxPerDoc: 25 },
   fields: [
     { name: 'title', type: 'text', required: true },
-    {
-      name: 'slug',
-      type: 'text',
-      required: true,
-      unique: true,
-      index: true,
-      admin: { description: 'URL path, e.g. "about" or "locations/wellington"' },
-    },
+    slugField({
+      from: 'title',
+      allowSlashes: true,
+      description: 'URL path, e.g. "about" or "locations/wellington"',
+    }),
     {
       name: 'updatedBy',
       type: 'relationship',
