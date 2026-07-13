@@ -74,7 +74,7 @@ export function GalaCountdownBar({
 
   const clock =
     time === undefined
-      ? ' '
+      ? ' '
       : `${time.d}d ${String(time.h).padStart(2, '0')}h ${String(time.m).padStart(2, '0')}m`
 
   const content = (
