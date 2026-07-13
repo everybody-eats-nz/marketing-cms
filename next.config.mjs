@@ -17,12 +17,44 @@ const nextConfig = {
     ],
   },
   reactCompiler: false,
-  // Preserve inbound links to the old Webflow legal URLs (the pages now live at
-  // /terms and /privacy — see scripts/seed-legal-pages.ts).
+  // Preserve inbound links from the old Webflow/Squarespace URLs. All 301
+  // (permanent). Path-level SEO redirect map — see docs/seo-migration-audit.md
+  // §2 for the traffic rationale behind each. Host canonicalisation (www→apex,
+  // http→https) is handled at the proxy/DNS layer, not here (§5).
+  //
+  // Order matters: Next matches top-to-bottom, first hit wins. Keep the more
+  // specific sources above their broader parents.
   async redirects() {
     return [
+      // Old Webflow legal URLs (pages now live at /terms and /privacy —
+      // see scripts/seed-legal-pages.ts).
       { source: '/hygiene/terms-and-conditions', destination: '/terms', permanent: true },
       { source: '/hygiene/privacy-policy', destination: '/privacy', permanent: true },
+
+      // Collection renamed journal-posts → journal. Wildcard covers all posts.
+      // Verify leaf-slug parity against the CMS (audit §3); add explicit
+      // /journal-posts/<old> → /journal/<new> entries ABOVE this line where a
+      // slug differs.
+      { source: '/journal-posts/:slug*', destination: '/journal/:slug*', permanent: true },
+
+      // Squarespace duplicate of the Onehunga location page (1,468 clicks/yr).
+      { source: '/dine-with-us/onehunga-auck', destination: '/dine-with-us/onehunga', permanent: true },
+
+      // /about-us/* section moved. Specific children before the parent.
+      { source: '/about-us/our-team', destination: '/about/team', permanent: true },
+      { source: '/about-us/contact-us', destination: '/contact', permanent: true },
+      { source: '/about-us/faqs', destination: '/about/faqs', permanent: true },
+      { source: '/about-us', destination: '/about', permanent: true },
+
+      // Squarespace `-2` artifact.
+      { source: '/get-involved-2', destination: '/get-involved', permanent: true },
+
+      // Fundraise page renamed + flattened.
+      {
+        source: '/get-involved/donate/fundraise-for-everybody-eats',
+        destination: '/get-involved/fundraise',
+        permanent: true,
+      },
     ]
   },
   // Reverse-proxy PostHog ingestion through our own origin so it loads as a
