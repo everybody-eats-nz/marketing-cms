@@ -34,6 +34,15 @@ export async function SiteHeader() {
   const showVolunteer = ctas.showVolunteer !== false && Boolean(volunteerUrl)
   const showShop = Boolean(ctas.showShop && shopUrl && shopUrl !== '#')
 
+  // Site-wide gala countdown strip, driven by Site Settings → Gala banner.
+  // Fall back to the internal /gala page when no link is configured so the
+  // strip never points at '#'.
+  const gala = (settings as any)?.galaBanner
+  const galaLinkHref = resolveHref(gala?.link)
+  const galaExternal = gala?.link?.type === 'external' && Boolean(gala?.link?.externalHref)
+  const galaHref = galaLinkHref !== '#' ? galaLinkHref : '/gala'
+  const showGala = Boolean(gala?.enabled && gala?.targetDate)
+
   // Booking dialog: pick a restaurant, then the (re-themed) Now Book It
   // widget loads in place. Only when Book isn't overridden to an external
   // URL in site-settings, and at least one open restaurant takes bookings.
@@ -73,7 +82,17 @@ export async function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 backdrop-blur-md bg-surface/85 border-b border-line/10">
-      <GalaCountdownBar />
+      {showGala && (
+        <GalaCountdownBar
+          targetIso={gala.targetDate}
+          href={galaHref}
+          external={galaExternal}
+          ctaLabel={gala.link?.label || 'Book'}
+          eventName={gala.eventName || 'The Everybody Eats Gala'}
+          eventNameShort={gala.eventNameShort || 'EE Gala'}
+          dateLabel={gala.dateLabel || undefined}
+        />
+      )}
       <div className="container-wide flex items-center justify-between h-16 sm:h-20">
         <Link
           href="/"

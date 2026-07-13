@@ -1121,6 +1121,10 @@ export interface Page {
             peopleNightsLabel?: string | null;
             peopleSubheading?: string | null;
             peopleSubbody?: string | null;
+            /**
+             * Hide this whole section, including the interactive drag-through-the-years table.
+             */
+            hidePayTable?: boolean | null;
             payEyebrow?: string | null;
             /**
              * Wrap a word in *asterisks* for the light editorial italic.
@@ -2954,6 +2958,7 @@ export interface PagesSelect<T extends boolean = true> {
               peopleNightsLabel?: T;
               peopleSubheading?: T;
               peopleSubbody?: T;
+              hidePayTable?: T;
               payEyebrow?: T;
               payHeading?: T;
               payBody?: T;
@@ -3667,6 +3672,38 @@ export interface SiteSetting {
         id?: string | null;
       }[]
     | null;
+  galaBanner?: {
+    enabled?: boolean | null;
+    /**
+     * When the gala starts. The banner counts down to this moment and retires itself afterwards.
+     */
+    targetDate?: string | null;
+    /**
+     * Shown on larger screens.
+     */
+    eventName?: string | null;
+    /**
+     * Shorter name used on mobile where space is tight.
+     */
+    eventNameShort?: string | null;
+    /**
+     * Human-friendly date shown next to the name (larger screens only).
+     */
+    dateLabel?: string | null;
+    link?: {
+      label?: string | null;
+      type?: ('internal' | 'external') | null;
+      /**
+       * Path on this site, e.g. /our-story
+       */
+      internalHref?: string | null;
+      /**
+       * Full URL incl. https://
+       */
+      externalHref?: string | null;
+      openInNewTab?: boolean | null;
+    };
+  };
   announcement?: {
     enabled?: boolean | null;
     /**
@@ -4088,6 +4125,24 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         liveMetric?: T;
         suffix?: T;
         id?: T;
+      };
+  galaBanner?:
+    | T
+    | {
+        enabled?: T;
+        targetDate?: T;
+        eventName?: T;
+        eventNameShort?: T;
+        dateLabel?: T;
+        link?:
+          | T
+          | {
+              label?: T;
+              type?: T;
+              internalHref?: T;
+              externalHref?: T;
+              openInNewTab?: T;
+            };
       };
   announcement?:
     | T

@@ -198,6 +198,15 @@ export const ImpactLanding: Block = {
       label: 'Pay as you feel',
       admin: { initCollapsed: true },
       fields: [
+        {
+          name: 'hidePayTable',
+          type: 'checkbox',
+          defaultValue: false,
+          admin: {
+            description:
+              'Hide this whole section, including the interactive drag-through-the-years table.',
+          },
+        },
         text('payEyebrow', IMPACT_DEFAULTS.payEyebrow),
         area('payHeading', IMPACT_DEFAULTS.payHeading, EM_HINT),
         area('payBody', IMPACT_DEFAULTS.payBody),

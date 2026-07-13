@@ -3692,127 +3692,6 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.pages_blocks_cafes_row": {
-      "name": "pages_blocks_cafes_row",
-      "schema": "",
-      "columns": {
-        "_order": {
-          "name": "_order",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "_parent_id": {
-          "name": "_parent_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "_path": {
-          "name": "_path",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "id": {
-          "name": "id",
-          "type": "varchar",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "eyebrow": {
-          "name": "eyebrow",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "heading": {
-          "name": "heading",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "intro": {
-          "name": "intro",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "block_name": {
-          "name": "block_name",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        }
-      },
-      "indexes": {
-        "pages_blocks_cafes_row_order_idx": {
-          "name": "pages_blocks_cafes_row_order_idx",
-          "columns": [
-            {
-              "expression": "_order",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "pages_blocks_cafes_row_parent_id_idx": {
-          "name": "pages_blocks_cafes_row_parent_id_idx",
-          "columns": [
-            {
-              "expression": "_parent_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "pages_blocks_cafes_row_path_idx": {
-          "name": "pages_blocks_cafes_row_path_idx",
-          "columns": [
-            {
-              "expression": "_path",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {
-        "pages_blocks_cafes_row_parent_id_fk": {
-          "name": "pages_blocks_cafes_row_parent_id_fk",
-          "tableFrom": "pages_blocks_cafes_row",
-          "tableTo": "pages",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
     "public.pages_blocks_events_list": {
       "name": "pages_blocks_events_list",
       "schema": "",
@@ -7170,6 +7049,13 @@
           "primaryKey": false,
           "notNull": false,
           "default": "'Most volunteers start with a single shift — and then they keep showing up. Here’s how many have served each milestone of nights.'"
+        },
+        "hide_pay_table": {
+          "name": "hide_pay_table",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
         },
         "pay_eyebrow": {
           "name": "pay_eyebrow",
@@ -14762,133 +14648,6 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public._pages_v_blocks_cafes_row": {
-      "name": "_pages_v_blocks_cafes_row",
-      "schema": "",
-      "columns": {
-        "_order": {
-          "name": "_order",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "_parent_id": {
-          "name": "_parent_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "_path": {
-          "name": "_path",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "eyebrow": {
-          "name": "eyebrow",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "heading": {
-          "name": "heading",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "intro": {
-          "name": "intro",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "_uuid": {
-          "name": "_uuid",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "block_name": {
-          "name": "block_name",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        }
-      },
-      "indexes": {
-        "_pages_v_blocks_cafes_row_order_idx": {
-          "name": "_pages_v_blocks_cafes_row_order_idx",
-          "columns": [
-            {
-              "expression": "_order",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "_pages_v_blocks_cafes_row_parent_id_idx": {
-          "name": "_pages_v_blocks_cafes_row_parent_id_idx",
-          "columns": [
-            {
-              "expression": "_parent_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "_pages_v_blocks_cafes_row_path_idx": {
-          "name": "_pages_v_blocks_cafes_row_path_idx",
-          "columns": [
-            {
-              "expression": "_path",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {
-        "_pages_v_blocks_cafes_row_parent_id_fk": {
-          "name": "_pages_v_blocks_cafes_row_parent_id_fk",
-          "tableFrom": "_pages_v_blocks_cafes_row",
-          "tableTo": "_pages_v",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
     "public._pages_v_blocks_events_list": {
       "name": "_pages_v_blocks_events_list",
       "schema": "",
@@ -18390,6 +18149,13 @@
           "primaryKey": false,
           "notNull": false,
           "default": "'Most volunteers start with a single shift — and then they keep showing up. Here’s how many have served each milestone of nights.'"
+        },
+        "hide_pay_table": {
+          "name": "hide_pay_table",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
         },
         "pay_eyebrow": {
           "name": "pay_eyebrow",
@@ -24932,519 +24698,6 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.cafes": {
-      "name": "cafes",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "slug": {
-          "name": "slug",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "city": {
-          "name": "city",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "tagline": {
-          "name": "tagline",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "open_status": {
-          "name": "open_status",
-          "type": "enum_cafes_open_status",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "hero_image_id": {
-          "name": "hero_image_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "link_label": {
-          "name": "link_label",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "link_type": {
-          "name": "link_type",
-          "type": "enum_cafes_link_type",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "'internal'"
-        },
-        "link_internal_href": {
-          "name": "link_internal_href",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "link_external_href": {
-          "name": "link_external_href",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "link_open_in_new_tab": {
-          "name": "link_open_in_new_tab",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": false,
-          "default": false
-        },
-        "display_order": {
-          "name": "display_order",
-          "type": "numeric",
-          "primaryKey": false,
-          "notNull": false,
-          "default": 0
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp(3) with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp(3) with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "_status": {
-          "name": "_status",
-          "type": "enum_cafes_status",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "'draft'"
-        }
-      },
-      "indexes": {
-        "cafes_slug_idx": {
-          "name": "cafes_slug_idx",
-          "columns": [
-            {
-              "expression": "slug",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": true,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "cafes_hero_image_idx": {
-          "name": "cafes_hero_image_idx",
-          "columns": [
-            {
-              "expression": "hero_image_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "cafes_updated_at_idx": {
-          "name": "cafes_updated_at_idx",
-          "columns": [
-            {
-              "expression": "updated_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "cafes_created_at_idx": {
-          "name": "cafes_created_at_idx",
-          "columns": [
-            {
-              "expression": "created_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "cafes__status_idx": {
-          "name": "cafes__status_idx",
-          "columns": [
-            {
-              "expression": "_status",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {
-        "cafes_hero_image_id_media_id_fk": {
-          "name": "cafes_hero_image_id_media_id_fk",
-          "tableFrom": "cafes",
-          "tableTo": "media",
-          "columnsFrom": [
-            "hero_image_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public._cafes_v": {
-      "name": "_cafes_v",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "parent_id": {
-          "name": "parent_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "version_name": {
-          "name": "version_name",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "version_slug": {
-          "name": "version_slug",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "version_city": {
-          "name": "version_city",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "version_tagline": {
-          "name": "version_tagline",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "version_open_status": {
-          "name": "version_open_status",
-          "type": "enum__cafes_v_version_open_status",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "version_hero_image_id": {
-          "name": "version_hero_image_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "version_link_label": {
-          "name": "version_link_label",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "version_link_type": {
-          "name": "version_link_type",
-          "type": "enum__cafes_v_version_link_type",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "'internal'"
-        },
-        "version_link_internal_href": {
-          "name": "version_link_internal_href",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "version_link_external_href": {
-          "name": "version_link_external_href",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "version_link_open_in_new_tab": {
-          "name": "version_link_open_in_new_tab",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": false,
-          "default": false
-        },
-        "version_display_order": {
-          "name": "version_display_order",
-          "type": "numeric",
-          "primaryKey": false,
-          "notNull": false,
-          "default": 0
-        },
-        "version_updated_at": {
-          "name": "version_updated_at",
-          "type": "timestamp(3) with time zone",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "version_created_at": {
-          "name": "version_created_at",
-          "type": "timestamp(3) with time zone",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "version__status": {
-          "name": "version__status",
-          "type": "enum__cafes_v_version_status",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "'draft'"
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp(3) with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp(3) with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "latest": {
-          "name": "latest",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": false
-        }
-      },
-      "indexes": {
-        "_cafes_v_parent_idx": {
-          "name": "_cafes_v_parent_idx",
-          "columns": [
-            {
-              "expression": "parent_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "_cafes_v_version_version_slug_idx": {
-          "name": "_cafes_v_version_version_slug_idx",
-          "columns": [
-            {
-              "expression": "version_slug",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "_cafes_v_version_version_hero_image_idx": {
-          "name": "_cafes_v_version_version_hero_image_idx",
-          "columns": [
-            {
-              "expression": "version_hero_image_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "_cafes_v_version_version_updated_at_idx": {
-          "name": "_cafes_v_version_version_updated_at_idx",
-          "columns": [
-            {
-              "expression": "version_updated_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "_cafes_v_version_version_created_at_idx": {
-          "name": "_cafes_v_version_version_created_at_idx",
-          "columns": [
-            {
-              "expression": "version_created_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "_cafes_v_version_version__status_idx": {
-          "name": "_cafes_v_version_version__status_idx",
-          "columns": [
-            {
-              "expression": "version__status",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "_cafes_v_created_at_idx": {
-          "name": "_cafes_v_created_at_idx",
-          "columns": [
-            {
-              "expression": "created_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "_cafes_v_updated_at_idx": {
-          "name": "_cafes_v_updated_at_idx",
-          "columns": [
-            {
-              "expression": "updated_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "_cafes_v_latest_idx": {
-          "name": "_cafes_v_latest_idx",
-          "columns": [
-            {
-              "expression": "latest",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {
-        "_cafes_v_parent_id_cafes_id_fk": {
-          "name": "_cafes_v_parent_id_cafes_id_fk",
-          "tableFrom": "_cafes_v",
-          "tableTo": "cafes",
-          "columnsFrom": [
-            "parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        },
-        "_cafes_v_version_hero_image_id_media_id_fk": {
-          "name": "_cafes_v_version_hero_image_id_media_id_fk",
-          "tableFrom": "_cafes_v",
-          "tableTo": "media",
-          "columnsFrom": [
-            "version_hero_image_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
     "public.team_members": {
       "name": "team_members",
       "schema": "",
@@ -28131,12 +27384,6 @@
           "primaryKey": false,
           "notNull": false
         },
-        "cafes_id": {
-          "name": "cafes_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
         "team_members_id": {
           "name": "team_members_id",
           "type": "integer",
@@ -28297,21 +27544,6 @@
           "columns": [
             {
               "expression": "locations_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "payload_locked_documents_rels_cafes_id_idx": {
-          "name": "payload_locked_documents_rels_cafes_id_idx",
-          "columns": [
-            {
-              "expression": "cafes_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -28515,19 +27747,6 @@
           "tableTo": "locations",
           "columnsFrom": [
             "locations_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        },
-        "payload_locked_documents_rels_cafes_fk": {
-          "name": "payload_locked_documents_rels_cafes_fk",
-          "tableFrom": "payload_locked_documents_rels",
-          "tableTo": "cafes",
-          "columnsFrom": [
-            "cafes_id"
           ],
           "columnsTo": [
             "id"
@@ -29255,6 +28474,74 @@
           "type": "varchar",
           "primaryKey": false,
           "notNull": false
+        },
+        "gala_banner_enabled": {
+          "name": "gala_banner_enabled",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": true
+        },
+        "gala_banner_target_date": {
+          "name": "gala_banner_target_date",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'2026-10-30T05:30:00.000Z'"
+        },
+        "gala_banner_event_name": {
+          "name": "gala_banner_event_name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'The Everybody Eats Gala'"
+        },
+        "gala_banner_event_name_short": {
+          "name": "gala_banner_event_name_short",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'EE Gala'"
+        },
+        "gala_banner_date_label": {
+          "name": "gala_banner_date_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Fri 30 Oct 2026'"
+        },
+        "gala_banner_link_label": {
+          "name": "gala_banner_link_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "gala_banner_link_type": {
+          "name": "gala_banner_link_type",
+          "type": "enum_site_settings_gala_banner_link_type",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'internal'"
+        },
+        "gala_banner_link_internal_href": {
+          "name": "gala_banner_link_internal_href",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "gala_banner_link_external_href": {
+          "name": "gala_banner_link_external_href",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "gala_banner_link_open_in_new_tab": {
+          "name": "gala_banner_link_open_in_new_tab",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
         },
         "announcement_enabled": {
           "name": "announcement_enabled",
@@ -30993,56 +30280,6 @@
         "published"
       ]
     },
-    "public.enum_cafes_open_status": {
-      "name": "enum_cafes_open_status",
-      "schema": "public",
-      "values": [
-        "open",
-        "coming-soon",
-        "closed"
-      ]
-    },
-    "public.enum_cafes_link_type": {
-      "name": "enum_cafes_link_type",
-      "schema": "public",
-      "values": [
-        "internal",
-        "external"
-      ]
-    },
-    "public.enum_cafes_status": {
-      "name": "enum_cafes_status",
-      "schema": "public",
-      "values": [
-        "draft",
-        "published"
-      ]
-    },
-    "public.enum__cafes_v_version_open_status": {
-      "name": "enum__cafes_v_version_open_status",
-      "schema": "public",
-      "values": [
-        "open",
-        "coming-soon",
-        "closed"
-      ]
-    },
-    "public.enum__cafes_v_version_link_type": {
-      "name": "enum__cafes_v_version_link_type",
-      "schema": "public",
-      "values": [
-        "internal",
-        "external"
-      ]
-    },
-    "public.enum__cafes_v_version_status": {
-      "name": "enum__cafes_v_version_status",
-      "schema": "public",
-      "values": [
-        "draft",
-        "published"
-      ]
-    },
     "public.enum_team_members_staff_type": {
       "name": "enum_team_members_staff_type",
       "schema": "public",
@@ -31226,6 +30463,14 @@
         "foodSavedKg"
       ]
     },
+    "public.enum_site_settings_gala_banner_link_type": {
+      "name": "enum_site_settings_gala_banner_link_type",
+      "schema": "public",
+      "values": [
+        "internal",
+        "external"
+      ]
+    },
     "public.enum_site_settings_announcement_link_type": {
       "name": "enum_site_settings_announcement_link_type",
       "schema": "public",
@@ -31277,6 +30522,6 @@
     "tables": {},
     "columns": {}
   },
-  "id": "ddc88762-c507-4862-9bc0-e6736a5df010",
+  "id": "123d9fef-22f2-4f1a-b36c-932ecfcb9e20",
   "prevId": "00000000-0000-0000-0000-000000000000"
 }
