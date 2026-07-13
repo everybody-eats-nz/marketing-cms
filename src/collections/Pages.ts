@@ -17,6 +17,7 @@ import { NewsletterFormBlock } from '../blocks/NewsletterFormBlock'
 import { EnquiryForm } from '../blocks/EnquiryForm'
 import { PartnersGrid } from '../blocks/PartnersGrid'
 import { LocationsMagazine } from '../blocks/LocationsMagazine'
+import { CafesRow } from '../blocks/CafesRow'
 import { MediaBlock } from '../blocks/MediaBlock'
 import { DonateHero } from '../blocks/DonateHero'
 import { Process } from '../blocks/Process'
@@ -141,6 +142,7 @@ export const Pages: CollectionConfig = {
         CtaStrip,
         LocationsGrid,
         LocationsMagazine,
+        CafesRow,
         EventsList,
         JournalList,
         TeamGrid,
