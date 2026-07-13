@@ -27,6 +27,7 @@ import * as migration_20260709_055347_add_card_grid_download from './20260709_05
 import * as migration_20260712_074526_add_gala_noir_blocks from './20260712_074526_add_gala_noir_blocks';
 import * as migration_20260712_233042_add_impact_excluded_venues from './20260712_233042_add_impact_excluded_venues';
 import * as migration_20260713_013451_add_gala_table_booking_urls from './20260713_013451_add_gala_table_booking_urls';
+import * as migration_20260713_020129_add_gala_banner_settings from './20260713_020129_add_gala_banner_settings';
 
 export const migrations = [
   {
@@ -172,6 +173,11 @@ export const migrations = [
   {
     up: migration_20260713_013451_add_gala_table_booking_urls.up,
     down: migration_20260713_013451_add_gala_table_booking_urls.down,
-    name: '20260713_013451_add_gala_table_booking_urls'
+    name: '20260713_013451_add_gala_table_booking_urls',
+  },
+  {
+    up: migration_20260713_020129_add_gala_banner_settings.up,
+    down: migration_20260713_020129_add_gala_banner_settings.down,
+    name: '20260713_020129_add_gala_banner_settings'
   },
 ];

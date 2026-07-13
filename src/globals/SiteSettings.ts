@@ -82,6 +82,74 @@ export const SiteSettings: GlobalConfig = {
           ],
         },
         {
+          label: 'Gala banner',
+          description:
+            'The slim promo strip with the live countdown, shown at the top of every page. It hides itself automatically on the page it links to, and once the countdown target has passed.',
+          fields: [
+            {
+              name: 'galaBanner',
+              type: 'group',
+              label: false,
+              fields: [
+                {
+                  name: 'enabled',
+                  type: 'checkbox',
+                  defaultValue: true,
+                  label: 'Show the gala banner',
+                },
+                {
+                  name: 'targetDate',
+                  type: 'date',
+                  defaultValue: '2026-10-30T05:30:00.000Z',
+                  label: 'Countdown target',
+                  admin: {
+                    description:
+                      'When the gala starts. The banner counts down to this moment and retires itself afterwards.',
+                    date: { pickerAppearance: 'dayAndTime' },
+                    condition: (_, siblingData) => Boolean(siblingData?.enabled),
+                  },
+                },
+                {
+                  name: 'eventName',
+                  type: 'text',
+                  defaultValue: 'The Everybody Eats Gala',
+                  admin: {
+                    description: 'Shown on larger screens.',
+                    condition: (_, siblingData) => Boolean(siblingData?.enabled),
+                  },
+                },
+                {
+                  name: 'eventNameShort',
+                  type: 'text',
+                  defaultValue: 'EE Gala',
+                  admin: {
+                    description: 'Shorter name used on mobile where space is tight.',
+                    condition: (_, siblingData) => Boolean(siblingData?.enabled),
+                  },
+                },
+                {
+                  name: 'dateLabel',
+                  type: 'text',
+                  defaultValue: 'Fri 30 Oct 2026',
+                  admin: {
+                    description: 'Human-friendly date shown next to the name (larger screens only).',
+                    condition: (_, siblingData) => Boolean(siblingData?.enabled),
+                  },
+                },
+                linkGroup({
+                  name: 'link',
+                  label: 'Call to action',
+                  admin: {
+                    hideGutter: true,
+                    condition: (_, siblingData) => Boolean(siblingData?.enabled),
+                  },
+                  defaultValue: { type: 'internal', internalHref: '/gala', label: 'Book' },
+                }),
+              ],
+            },
+          ],
+        },
+        {
           label: 'Announcement',
           description:
             'A full-screen takeover shown once per visitor on the home page, in the Hopper brand (lilac paper, bubbly "hopper" logotype). The logotype is fixed — this promotes Hopper specifically; the copy and link below are editable.',
