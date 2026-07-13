@@ -304,19 +304,21 @@ export function ImpactLandingBlock({
       </section>
 
       {/* Pay-as-you-feel — the communal table */}
-      <section className="container-tight pb-16 sm:pb-24">
-        <div className="max-w-2xl mb-9">
-          <p className="eyebrow flex items-center gap-3 text-clay-300">
-            <span className="inline-block w-8 h-px bg-clay-300/60" />
-            {b.payEyebrow}
-          </p>
-          <h2 className="display text-3xl sm:text-5xl font-light text-content mt-4">
-            {renderRichText(b.payHeading)}
-          </h2>
-          <p className="text-base text-content/80 mt-5 leading-relaxed">{b.payBody}</p>
-        </div>
-        <CommunalTable years={story.yearly} />
-      </section>
+      {!b.hidePayTable && (
+        <section className="container-tight pb-16 sm:pb-24">
+          <div className="max-w-2xl mb-9">
+            <p className="eyebrow flex items-center gap-3 text-clay-300">
+              <span className="inline-block w-8 h-px bg-clay-300/60" />
+              {b.payEyebrow}
+            </p>
+            <h2 className="display text-3xl sm:text-5xl font-light text-content mt-4">
+              {renderRichText(b.payHeading)}
+            </h2>
+            <p className="text-base text-content/80 mt-5 leading-relaxed">{b.payBody}</p>
+          </div>
+          <CommunalTable years={story.yearly} />
+        </section>
+      )}
 
       {/* Where we serve */}
       <section className="container-tight pb-16 sm:pb-24">
