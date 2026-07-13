@@ -272,10 +272,10 @@ export default async function LocationPage({ params }: Params) {
 
             <div className="mt-12 space-y-10">
               {[
+                { label: 'To drink', items: tonightsMenu.drink },
                 { label: 'To start', items: tonightsMenu.starter },
                 { label: 'Mains', items: tonightsMenu.mains },
                 { label: 'Dessert', items: tonightsMenu.dessert },
-                { label: 'To drink', items: tonightsMenu.drink },
               ]
                 .filter((course) => course.items && course.items.length > 0)
                 .map((course) => (
