@@ -319,10 +319,11 @@ export const GALA_NOIR_DEFAULTS = {
 
 const EM_HINT = 'Wrap a word in *asterisks* for the editorial italic.'
 
-const text = (name: string, defaultValue: string, description?: string) => ({
+const text = (name: string, defaultValue: string, description?: string, label?: string) => ({
   name,
   type: 'text' as const,
   defaultValue,
+  label,
   admin: description ? { description } : undefined,
 })
 
@@ -607,18 +608,29 @@ export const GalaNoirTable: Block = {
     {
       type: 'row',
       fields: [
-        text('ctaLabel', D.table.ctaLabel),
-        text('ctaUrl', D.table.ctaUrl, 'Humanitix booking link. Falls back to a mailto when empty.'),
+        text('ctaLabel', D.table.ctaLabel, undefined, 'Book a table — button text'),
+        text(
+          'ctaUrl',
+          D.table.ctaUrl,
+          'Humanitix booking link. Falls back to a mailto when empty.',
+          'Book a table URL',
+        ),
       ],
     },
     {
       type: 'row',
       fields: [
-        text('secondaryCtaLabel', D.table.secondaryCtaLabel),
+        text(
+          'secondaryCtaLabel',
+          D.table.secondaryCtaLabel,
+          undefined,
+          'Individual tickets — button text',
+        ),
         text(
           'secondaryCtaUrl',
           D.table.secondaryCtaUrl,
           'Humanitix booking link. Falls back to a mailto when empty.',
+          'Individual tickets URL',
         ),
       ],
     },
