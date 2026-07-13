@@ -681,6 +681,11 @@ export function GalaNoirTableBlock({ block }: { block: Block }) {
   const b = block
   const galaEmail: string = b.galaEmail || 'gala@everybodyeats.nz'
   const includes: { item: string }[] = b.includes || []
+
+  // Both CTAs prefer a Humanitix booking link when one is set; without it they
+  // fall back to a mailto so the button is never a dead anchor.
+  const ctaUrl: string = (b.ctaUrl || '').trim()
+  const secondaryCtaUrl: string = (b.secondaryCtaUrl || '').trim()
   return (
     <div className="gala-noir">
       <section id="table" className="gn-section">
@@ -713,19 +718,24 @@ export function GalaNoirTableBlock({ block }: { block: Block }) {
                 <div className="mt-6 flex flex-wrap gap-3">
                   {b.ctaLabel ? (
                     <a
-                      href={mailto(galaEmail, 'Host a table — Everybody Eats Gala')}
+                      href={ctaUrl || mailto(galaEmail, 'Host a table — Everybody Eats Gala')}
                       className="gn-btn gn-btn--primary"
+                      {...(ctaUrl ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                     >
-                      <MailIcon />
+                      {ctaUrl ? <ArrowUpRightIcon /> : <MailIcon />}
                       {b.ctaLabel}
                     </a>
                   ) : null}
                   {b.secondaryCtaLabel ? (
                     <a
-                      href={mailto(galaEmail, 'Individual tickets — Everybody Eats Gala')}
+                      href={
+                        secondaryCtaUrl ||
+                        mailto(galaEmail, 'Individual tickets — Everybody Eats Gala')
+                      }
                       className="gn-btn gn-btn--ghost"
+                      {...(secondaryCtaUrl ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                     >
-                      <MailIcon />
+                      {secondaryCtaUrl ? <ArrowUpRightIcon /> : <MailIcon />}
                       {b.secondaryCtaLabel}
                     </a>
                   ) : null}

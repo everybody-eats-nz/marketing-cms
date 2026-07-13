@@ -222,7 +222,9 @@ export const GALA_NOIR_DEFAULTS = {
     priceLabel: 'Table of ten, inclusive of GST',
     seatNote: 'Individual tickets $330 on shared tables.',
     ctaLabel: 'Book a table',
+    ctaUrl: '',
     secondaryCtaLabel: 'Individual tickets',
+    secondaryCtaUrl: '',
     imageCaption: 'Images from previous Everybody Eats Galas',
   },
 
@@ -606,7 +608,18 @@ export const GalaNoirTable: Block = {
       type: 'row',
       fields: [
         text('ctaLabel', D.table.ctaLabel),
+        text('ctaUrl', D.table.ctaUrl, 'Humanitix booking link. Falls back to a mailto when empty.'),
+      ],
+    },
+    {
+      type: 'row',
+      fields: [
         text('secondaryCtaLabel', D.table.secondaryCtaLabel),
+        text(
+          'secondaryCtaUrl',
+          D.table.secondaryCtaUrl,
+          'Humanitix booking link. Falls back to a mailto when empty.',
+        ),
       ],
     },
     email('galaEmail', D.table.galaEmail),

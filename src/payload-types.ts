@@ -1386,7 +1386,15 @@ export interface Page {
             priceLabel?: string | null;
             seatNote?: string | null;
             ctaLabel?: string | null;
+            /**
+             * Humanitix booking link. Falls back to a mailto when empty.
+             */
+            ctaUrl?: string | null;
             secondaryCtaLabel?: string | null;
+            /**
+             * Humanitix booking link. Falls back to a mailto when empty.
+             */
+            secondaryCtaUrl?: string | null;
             galaEmail: string;
             id?: string | null;
             blockName?: string | null;
@@ -3051,7 +3059,9 @@ export interface PagesSelect<T extends boolean = true> {
               priceLabel?: T;
               seatNote?: T;
               ctaLabel?: T;
+              ctaUrl?: T;
               secondaryCtaLabel?: T;
+              secondaryCtaUrl?: T;
               galaEmail?: T;
               id?: T;
               blockName?: T;
