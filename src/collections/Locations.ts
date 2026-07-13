@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { seoField } from '../fields/seo'
+import { slugField } from '../fields/slug'
 
 export const Locations: CollectionConfig = {
   slug: 'locations',
@@ -12,14 +13,7 @@ export const Locations: CollectionConfig = {
   versions: { drafts: true },
   fields: [
     { name: 'name', type: 'text', required: true },
-    {
-      name: 'slug',
-      type: 'text',
-      required: true,
-      unique: true,
-      index: true,
-      admin: { description: 'e.g. "wellington", "onehunga", "glen-innes"' },
-    },
+    slugField({ from: 'name', description: 'e.g. "wellington", "onehunga", "glen-innes"' }),
     {
       name: 'menuLocationName',
       label: 'Menu source name',

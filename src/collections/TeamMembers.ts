@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { slugField } from '../fields/slug'
 
 export const TeamMembers: CollectionConfig = {
   slug: 'team-members',
@@ -11,13 +12,7 @@ export const TeamMembers: CollectionConfig = {
   versions: { drafts: true },
   fields: [
     { name: 'name', type: 'text', required: true },
-    {
-      name: 'slug',
-      type: 'text',
-      required: true,
-      unique: true,
-      index: true,
-    },
+    slugField({ from: 'name' }),
     { name: 'jobTitle', type: 'text' },
     {
       name: 'staffType',
