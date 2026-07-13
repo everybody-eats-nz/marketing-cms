@@ -442,7 +442,7 @@ async function seedGlobals(payload: any) {
             { link: { label: 'Onehunga', type: 'internal', internalHref: '/dine-with-us/onehunga' } },
             { link: { label: 'Glen Innes', type: 'internal', internalHref: '/dine-with-us/glen-innes' } },
             { link: { label: 'Wellington', type: 'internal', internalHref: '/dine-with-us/wellington' } },
-            { link: { label: 'Pay at table', type: 'internal', internalHref: '/dine-with-us/pay' } },
+            { link: { label: 'Cafes', type: 'internal', internalHref: '/hopper' } },
           ],
         },
         {
