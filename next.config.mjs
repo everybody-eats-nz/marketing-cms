@@ -44,7 +44,10 @@ const nextConfig = {
       { source: '/about-us/our-team', destination: '/about/team', permanent: true },
       { source: '/about-us/contact-us', destination: '/contact', permanent: true },
       { source: '/about-us/faqs', destination: '/about/faqs', permanent: true },
-      { source: '/about-us', destination: '/about', permanent: true },
+      // /about is only a stub that 307s to /our-story, so redirect straight to
+      // the real destination — avoids a 301→307 chain ending on a non-permanent
+      // hop, which would undercut the link-equity goal.
+      { source: '/about-us', destination: '/our-story', permanent: true },
 
       // Squarespace `-2` artifact.
       { source: '/get-involved-2', destination: '/get-involved', permanent: true },
