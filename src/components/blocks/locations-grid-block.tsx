@@ -40,7 +40,7 @@ export function LocationsGridBlock({ block, locations }: Props) {
         {docs.map((loc, i) => (
           <Link
             key={loc.id}
-            href={`/dine-with-us/${loc.slug}`}
+            href={loc.listButtons?.visitHref || `/dine-with-us/${loc.slug}`}
             className="group relative aspect-[4/5] rounded-3xl overflow-hidden bg-surface-3 card-hover"
           >
             {loc.heroImage ? (
@@ -77,7 +77,8 @@ export function LocationsGridBlock({ block, locations }: Props) {
                 <p className="text-sm text-cream-50/85 mt-3 max-w-sm line-clamp-2">{loc.tagline}</p>
               )}
               <span className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-sun-200 group-hover:gap-3 transition-all">
-                Visit {loc.name} <span>→</span>
+                {loc.listButtons?.visitLabel?.replace('{name}', loc.name) || `Visit ${loc.name}`}{' '}
+                <span>→</span>
               </span>
             </div>
           </Link>
