@@ -7050,6 +7050,13 @@
           "notNull": false,
           "default": "'Most volunteers start with a single shift — and then they keep showing up. Here’s how many have served each milestone of nights.'"
         },
+        "hide_pay_table": {
+          "name": "hide_pay_table",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
         "pay_eyebrow": {
           "name": "pay_eyebrow",
           "type": "varchar",
@@ -18142,6 +18149,13 @@
           "primaryKey": false,
           "notNull": false,
           "default": "'Most volunteers start with a single shift — and then they keep showing up. Here’s how many have served each milestone of nights.'"
+        },
+        "hide_pay_table": {
+          "name": "hide_pay_table",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
         },
         "pay_eyebrow": {
           "name": "pay_eyebrow",
@@ -30508,6 +30522,6 @@
     "tables": {},
     "columns": {}
   },
-  "id": "4df8dbd6-0282-4cf0-8726-0f98f41a05fa",
+  "id": "123d9fef-22f2-4f1a-b36c-932ecfcb9e20",
   "prevId": "00000000-0000-0000-0000-000000000000"
 }
