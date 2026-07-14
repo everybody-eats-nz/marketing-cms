@@ -36,6 +36,15 @@ ENV NODE_ENV=production
 ENV PAYLOAD_SECRET=build-placeholder-replace-at-runtime
 ENV DATABASE_URI=postgres://placeholder:placeholder@localhost:5432/placeholder
 
+# PostHog source map upload credentials. Only present in this build stage —
+# they are not copied to the runner image. Pass via --build-arg in CI/Coolify.
+ARG POSTHOG_API_KEY
+ARG POSTHOG_PROJECT_ID
+ARG NEXT_PUBLIC_POSTHOG_HOST
+ENV POSTHOG_API_KEY=$POSTHOG_API_KEY \
+    POSTHOG_PROJECT_ID=$POSTHOG_PROJECT_ID \
+    NEXT_PUBLIC_POSTHOG_HOST=$NEXT_PUBLIC_POSTHOG_HOST
+
 RUN pnpm build
 
 # ---------- runner ----------
