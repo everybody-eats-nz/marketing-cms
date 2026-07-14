@@ -1,4 +1,5 @@
 import { withPayload } from '@payloadcms/next/withPayload'
+import { withPostHogConfig } from '@posthog/nextjs-config'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -77,4 +78,11 @@ const nextConfig = {
   skipTrailingSlashRedirect: true,
 }
 
-export default withPayload(nextConfig, { devBundleServerPackages: false })
+export default withPostHogConfig(
+  withPayload(nextConfig, { devBundleServerPackages: false }),
+  {
+    personalApiKey: process.env.POSTHOG_API_KEY,
+    projectId: process.env.POSTHOG_PROJECT_ID,
+    host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
+  },
+)
