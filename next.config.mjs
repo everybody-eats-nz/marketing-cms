@@ -78,11 +78,17 @@ const nextConfig = {
   skipTrailingSlashRedirect: true,
 }
 
-export default withPostHogConfig(
-  withPayload(nextConfig, { devBundleServerPackages: false }),
-  {
-    personalApiKey: process.env.POSTHOG_API_KEY,
-    projectId: process.env.POSTHOG_PROJECT_ID,
-    host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
-  },
-)
+const config = withPayload(nextConfig, { devBundleServerPackages: false })
+
+// Source-map upload only runs in the deploy container, which sets both secrets.
+// withPostHogConfig enables sourcemaps by default and throws at config-load time
+// if `projectId` is missing (`projectId is required when sourcemaps are
+// enabled`), so gate the wrapper on the vars being present — otherwise CI and
+// local `next build` (no PostHog secrets) fail to load next.config.mjs.
+export default process.env.POSTHOG_API_KEY && process.env.POSTHOG_PROJECT_ID
+  ? withPostHogConfig(config, {
+      personalApiKey: process.env.POSTHOG_API_KEY,
+      projectId: process.env.POSTHOG_PROJECT_ID,
+      host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
+    })
+  : config
