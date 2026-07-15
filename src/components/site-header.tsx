@@ -1,8 +1,10 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { getPayloadClient } from '@/lib/payload'
+import { activeClosure } from '@/lib/closures'
 import { resolveHref, type LinkValue } from '@/lib/types'
 import { BookingDialog, BookingDialogTrigger, type BookingLocation } from './booking/booking-dialog'
+import { ClosureBanner } from './closure-banner'
 import { ExternalLinkIcon } from './external-link-icon'
 import { GalaCountdownBar } from './gala-countdown-bar'
 import { MobileMenu, type MenuAction } from './mobile-menu'
@@ -34,6 +36,28 @@ export async function SiteHeader() {
   const showVolunteer = ctas.showVolunteer !== false && Boolean(volunteerUrl)
   const showShop = Boolean(ctas.showShop && shopUrl && shopUrl !== '#')
 
+  // Unscheduled closures (staff shortages, private events), entered per
+  // location in the CMS. While any closure is live, a yellow marquee strip
+  // takes the gala strip's slot — diners deciding whether to come tonight
+  // outrank the promo — and both hand back automatically once the night passes.
+  const closedLocations = (locationsRes.docs as any[]).flatMap((l) => {
+    if (l._status && l._status !== 'published') return []
+    const closure = activeClosure(l.closures)
+    return closure ? [{ name: l.name as string, slug: l.slug as string, closure }] : []
+  })
+  const closureMessages = closedLocations.map(({ name, closure }) => {
+    const when =
+      closure.start === closure.end
+        ? closure.isTonight
+          ? `tonight, ${closure.dateLabel}`
+          : `on ${closure.dateLabel}`
+        : closure.dateLabel
+    const verb = closure.isTonight ? 'is closed' : 'will be closed'
+    return `${name} ${verb} ${when}${closure.reason ? ` · ${closure.reason}` : ''}`
+  })
+  const closureHref =
+    closedLocations.length === 1 ? `/dine-with-us/${closedLocations[0].slug}` : '/dine-with-us'
+
   // Site-wide gala countdown strip, driven by Site Settings → Gala banner.
   // Fall back to the internal /gala page when no link is configured so the
   // strip never points at '#'.
@@ -41,7 +65,7 @@ export async function SiteHeader() {
   const galaLinkHref = resolveHref(gala?.link)
   const galaExternal = gala?.link?.type === 'external' && Boolean(gala?.link?.externalHref)
   const galaHref = galaLinkHref !== '#' ? galaLinkHref : '/gala'
-  const showGala = Boolean(gala?.enabled && gala?.targetDate)
+  const showGala = Boolean(gala?.enabled && gala?.targetDate) && closureMessages.length === 0
 
   // Booking dialog: pick a restaurant, then the (re-themed) Now Book It
   // widget loads in place. Only when Book isn't overridden to an external
@@ -82,6 +106,9 @@ export async function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 backdrop-blur-md bg-surface/85 border-b border-line/10">
+      {closureMessages.length > 0 && (
+        <ClosureBanner messages={closureMessages} href={closureHref} />
+      )}
       {showGala && (
         <GalaCountdownBar
           targetIso={gala.targetDate}

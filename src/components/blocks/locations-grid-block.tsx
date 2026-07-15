@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { activeClosure } from '@/lib/closures'
 import { PayloadImage } from '@/components/payload-image'
 import { renderRichText } from './render-text'
 
@@ -37,7 +38,11 @@ export function LocationsGridBlock({ block, locations }: Props) {
       </div>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {docs.map((loc, i) => (
+        {docs.map((loc, i) => {
+          // Unscheduled closure covering tonight — the live "Open" dot flips
+          // to a red "Closed tonight" so nobody turns up to a dark room.
+          const closedTonight = Boolean(activeClosure(loc.closures)?.isTonight)
+          return (
           <Link
             key={loc.id}
             href={loc.listButtons?.visitHref || `/dine-with-us/${loc.slug}`}
@@ -65,12 +70,17 @@ export function LocationsGridBlock({ block, locations }: Props) {
             )}
             <div className="absolute inset-0 bg-gradient-to-t from-forest-700/85 via-forest-700/20 to-transparent" />
             <div className="absolute inset-0 p-7 flex flex-col justify-end text-cream-50">
-              {loc.openStatus && (
+              {closedTonight ? (
+                <div className="flex items-center gap-2 text-xs uppercase tracking-[0.15em] mb-3 text-cream-50/90">
+                  <span className="w-2 h-2 rounded-full bg-clay-300" />
+                  Closed tonight
+                </div>
+              ) : loc.openStatus ? (
                 <div className="flex items-center gap-2 text-xs uppercase tracking-[0.15em] mb-3 text-cream-50/80">
                   <span className="w-2 h-2 rounded-full bg-sun-200 animate-pulse" />
                   {loc.openStatus === 'open' ? 'Open' : loc.openStatus}
                 </div>
-              )}
+              ) : null}
               <h3 className="display text-3xl sm:text-4xl font-light leading-tight">{loc.name}</h3>
               {loc.city && <p className="text-sm text-cream-50/85 mt-1">{loc.city}</p>}
               {loc.tagline && (
@@ -82,7 +92,8 @@ export function LocationsGridBlock({ block, locations }: Props) {
               </span>
             </div>
           </Link>
-        ))}
+          )
+        })}
       </div>
     </section>
   )

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { activeClosure } from '@/lib/closures'
 import { PayloadImage } from '@/components/payload-image'
 
 type Props = {
@@ -11,6 +12,9 @@ export function LocationsMagazineBlock({ locations }: Props) {
     <section className="container-wide pb-32 space-y-24">
       {locations.map((loc, i) => {
         const reverse = i % 2 === 1
+        // Unscheduled closure covering tonight — swap the green "Open this
+        // week" pill for a red "Closed tonight" one.
+        const closedTonight = Boolean(activeClosure(loc.closures)?.isTonight)
         return (
           <article
             key={loc.id}
@@ -34,12 +38,17 @@ export function LocationsMagazineBlock({ locations }: Props) {
                 ) : (
                   <div className="absolute inset-0 bg-gradient-to-br from-forest-300 to-forest-600" />
                 )}
-                {loc.openStatus && (
+                {closedTonight ? (
+                  <span className="absolute bottom-6 left-6 flex items-center gap-2 px-4 py-2 rounded-pill bg-clay-300 text-ink text-xs uppercase tracking-[0.15em] font-medium">
+                    <span className="w-2 h-2 rounded-full bg-ink/60" />
+                    Closed tonight
+                  </span>
+                ) : loc.openStatus ? (
                   <span className="absolute bottom-6 left-6 flex items-center gap-2 px-4 py-2 rounded-pill bg-surface/95 text-content text-xs uppercase tracking-[0.15em] font-medium">
                     <span className="w-2 h-2 rounded-full bg-forest-500 animate-pulse" />
                     {loc.openStatus === 'open' ? 'Open this week' : loc.openStatus}
                   </span>
-                )}
+                ) : null}
               </Link>
             </div>
 
