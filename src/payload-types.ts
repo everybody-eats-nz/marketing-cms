@@ -1707,7 +1707,7 @@ export interface Location {
    */
   payAtTableUrl?: string | null;
   /**
-   * The two buttons shown for this restaurant on the /dine-with-us list. Leave any field blank to use the default. The "Book a table" button only appears when a Booking link is set above.
+   * The buttons/links shown for this restaurant in the restaurant grids (homepage and /dine-with-us list). Leave any field blank to use the default. The "Book a table" button only appears when a Booking link is set above.
    */
   listButtons?: {
     /**

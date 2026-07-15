@@ -8,6 +8,7 @@ export type EnquiryInput = {
   email: string
   phone?: string
   enquiryType?: string
+  preferredLocation?: string
   eventDate?: string
   headcount?: string
   budget?: string
@@ -66,6 +67,7 @@ export async function submitEnquiry(input: EnquiryInput): Promise<EnquiryResult>
     ['Email', email],
     ['Phone', input.phone?.trim()],
     ['Enquiry type', input.enquiryType?.trim()],
+    ['Preferred location', input.preferredLocation?.trim()],
     ['Preferred date', input.eventDate?.trim()],
     ['Approx. headcount', input.headcount?.trim()],
     ['Budget', input.budget?.trim()],
@@ -110,6 +112,7 @@ export async function submitEnquiry(input: EnquiryInput): Promise<EnquiryResult>
 
   await captureAnalytics(email, {
     enquiry_type: input.enquiryType,
+    preferred_location: input.preferredLocation,
     company,
     has_date: Boolean(input.eventDate),
     headcount: input.headcount,
