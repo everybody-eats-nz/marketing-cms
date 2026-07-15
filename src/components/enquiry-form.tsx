@@ -17,6 +17,25 @@ type Props = {
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
+const LOCATION_OPTIONS = ['Onehunga', 'Glen Innes', 'Auckland', 'Wellington', 'Other']
+
+// appearance-none strips the native select arrow, so both selects get this
+// custom chevron to keep reading as dropdowns.
+function SelectChevron({ isForest }: { isForest: boolean }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden
+      className={`pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 ${
+        isForest ? 'text-cream-50/60' : 'text-forest-600/60 dark:text-muted'
+      }`}
+    >
+      <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
 export function EnquiryForm({ tone, enquiryTypes, successMessage, recipientEmail }: Props) {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
   const [error, setError] = useState<string | null>(null)
@@ -29,6 +48,7 @@ export function EnquiryForm({ tone, enquiryTypes, successMessage, recipientEmail
   const [selectedType, setSelectedType] = useState(() =>
     enquiryTypes.includes(paramType) ? paramType : enquiryTypes[0] || '',
   )
+  const [selectedLocation, setSelectedLocation] = useState('')
   // Follow later ?type= changes (e.g. client-side nav from another "Enquire"
   // card) by adjusting state during render off the previous param value.
   const [prevParamType, setPrevParamType] = useState(paramType)
@@ -91,6 +111,7 @@ export function EnquiryForm({ tone, enquiryTypes, successMessage, recipientEmail
       email: String(fd.get('email') || ''),
       phone: String(fd.get('phone') || ''),
       enquiryType: String(fd.get('enquiryType') || ''),
+      preferredLocation: String(fd.get('preferredLocation') || ''),
       eventDate: String(fd.get('eventDate') || ''),
       headcount: String(fd.get('headcount') || ''),
       budget: String(fd.get('budget') || ''),
@@ -156,21 +177,55 @@ export function EnquiryForm({ tone, enquiryTypes, successMessage, recipientEmail
             <label htmlFor={`${formId}-type`} className={labelCls}>
               What can we help with?
             </label>
+            <div className="relative">
+              <select
+                id={`${formId}-type`}
+                name="enquiryType"
+                className={`${fieldCls} appearance-none pr-10`}
+                value={selectedType}
+                onChange={(e) => setSelectedType(e.target.value)}
+              >
+                {enquiryTypes.map((t) => (
+                  <option key={t} value={t}>
+                    {t}
+                  </option>
+                ))}
+              </select>
+              <SelectChevron isForest={isForest} />
+            </div>
+          </div>
+        )}
+        <div>
+          <label htmlFor={`${formId}-location`} className={labelCls}>
+            Preferred location
+          </label>
+          <div className="relative">
             <select
-              id={`${formId}-type`}
-              name="enquiryType"
-              className={`${fieldCls} appearance-none`}
-              value={selectedType}
-              onChange={(e) => setSelectedType(e.target.value)}
+              id={`${formId}-location`}
+              name="preferredLocation"
+              // Until a location is picked, dim the text to match the muted
+              // placeholder colour of the inputs (fieldCls sets the full-strength
+              // colour, so the override needs !important).
+              className={`${fieldCls} appearance-none pr-10 ${
+                selectedLocation === ''
+                  ? isForest
+                    ? '!text-cream-50/40'
+                    : '!text-forest-600/40 dark:!text-muted/50'
+                  : ''
+              }`}
+              value={selectedLocation}
+              onChange={(e) => setSelectedLocation(e.target.value)}
             >
-              {enquiryTypes.map((t) => (
-                <option key={t} value={t}>
-                  {t}
+              <option value="">Select a location</option>
+              {LOCATION_OPTIONS.map((l) => (
+                <option key={l} value={l}>
+                  {l}
                 </option>
               ))}
             </select>
+            <SelectChevron isForest={isForest} />
           </div>
-        )}
+        </div>
         <div>
           <label htmlFor={`${formId}-date`} className={labelCls}>
             Preferred date
