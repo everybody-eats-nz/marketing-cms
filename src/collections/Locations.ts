@@ -45,6 +45,45 @@ export const Locations: CollectionConfig = {
       },
     },
     {
+      name: 'closures',
+      label: 'Temporary closures',
+      type: 'array',
+      labels: { singular: 'Closure', plural: 'Closures' },
+      admin: {
+        description:
+          'Unscheduled closed nights (staff shortage, private event…). Each closure shows a yellow banner at the top of every page, a notice where tonight\'s menu normally sits on this restaurant\'s page, and — on the night itself — a red "Closed tonight" badge. Everything disappears automatically once the last night has passed, so there\'s nothing to switch off.',
+      },
+      fields: [
+        {
+          name: 'date',
+          label: 'Closed on',
+          type: 'date',
+          required: true,
+          admin: {
+            date: { pickerAppearance: 'dayOnly' },
+            description: 'The night the restaurant is closed (first night, for a multi-night closure).',
+          },
+        },
+        {
+          name: 'endDate',
+          label: 'Until (optional)',
+          type: 'date',
+          admin: {
+            date: { pickerAppearance: 'dayOnly' },
+            description: 'Last closed night. Leave blank for a single night.',
+          },
+        },
+        {
+          name: 'reason',
+          type: 'text',
+          admin: {
+            description:
+              'Shown to diners, e.g. "due to staff shortages" or "for a private event". Leave blank to show no reason.',
+          },
+        },
+      ],
+    },
+    {
       type: 'tabs',
       tabs: [
         {

@@ -1610,6 +1610,26 @@ export interface Location {
    */
   showInMainGrids?: boolean | null;
   /**
+   * Unscheduled closed nights (staff shortage, private event…). Each closure shows a yellow banner at the top of every page, a notice where tonight's menu normally sits on this restaurant's page, and — on the night itself — a red "Closed tonight" badge. Everything disappears automatically once the last night has passed, so there's nothing to switch off.
+   */
+  closures?:
+    | {
+        /**
+         * The night the restaurant is closed (first night, for a multi-night closure).
+         */
+        date: string;
+        /**
+         * Last closed night. Leave blank for a single night.
+         */
+        endDate?: string | null;
+        /**
+         * Shown to diners, e.g. "due to staff shortages" or "for a private event". Leave blank to show no reason.
+         */
+        reason?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
    * One-line description shown on cards
    */
   tagline?: string | null;
@@ -3223,6 +3243,14 @@ export interface LocationsSelect<T extends boolean = true> {
   menuLocationName?: T;
   openStatus?: T;
   showInMainGrids?: T;
+  closures?:
+    | T
+    | {
+        date?: T;
+        endDate?: T;
+        reason?: T;
+        id?: T;
+      };
   tagline?: T;
   intro?: T;
   body?: T;
