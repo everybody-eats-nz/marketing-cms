@@ -17,8 +17,10 @@ export async function SiteHeader() {
   const [nav, settings, locationsRes] = await Promise.all([
     payload.findGlobal({ slug: 'navigation', depth: 2 }).catch(() => null),
     payload.findGlobal({ slug: 'site-settings' }).catch(() => null),
+    // All locations: this list drives the booking dialog AND the site-wide
+    // closure banner, so it must never silently truncate.
     payload
-      .find({ collection: 'locations', limit: 12, sort: 'name', depth: 0 })
+      .find({ collection: 'locations', pagination: false, sort: 'name', depth: 0 })
       .catch(() => ({ docs: [] as any[] })),
   ])
 
@@ -38,8 +40,9 @@ export async function SiteHeader() {
 
   // Unscheduled closures (staff shortages, private events), entered per
   // location in the CMS. While any closure is live, a yellow marquee strip
-  // takes the gala strip's slot — diners deciding whether to come tonight
-  // outrank the promo — and both hand back automatically once the night passes.
+  // appears above the gala strip; on the closed night itself it takes the
+  // gala's slot outright — diners deciding whether to come tonight outrank
+  // the promo — and everything hands back once the night passes.
   const closedLocations = (locationsRes.docs as any[]).flatMap((l) => {
     if (l._status && l._status !== 'published') return []
     const closure = activeClosure(l.closures)
@@ -57,6 +60,7 @@ export async function SiteHeader() {
   })
   const closureHref =
     closedLocations.length === 1 ? `/dine-with-us/${closedLocations[0].slug}` : '/dine-with-us'
+  const closedTonightAnywhere = closedLocations.some((l) => l.closure.isTonight)
 
   // Site-wide gala countdown strip, driven by Site Settings → Gala banner.
   // Fall back to the internal /gala page when no link is configured so the
@@ -65,7 +69,10 @@ export async function SiteHeader() {
   const galaLinkHref = resolveHref(gala?.link)
   const galaExternal = gala?.link?.type === 'external' && Boolean(gala?.link?.externalHref)
   const galaHref = galaLinkHref !== '#' ? galaLinkHref : '/gala'
-  const showGala = Boolean(gala?.enabled && gala?.targetDate) && closureMessages.length === 0
+  // Advance closure notices stack above the gala strip; only an actual
+  // closed-tonight state displaces it (a future-dated closure entered weeks
+  // ahead shouldn't silence the promo for weeks).
+  const showGala = Boolean(gala?.enabled && gala?.targetDate) && !closedTonightAnywhere
 
   // Booking dialog: pick a restaurant, then the (re-themed) Now Book It
   // widget loads in place. Only when Book isn't overridden to an external
