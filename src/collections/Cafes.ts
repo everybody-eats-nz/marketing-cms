@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { linkGroup } from '../fields/link'
+import { slugField } from '../fields/slug'
 
 // Cafés are a lightweight sibling to Locations. Unlike restaurants they don't
 // get a generated detail page under /dine-with-us/[slug] — each café just links
@@ -17,14 +18,7 @@ export const Cafes: CollectionConfig = {
   versions: { drafts: true },
   fields: [
     { name: 'name', type: 'text', required: true },
-    {
-      name: 'slug',
-      type: 'text',
-      required: true,
-      unique: true,
-      index: true,
-      admin: { description: 'Stable identifier used for seeding, e.g. "hopper". Not a public URL.' },
-    },
+    slugField({ from: 'name', description: 'Stable identifier used for seeding, e.g. "hopper". Not a public URL.' }),
     { name: 'city', type: 'text', admin: { description: 'e.g. "Wellington"' } },
     {
       name: 'tagline',

@@ -22,8 +22,15 @@ export default async function EventsPage() {
   })
 
   const now = new Date()
-  const upcoming = events.filter((e: any) => e.date && new Date(e.date) >= now)
-  const past = events.filter((e: any) => e.date && new Date(e.date) < now)
+  const time = (e: any) => new Date(e.date).getTime()
+  // Coming up: soonest first (ascending), so the next event to happen leads.
+  // Past: most recent first (descending).
+  const upcoming = events
+    .filter((e: any) => e.date && new Date(e.date) >= now)
+    .sort((a: any, b: any) => time(a) - time(b))
+  const past = events
+    .filter((e: any) => e.date && new Date(e.date) < now)
+    .sort((a: any, b: any) => time(b) - time(a))
 
   return (
     <>

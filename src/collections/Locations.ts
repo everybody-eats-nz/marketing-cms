@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { seoField } from '../fields/seo'
+import { slugField } from '../fields/slug'
 
 export const Locations: CollectionConfig = {
   slug: 'locations',
@@ -12,14 +13,7 @@ export const Locations: CollectionConfig = {
   versions: { drafts: true },
   fields: [
     { name: 'name', type: 'text', required: true },
-    {
-      name: 'slug',
-      type: 'text',
-      required: true,
-      unique: true,
-      index: true,
-      admin: { description: 'e.g. "wellington", "onehunga", "glen-innes"' },
-    },
+    slugField({ from: 'name', description: 'e.g. "wellington", "onehunga", "glen-innes"' }),
     {
       name: 'menuLocationName',
       label: 'Menu source name',
@@ -49,6 +43,45 @@ export const Locations: CollectionConfig = {
         description:
           'When on, this venue appears in the main "restaurants" grids (e.g. /dine-with-us). Turn on for our permanent restaurants; leave off for pop-ups or one-off sites.',
       },
+    },
+    {
+      name: 'closures',
+      label: 'Temporary closures',
+      type: 'array',
+      labels: { singular: 'Closure', plural: 'Closures' },
+      admin: {
+        description:
+          'Unscheduled closed nights (staff shortage, private event…). Each closure shows a yellow banner at the top of every page, a notice where tonight\'s menu normally sits on this restaurant\'s page, and — on the night itself — a red "Closed tonight" badge. Everything disappears automatically once the last night has passed, so there\'s nothing to switch off.',
+      },
+      fields: [
+        {
+          name: 'date',
+          label: 'Closed on',
+          type: 'date',
+          required: true,
+          admin: {
+            date: { pickerAppearance: 'dayOnly' },
+            description: 'The night the restaurant is closed (first night, for a multi-night closure).',
+          },
+        },
+        {
+          name: 'endDate',
+          label: 'Until (optional)',
+          type: 'date',
+          admin: {
+            date: { pickerAppearance: 'dayOnly' },
+            description: 'Last closed night. Leave blank for a single night.',
+          },
+        },
+        {
+          name: 'reason',
+          type: 'text',
+          admin: {
+            description:
+              'Shown to diners, e.g. "due to staff shortages" or "for a private event". Leave blank to show no reason.',
+          },
+        },
+      ],
     },
     {
       type: 'tabs',
@@ -171,7 +204,7 @@ export const Locations: CollectionConfig = {
               admin: {
                 hideGutter: true,
                 description:
-                  'The two buttons shown for this restaurant on the /dine-with-us list. Leave any field blank to use the default. The "Book a table" button only appears when a Booking link is set above.',
+                  'The buttons/links shown for this restaurant in the restaurant grids (homepage and /dine-with-us list). Leave any field blank to use the default. The "Book a table" button only appears when a Booking link is set above.',
               },
               fields: [
                 {

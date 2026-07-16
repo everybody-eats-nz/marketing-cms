@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { seoField } from '../fields/seo'
+import { slugField, slugify } from '../fields/slug'
 import { Hero } from '../blocks/Hero'
 import { RichText } from '../blocks/RichText'
 import { Stats } from '../blocks/Stats'
@@ -40,7 +41,13 @@ export const Pages: CollectionConfig = {
     livePreview: {
       url: ({ data }) => {
         const base = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
-        const slug = (data?.slug as string) || ''
+        // Mirror the slugField beforeValidate normalisation so the preview path
+        // matches what will actually be saved. The hook only runs server-side on
+        // save, so for a new page with a blank slug we derive it from the title
+        // client-side here — otherwise the preview would resolve to `/` (home)
+        // until the first save.
+        const raw = ((data?.slug as string) || (data?.title as string) || '').trim()
+        const slug = slugify(raw, { allowSlashes: true })
         const path = slug === 'home' ? '/' : `/${slug}`
         return `${base}/api/preview?path=${encodeURIComponent(path)}`
       },
@@ -82,14 +89,11 @@ export const Pages: CollectionConfig = {
   versions: { drafts: true, maxPerDoc: 25 },
   fields: [
     { name: 'title', type: 'text', required: true },
-    {
-      name: 'slug',
-      type: 'text',
-      required: true,
-      unique: true,
-      index: true,
-      admin: { description: 'URL path, e.g. "about" or "locations/wellington"' },
-    },
+    slugField({
+      from: 'title',
+      allowSlashes: true,
+      description: 'URL path, e.g. "about" or "locations/wellington"',
+    }),
     {
       name: 'updatedBy',
       type: 'relationship',

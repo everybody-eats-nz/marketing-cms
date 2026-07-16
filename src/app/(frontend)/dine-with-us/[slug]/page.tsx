@@ -2,10 +2,12 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
+import { activeClosure } from '@/lib/closures'
 import { getPayloadClient } from '@/lib/payload'
 import { pageMetadata } from '@/lib/seo'
 import { JsonLd, buildRestaurant, buildBreadcrumbs } from '@/components/structured-data'
 import { BookingLocationLink } from '@/components/booking/booking-dialog'
+import { ClosureNotice } from '@/components/closure-notice'
 import { PayloadImage } from '@/components/payload-image'
 import { DiningRoomMural } from '@/components/dining-room-mural'
 
@@ -113,6 +115,11 @@ export default async function LocationPage({ params }: Params) {
   const loc: any = await fetchLocation(slug)
   if (!loc) notFound()
 
+  // Current or upcoming unscheduled closure (staff shortage, private event…).
+  // Drives the notice in the menu slot and, on the night itself, the red
+  // "Closed tonight" badge in the hero.
+  const closure = activeClosure(loc.closures)
+
   const payload = await getPayloadClient()
   const [upcomingEvents, tonightsMenu, dinerNotes] = await Promise.all([
     payload.find({
@@ -128,7 +135,9 @@ export default async function LocationPage({ params }: Params) {
     }).catch(() => ({ docs: [] })),
     // Match the portal by the explicit menu-source name when set, so renaming
     // the display name (e.g. adding a "Restaurant" suffix) never breaks the menu.
-    fetchTonightsMenu(loc.menuLocationName || loc.name),
+    // On a closed night the closure notice takes the menu's place, so don't
+    // fetch (or show) a menu nobody can order from.
+    closure?.isTonight ? Promise.resolve(null) : fetchTonightsMenu(loc.menuLocationName || loc.name),
     // Published diner feedback (positive + consented, auto-approved by the AI
     // classifier on submit, with staff override). Social proof, in diners' words.
     payload.find({
@@ -182,9 +191,17 @@ export default async function LocationPage({ params }: Params) {
                 className="h-20 sm:h-24 w-auto object-contain mb-6 drop-shadow-md"
               />
             )}
-            <div className="inline-flex items-center gap-3 mb-6 text-xs uppercase tracking-[0.18em] text-cream-50/80">
-              <span className="w-8 h-px bg-cream-50/40" />
-              {loc.city || 'New Zealand'}
+            <div className="flex flex-wrap items-center gap-4 mb-6">
+              <span className="inline-flex items-center gap-3 text-xs uppercase tracking-[0.18em] text-cream-50/80">
+                <span className="w-8 h-px bg-cream-50/40" />
+                {loc.city || 'New Zealand'}
+              </span>
+              {closure?.isTonight && (
+                <span className="inline-flex items-center gap-2 rounded-pill bg-clay-300 px-4 py-1.5 text-xs uppercase tracking-[0.15em] font-medium text-ink">
+                  <span className="w-2 h-2 rounded-full bg-ink/60" />
+                  Closed tonight
+                </span>
+              )}
             </div>
             <h1 className="display text-6xl sm:text-8xl lg:text-[10rem] font-light leading-[0.9]">
               {loc.name}
@@ -249,6 +266,10 @@ export default async function LocationPage({ params }: Params) {
         </div>
       </section>
 
+      {/* Unscheduled closure — on the closed night this stands in for the menu;
+          while the closure is still ahead it sits above it as advance warning. */}
+      {closure && <ClosureNotice closure={closure} />}
+
       {/* Tonight's menu — published daily by the kitchen via the volunteers portal */}
       {tonightsMenu && (
         <section className="container-tight pt-24">
@@ -272,10 +293,10 @@ export default async function LocationPage({ params }: Params) {
 
             <div className="mt-12 space-y-10">
               {[
+                { label: 'To drink', items: tonightsMenu.drink },
                 { label: 'To start', items: tonightsMenu.starter },
                 { label: 'Mains', items: tonightsMenu.mains },
                 { label: 'Dessert', items: tonightsMenu.dessert },
-                { label: 'To drink', items: tonightsMenu.drink },
               ]
                 .filter((course) => course.items && course.items.length > 0)
                 .map((course) => (
