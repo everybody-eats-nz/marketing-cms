@@ -101,8 +101,11 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   return pageMetadata({
     // Honour a CMS-set SEO title; otherwise lead with the intent these pages
     // actually rank for in Search Console ("<suburb> restaurant", "cheap eats",
-    // "pay what you can") rather than a bare "<name> restaurant".
-    title: loc.seo?.title || `${loc.name} Restaurant — Pay What You Can`,
+    // "pay what you can") rather than a bare "<name> restaurant". Guard against
+    // names that already end in "Restaurant" so we don't get "… Restaurant Restaurant".
+    title:
+      loc.seo?.title ||
+      `${/\brestaurant$/i.test(loc.name) ? loc.name : `${loc.name} Restaurant`} — Pay What You Can`,
     description: loc.seo?.description || loc.tagline || loc.intro,
     image: loc.seo?.image || loc.heroImage,
     path: `/dine-with-us/${loc.slug}`,
