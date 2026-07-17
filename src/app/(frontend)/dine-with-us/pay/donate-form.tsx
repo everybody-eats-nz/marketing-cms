@@ -162,6 +162,16 @@ export function DonateForm({
     }
     setStarting(true)
     try {
+      // Confirm Stripe.js actually loaded before advancing to the card step.
+      // A slow block (e.g. a stalling proxy) can leave stripePromise unsettled
+      // at click time, so the useEffect above may not have flipped the flag yet.
+      // Await it here: if it resolved to null, show the fallback rather than
+      // rendering <Elements> that would never mount.
+      const stripe = await stripePromise
+      if (!stripe) {
+        setStripeLoadFailed(true)
+        return
+      }
       const res = await fetch('/api/donate/create-intent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
