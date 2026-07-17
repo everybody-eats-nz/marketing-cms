@@ -1,4 +1,34 @@
 import posthog from 'posthog-js'
+import type { CaptureResult } from 'posthog-js'
+
+// Substrings that mark a captured exception as third-party browser-extension
+// noise rather than a real site error. `capture_exceptions` turns on global
+// `unhandledrejection` autocapture, which scoops up promise rejections thrown by
+// extension content scripts running in the page. The one we see is
+// "Non-Error promise rejection captured with value: Object Not Found Matching
+// Id:… MethodName:update ParamCount:…" — an injected script that can't reach its
+// own background page. Neither string appears anywhere in our code, so matching
+// on them only ever drops extension noise, never a genuine site error.
+const EXTENSION_NOISE_MARKERS = [
+  'Object Not Found Matching Id',
+  'MethodName:update',
+]
+
+// Drop $exception events whose message matches a known extension-noise marker.
+// Returning null tells posthog-js not to send the event.
+function dropExtensionNoise(event: CaptureResult | null): CaptureResult | null {
+  if (!event || event.event !== '$exception') return event
+
+  const exceptions = event.properties?.$exception_list
+  if (!Array.isArray(exceptions)) return event
+
+  const isNoise = exceptions.some((ex: { value?: unknown }) => {
+    const value = typeof ex?.value === 'string' ? ex.value : ''
+    return EXTENSION_NOISE_MARKERS.some((marker) => value.includes(marker))
+  })
+
+  return isNoise ? null : event
+}
 
 // Client-side PostHog bootstrap. Next.js runs `instrumentation-client` once per
 // full page load, before the app hydrates — the canonical place to init the
@@ -26,6 +56,7 @@ if (key && typeof window !== 'undefined' && !window.location.pathname.startsWith
     ui_host: 'https://us.posthog.com',
     defaults: '2026-01-30',
     capture_exceptions: true,
+    before_send: dropExtensionNoise,
     debug: process.env.NODE_ENV === 'development',
   })
 }
