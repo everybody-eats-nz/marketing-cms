@@ -32,6 +32,10 @@ const nextConfig = {
       { source: '/hygiene/terms-and-conditions', destination: '/terms', permanent: true },
       { source: '/hygiene/privacy-policy', destination: '/privacy', permanent: true },
 
+      // Hopper Cafe was briefly published under /events/hopper-cafe (still
+      // indexed by Google, now 404s). It lives at its own top-level /hopper.
+      { source: '/events/hopper-cafe', destination: '/hopper', permanent: true },
+
       // Collection renamed journal-posts → journal. Wildcard covers all posts.
       // Verify leaf-slug parity against the CMS (audit §3); add explicit
       // /journal-posts/<old> → /journal/<new> entries ABOVE this line where a
