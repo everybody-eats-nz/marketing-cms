@@ -89,10 +89,39 @@ const config = withPayload(nextConfig, { devBundleServerPackages: false })
 // if `projectId` is missing (`projectId is required when sourcemaps are
 // enabled`), so gate the wrapper on the vars being present — otherwise CI and
 // local `next build` (no PostHog secrets) fail to load next.config.mjs.
-export default process.env.POSTHOG_API_KEY && process.env.POSTHOG_PROJECT_ID
+//
+// IMPORTANT (Coolify): both secrets must be marked "Available at build time" so
+// the Dockerfile's `ARG POSTHOG_API_KEY` / `ARG POSTHOG_PROJECT_ID` are actually
+// populated during `next build`. A Coolify env var is runtime-only by default
+// and is NOT passed to `docker build`, which leaves these empty — so the wrapper
+// below is skipped, no `//# chunkId=` is injected into the shipped bundles, and
+// every stack trace in PostHog Error Tracking stays unsymbolicated.
+const posthogSourcemapsEnabled = Boolean(
+  process.env.POSTHOG_API_KEY && process.env.POSTHOG_PROJECT_ID,
+)
+
+if (!posthogSourcemapsEnabled && process.env.NODE_ENV === 'production') {
+  // Make the misconfiguration visible in the deploy log instead of silently
+  // shipping un-symbolicated bundles. Expected (and harmless) in CI and local
+  // production builds, which intentionally run without the upload secrets.
+  console.warn(
+    '[posthog] Source map upload DISABLED: POSTHOG_API_KEY and/or ' +
+      'POSTHOG_PROJECT_ID are not set at build time, so production error stack ' +
+      'traces will not be symbolicated. In Coolify, mark both as "Available at ' +
+      'build time".',
+  )
+}
+
+export default posthogSourcemapsEnabled
   ? withPostHogConfig(config, {
       personalApiKey: process.env.POSTHOG_API_KEY,
       projectId: process.env.POSTHOG_PROJECT_ID,
-      host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
+      // Source maps upload to the PostHog *app* host (default us.posthog.com),
+      // which is a different endpoint from the browser SDK's ingestion host.
+      // Keep this decoupled from NEXT_PUBLIC_POSTHOG_HOST — that var points at
+      // the ingestion host (us.i.posthog.com), and pointing the uploader there
+      // makes the upload fail, which (since the upload runs in Next's
+      // runAfterProductionCompile hook) fails the whole production build.
+      host: process.env.POSTHOG_HOST || 'https://us.posthog.com',
     })
   : config
