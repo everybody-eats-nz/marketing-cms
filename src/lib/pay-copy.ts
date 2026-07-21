@@ -32,6 +32,11 @@ export type FormCopy = {
   // `pay-settings` field), so these two stay code-only defaults.
   loadError: string
   loadErrorRetry: string
+  // Shown when Stripe *throws* while confirming a payment — an integration-level
+  // error (e.g. confirming before an Element has emitted `ready`), as opposed to
+  // a declined card, which Stripe returns as a normal error we surface inline.
+  // Also code-only (no `pay-settings` field), like loadError above.
+  confirmError: string
   continueLabel: string
   oneMomentLabel: string
   securityNote1: string
@@ -170,6 +175,8 @@ export const DEFAULT_PAY_COPY: PayCopy = {
     loadError:
       'We couldn’t load the secure payment form. An ad or content blocker, or a patchy connection, can stop it loading — try switching off any blocker for this page, or refresh to try again. Still stuck? Our team at the counter can help.',
     loadErrorRetry: 'Refresh and try again',
+    confirmError:
+      'We couldn’t process your payment just then. Please wait a moment and try again — if it keeps happening, refresh the page or see our team at the counter.',
     continueLabel: 'Continue',
     oneMomentLabel: 'One moment…',
     securityNote1: 'Secure payment by Stripe — card, Apple Pay or Google Pay.',
@@ -287,6 +294,7 @@ export function mergePayCopy(global: any): PayCopy {
       // Code-only defaults (no `pay-settings` field for these).
       loadError: d.form.loadError,
       loadErrorRetry: d.form.loadErrorRetry,
+      confirmError: d.form.confirmError,
       continueLabel: s(g.form?.continueLabel, d.form.continueLabel),
       oneMomentLabel: s(g.form?.oneMomentLabel, d.form.oneMomentLabel),
       securityNote1: s(g.form?.securityNote1, d.form.securityNote1),
