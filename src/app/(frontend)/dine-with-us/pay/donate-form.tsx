@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useSyncExternalStore } from 'react'
+import { useEffect, useState, useSyncExternalStore } from 'react'
 import { useRouter } from 'next/navigation'
 import { useIsDark } from '@/lib/hooks'
 import { loadStripe } from '@stripe/stripe-js'
@@ -22,7 +22,14 @@ import {
 
 // Loaded once per page. The publishable key is safe to expose to the browser.
 const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-const stripePromise = publishableKey ? loadStripe(publishableKey) : null
+// Stripe.js is fetched from js.stripe.com; an ad/content blocker, corporate
+// proxy, or flaky network can block it, in which case loadStripe() rejects.
+// We .catch() that here so the rejection never goes unhandled (posthog-js has
+// capture_exceptions on, so an unhandled rejection reads as an app crash) and
+// resolve to null instead, letting the form degrade to a friendly fallback.
+const stripePromise = publishableKey
+  ? loadStripe(publishableKey).catch(() => null)
+  : null
 
 // Stripe Elements render inside a cross-origin iframe, so our CSS variables,
 // self-hosted fonts, and `.dark` class don't reach them — brand colours and
@@ -102,6 +109,21 @@ export function DonateForm({
   const isDark = useIsDark()
   const appearance = isDark ? darkAppearance : lightAppearance
 
+  // If Stripe.js can't load (blocker / proxy / network), the promise above
+  // resolves to null. Track that so we can swap the form for a fallback with a
+  // path forward, rather than leaving <Elements> stuck loading forever.
+  const [stripeLoadFailed, setStripeLoadFailed] = useState(false)
+  useEffect(() => {
+    if (!stripePromise) return
+    let active = true
+    stripePromise.then((stripe) => {
+      if (active && !stripe) setStripeLoadFailed(true)
+    })
+    return () => {
+      active = false
+    }
+  }, [])
+
   // Prefill from a ?amount= query: select it if it's a preset, otherwise drop
   // it into the custom field. Applied once, during the first render where the
   // URL is readable (right after hydration), then left to the user.
@@ -140,6 +162,16 @@ export function DonateForm({
     }
     setStarting(true)
     try {
+      // Confirm Stripe.js actually loaded before advancing to the card step.
+      // A slow block (e.g. a stalling proxy) can leave stripePromise unsettled
+      // at click time, so the useEffect above may not have flipped the flag yet.
+      // Await it here: if it resolved to null, show the fallback rather than
+      // rendering <Elements> that would never mount.
+      const stripe = await stripePromise
+      if (!stripe) {
+        setStripeLoadFailed(true)
+        return
+      }
       const res = await fetch('/api/donate/create-intent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -165,6 +197,24 @@ export function DonateForm({
 
   if (!stripePromise) {
     return <p className="text-center text-base text-muted py-6">{copy.notConfigured}</p>
+  }
+
+  // Stripe.js was blocked from loading — an environmental failure, not a broken
+  // form. Explain it and offer a refresh (loadStripe memoises its failure, so a
+  // fresh page load is the reliable retry).
+  if (stripeLoadFailed) {
+    return (
+      <div className="py-6 text-center">
+        <p className="text-base text-muted leading-relaxed">{copy.loadError}</p>
+        <button
+          type="button"
+          onClick={() => window.location.reload()}
+          className="btn-ghost mt-5"
+        >
+          {copy.loadErrorRetry}
+        </button>
+      </div>
+    )
   }
 
   // Step 2 — embedded card / wallet form, shown once we have a client secret.
