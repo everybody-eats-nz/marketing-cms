@@ -25,6 +25,18 @@ export type FormCopy = {
   // Templates — {min} / {max} are replaced with the formatted dollar amounts.
   rangeError: string
   notConfigured: string
+  // Shown when Stripe.js itself fails to load in the browser (ad/content
+  // blocker, corporate proxy, or flaky network blocking js.stripe.com) — a
+  // recoverable, environmental failure, distinct from `notConfigured` (which
+  // means we never had a publishable key). Not editable in /admin (no matching
+  // `pay-settings` field), so these two stay code-only defaults.
+  loadError: string
+  loadErrorRetry: string
+  // Shown when Stripe *throws* while confirming a payment — an integration-level
+  // error (e.g. confirming before an Element has emitted `ready`), as opposed to
+  // a declined card, which Stripe returns as a normal error we surface inline.
+  // Also code-only (no `pay-settings` field), like loadError above.
+  confirmError: string
   continueLabel: string
   oneMomentLabel: string
   securityNote1: string
@@ -160,6 +172,11 @@ export const DEFAULT_PAY_COPY: PayCopy = {
     rangeError: 'Please enter an amount between {min} and {max}.',
     notConfigured:
       'Online payments aren’t set up yet — please see one of our team at the counter. Sorry!',
+    loadError:
+      'We couldn’t load the secure payment form. An ad or content blocker, or a patchy connection, can stop it loading — try switching off any blocker for this page, or refresh to try again. Still stuck? Our team at the counter can help.',
+    loadErrorRetry: 'Refresh and try again',
+    confirmError:
+      'We couldn’t process your payment just then. Please wait a moment and try again — if it keeps happening, refresh the page or see our team at the counter.',
     continueLabel: 'Continue',
     oneMomentLabel: 'One moment…',
     securityNote1: 'Secure payment by Stripe — card, Apple Pay or Google Pay.',
@@ -274,6 +291,10 @@ export function mergePayCopy(global: any): PayCopy {
       chooseAmountError: s(g.form?.chooseAmountError, d.form.chooseAmountError),
       rangeError: s(g.form?.rangeError, d.form.rangeError),
       notConfigured: s(g.form?.notConfigured, d.form.notConfigured),
+      // Code-only defaults (no `pay-settings` field for these).
+      loadError: d.form.loadError,
+      loadErrorRetry: d.form.loadErrorRetry,
+      confirmError: d.form.confirmError,
       continueLabel: s(g.form?.continueLabel, d.form.continueLabel),
       oneMomentLabel: s(g.form?.oneMomentLabel, d.form.oneMomentLabel),
       securityNote1: s(g.form?.securityNote1, d.form.securityNote1),

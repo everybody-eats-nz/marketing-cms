@@ -162,6 +162,18 @@ In Coolify → **Resources → New → Database → PostgreSQL** (16+). Copy the
 | `PAYLOAD_SECRET` | a long random string (e.g. `openssl rand -base64 48`) |
 | `NEXT_PUBLIC_SITE_URL` | the public URL Coolify gives the app (e.g. `https://cms.example.org`) |
 
+#### PostHog Error Tracking source maps (build-time)
+
+To symbolicate production JavaScript stack traces in [PostHog Error Tracking](https://us.posthog.com/project/200228/error_tracking), the build must upload source maps. These variables are read during `next build`, so in Coolify they **must be marked "Available at build time"** (the build-arg toggle) — a plain runtime variable is not passed to `docker build`, and the upload is silently skipped, leaving stack traces unsymbolicated.
+
+| Key | Value |
+| --- | --- |
+| `POSTHOG_API_KEY` | a [personal API key](https://us.posthog.com/settings/user-api-keys) with **error tracking write** + **organization read** scopes (not the `phc_…` project key) |
+| `POSTHOG_PROJECT_ID` | the numeric project ID from [project settings](https://us.posthog.com/settings/project#variables) |
+| `POSTHOG_HOST` | *(optional)* PostHog app host for upload; defaults to `https://us.posthog.com` |
+
+After a deploy, confirm a new entry appears under [Error Tracking → Symbol sets](https://us.posthog.com/project/200228/error_tracking/configuration#selectedSetting=error-tracking-symbol-sets).
+
 ### 4. Persistent storage
 
 Add a **Storage** mount so uploaded media survives redeploys:

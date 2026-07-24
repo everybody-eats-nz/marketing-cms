@@ -36,13 +36,24 @@ ENV NODE_ENV=production
 ENV PAYLOAD_SECRET=build-placeholder-replace-at-runtime
 ENV DATABASE_URI=postgres://placeholder:placeholder@localhost:5432/placeholder
 
-# PostHog source map upload credentials. Only present in this build stage —
-# they are not copied to the runner image. Pass via --build-arg in CI/Coolify.
+# PostHog source map upload credentials + the browser SDK host. Only present in
+# this build stage — they are not copied to the runner image.
+#
+# In Coolify these MUST be marked "Available at build time" (the build-arg
+# toggle). A plain runtime env var is NOT passed to `docker build`, so the ARGs
+# stay empty, `next build` skips source map upload, and PostHog Error Tracking
+# stack traces stay unsymbolicated (see the gate in next.config.mjs).
+#
+# POSTHOG_HOST is the PostHog *app* host used for source map upload (defaults to
+# https://us.posthog.com in next.config.mjs); it is deliberately separate from
+# NEXT_PUBLIC_POSTHOG_HOST, which is the SDK ingestion host (us.i.posthog.com).
 ARG POSTHOG_API_KEY
 ARG POSTHOG_PROJECT_ID
+ARG POSTHOG_HOST
 ARG NEXT_PUBLIC_POSTHOG_HOST
 ENV POSTHOG_API_KEY=$POSTHOG_API_KEY \
     POSTHOG_PROJECT_ID=$POSTHOG_PROJECT_ID \
+    POSTHOG_HOST=$POSTHOG_HOST \
     NEXT_PUBLIC_POSTHOG_HOST=$NEXT_PUBLIC_POSTHOG_HOST
 
 RUN pnpm build
