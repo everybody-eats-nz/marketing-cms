@@ -3,8 +3,8 @@ import type { CaptureResult } from 'posthog-js'
 
 // Substrings that mark a captured exception as third-party noise rather than a
 // real site error. `capture_exceptions` turns on global autocapture of
-// `unhandledrejection` and `window` errors, which scoops up two kinds of noise
-// that never originate in our code:
+// `unhandledrejection` and `window` errors, which scoops up several kinds of
+// noise that never originate in our code:
 //
 //  Browser-extension content scripts (promise rejections that can't reach their
 //  own background page):
@@ -18,6 +18,12 @@ import type { CaptureResult } from 'posthog-js'
 //   - `Can't find variable: gmo`, `instantSearchSDKJSBridgeClearHighlight` →
 //     in-app browser (Google app / Firefox) injected globals.
 //
+//  A browser extension / injected script calling `JSON.stringify` on a live DOM
+//  node whose React fiber closes a reference cycle, producing a synthetic,
+//  stack-traceless `TypeError` that bubbles to `window.onerror`:
+//   - `Converting circular structure to JSON` — every `JSON.stringify` in our
+//     code serializes a plain object, never a DOM node, so this is never ours.
+//
 // None of these strings appear anywhere in our code, so matching on them only
 // ever drops third-party noise, never a genuine site error.
 const NOISE_SIGNATURES = [
@@ -28,6 +34,7 @@ const NOISE_SIGNATURES = [
   'webkit.messageHandlers',
   'instantSearchSDKJSBridgeClearHighlight',
   "Can't find variable: gmo",
+  'Converting circular structure to JSON',
 ]
 
 // Drop $exception events whose type or message matches a known noise signature.
