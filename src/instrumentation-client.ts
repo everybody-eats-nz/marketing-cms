@@ -1,30 +1,48 @@
 import posthog from 'posthog-js'
 import type { CaptureResult } from 'posthog-js'
 
-// Substrings that mark a captured exception as third-party browser-extension
-// noise rather than a real site error. `capture_exceptions` turns on global
-// `unhandledrejection` autocapture, which scoops up promise rejections thrown by
-// extension content scripts running in the page. The one we see is
-// "Non-Error promise rejection captured with value: Object Not Found Matching
-// Id:… MethodName:update ParamCount:…" — an injected script that can't reach its
-// own background page. Neither string appears anywhere in our code, so matching
-// on them only ever drops extension noise, never a genuine site error.
-const EXTENSION_NOISE_MARKERS = [
+// Substrings that mark a captured exception as third-party noise rather than a
+// real site error. `capture_exceptions` turns on global autocapture of
+// `unhandledrejection` and `window` errors, which scoops up two kinds of noise
+// that never originate in our code:
+//
+//  Browser-extension content scripts (promise rejections that can't reach their
+//  own background page):
+//   - "Object Not Found Matching Id:… MethodName:update ParamCount:…"
+//
+//  Browser/OS content scripts injected into the page, which surface in PostHog as
+//  fake "new issues" (1 event, 1 user):
+//   - `window.__firefox__.reader` → Firefox for iOS Reader-mode content script.
+//   - `_AutofillCallbackHandler` → iOS WebKit autofill script.
+//   - `webkit.messageHandlers` → generic iOS WKWebView native bridge.
+//   - `Can't find variable: gmo`, `instantSearchSDKJSBridgeClearHighlight` →
+//     in-app browser (Google app / Firefox) injected globals.
+//
+// None of these strings appear anywhere in our code, so matching on them only
+// ever drops third-party noise, never a genuine site error.
+const NOISE_SIGNATURES = [
   'Object Not Found Matching Id',
   'MethodName:update',
+  '__firefox__',
+  '_AutofillCallbackHandler',
+  'webkit.messageHandlers',
+  'instantSearchSDKJSBridgeClearHighlight',
+  "Can't find variable: gmo",
 ]
 
-// Drop $exception events whose message matches a known extension-noise marker.
+// Drop $exception events whose type or message matches a known noise signature.
 // Returning null tells posthog-js not to send the event.
-function dropExtensionNoise(event: CaptureResult | null): CaptureResult | null {
+function dropInjectedNoise(event: CaptureResult | null): CaptureResult | null {
   if (!event || event.event !== '$exception') return event
 
   const exceptions = event.properties?.$exception_list
   if (!Array.isArray(exceptions)) return event
 
-  const isNoise = exceptions.some((ex: { value?: unknown }) => {
+  const isNoise = exceptions.some((ex: { type?: unknown; value?: unknown }) => {
+    const type = typeof ex?.type === 'string' ? ex.type : ''
     const value = typeof ex?.value === 'string' ? ex.value : ''
-    return EXTENSION_NOISE_MARKERS.some((marker) => value.includes(marker))
+    const haystack = `${type} ${value}`
+    return NOISE_SIGNATURES.some((sig) => haystack.includes(sig))
   })
 
   return isNoise ? null : event
@@ -56,7 +74,7 @@ if (key && typeof window !== 'undefined' && !window.location.pathname.startsWith
     ui_host: 'https://us.posthog.com',
     defaults: '2026-01-30',
     capture_exceptions: true,
-    before_send: dropExtensionNoise,
+    before_send: dropInjectedNoise,
     debug: process.env.NODE_ENV === 'development',
   })
 }
