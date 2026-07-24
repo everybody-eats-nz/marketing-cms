@@ -16,6 +16,7 @@ import { NewsletterFormBlockRenderer } from './newsletter-form-block'
 import { EnquiryFormBlock } from './enquiry-form-block'
 import { PartnersGridBlock } from './partners-grid-block'
 import { LocationsMagazineBlock } from './locations-magazine-block'
+import { CafesRowBlock } from './cafes-row-block'
 import { DonateHeroBlock } from './donate-hero-block'
 import { ProcessBlock } from './process-block'
 import { ValuesBlock } from './values-block'
@@ -50,6 +51,7 @@ export type RenderExtras = {
   liveStats?: import('@/lib/impact-stats').LiveImpactStats | null
   impactStory?: import('@/lib/impact-story').ImpactStory | null
   locations?: any[]
+  cafes?: any[]
   events?: any[]
   journal?: any[]
   team?: any[]
@@ -71,6 +73,7 @@ export function RenderBlocks({
   liveStats = null,
   impactStory = null,
   locations = [],
+  cafes = [],
   events = [],
   journal = [],
   team = [],
@@ -135,6 +138,8 @@ export function RenderBlocks({
             return <LocationsGridBlock key={key} block={block as any} locations={locations} />
           case 'locationsMagazine':
             return <LocationsMagazineBlock key={key} locations={locations} />
+          case 'cafesRow':
+            return <CafesRowBlock key={key} block={block as any} cafes={cafes} />
           case 'eventsList':
             return <EventsListBlock key={key} block={block as any} events={events} />
           case 'journalList':

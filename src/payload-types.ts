@@ -72,6 +72,7 @@ export interface Config {
     documents: Document;
     pages: Page;
     locations: Location;
+    cafes: Cafe;
     'team-members': TeamMember;
     events: Event;
     'journal-posts': JournalPost;
@@ -92,6 +93,7 @@ export interface Config {
     documents: DocumentsSelect<false> | DocumentsSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     locations: LocationsSelect<false> | LocationsSelect<true>;
+    cafes: CafesSelect<false> | CafesSelect<true>;
     'team-members': TeamMembersSelect<false> | TeamMembersSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
     'journal-posts': JournalPostsSelect<false> | JournalPostsSelect<true>;
@@ -663,6 +665,23 @@ export interface Page {
             id?: string | null;
             blockName?: string | null;
             blockType: 'locationsMagazine';
+          }
+        | {
+            /**
+             * Small label above the heading, e.g. "Also from us".
+             */
+            eyebrow?: string | null;
+            /**
+             * Section heading. Wrap a word in *asterisks* to italicise it.
+             */
+            heading?: string | null;
+            /**
+             * Optional supporting line shown beneath the heading.
+             */
+            intro?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'cafesRow';
           }
         | {
             eyebrow?: string | null;
@@ -1797,6 +1816,57 @@ export interface Quote {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cafes".
+ */
+export interface Cafe {
+  id: number;
+  name: string;
+  /**
+   * Stable identifier used for seeding, e.g. "hopper". Not a public URL.
+   */
+  slug: string;
+  /**
+   * e.g. "Wellington"
+   */
+  city?: string | null;
+  /**
+   * One-line description shown on the café card.
+   */
+  tagline?: string | null;
+  /**
+   * Leave blank to show no status badge.
+   */
+  openStatus?: ('open' | 'coming-soon' | 'closed') | null;
+  /**
+   * Portrait-friendly image, at least 1400px wide. Fills the café card.
+   */
+  heroImage?: (number | null) | Media;
+  /**
+   * Where the café card links to, e.g. the internal /hopper page.
+   */
+  link?: {
+    label?: string | null;
+    type?: ('internal' | 'external') | null;
+    /**
+     * Path on this site, e.g. /our-story
+     */
+    internalHref?: string | null;
+    /**
+     * Full URL incl. https://
+     */
+    externalHref?: string | null;
+    openInNewTab?: boolean | null;
+  };
+  /**
+   * Lower numbers appear first.
+   */
+  displayOrder?: number | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "team-members".
  */
 export interface TeamMember {
@@ -2157,6 +2227,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'locations';
         value: number | Location;
+      } | null)
+    | ({
+        relationTo: 'cafes';
+        value: number | Cafe;
       } | null)
     | ({
         relationTo: 'team-members';
@@ -2607,6 +2681,15 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               note?: T;
+              id?: T;
+              blockName?: T;
+            };
+        cafesRow?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              intro?: T;
               id?: T;
               blockName?: T;
             };
@@ -3313,6 +3396,31 @@ export interface LocationsSelect<T extends boolean = true> {
         image?: T;
         noindex?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cafes_select".
+ */
+export interface CafesSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  city?: T;
+  tagline?: T;
+  openStatus?: T;
+  heroImage?: T;
+  link?:
+    | T
+    | {
+        label?: T;
+        type?: T;
+        internalHref?: T;
+        externalHref?: T;
+        openInNewTab?: T;
+      };
+  displayOrder?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;

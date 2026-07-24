@@ -384,6 +384,13 @@ async function main() {
             "Our restaurants serve a three-course menu Wednesday through Saturday. Pay what feels right — generously, modestly, or anywhere in between. There's only ever one menu, made fresh that day from ingredients rescued from supermarkets, farms and producers.",
         },
         { blockType: 'locationsMagazine' },
+        {
+          blockType: 'cafesRow',
+          eyebrow: 'Also from us',
+          heading: 'Our *cafés*',
+          intro:
+            'Rescued food, accessible prices, and a genuine sense of belonging — cafés from the Everybody Eats team.',
+        },
       ],
     },
 
