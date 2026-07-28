@@ -4,8 +4,9 @@
 // in the menu slot on the location page, and the red "Closed tonight" badge on
 // the night itself. Entries expire on their own once the last night has passed.
 //
-// All day-maths happen on Pacific/Auckland calendar dates, so "tonight" means
-// tonight at the restaurants regardless of where the server runs.
+// "Tonight" is resolved on the Pacific/Auckland calendar, so it means tonight at
+// the restaurants regardless of where the server runs. The dates the editor
+// picked are read back in UTC instead - see pickedDay() for why.
 
 export type ClosureEntry = {
   date?: string | null
@@ -26,6 +27,7 @@ export type ActiveClosure = {
 }
 
 const NZ_DAY = new Intl.DateTimeFormat('en-CA', { timeZone: 'Pacific/Auckland' })
+const PICKED_DAY = new Intl.DateTimeFormat('en-CA', { timeZone: 'UTC' })
 const NZ_LABEL = new Intl.DateTimeFormat('en-NZ', {
   timeZone: 'Pacific/Auckland',
   weekday: 'long',
@@ -37,6 +39,18 @@ const NZ_LABEL = new Intl.DateTimeFormat('en-NZ', {
 function nzDay(iso: string | Date): string | null {
   const d = new Date(iso)
   return Number.isNaN(d.getTime()) ? null : NZ_DAY.format(d)
+}
+
+/**
+ * The calendar date (YYYY-MM-DD) an editor picked in the admin. Payload's
+ * `dayOnly` picker normalises to 12:00 UTC on the chosen day whatever timezone
+ * the editor is in, so the day reads back in UTC. Don't reach for nzDay() here:
+ * NZ is UTC+12/+13, so noon UTC is already tomorrow in Auckland and every
+ * closure would land a night late.
+ */
+function pickedDay(iso: string | Date): string | null {
+  const d = new Date(iso)
+  return Number.isNaN(d.getTime()) ? null : PICKED_DAY.format(d)
 }
 
 /** "Friday 18 July" for a YYYY-MM-DD day string. */
@@ -59,9 +73,9 @@ export function activeClosure(
 
   const upcoming = closures
     .flatMap((entry) => {
-      const start = entry.date ? nzDay(entry.date) : null
+      const start = entry.date ? pickedDay(entry.date) : null
       if (!start) return []
-      const rawEnd = entry.endDate ? nzDay(entry.endDate) : null
+      const rawEnd = entry.endDate ? pickedDay(entry.endDate) : null
       // A range ending before it starts is a data-entry slip — treat as one night.
       const end = rawEnd && rawEnd >= start ? rawEnd : start
       if (end < today) return [] // already over

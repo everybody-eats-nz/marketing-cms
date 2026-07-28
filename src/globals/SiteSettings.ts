@@ -82,6 +82,33 @@ export const SiteSettings: GlobalConfig = {
           ],
         },
         {
+          label: 'Closure banner',
+          description:
+            'The yellow scrolling strip shown at the top of every page while a restaurant has a temporary closure entered. It writes itself from the closures on each location and retires once the last closed night has passed - there is nothing to switch on here.',
+          fields: [
+            {
+              name: 'closureBanner',
+              type: 'group',
+              label: false,
+              fields: [
+                {
+                  name: 'speed',
+                  type: 'number',
+                  label: 'Scroll speed',
+                  defaultValue: 125,
+                  min: 10,
+                  max: 400,
+                  admin: {
+                    step: 5,
+                    description:
+                      'How far the strip travels each second, in pixels. 125 is the pace the banner has always run at. Drop to around 80-90 to make the messages easier to read, or raise it for more urgency. Leave blank for 125.',
+                  },
+                },
+              ],
+            },
+          ],
+        },
+        {
           label: 'Gala banner',
           description:
             'The slim promo strip with the live countdown, shown at the top of every page. It hides itself automatically on the page it links to, and once the countdown target has passed.',
