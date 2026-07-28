@@ -1618,10 +1618,12 @@ export interface Location {
          * The night the restaurant is closed (first night, for a multi-night closure).
          */
         date: string;
+        date_tz: SupportedTimezones;
         /**
          * Last closed night. Leave blank for a single night.
          */
         endDate?: string | null;
+        endDate_tz?: SupportedTimezones;
         /**
          * Shown to diners, e.g. "due to staff shortages" or "for a private event". Leave blank to show no reason.
          */
@@ -1921,6 +1923,7 @@ export interface JournalPost {
   author?: string | null;
   authorMember?: (number | null) | TeamMember;
   publishedAt?: string | null;
+  publishedAt_tz?: SupportedTimezones;
   body?: {
     root: {
       type: string;
@@ -3247,7 +3250,9 @@ export interface LocationsSelect<T extends boolean = true> {
     | T
     | {
         date?: T;
+        date_tz?: T;
         endDate?: T;
+        endDate_tz?: T;
         reason?: T;
         id?: T;
       };
@@ -3388,6 +3393,7 @@ export interface JournalPostsSelect<T extends boolean = true> {
   author?: T;
   authorMember?: T;
   publishedAt?: T;
+  publishedAt_tz?: T;
   body?: T;
   seo?:
     | T
@@ -3594,7 +3600,7 @@ export interface SiteSetting {
     | null;
   closureBanner?: {
     /**
-     * How far the strip travels each second, in pixels. 125 is the pace the banner has always run at. Drop to around 80–90 to make the messages easier to read, or raise it for more urgency. Leave blank for 125.
+     * How far the strip travels each second, in pixels. 125 is the pace the banner has always run at. Drop to around 80-90 to make the messages easier to read, or raise it for more urgency. Leave blank for 125.
      */
     speed?: number | null;
   };

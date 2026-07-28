@@ -42,11 +42,14 @@ function nzDay(iso: string | Date): string | null {
 }
 
 /**
- * The calendar date (YYYY-MM-DD) an editor picked in the admin. Payload's
- * `dayOnly` picker normalises to 12:00 UTC on the chosen day whatever timezone
- * the editor is in, so the day reads back in UTC. Don't reach for nzDay() here:
- * NZ is UTC+12/+13, so noon UTC is already tomorrow in Auckland and every
- * closure would land a night late.
+ * The calendar date (YYYY-MM-DD) an editor picked in the admin.
+ *
+ * These fields are anchored to Pacific/Auckland (`timezone: true` on Locations),
+ * so a pick is stored at midday Auckland - 00:00 UTC on the chosen day. Rows
+ * written before that anchoring landed sit on 12:00 UTC instead. Reading the UTC
+ * day is correct for both, which is why this is deliberately not nzDay(): NZ is
+ * UTC+12/+13, so the older 12:00 UTC values are already tomorrow in Auckland and
+ * every one of those closures would land a night late.
  */
 function pickedDay(iso: string | Date): string | null {
   const d = new Date(iso)
