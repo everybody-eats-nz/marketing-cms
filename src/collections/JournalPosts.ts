@@ -38,7 +38,14 @@ export const JournalPosts: CollectionConfig = {
     },
     { name: 'author', type: 'text' },
     { name: 'authorMember', type: 'relationship', relationTo: 'team-members' },
-    { name: 'publishedAt', type: 'date', admin: { date: { pickerAppearance: 'dayOnly' } } },
+    // Anchored to Auckland for the same reason as the closure dates on
+    // Locations - a day-only pick otherwise redisplays as the following day.
+    {
+      name: 'publishedAt',
+      type: 'date',
+      timezone: true,
+      admin: { date: { pickerAppearance: 'dayOnly' } },
+    },
     { name: 'body', type: 'richText' },
     seoField,
   ],
