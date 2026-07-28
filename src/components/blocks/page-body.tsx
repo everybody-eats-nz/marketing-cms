@@ -32,6 +32,7 @@ export async function PageBody({ page, isDraft }: { page: any; isDraft: boolean 
     types.has('locationsGrid') ||
     types.has('locationsMagazine') ||
     types.has('impactLanding')
+  const needCafes = isDraft || types.has('cafesRow')
   const needEvents = isDraft || types.has('eventsList')
   const needJournal = isDraft || types.has('journalList')
   const needTeam = isDraft || types.has('teamGrid')
@@ -42,7 +43,7 @@ export async function PageBody({ page, isDraft }: { page: any; isDraft: boolean 
   const needImpactStory = isDraft || types.has('impactLanding')
 
   const payload = await getPayloadClient()
-  const [settings, payCopy, liveStats, impactStory, locations, events, journal, team, faqs, partners] =
+  const [settings, payCopy, liveStats, impactStory, locations, cafes, events, journal, team, faqs, partners] =
     await Promise.all([
     needSettings
       ? payload.findGlobal({ slug: 'site-settings' }).catch(() => null)
@@ -66,6 +67,17 @@ export async function PageBody({ page, isDraft }: { page: any; isDraft: boolean 
             showInMainGrids: { equals: true },
             ...(isDraft ? {} : { _status: { equals: 'published' } }),
           },
+        })
+      : Promise.resolve({ docs: [] as any[] }),
+    needCafes
+      ? payload.find({
+          collection: 'cafes',
+          limit: 20,
+          sort: 'displayOrder',
+          depth: 1,
+          // Outside preview, hide unpublished cafés so the list stays consistent
+          // with what's live (mirrors the locations query above).
+          ...(isDraft ? {} : { where: { _status: { equals: 'published' } } }),
         })
       : Promise.resolve({ docs: [] as any[] }),
     needEvents
@@ -136,6 +148,7 @@ export async function PageBody({ page, isDraft }: { page: any; isDraft: boolean 
     liveStats,
     impactStory,
     locations: locations.docs as any[],
+    cafes: cafes.docs as any[],
     events: events.docs as any[],
     journal: journal.docs as any[],
     team: team.docs as any[],

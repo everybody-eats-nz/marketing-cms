@@ -12,6 +12,7 @@ import { Media } from './collections/Media'
 import { Documents } from './collections/Documents'
 import { Pages } from './collections/Pages'
 import { Locations } from './collections/Locations'
+import { Cafes } from './collections/Cafes'
 import { TeamMembers } from './collections/TeamMembers'
 import { Events } from './collections/Events'
 import { JournalPosts } from './collections/JournalPosts'
@@ -92,6 +93,7 @@ export default buildConfig({
     Documents,
     Pages,
     Locations,
+    Cafes,
     TeamMembers,
     Events,
     JournalPosts,
