@@ -76,13 +76,13 @@ The path *pattern* matches but individual slugs came from a different CMS export
 
 ---
 
-## 5. Host & infra checklist (NOT Next `redirects()` — handle at Coolify/Cloudflare)
+## 5. Host & infra checklist
 
 GSC shows clicks split across all of these — they must collapse to one canonical origin with 301s:
 
-- [ ] `http://` → `https://`
-- [ ] `www.everybodyeats.nz` → `everybodyeats.nz` (or the reverse — pick one canonical and keep it consistent with `<link rel=canonical>` and the sitemap).
-- [ ] Confirm `everybodyeats.nz` apex is the canonical host the new deploy serves on.
+- [x] `http://` → `https://` — handled at the proxy (currently a 307; a permanent 301/308 at Cloudflare/Coolify would be better for link equity, but the hop lands on the canonical origin).
+- [x] `www.everybodyeats.nz` → `everybodyeats.nz` — 308 in `next.config.mjs` `redirects()` (2026-07). Originally planned for the proxy layer, but it was never configured there and both hosts served 200; app-level keeps it version-controlled.
+- [x] Confirm `everybodyeats.nz` apex is the canonical host the new deploy serves on — confirmed: canonical tags, sitemap `<loc>` and robots.txt `Host:` all use the apex.
 - [ ] Submit a fresh `sitemap.xml` in Search Console after launch.
 - [ ] Keep the GSC property verified through the cutover; watch Coverage/Pages for a 404 spike in week 1.
 - [ ] Per-page `<title>`/meta + canonical tags on the homepage and 3 location pages — these carry the branded rankings; don't regress them.

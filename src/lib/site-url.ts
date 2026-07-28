@@ -5,8 +5,10 @@
 
 /**
  * Canonical origin for the site, used to build absolute URLs for sitemaps,
- * canonical tags and OG/Twitter images. Must be the public www host in
- * production (set NEXT_PUBLIC_SITE_URL); falls back to localhost in dev.
+ * canonical tags and OG/Twitter images. Must be the canonical apex origin
+ * (https://everybodyeats.nz) in production (set NEXT_PUBLIC_SITE_URL) — the
+ * www host 308s to the apex (see redirects() in next.config.mjs); falls back
+ * to localhost in dev.
  */
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000').replace(
   /\/$/,

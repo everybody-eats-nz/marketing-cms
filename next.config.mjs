@@ -20,17 +20,37 @@ const nextConfig = {
   reactCompiler: false,
   // Preserve inbound links from the old Webflow/Squarespace URLs. All 301
   // (permanent). Path-level SEO redirect map — see docs/seo-migration-audit.md
-  // §2 for the traffic rationale behind each. Host canonicalisation (www→apex,
-  // http→https) is handled at the proxy/DNS layer, not here (§5).
+  // §2 for the traffic rationale behind each. http→https stays at the
+  // proxy/DNS layer (§5) — TLS terminates before the app sees the request.
   //
   // Order matters: Next matches top-to-bottom, first hit wins. Keep the more
   // specific sources above their broader parents.
   async redirects() {
     return [
+      // Host canonicalisation: www → apex (audit §5). Originally delegated to
+      // the proxy/DNS layer, but it was never configured there — both hosts
+      // served 200, splitting analytics and GSC clicks across host variants.
+      // The apex is the canonical host everywhere else (canonical tags,
+      // sitemap <loc>, robots.txt Host), so collapse www onto it here, where
+      // the rule is version-controlled and survives infra changes. Matched on
+      // the exact public host so internal traffic (Docker service names,
+      // localhost, healthchecks) is untouched. Only the first matching
+      // redirect applies per request, so www + old-path requests take two
+      // hops (host first, then the path rule) — unavoidable in Next.
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.everybodyeats.nz' }],
+        destination: 'https://everybodyeats.nz/:path*',
+        permanent: true,
+      },
       // Old Webflow legal URLs (pages now live at /terms and /privacy —
       // see scripts/seed-legal-pages.ts).
       { source: '/hygiene/terms-and-conditions', destination: '/terms', permanent: true },
       { source: '/hygiene/privacy-policy', destination: '/privacy', permanent: true },
+
+      // Hopper Cafe was briefly published under /events/hopper-cafe (still
+      // indexed by Google, now 404s). It lives at its own top-level /hopper.
+      { source: '/events/hopper-cafe', destination: '/hopper', permanent: true },
 
       // Collection renamed journal-posts → journal. Wildcard covers all posts.
       // Verify leaf-slug parity against the CMS (audit §3); add explicit
@@ -85,10 +105,39 @@ const config = withPayload(nextConfig, { devBundleServerPackages: false })
 // if `projectId` is missing (`projectId is required when sourcemaps are
 // enabled`), so gate the wrapper on the vars being present — otherwise CI and
 // local `next build` (no PostHog secrets) fail to load next.config.mjs.
-export default process.env.POSTHOG_API_KEY && process.env.POSTHOG_PROJECT_ID
+//
+// IMPORTANT (Coolify): both secrets must be marked "Available at build time" so
+// the Dockerfile's `ARG POSTHOG_API_KEY` / `ARG POSTHOG_PROJECT_ID` are actually
+// populated during `next build`. A Coolify env var is runtime-only by default
+// and is NOT passed to `docker build`, which leaves these empty — so the wrapper
+// below is skipped, no `//# chunkId=` is injected into the shipped bundles, and
+// every stack trace in PostHog Error Tracking stays unsymbolicated.
+const posthogSourcemapsEnabled = Boolean(
+  process.env.POSTHOG_API_KEY && process.env.POSTHOG_PROJECT_ID,
+)
+
+if (!posthogSourcemapsEnabled && process.env.NODE_ENV === 'production') {
+  // Make the misconfiguration visible in the deploy log instead of silently
+  // shipping un-symbolicated bundles. Expected (and harmless) in CI and local
+  // production builds, which intentionally run without the upload secrets.
+  console.warn(
+    '[posthog] Source map upload DISABLED: POSTHOG_API_KEY and/or ' +
+      'POSTHOG_PROJECT_ID are not set at build time, so production error stack ' +
+      'traces will not be symbolicated. In Coolify, mark both as "Available at ' +
+      'build time".',
+  )
+}
+
+export default posthogSourcemapsEnabled
   ? withPostHogConfig(config, {
       personalApiKey: process.env.POSTHOG_API_KEY,
       projectId: process.env.POSTHOG_PROJECT_ID,
-      host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
+      // Source maps upload to the PostHog *app* host (default us.posthog.com),
+      // which is a different endpoint from the browser SDK's ingestion host.
+      // Keep this decoupled from NEXT_PUBLIC_POSTHOG_HOST — that var points at
+      // the ingestion host (us.i.posthog.com), and pointing the uploader there
+      // makes the upload fail, which (since the upload runs in Next's
+      // runAfterProductionCompile hook) fails the whole production build.
+      host: process.env.POSTHOG_HOST || 'https://us.posthog.com',
     })
   : config

@@ -3700,6 +3700,12 @@ export interface SiteSetting {
         id?: string | null;
       }[]
     | null;
+  closureBanner?: {
+    /**
+     * How far the strip travels each second, in pixels. 125 is the pace the banner has always run at. Drop to around 80-90 to make the messages easier to read, or raise it for more urgency. Leave blank for 125.
+     */
+    speed?: number | null;
+  };
   galaBanner?: {
     enabled?: boolean | null;
     /**
@@ -4153,6 +4159,11 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         liveMetric?: T;
         suffix?: T;
         id?: T;
+      };
+  closureBanner?:
+    | T
+    | {
+        speed?: T;
       };
   galaBanner?:
     | T

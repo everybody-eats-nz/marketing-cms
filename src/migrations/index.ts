@@ -30,7 +30,8 @@ import * as migration_20260713_013451_add_gala_table_booking_urls from './202607
 import * as migration_20260713_020648_add_impact_hide_pay_table from './20260713_020648_add_impact_hide_pay_table';
 import * as migration_20260713_021329_add_gala_banner_settings from './20260713_021329_add_gala_banner_settings';
 import * as migration_20260715_232934_add_location_closures from './20260715_232934_add_location_closures';
-import * as migration_20260716_014851_add_cafes_collection from './20260716_014851_add_cafes_collection';
+import * as migration_20260728_002328_add_closure_banner_speed from './20260728_002328_add_closure_banner_speed';
+import * as migration_20260728_013420_add_cafes_collection from './20260728_013420_add_cafes_collection';
 
 export const migrations = [
   {
@@ -194,8 +195,13 @@ export const migrations = [
     name: '20260715_232934_add_location_closures',
   },
   {
-    up: migration_20260716_014851_add_cafes_collection.up,
-    down: migration_20260716_014851_add_cafes_collection.down,
-    name: '20260716_014851_add_cafes_collection'
+    up: migration_20260728_002328_add_closure_banner_speed.up,
+    down: migration_20260728_002328_add_closure_banner_speed.down,
+    name: '20260728_002328_add_closure_banner_speed',
+  },
+  {
+    up: migration_20260728_013420_add_cafes_collection.up,
+    down: migration_20260728_013420_add_cafes_collection.down,
+    name: '20260728_013420_add_cafes_collection'
   },
 ];
