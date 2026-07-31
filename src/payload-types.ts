@@ -1565,6 +1565,93 @@ export interface Page {
             blockName?: string | null;
             blockType: 'hopperVisit';
           }
+        | {
+            /**
+             * Accessible label for the Everybody Eats logo shown above the wordmark (links back to the main site).
+             */
+            kicker?: string | null;
+            kickerHref?: string | null;
+            /**
+             * Sits under the Toast wordmark. The wordmark itself is the drawn logo, so there is nothing to type for it.
+             */
+            label?: string | null;
+            addressLine?: string | null;
+            hoursLine?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'toastHero';
+          }
+        | {
+            eyebrow?: string | null;
+            heading: string;
+            body?: string | null;
+            cta?: {
+              label?: string | null;
+              href?: string | null;
+            };
+            /**
+             * Optional partner logo shown beside the copy — e.g. Coffee Supreme. Upload it as supplied, in the partner’s own colours; it sits on the yellow paper untouched.
+             */
+            aside?: {
+              image?: (number | null) | Media;
+              /**
+               * Small line above the logo, e.g. “Coffee by”.
+               */
+              label?: string | null;
+              /**
+               * Optional link — usually the partner’s website.
+               */
+              href?: string | null;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'toastStatement';
+          }
+        | {
+            eyebrow?: string | null;
+            /**
+             * JPEG or PNG artwork, shown full width on the page in this order — one row per page of the menu. This is the recommended way to publish the menu: it displays everywhere, including on phones.
+             */
+            sheets?:
+              | {
+                  image: number | Media;
+                  /**
+                   * Describes the sheet for screen readers and search. Falls back to the alt text on the upload itself.
+                   */
+                  alt?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Optional. Adds a download button. If no menu images are uploaded above, the PDF is also embedded in the page — but some phone browsers will only offer it as a download, so upload images as well when you can.
+             */
+            pdf?: (number | null) | Document;
+            downloadLabel?: string | null;
+            footnote?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'toastMenu';
+          }
+        | {
+            eyebrow?: string | null;
+            address?: string | null;
+            /**
+             * e.g. neighbours / how to spot the door.
+             */
+            note?: string | null;
+            hours?:
+              | {
+                  days: string;
+                  times: string;
+                  id?: string | null;
+                }[]
+              | null;
+            mapLabel?: string | null;
+            mapHref?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'toastVisit';
+          }
       )[]
     | null;
   seo?: {
@@ -3206,6 +3293,74 @@ export interface PagesSelect<T extends boolean = true> {
               blockName?: T;
             };
         hopperVisit?:
+          | T
+          | {
+              eyebrow?: T;
+              address?: T;
+              note?: T;
+              hours?:
+                | T
+                | {
+                    days?: T;
+                    times?: T;
+                    id?: T;
+                  };
+              mapLabel?: T;
+              mapHref?: T;
+              id?: T;
+              blockName?: T;
+            };
+        toastHero?:
+          | T
+          | {
+              kicker?: T;
+              kickerHref?: T;
+              label?: T;
+              addressLine?: T;
+              hoursLine?: T;
+              id?: T;
+              blockName?: T;
+            };
+        toastStatement?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              body?: T;
+              cta?:
+                | T
+                | {
+                    label?: T;
+                    href?: T;
+                  };
+              aside?:
+                | T
+                | {
+                    image?: T;
+                    label?: T;
+                    href?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        toastMenu?:
+          | T
+          | {
+              eyebrow?: T;
+              sheets?:
+                | T
+                | {
+                    image?: T;
+                    alt?: T;
+                    id?: T;
+                  };
+              pdf?: T;
+              downloadLabel?: T;
+              footnote?: T;
+              id?: T;
+              blockName?: T;
+            };
+        toastVisit?:
           | T
           | {
               eyebrow?: T;

@@ -31,6 +31,10 @@ import { HopperHero } from '../blocks/HopperHero'
 import { HopperStatement } from '../blocks/HopperStatement'
 import { HopperMenu } from '../blocks/HopperMenu'
 import { HopperVisit } from '../blocks/HopperVisit'
+import { ToastHero } from '../blocks/ToastHero'
+import { ToastStatement } from '../blocks/ToastStatement'
+import { ToastMenu } from '../blocks/ToastMenu'
+import { ToastVisit } from '../blocks/ToastVisit'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -164,6 +168,12 @@ export const Pages: CollectionConfig = {
         HopperStatement,
         HopperMenu,
         HopperVisit,
+        // Toast blocks — standalone brand, meant for the /toast page
+        // (which renders chrome-free via src/app/(toast)/).
+        ToastHero,
+        ToastStatement,
+        ToastMenu,
+        ToastVisit,
       ],
     },
     seoField,
