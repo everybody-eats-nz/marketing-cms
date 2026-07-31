@@ -32,6 +32,7 @@ import * as migration_20260713_021329_add_gala_banner_settings from './20260713_
 import * as migration_20260715_232934_add_location_closures from './20260715_232934_add_location_closures';
 import * as migration_20260728_002328_add_closure_banner_speed from './20260728_002328_add_closure_banner_speed';
 import * as migration_20260728_021410_anchor_day_dates_to_nz_timezone from './20260728_021410_anchor_day_dates_to_nz_timezone';
+import * as migration_20260731_000355_add_toast_blocks from './20260731_000355_add_toast_blocks';
 
 export const migrations = [
   {
@@ -202,6 +203,11 @@ export const migrations = [
   {
     up: migration_20260728_021410_anchor_day_dates_to_nz_timezone.up,
     down: migration_20260728_021410_anchor_day_dates_to_nz_timezone.down,
-    name: '20260728_021410_anchor_day_dates_to_nz_timezone'
+    name: '20260728_021410_anchor_day_dates_to_nz_timezone',
+  },
+  {
+    up: migration_20260731_000355_add_toast_blocks.up,
+    down: migration_20260731_000355_add_toast_blocks.down,
+    name: '20260731_000355_add_toast_blocks'
   },
 ];

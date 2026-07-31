@@ -1,0 +1,163 @@
+/*
+ * Toast brand tokens + primitives.
+ *
+ * Toast is a standalone Everybody Eats pop-up community cafe brand: yellow
+ * paper, brown ink, a drawn script wordmark and monospaced everything else.
+ * Like Hopper (src/components/blocks/hopper/hopper.css) these tokens are
+ * DELIBERATELY separate from the Everybody Eats palette in
+ * src/styles/brand-tokens.ts / tailwind.config.ts — everything hangs off the
+ * .toast-scope class so nothing here can leak into the main site, and no
+ * main-site token is used in here.
+ *
+ * The --font-toast-mono variable is provided by src/app/(toast)/layout.tsx
+ * (next/font). Outside that layout the stack below is the fallback.
+ */
+
+.toast-scope {
+  /* CMYK 0 / 0 / 46 / 0, the brand paper colour. */
+  --toast-paper: #fff69b;
+  /* The same brown as the Hopper logo (hopper.css --hopper-ink), so the two
+     Everybody Eats cafes read as siblings. The logo SVG bakes in this exact
+     value — change both together. */
+  --toast-ink: #3d3100;
+  --toast-hairline: rgb(61 49 0 / 0.3);
+  --toast-mono: var(--font-toast-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+
+  background-color: var(--toast-paper);
+  color: var(--toast-ink);
+  font-family: var(--toast-mono);
+}
+
+.toast-scope ::selection {
+  background-color: var(--toast-ink);
+  color: var(--toast-paper);
+}
+
+.toast-scope :focus-visible {
+  outline: 2px solid var(--toast-ink);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+.toast-label {
+  font-family: var(--toast-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.toast-rule {
+  border-color: var(--toast-hairline);
+}
+
+/*
+ * The Everybody Eats wordmark, recoloured to Toast ink. The SVG asset is
+ * hard-coded forest green, so it's applied as a mask over the ink token
+ * instead of rendered directly.
+ */
+.toast-ee-logo {
+  display: block;
+  background-color: var(--toast-ink);
+  -webkit-mask: url('/everybody-eats-logo.svg') no-repeat center / contain;
+  mask: url('/everybody-eats-logo.svg') no-repeat center / contain;
+}
+
+/* Inline links inside body copy. Underlined so the affordance never relies on
+   colour alone; dims slightly on hover/focus. */
+.toast-inline-link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: opacity 150ms ease;
+}
+.toast-inline-link:hover {
+  opacity: 0.6;
+}
+
+.toast-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid var(--toast-ink);
+  border-radius: 9999px;
+  padding: 0.875rem 1.75rem;
+  font-family: var(--toast-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease,
+    transform 150ms ease;
+}
+.toast-btn:hover {
+  background-color: var(--toast-ink);
+  color: var(--toast-paper);
+}
+.toast-btn:active {
+  transform: scale(0.97);
+}
+
+/*
+ * The hero wordmark. The logo is a drawn script mark rather than set type, so
+ * it gets one quiet entrance — a short rise + settle — instead of Hopper's
+ * per-letter bounce. Width is capped in ch-like terms by the viewport clamp so
+ * the mark never fills edge to edge on a wide screen.
+ */
+.toast-wordmark {
+  display: block;
+  width: clamp(17rem, 62vw, 46rem);
+  height: auto;
+  animation: toast-rise 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes toast-rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.35em) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/*
+ * The menu, shown in full on the page — a poster pinned to the paper rather
+ * than a file you have to open. Each sheet keeps its own aspect ratio, so a
+ * portrait A4 and a square jpeg both render at their true proportions.
+ */
+.toast-sheet {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--toast-hairline);
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+/* PDF fallback: browsers that embed PDFs inline render it here; the rest get
+   the download button underneath, which is always present. */
+.toast-sheet-pdf {
+  width: 100%;
+  aspect-ratio: 1 / 1.4142; /* A4 portrait */
+  border: 1px solid var(--toast-hairline);
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+/* The Coffee Supreme lockup. Their logotype ships as a raster asset in their
+   own red, so it is placed as supplied rather than recoloured or redrawn. */
+.toast-partner-logo {
+  display: block;
+  width: 100%;
+  max-width: 13rem;
+  height: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast-wordmark {
+    animation: none;
+  }
+}
