@@ -3,7 +3,8 @@ import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 
 export const runtime = 'nodejs'
-export const alt = 'Toast — a pop-up community cafe from Everybody Eats'
+export const alt =
+  'Toast — a pop-up community cafe from Everybody Eats at 306 Onehunga Mall, Onehunga, Auckland'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -70,9 +71,19 @@ export default async function ToastOgImage() {
           fontFamily: family,
         }}
       >
-        {/* Eyebrow — the utility label from the hero kicker. */}
-        <div style={{ display: 'flex', fontSize: 25, letterSpacing: 8, textTransform: 'uppercase' }}>
-          an everybody eats cafe
+        {/* Eyebrow — the hero kicker, with the address balancing the row so the
+            card carries the location even when it is shared without a caption. */}
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            fontSize: 25,
+            letterSpacing: 8,
+            textTransform: 'uppercase',
+          }}
+        >
+          <div style={{ display: 'flex' }}>an everybody eats cafe</div>
+          <div style={{ display: 'flex' }}>306 onehunga mall</div>
         </div>
 
         {/* Masthead — the drawn wordmark, then the descriptor beneath it. */}

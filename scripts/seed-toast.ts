@@ -65,10 +65,7 @@ async function main() {
       kicker: 'an everybody eats cafe',
       kickerHref: '/',
       label: 'pop-up community cafe',
-      // TODO: fill in once the venue is confirmed — see the matching note in
-      // src/app/(toast)/toast/page.tsx (structured data) and the toastVisit
-      // block below.
-      addressLine: '',
+      addressLine: '306 Onehunga Mall, Onehunga',
       hoursLine: 'Fri 7.30–2.30 · Sat + Sun 8.30–2.30',
     },
     {
@@ -98,22 +95,26 @@ async function main() {
     {
       blockType: 'toastVisit',
       eyebrow: 'Find us',
-      // TODO: fill in once the venue is confirmed.
-      address: '',
+      // Same premises as the Everybody Eats Onehunga restaurant — keep this
+      // matching the structured data in src/app/(toast)/toast/page.tsx.
+      address: '306 Onehunga Mall\nOnehunga, Auckland',
       hours: [
         { days: 'Friday', times: '7.30am – 2.30pm' },
         { days: 'Saturday', times: '8.30am – 2.30pm' },
         { days: 'Sunday', times: '8.30am – 2.30pm' },
       ],
       mapLabel: 'Open in maps ↗',
-      mapHref: '',
+      mapHref: 'https://maps.google.com/?q=306+Onehunga+Mall,+Onehunga,+Auckland',
     },
     {
       blockType: 'toastStatement',
       eyebrow: 'Lend a hand',
       heading: 'Toast is being built by its community — and there’s a spot here for you.',
       body: 'If you’d like to volunteer, we’d love to have you. Front of house, kitchen, dishes — no experience needed.',
-      cta: { label: 'Volunteer with us', href: VOLUNTEER_LINKS.index },
+      // Toast runs out of the Onehunga premises, so the Auckland landing page
+      // is the right destination. Swap for a portal deep link (the pattern
+      // scripts/seed-hopper.ts uses) once Toast has its own portal location.
+      cta: { label: 'Volunteer with us', href: VOLUNTEER_LINKS.auckland },
     },
   ]
 
@@ -122,9 +123,9 @@ async function main() {
     slug: 'toast',
     layout,
     seo: {
-      title: 'Toast — a pop-up community cafe from Everybody Eats',
+      title: 'Toast Community Cafe — 306 Onehunga Mall, Onehunga, Auckland',
       description:
-        'Toast is Everybody Eats’ pop-up community cafe — inventive toppings on fresh sourdough, oats, Supreme coffee and housemade shrubs and cordials. Open Friday to Sunday.',
+        'Toast is Everybody Eats’ pop-up community cafe at 306 Onehunga Mall — inventive toppings on fresh sourdough, oats, Supreme coffee and housemade shrubs and cordials. Open Friday to Sunday.',
     },
     _status: 'published' as const,
   }

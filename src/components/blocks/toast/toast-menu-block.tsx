@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import { PayloadImage } from '@/components/payload-image'
 import { type DocFile, formatBytes } from '../file-meta'
 import { renderToastText } from './toast-text'
 import './toast.css'
@@ -15,21 +15,17 @@ type Props = {
   }
 }
 
-/** One page of the menu, shown at the artwork's own proportions. */
+/** One page of the menu, shown at the artwork's own proportions. Asks for the
+ *  largest size on offer: menus are artwork, not photography, so small print
+ *  has to stay legible when someone pinches in. PayloadImage steps down to
+ *  `feature` and then the original when a sheet was uploaded too small for a
+ *  2000w derivative to exist. */
 function MenuSheet({ sheet }: { sheet: Sheet }) {
-  const media = sheet.image
-  // Menus are artwork, not photography: render the full-size original rather
-  // than a crop, so small print stays legible when someone pinches in.
-  const url = media.url
-  if (!url) return null
-  const width = media.width || 1400
-  const height = media.height || Math.round(width * 1.4142)
   return (
-    <Image
-      src={url}
-      alt={sheet.alt || media.alt || ''}
-      width={width}
-      height={height}
+    <PayloadImage
+      media={sheet.image}
+      alt={sheet.alt || undefined}
+      size="hero"
       sizes="(min-width: 768px) 48rem, 100vw"
       className="toast-sheet"
     />

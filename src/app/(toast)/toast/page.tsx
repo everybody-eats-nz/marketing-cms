@@ -8,20 +8,19 @@ import { SITE_URL, absoluteUrl, mediaUrl } from '@/lib/site-url'
 // renders inside the chrome-free Toast layout instead of the main-site shell.
 export const dynamic = 'force-dynamic'
 
-const FALLBACK_TITLE = 'Toast — a pop-up community cafe from Everybody Eats'
+const FALLBACK_TITLE = 'Toast Community Cafe — 306 Onehunga Mall, Onehunga, Auckland'
 const FALLBACK_DESCRIPTION =
-  'Toast is Everybody Eats’ pop-up community cafe — inventive toppings on fresh sourdough, oats, Supreme coffee and housemade shrubs and cordials. Open Friday to Sunday.'
+  'Toast is Everybody Eats’ pop-up community cafe at 306 Onehunga Mall — inventive toppings on fresh sourdough, oats, Supreme coffee and housemade shrubs and cordials. Open Friday to Sunday.'
 
 /**
- * Street address for the LocalBusiness card below. Left blank until the venue
- * is confirmed: an empty value drops `address` and `hasMap` from the structured
- * data rather than publishing a guess, which Google penalises. Fill all three
- * in together, and keep them matching the `toastVisit` block's copy.
+ * Street address for the LocalBusiness card below. Keep these matching the
+ * `toastVisit` block's copy (scripts/seed-toast.ts) — Google cross-checks the
+ * structured data against what a visitor can actually read on the page.
  */
-const STREET_ADDRESS: string = ''
-const SUBURB: string = ''
-const CITY: string = ''
-const MAP_URL: string = ''
+const STREET_ADDRESS: string = '306 Onehunga Mall'
+const SUBURB: string = 'Onehunga'
+const CITY: string = 'Auckland'
+const MAP_URL: string = 'https://maps.google.com/?q=306+Onehunga+Mall,+Onehunga,+Auckland'
 
 // LocalBusiness structured data so Toast is eligible for the Google local pack,
 // Maps and rich results. Facts mirror the seed layout (scripts/seed-toast.ts);
@@ -30,7 +29,7 @@ const MAP_URL: string = ''
 const CAFE_JSONLD: Record<string, any> = {
   '@context': 'https://schema.org',
   '@type': 'CafeOrCoffeeShop',
-  name: 'Toast',
+  name: 'Toast Community Cafe',
   url: absoluteUrl('/toast'),
   description:
     'A pop-up community cafe from Everybody Eats — inventive toppings on fresh sourdough and oats, Supreme coffee, and housemade shrubs and cordials.',
