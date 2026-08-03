@@ -1,5 +1,6 @@
 import posthog from 'posthog-js'
 import type { CaptureResult } from 'posthog-js'
+import { installChunkErrorReloadHandler } from '@/lib/chunk-error-recovery'
 
 // Substrings that mark a captured exception as third-party noise rather than a
 // real site error. `capture_exceptions` turns on global autocapture of
@@ -73,6 +74,13 @@ function dropInjectedNoise(event: CaptureResult | null): CaptureResult | null {
 // rides the first-party domain and survives ad blockers. `defaults` opts into
 // PostHog's current best-practice bundle (autocapture + history-aware pageviews
 // and pageleaves), so no manual $pageview wiring is needed for App Router nav.
+
+// Recover from post-deploy chunk-load failures (a stale document requesting a
+// `/_next/static/chunks/*` asset the new build removed) with a guarded one-shot
+// reload. Installed unconditionally — before the PostHog/admin guards below —
+// so it also covers the CMS admin and runs even when analytics is disabled.
+installChunkErrorReloadHandler()
+
 const key = process.env.NEXT_PUBLIC_POSTHOG_KEY
 
 if (key && typeof window !== 'undefined' && !window.location.pathname.startsWith('/admin')) {
