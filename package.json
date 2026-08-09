@@ -34,7 +34,7 @@
     "@stripe/stripe-js": "^9.12.1",
     "cross-env": "^10.1.0",
     "graphql": "^17.0.2",
-    "motion": "^12.43.0",
+    "motion": "^13.0.0",
     "next": "16.2.12",
     "payload": "^3.87.0",
     "posthog-js": "^1.409.5",
