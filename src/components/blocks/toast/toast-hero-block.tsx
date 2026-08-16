@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import Link from 'next/link'
 import './toast.css'
 
 // Natural proportions of public/toast-logo.svg (the drawn wordmark, trimmed to
@@ -20,17 +19,7 @@ type Props = {
 export function ToastHeroBlock({ block }: Props) {
   return (
     <section className="toast-scope">
-      <div className="mx-auto flex min-h-[100svh] max-w-6xl flex-col px-6 pb-10 pt-8 sm:px-10">
-        <div className="flex justify-center">
-          <Link
-            href={block.kickerHref || '/'}
-            aria-label={block.kicker || 'Everybody Eats'}
-            className="transition-opacity hover:opacity-70"
-          >
-            <span className="toast-ee-logo h-8 sm:h-10 aspect-[179/65]" />
-          </Link>
-        </div>
-
+      <div className="toast-hero-frame mx-auto flex max-w-6xl flex-col px-6 pb-10 pt-8 sm:px-10">
         <div className="flex flex-1 flex-col items-center justify-center py-16 text-center">
           <h1 className="flex justify-center">
             <Image

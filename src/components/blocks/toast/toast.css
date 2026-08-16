@@ -89,6 +89,7 @@
   transition:
     background-color 150ms ease,
     color 150ms ease,
+    opacity 150ms ease,
     transform 150ms ease;
 }
 .toast-btn:hover {
@@ -97,6 +98,226 @@
 }
 .toast-btn:active {
   transform: scale(0.97);
+}
+
+/*
+ * The page's header row (src/components/cafe-bar.tsx): the Everybody Eats mark
+ * at the left, Book / Donate at the right. Toast has no site header of its own,
+ * so this is the only way to act without reading to the bottom of the page.
+ *
+ * There is no rule under it and no band of colour — it reads as the top of the
+ * sheet rather than a strip laid over it, which keeps the wordmark below the
+ * undisputed first thing you see.
+ *
+ * These rules must stay after .toast-btn:hover — .toast-btn--solid overrides it
+ * at equal specificity and wins on source order alone.
+ *
+ * Height of the row, set on <body> only when the layout actually renders one,
+ * and read below by the hero so it still fills exactly one screen either way.
+ * It is deliberately NOT declared on .toast-scope: every block section carries
+ * that class too, so a default there would be re-declared inside the page and
+ * the hero would never see the body's value.
+ */
+.toast-scope.has-toast-bar {
+  --toast-bar-h: 3.75rem;
+}
+
+.toast-bar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  min-height: var(--toast-bar-h, 0rem);
+  padding-block: 0.5rem;
+  /* No rule under it: this is the page's own header row, not a strip laid on
+     top. Slightly translucent + blurred so page content stays legible as it
+     passes underneath while stuck, the way the main site header behaves. */
+  background-color: rgb(255 246 155 / 0.88);
+  backdrop-filter: blur(8px);
+}
+
+/* The Everybody Eats mark, sharing the row with the actions. */
+.toast-bar-logo {
+  flex: none;
+  transition: opacity 150ms ease;
+}
+.toast-bar-logo:hover {
+  opacity: 0.7;
+}
+
+/* Smaller than a body button, but still a 44px target. */
+.toast-bar-btn {
+  min-height: 2.75rem;
+  gap: 0.35rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+}
+@media (min-width: 640px) {
+  .toast-bar-btn {
+    padding-inline: 1.5rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+  }
+}
+
+/* Donate is the one filled button on the page, so it stays the single primary
+   action however many buttons the bar ends up carrying. */
+.toast-btn--solid {
+  background-color: var(--toast-ink);
+  color: var(--toast-paper);
+}
+.toast-btn--solid:hover {
+  opacity: 0.78;
+}
+
+/* The full-height hero, less whatever the bar above it occupies. */
+.toast-hero-frame {
+  min-height: calc(100svh - var(--toast-bar-h, 0rem));
+}
+
+/*
+ * The booking modal (src/components/cafe-booking-dialog.tsx). Same idea as the
+ * main site's booking dialog — the Now Book It widget loads in place rather
+ * than throwing you into a new tab — but on Toast paper, so the embed reads as
+ * part of the page.
+ */
+.toast-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 0;
+  visibility: hidden;
+  /* Not `transition: all`: animating `visibility` alongside everything else
+     delays the computed value, and the close button's focus() then no-ops. */
+  transition:
+    opacity 250ms ease,
+    visibility 250ms ease;
+}
+.toast-modal--open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.toast-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  cursor: default;
+  background-color: rgb(61 49 0 / 0.55);
+  backdrop-filter: blur(3px);
+}
+
+.toast-modal-panel {
+  position: relative;
+  display: flex;
+  width: 100%;
+  max-width: 34rem;
+  /* An explicit height, not just a cap: the widget frame below is the flex
+     child that fills it. Sized to content instead, the panel would collapse to
+     the frame's minimum and the booking form would scroll inside a short box. */
+  height: calc(100svh - 2rem);
+  max-height: 48rem;
+  flex-direction: column;
+  gap: 1rem;
+  border-radius: 20px;
+  background-color: var(--toast-paper);
+  padding: 1.25rem;
+  box-shadow: 0 40px 120px -24px rgb(61 49 0 / 0.55);
+  transform: translateY(12px) scale(0.98);
+  transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.toast-modal--open .toast-modal-panel {
+  transform: none;
+}
+
+.toast-modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.toast-modal-close {
+  display: inline-flex;
+  height: 2.75rem;
+  width: 2.75rem;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--toast-hairline);
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  line-height: 1;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
+}
+.toast-modal-close:hover {
+  background-color: var(--toast-ink);
+  color: var(--toast-paper);
+}
+
+/* The widget itself, filling whatever the panel has left. `min-height: 0` is
+   what lets a flex child actually shrink to its container instead of pushing
+   past it at its content height. */
+.toast-modal-frame {
+  position: relative;
+  min-height: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
+  border-radius: 12px;
+  background-color: var(--toast-paper);
+}
+.toast-modal-frame iframe {
+  height: 100%;
+  width: 100%;
+  border: 0;
+}
+.toast-modal-loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background-color: var(--toast-paper);
+  transition: opacity 400ms ease;
+}
+.toast-modal-loading--done {
+  pointer-events: none;
+  opacity: 0;
+}
+
+.toast-modal-newtab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  font-family: var(--toast-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  opacity: 0.6;
+  transition: opacity 150ms ease;
+}
+.toast-modal-newtab:hover {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast-modal,
+  .toast-modal-panel {
+    transition: none;
+  }
+  .toast-modal-panel {
+    transform: none;
+  }
 }
 
 /*

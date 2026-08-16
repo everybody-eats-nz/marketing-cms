@@ -177,6 +177,60 @@ export const SiteSettings: GlobalConfig = {
           ],
         },
         {
+          label: 'Cafe banner',
+          description:
+            'The slim strip of buttons pinned to the top of the Toast and Hopper cafe pages. Those pages carry their own brand and have no site header, so this bar is the only way to book or donate without scrolling. Donate always shows. Toast books through the Onehunga restaurant it runs out of, so its Book button works already; Hopper has no bookings yet, so it shows Donate alone until a link is added below.',
+          fields: [
+            {
+              name: 'cafeBanner',
+              type: 'group',
+              label: false,
+              fields: [
+                {
+                  name: 'bookLabel',
+                  type: 'text',
+                  defaultValue: 'Book a table',
+                  admin: {
+                    description:
+                      'Shown on the Book button for both cafes. Keep it short - the bar is narrow on a phone.',
+                  },
+                },
+                {
+                  name: 'toastBookingUrl',
+                  type: 'text',
+                  label: 'Toast booking link',
+                  admin: {
+                    description:
+                      'Leave blank. Toast runs out of the Onehunga kitchen, so the Book button already uses that restaurant\'s booking link and follows it if it ever changes. Only fill this in if Toast gets a booking system of its own.',
+                  },
+                },
+                {
+                  name: 'hopperBookingUrl',
+                  type: 'text',
+                  label: 'Hopper booking link',
+                  admin: {
+                    description:
+                      'Where the Book button on /hopper goes. Hopper bookings are not live yet - leave this blank until they are, and the Book button stays hidden.',
+                  },
+                },
+                {
+                  name: 'donateLabel',
+                  type: 'text',
+                  defaultValue: 'Donate',
+                },
+                {
+                  name: 'donateUrl',
+                  type: 'text',
+                  admin: {
+                    description:
+                      'Optional. Leave blank to send cafe visitors to the same place as the main site (Links → Donate URL).',
+                  },
+                },
+              ],
+            },
+          ],
+        },
+        {
           label: 'Announcement',
           description:
             'A full-screen takeover shown once per visitor on the home page, in the Hopper brand (lilac paper, bubbly "hopper" logotype). The logotype is fixed — this promotes Hopper specifically; the copy and link below are editable.',

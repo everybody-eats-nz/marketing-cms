@@ -3791,6 +3791,25 @@ export interface SiteSetting {
       openInNewTab?: boolean | null;
     };
   };
+  cafeBanner?: {
+    /**
+     * Shown on the Book button for both cafes. Keep it short - the bar is narrow on a phone.
+     */
+    bookLabel?: string | null;
+    /**
+     * Leave blank. Toast runs out of the Onehunga kitchen, so the Book button already uses that restaurant's booking link and follows it if it ever changes. Only fill this in if Toast gets a booking system of its own.
+     */
+    toastBookingUrl?: string | null;
+    /**
+     * Where the Book button on /hopper goes. Hopper bookings are not live yet - leave this blank until they are, and the Book button stays hidden.
+     */
+    hopperBookingUrl?: string | null;
+    donateLabel?: string | null;
+    /**
+     * Optional. Leave blank to send cafe visitors to the same place as the main site (Links → Donate URL).
+     */
+    donateUrl?: string | null;
+  };
   announcement?: {
     enabled?: boolean | null;
     /**
@@ -4235,6 +4254,15 @@ export interface SiteSettingsSelect<T extends boolean = true> {
               externalHref?: T;
               openInNewTab?: T;
             };
+      };
+  cafeBanner?:
+    | T
+    | {
+        bookLabel?: T;
+        toastBookingUrl?: T;
+        hopperBookingUrl?: T;
+        donateLabel?: T;
+        donateUrl?: T;
       };
   announcement?:
     | T
