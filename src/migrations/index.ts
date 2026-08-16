@@ -33,6 +33,7 @@ import * as migration_20260715_232934_add_location_closures from './20260715_232
 import * as migration_20260728_002328_add_closure_banner_speed from './20260728_002328_add_closure_banner_speed';
 import * as migration_20260728_021410_anchor_day_dates_to_nz_timezone from './20260728_021410_anchor_day_dates_to_nz_timezone';
 import * as migration_20260731_000355_add_toast_blocks from './20260731_000355_add_toast_blocks';
+import * as migration_20260814_205953_add_cafe_banner_settings from './20260814_205953_add_cafe_banner_settings';
 
 export const migrations = [
   {
@@ -208,6 +209,11 @@ export const migrations = [
   {
     up: migration_20260731_000355_add_toast_blocks.up,
     down: migration_20260731_000355_add_toast_blocks.down,
-    name: '20260731_000355_add_toast_blocks'
+    name: '20260731_000355_add_toast_blocks',
+  },
+  {
+    up: migration_20260814_205953_add_cafe_banner_settings.up,
+    down: migration_20260814_205953_add_cafe_banner_settings.down,
+    name: '20260814_205953_add_cafe_banner_settings'
   },
 ];
