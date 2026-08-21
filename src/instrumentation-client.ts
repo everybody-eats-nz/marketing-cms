@@ -38,6 +38,35 @@ const NOISE_SIGNATURES = [
   'Converting circular structure to JSON',
 ]
 
+type ExceptionItem = {
+  type?: unknown
+  value?: unknown
+  mechanism?: { handled?: unknown }
+  stacktrace?: { frames?: unknown }
+}
+
+// A frame-less, unhandled `DOMException: NetworkError: A network error
+// occurred.` is browser-level noise, not a site error. `capture_exceptions`
+// autocaptures `window` errors, so a resource load or `fetch` that a browser
+// extension or in-app browser aborts surfaces as this generic, stack-traceless
+// throw. Every `fetch` on the marketing site sits behind a form handler wrapped
+// in try/catch, and `/` (where this fires) makes no network call, so this
+// variant never comes from our code. The empty stack and unhandled flag are
+// part of the match, so a genuine network failure — which carries an app frame
+// — is still reported.
+function isFramelessNetworkError(ex: ExceptionItem): boolean {
+  const type = typeof ex?.type === 'string' ? ex.type : ''
+  const value = typeof ex?.value === 'string' ? ex.value : ''
+  const frames = ex?.stacktrace?.frames
+  const frameless = !Array.isArray(frames) || frames.length === 0
+  return (
+    type === 'DOMException' &&
+    value.includes('A network error occurred') &&
+    ex?.mechanism?.handled === false &&
+    frameless
+  )
+}
+
 // Drop $exception events whose type or message matches a known noise signature.
 // Returning null tells posthog-js not to send the event.
 function dropInjectedNoise(event: CaptureResult | null): CaptureResult | null {
@@ -46,11 +75,12 @@ function dropInjectedNoise(event: CaptureResult | null): CaptureResult | null {
   const exceptions = event.properties?.$exception_list
   if (!Array.isArray(exceptions)) return event
 
-  const isNoise = exceptions.some((ex: { type?: unknown; value?: unknown }) => {
+  const isNoise = exceptions.some((ex: ExceptionItem) => {
     const type = typeof ex?.type === 'string' ? ex.type : ''
     const value = typeof ex?.value === 'string' ? ex.value : ''
     const haystack = `${type} ${value}`
-    return NOISE_SIGNATURES.some((sig) => haystack.includes(sig))
+    if (NOISE_SIGNATURES.some((sig) => haystack.includes(sig))) return true
+    return isFramelessNetworkError(ex)
   })
 
   return isNoise ? null : event
