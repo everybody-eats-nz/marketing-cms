@@ -18,6 +18,11 @@ import { installChunkErrorReloadHandler } from '@/lib/chunk-error-recovery'
 //   - `webkit.messageHandlers` → generic iOS WKWebView native bridge.
 //   - `Can't find variable: gmo`, `instantSearchSDKJSBridgeClearHighlight` →
 //     in-app browser (Google app / Firefox) injected globals.
+//   - `Error invoking postMessage` → Android in-app WebView native bridge. The
+//     host injects a `sendDataToNative` bridge; when it tears the page down the
+//     backing Java object is garbage-collected, so the bridge throws "Java
+//     object is gone" (or "Java exception was raised during method invocation").
+//     The throwing frames carry no source url, so they are never our bundle.
 //
 //  A browser extension / injected script calling `JSON.stringify` on a live DOM
 //  node whose React fiber closes a reference cycle, producing a synthetic,
@@ -33,6 +38,7 @@ const NOISE_SIGNATURES = [
   '__firefox__',
   '_AutofillCallbackHandler',
   'webkit.messageHandlers',
+  'Error invoking postMessage',
   'instantSearchSDKJSBridgeClearHighlight',
   "Can't find variable: gmo",
   'Converting circular structure to JSON',
