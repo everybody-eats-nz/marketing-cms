@@ -233,7 +233,7 @@ export const SiteSettings: GlobalConfig = {
         {
           label: 'Announcement',
           description:
-            'A full-screen takeover shown once per visitor on the home page, in the Hopper brand (lilac paper, bubbly "hopper" logotype). The logotype is fixed — this promotes Hopper specifically; the copy and link below are editable.',
+            'A full-screen takeover shown once per visitor on the home page, in the Toast brand (yellow paper, the drawn "Toast" wordmark). The wordmark is fixed — this promotes Toast specifically; the copy and link below are editable.',
           fields: [
             {
               name: 'announcement',
@@ -249,7 +249,7 @@ export const SiteSettings: GlobalConfig = {
                 {
                   name: 'campaignId',
                   type: 'text',
-                  defaultValue: 'hopper-launch',
+                  defaultValue: 'toast-launch',
                   admin: {
                     description:
                       'Visitors who dismiss the takeover won\'t see it again. Change this ID to reset that and show it to everyone once more.',
@@ -265,7 +265,7 @@ export const SiteSettings: GlobalConfig = {
                 {
                   name: 'heading',
                   type: 'text',
-                  defaultValue: 'Now open in Te Aro.',
+                  defaultValue: 'Now open in Onehunga.',
                   admin: { condition: (_, siblingData) => Boolean(siblingData?.enabled) },
                 },
                 {
@@ -282,7 +282,7 @@ export const SiteSettings: GlobalConfig = {
                     hideGutter: true,
                     condition: (_, siblingData) => Boolean(siblingData?.enabled),
                   },
-                  defaultValue: { type: 'internal', internalHref: '/hopper', label: 'Visit Hopper' },
+                  defaultValue: { type: 'internal', internalHref: '/toast', label: 'Visit Toast' },
                 }),
                 {
                   name: 'dismissLabel',
