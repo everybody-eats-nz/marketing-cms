@@ -18,6 +18,7 @@ import { installChunkErrorReloadHandler } from '@/lib/chunk-error-recovery'
 //   - `webkit.messageHandlers` → generic iOS WKWebView native bridge.
 //   - `Can't find variable: gmo`, `instantSearchSDKJSBridgeClearHighlight` →
 //     in-app browser (Google app / Firefox) injected globals.
+//   - `zaloJSV2` → Zalo in-app browser injected global.
 //   - `Error invoking postMessage` → Android in-app WebView native bridge. The
 //     host injects a `sendDataToNative` bridge; when it tears the page down the
 //     backing Java object is garbage-collected, so the bridge throws "Java
@@ -41,6 +42,7 @@ const NOISE_SIGNATURES = [
   'Error invoking postMessage',
   'instantSearchSDKJSBridgeClearHighlight',
   "Can't find variable: gmo",
+  'zaloJSV2',
   'Converting circular structure to JSON',
 ]
 
