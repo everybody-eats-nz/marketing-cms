@@ -1565,6 +1565,93 @@ export interface Page {
             blockName?: string | null;
             blockType: 'hopperVisit';
           }
+        | {
+            /**
+             * Accessible label for the Everybody Eats logo shown above the wordmark (links back to the main site).
+             */
+            kicker?: string | null;
+            kickerHref?: string | null;
+            /**
+             * Sits under the Toast wordmark. The wordmark itself is the drawn logo, so there is nothing to type for it.
+             */
+            label?: string | null;
+            addressLine?: string | null;
+            hoursLine?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'toastHero';
+          }
+        | {
+            eyebrow?: string | null;
+            heading: string;
+            body?: string | null;
+            cta?: {
+              label?: string | null;
+              href?: string | null;
+            };
+            /**
+             * Optional partner logo shown beside the copy — e.g. Coffee Supreme. Upload it as supplied, in the partner’s own colours; it sits on the yellow paper untouched.
+             */
+            aside?: {
+              image?: (number | null) | Media;
+              /**
+               * Small line above the logo, e.g. “Coffee by”.
+               */
+              label?: string | null;
+              /**
+               * Optional link — usually the partner’s website.
+               */
+              href?: string | null;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'toastStatement';
+          }
+        | {
+            eyebrow?: string | null;
+            /**
+             * JPEG or PNG artwork, shown full width on the page in this order — one row per page of the menu. This is the recommended way to publish the menu: it displays everywhere, including on phones.
+             */
+            sheets?:
+              | {
+                  image: number | Media;
+                  /**
+                   * Describes the sheet for screen readers and search. Falls back to the alt text on the upload itself.
+                   */
+                  alt?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Optional. Adds a download button. If no menu images are uploaded above, the PDF is also embedded in the page — but some phone browsers will only offer it as a download, so upload images as well when you can.
+             */
+            pdf?: (number | null) | Document;
+            downloadLabel?: string | null;
+            footnote?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'toastMenu';
+          }
+        | {
+            eyebrow?: string | null;
+            address?: string | null;
+            /**
+             * e.g. neighbours / how to spot the door.
+             */
+            note?: string | null;
+            hours?:
+              | {
+                  days: string;
+                  times: string;
+                  id?: string | null;
+                }[]
+              | null;
+            mapLabel?: string | null;
+            mapHref?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'toastVisit';
+          }
       )[]
     | null;
   seo?: {
@@ -1618,10 +1705,12 @@ export interface Location {
          * The night the restaurant is closed (first night, for a multi-night closure).
          */
         date: string;
+        date_tz: SupportedTimezones;
         /**
          * Last closed night. Leave blank for a single night.
          */
         endDate?: string | null;
+        endDate_tz?: SupportedTimezones;
         /**
          * Shown to diners, e.g. "due to staff shortages" or "for a private event". Leave blank to show no reason.
          */
@@ -1921,6 +2010,7 @@ export interface JournalPost {
   author?: string | null;
   authorMember?: (number | null) | TeamMember;
   publishedAt?: string | null;
+  publishedAt_tz?: SupportedTimezones;
   body?: {
     root: {
       type: string;
@@ -3220,6 +3310,74 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        toastHero?:
+          | T
+          | {
+              kicker?: T;
+              kickerHref?: T;
+              label?: T;
+              addressLine?: T;
+              hoursLine?: T;
+              id?: T;
+              blockName?: T;
+            };
+        toastStatement?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              body?: T;
+              cta?:
+                | T
+                | {
+                    label?: T;
+                    href?: T;
+                  };
+              aside?:
+                | T
+                | {
+                    image?: T;
+                    label?: T;
+                    href?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        toastMenu?:
+          | T
+          | {
+              eyebrow?: T;
+              sheets?:
+                | T
+                | {
+                    image?: T;
+                    alt?: T;
+                    id?: T;
+                  };
+              pdf?: T;
+              downloadLabel?: T;
+              footnote?: T;
+              id?: T;
+              blockName?: T;
+            };
+        toastVisit?:
+          | T
+          | {
+              eyebrow?: T;
+              address?: T;
+              note?: T;
+              hours?:
+                | T
+                | {
+                    days?: T;
+                    times?: T;
+                    id?: T;
+                  };
+              mapLabel?: T;
+              mapHref?: T;
+              id?: T;
+              blockName?: T;
+            };
       };
   seo?:
     | T
@@ -3247,7 +3405,9 @@ export interface LocationsSelect<T extends boolean = true> {
     | T
     | {
         date?: T;
+        date_tz?: T;
         endDate?: T;
+        endDate_tz?: T;
         reason?: T;
         id?: T;
       };
@@ -3388,6 +3548,7 @@ export interface JournalPostsSelect<T extends boolean = true> {
   author?: T;
   authorMember?: T;
   publishedAt?: T;
+  publishedAt_tz?: T;
   body?: T;
   seo?:
     | T
@@ -3592,6 +3753,12 @@ export interface SiteSetting {
         id?: string | null;
       }[]
     | null;
+  closureBanner?: {
+    /**
+     * How far the strip travels each second, in pixels. 125 is the pace the banner has always run at. Drop to around 80-90 to make the messages easier to read, or raise it for more urgency. Leave blank for 125.
+     */
+    speed?: number | null;
+  };
   galaBanner?: {
     enabled?: boolean | null;
     /**
@@ -3623,6 +3790,25 @@ export interface SiteSetting {
       externalHref?: string | null;
       openInNewTab?: boolean | null;
     };
+  };
+  cafeBanner?: {
+    /**
+     * Shown on the Book button for both cafes. Keep it short - the bar is narrow on a phone.
+     */
+    bookLabel?: string | null;
+    /**
+     * Leave blank. Toast runs out of the Onehunga kitchen, so the Book button already uses that restaurant's booking link and follows it if it ever changes. Only fill this in if Toast gets a booking system of its own.
+     */
+    toastBookingUrl?: string | null;
+    /**
+     * Where the Book button on /hopper goes. Hopper bookings are not live yet - leave this blank until they are, and the Book button stays hidden.
+     */
+    hopperBookingUrl?: string | null;
+    donateLabel?: string | null;
+    /**
+     * Optional. Leave blank to send cafe visitors to the same place as the main site (Links → Donate URL).
+     */
+    donateUrl?: string | null;
   };
   announcement?: {
     enabled?: boolean | null;
@@ -4046,6 +4232,11 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         suffix?: T;
         id?: T;
       };
+  closureBanner?:
+    | T
+    | {
+        speed?: T;
+      };
   galaBanner?:
     | T
     | {
@@ -4063,6 +4254,15 @@ export interface SiteSettingsSelect<T extends boolean = true> {
               externalHref?: T;
               openInNewTab?: T;
             };
+      };
+  cafeBanner?:
+    | T
+    | {
+        bookLabel?: T;
+        toastBookingUrl?: T;
+        hopperBookingUrl?: T;
+        donateLabel?: T;
+        donateUrl?: T;
       };
   announcement?:
     | T

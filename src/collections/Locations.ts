@@ -59,6 +59,12 @@ export const Locations: CollectionConfig = {
           label: 'Closed on',
           type: 'date',
           required: true,
+          // Anchored to Pacific/Auckland (see admin.timezones in payload.config).
+          // Without this Payload writes 12:00 UTC for a day-only pick and then
+          // redisplays that raw instant in the browser's timezone - which in NZ
+          // (UTC+12/+13) is midnight the NEXT day, so the field showed a
+          // different date than the one the editor clicked.
+          timezone: true,
           admin: {
             date: { pickerAppearance: 'dayOnly' },
             description: 'The night the restaurant is closed (first night, for a multi-night closure).',
@@ -68,6 +74,7 @@ export const Locations: CollectionConfig = {
           name: 'endDate',
           label: 'Until (optional)',
           type: 'date',
+          timezone: true,
           admin: {
             date: { pickerAppearance: 'dayOnly' },
             description: 'Last closed night. Leave blank for a single night.',

@@ -144,10 +144,12 @@
     @apply transition-all duration-300 ease-in-out-soft hover:-translate-y-1 hover:shadow-xl;
   }
 
-  /* Marquee track */
+  /* Marquee track. --marquee-duration lets a caller set its own loop time -
+     the closure banner measures its track and derives one from the px/second
+     speed in Site Settings. Everything else keeps the 35s default. */
   .marquee-track {
     @apply flex items-center gap-12 whitespace-nowrap;
-    animation: marquee 35s linear infinite;
+    animation: marquee var(--marquee-duration, 35s) linear infinite;
     width: max-content;
   }
   .marquee-track:hover {

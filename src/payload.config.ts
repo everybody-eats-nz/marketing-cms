@@ -85,6 +85,13 @@ export default buildConfig({
       titleSuffix: '— Everybody Eats CMS',
       icons: [],
     },
+    // Every date in this CMS means a date at the restaurants. Any field with
+    // `timezone: true` anchors to Auckland unless it says otherwise, so a
+    // day-only picker stores and redisplays the day the editor actually clicked
+    // rather than drifting with whatever timezone their laptop is set to.
+    timezones: {
+      defaultTimezone: 'Pacific/Auckland',
+    },
   },
   collections: [
     Users,

@@ -347,33 +347,56 @@ function CheckoutForm({
   // Whether Apple Pay / Google Pay actually rendered (browser/device support),
   // so the "or pay by card" divider only shows when an express button is there.
   const [hasWallet, setHasWallet] = useState(false)
+  // The PaymentElement mounts asynchronously inside its iframe. confirmPayment()
+  // requires every Element in the group to have emitted `ready`, and *throws* an
+  // IntegrationError if it hasn't — the trigger being a wallet tap (Apple Pay /
+  // Google Pay) firing confirm() before the card element finished mounting.
+  // Gate confirm() on this so that can't happen.
+  const [paymentReady, setPaymentReady] = useState(false)
 
   // Shared by the card form submit and the express (wallet) buttons.
   async function confirm() {
     if (!stripe || !elements) return
+    // Don't confirm until the PaymentElement in this group has mounted —
+    // otherwise Stripe throws an IntegrationError (see paymentReady above). A
+    // wallet tap can beat the card element's `ready`; bail with a friendly
+    // retry rather than crashing.
+    if (!paymentReady) {
+      setError(copy.confirmError)
+      return
+    }
     setSubmitting(true)
     setError(null)
 
-    const { error: submitError, paymentIntent } = await stripe.confirmPayment({
-      elements,
-      // Wallets may need a redirect; cards usually don't. `if_required` keeps
-      // card payments on-page and only redirects when the method demands it.
-      redirect: 'if_required',
-      confirmParams: {
-        return_url: `${window.location.origin}/dine-with-us/pay/thanks`,
-      },
-    })
+    try {
+      const { error: submitError, paymentIntent } = await stripe.confirmPayment({
+        elements,
+        // Wallets may need a redirect; cards usually don't. `if_required` keeps
+        // card payments on-page and only redirects when the method demands it.
+        redirect: 'if_required',
+        confirmParams: {
+          return_url: `${window.location.origin}/dine-with-us/pay/thanks`,
+        },
+      })
 
-    if (submitError) {
-      setError(submitError.message || 'Your payment could not be completed.')
+      if (submitError) {
+        setError(submitError.message || 'Your payment could not be completed.')
+        setSubmitting(false)
+        return
+      }
+
+      // No redirect was needed — send the diner to the thank-you page ourselves,
+      // carrying the PaymentIntent id so it can confirm and offer to leave a note.
+      if (paymentIntent) {
+        router.push(`/dine-with-us/pay/thanks?payment_intent=${paymentIntent.id}`)
+      }
+    } catch {
+      // Stripe *throws* (rather than returning submitError) for integration-level
+      // failures like confirming against an unmounted Element. posthog-js has
+      // capture_exceptions on, so an unhandled rejection reads as an app crash —
+      // catch it and degrade to a friendly retry.
+      setError(copy.confirmError)
       setSubmitting(false)
-      return
-    }
-
-    // No redirect was needed — send the diner to the thank-you page ourselves,
-    // carrying the PaymentIntent id so it can confirm and offer to leave a note.
-    if (paymentIntent) {
-      router.push(`/dine-with-us/pay/thanks?payment_intent=${paymentIntent.id}`)
     }
   }
 
@@ -411,13 +434,16 @@ function CheckoutForm({
 
       {/* Wallets are handled by the express element above, so keep them out of
           the card form to avoid duplicate Apple Pay / Google Pay entries. */}
-      <PaymentElement options={{ wallets: { applePay: 'never', googlePay: 'never' } }} />
+      <PaymentElement
+        onReady={() => setPaymentReady(true)}
+        options={{ wallets: { applePay: 'never', googlePay: 'never' } }}
+      />
 
       {error && <p className="mt-4 text-sm text-clay-300">{error}</p>}
 
       <button
         type="submit"
-        disabled={!stripe || submitting}
+        disabled={!stripe || !paymentReady || submitting}
         className="btn-primary w-full justify-center mt-6 py-4 text-base disabled:opacity-60"
       >
         {submitting

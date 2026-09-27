@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { fetchPageDoc, PageBody } from '@/components/blocks/page-body'
 import { getSiteSettings, pageMetadata } from '@/lib/seo'
 import { HomeTakeover } from '@/components/home-takeover'
-import { hopperFontVars } from '@/lib/hopper-fonts'
+import { toastFontVars } from '@/lib/toast-fonts'
 
 export async function generateMetadata(): Promise<Metadata> {
   const [{ page }, settings] = await Promise.all([fetchPageDoc('home'), getSiteSettings()])
@@ -30,7 +30,7 @@ export default async function HomePage() {
   // cover the entire preview iframe in the admin (and dismissing it there would
   // permanently suppress it for that browser as a real visitor).
   const takeover = !isDraft && (
-    <HomeTakeover announcement={(settings as any)?.announcement} fontClassName={hopperFontVars} />
+    <HomeTakeover announcement={(settings as any)?.announcement} fontClassName={toastFontVars} />
   )
   if (!page) {
     // Home doc missing — render an empty fallback rather than 404 so dev environments still boot.

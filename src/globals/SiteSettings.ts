@@ -82,6 +82,33 @@ export const SiteSettings: GlobalConfig = {
           ],
         },
         {
+          label: 'Closure banner',
+          description:
+            'The yellow scrolling strip shown at the top of every page while a restaurant has a temporary closure entered. It writes itself from the closures on each location and retires once the last closed night has passed - there is nothing to switch on here.',
+          fields: [
+            {
+              name: 'closureBanner',
+              type: 'group',
+              label: false,
+              fields: [
+                {
+                  name: 'speed',
+                  type: 'number',
+                  label: 'Scroll speed',
+                  defaultValue: 125,
+                  min: 10,
+                  max: 400,
+                  admin: {
+                    step: 5,
+                    description:
+                      'How far the strip travels each second, in pixels. 125 is the pace the banner has always run at. Drop to around 80-90 to make the messages easier to read, or raise it for more urgency. Leave blank for 125.',
+                  },
+                },
+              ],
+            },
+          ],
+        },
+        {
           label: 'Gala banner',
           description:
             'The slim promo strip with the live countdown, shown at the top of every page. It hides itself automatically on the page it links to, and once the countdown target has passed.',
@@ -150,9 +177,63 @@ export const SiteSettings: GlobalConfig = {
           ],
         },
         {
+          label: 'Cafe banner',
+          description:
+            'The slim strip of buttons pinned to the top of the Toast and Hopper cafe pages. Those pages carry their own brand and have no site header, so this bar is the only way to book or donate without scrolling. Donate always shows. Toast books through the Onehunga restaurant it runs out of, so its Book button works already; Hopper has no bookings yet, so it shows Donate alone until a link is added below.',
+          fields: [
+            {
+              name: 'cafeBanner',
+              type: 'group',
+              label: false,
+              fields: [
+                {
+                  name: 'bookLabel',
+                  type: 'text',
+                  defaultValue: 'Book a table',
+                  admin: {
+                    description:
+                      'Shown on the Book button for both cafes. Keep it short - the bar is narrow on a phone.',
+                  },
+                },
+                {
+                  name: 'toastBookingUrl',
+                  type: 'text',
+                  label: 'Toast booking link',
+                  admin: {
+                    description:
+                      'Leave blank. Toast runs out of the Onehunga kitchen, so the Book button already uses that restaurant\'s booking link and follows it if it ever changes. Only fill this in if Toast gets a booking system of its own.',
+                  },
+                },
+                {
+                  name: 'hopperBookingUrl',
+                  type: 'text',
+                  label: 'Hopper booking link',
+                  admin: {
+                    description:
+                      'Where the Book button on /hopper goes. Hopper bookings are not live yet - leave this blank until they are, and the Book button stays hidden.',
+                  },
+                },
+                {
+                  name: 'donateLabel',
+                  type: 'text',
+                  defaultValue: 'Donate',
+                },
+                {
+                  name: 'donateUrl',
+                  type: 'text',
+                  admin: {
+                    description:
+                      'Optional. Leave blank to send cafe visitors to the same place as the main site (Links → Donate URL).',
+                  },
+                },
+              ],
+            },
+          ],
+        },
+        {
           label: 'Announcement',
           description:
-            'A full-screen takeover shown once per visitor on the home page, in the Hopper brand (lilac paper, bubbly "hopper" logotype). The logotype is fixed — this promotes Hopper specifically; the copy and link below are editable.',
+            'A full-screen takeover shown once per visitor on the home page, in the Toast brand (yellow paper, the drawn "Toast" wordmark). The wordmark is fixed — this promotes Toast specifically; the copy and link below are editable.',
           fields: [
             {
               name: 'announcement',
@@ -168,7 +249,7 @@ export const SiteSettings: GlobalConfig = {
                 {
                   name: 'campaignId',
                   type: 'text',
-                  defaultValue: 'hopper-launch',
+                  defaultValue: 'toast-launch',
                   admin: {
                     description:
                       'Visitors who dismiss the takeover won\'t see it again. Change this ID to reset that and show it to everyone once more.',
@@ -184,7 +265,7 @@ export const SiteSettings: GlobalConfig = {
                 {
                   name: 'heading',
                   type: 'text',
-                  defaultValue: 'Now open in Te Aro.',
+                  defaultValue: 'Now open in Onehunga.',
                   admin: { condition: (_, siblingData) => Boolean(siblingData?.enabled) },
                 },
                 {
@@ -201,7 +282,7 @@ export const SiteSettings: GlobalConfig = {
                     hideGutter: true,
                     condition: (_, siblingData) => Boolean(siblingData?.enabled),
                   },
-                  defaultValue: { type: 'internal', internalHref: '/hopper', label: 'Visit Hopper' },
+                  defaultValue: { type: 'internal', internalHref: '/toast', label: 'Visit Toast' },
                 }),
                 {
                   name: 'dismissLabel',

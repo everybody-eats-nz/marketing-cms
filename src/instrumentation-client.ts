@@ -1,17 +1,49 @@
 import posthog from 'posthog-js'
 import type { CaptureResult } from 'posthog-js'
+import { installChunkErrorReloadHandler } from '@/lib/chunk-error-recovery'
 
-// Substrings that mark a captured exception as third-party browser-extension
-// noise rather than a real site error. `capture_exceptions` turns on global
-// `unhandledrejection` autocapture, which scoops up promise rejections thrown by
-// extension content scripts running in the page. The one we see is
-// "Non-Error promise rejection captured with value: Object Not Found Matching
-// Id:… MethodName:update ParamCount:…" — an injected script that can't reach its
-// own background page. Neither string appears anywhere in our code, so matching
-// on them only ever drops extension noise, never a genuine site error.
-const EXTENSION_NOISE_MARKERS = [
+// Substrings that mark a captured exception as third-party noise rather than a
+// real site error. `capture_exceptions` turns on global autocapture of
+// `unhandledrejection` and `window` errors, which scoops up several kinds of
+// noise that never originate in our code:
+//
+//  Browser-extension content scripts (promise rejections that can't reach their
+//  own background page):
+//   - "Object Not Found Matching Id:… MethodName:update ParamCount:…"
+//
+//  Browser/OS content scripts injected into the page, which surface in PostHog as
+//  fake "new issues" (1 event, 1 user):
+//   - `window.__firefox__.reader` → Firefox for iOS Reader-mode content script.
+//   - `_AutofillCallbackHandler` → iOS WebKit autofill script.
+//   - `webkit.messageHandlers` → generic iOS WKWebView native bridge.
+//   - `Can't find variable: gmo`, `instantSearchSDKJSBridgeClearHighlight` →
+//     in-app browser (Google app / Firefox) injected globals.
+//   - `zaloJSV2` → Zalo in-app browser injected global.
+//   - `Error invoking postMessage` → Android in-app WebView native bridge. The
+//     host injects a `sendDataToNative` bridge; when it tears the page down the
+//     backing Java object is garbage-collected, so the bridge throws "Java
+//     object is gone" (or "Java exception was raised during method invocation").
+//     The throwing frames carry no source url, so they are never our bundle.
+//
+//  A browser extension / injected script calling `JSON.stringify` on a live DOM
+//  node whose React fiber closes a reference cycle, producing a synthetic,
+//  stack-traceless `TypeError` that bubbles to `window.onerror`:
+//   - `Converting circular structure to JSON` — every `JSON.stringify` in our
+//     code serializes a plain object, never a DOM node, so this is never ours.
+//
+// None of these strings appear anywhere in our code, so matching on them only
+// ever drops third-party noise, never a genuine site error.
+const NOISE_SIGNATURES = [
   'Object Not Found Matching Id',
   'MethodName:update',
+  '__firefox__',
+  '_AutofillCallbackHandler',
+  'webkit.messageHandlers',
+  'Error invoking postMessage',
+  'instantSearchSDKJSBridgeClearHighlight',
+  "Can't find variable: gmo",
+  'zaloJSV2',
+  'Converting circular structure to JSON',
 ]
 
 // React #418 is a text-content hydration mismatch: the text a server-rendered
@@ -32,21 +64,111 @@ const EXTENSION_NOISE_MARKERS = [
 // which is what we match on.
 const REACT_HYDRATION_MISMATCH_MARKER = 'Minified React error #418'
 
-// Drop $exception events whose message matches known benign noise: third-party
-// browser-extension rejections, and the React #418 text-content hydration
-// mismatch caused by external DOM mutation (auto-translate/extensions).
+type ExceptionItem = {
+  type?: unknown
+  value?: unknown
+  mechanism?: { handled?: unknown; synthetic?: unknown }
+  stacktrace?: { frames?: unknown }
+}
+
+// A frame-less, unhandled `DOMException: NetworkError: A network error
+// occurred.` is browser-level noise, not a site error. `capture_exceptions`
+// autocaptures `window` errors, so a resource load or `fetch` that a browser
+// extension or in-app browser aborts surfaces as this generic, stack-traceless
+// throw. Every `fetch` on the marketing site sits behind a form handler wrapped
+// in try/catch, and `/` (where this fires) makes no network call, so this
+// variant never comes from our code. The empty stack and unhandled flag are
+// part of the match, so a genuine network failure — which carries an app frame
+// — is still reported.
+function isFramelessNetworkError(ex: ExceptionItem): boolean {
+  const type = typeof ex?.type === 'string' ? ex.type : ''
+  const value = typeof ex?.value === 'string' ? ex.value : ''
+  const frames = ex?.stacktrace?.frames
+  const frameless = !Array.isArray(frames) || frames.length === 0
+  return (
+    type === 'DOMException' &&
+    value.includes('A network error occurred') &&
+    ex?.mechanism?.handled === false &&
+    frameless
+  )
+}
+
+// A synthetic, frame-less, unhandled non-Error rejection is injected-script
+// noise, not a site error. `capture_exceptions` autocaptures a rejected promise
+// or a thrown non-Error, so a browser extension or injected script that rejects
+// a promise with `null` — or throws a bare `Object` or a DOM `Event` /
+// `CustomEvent` — surfaces as a stack-traceless `$exception` and files a fake
+// "new issue" (1 event, 1 user). posthog-js wraps each such value in a fixed
+// message: `Non-Error promise rejection captured with value: …` for a
+// rejection, `… captured as exception with keys: …` for a thrown non-Error. Our
+// code never rejects with a non-Error value and never throws a bare object or
+// Event, and a genuine app rejection carries a stack frame, so the empty stack
+// plus the synthetic and unhandled flags mark this variant as never ours.
+const SYNTHETIC_NOISE_MESSAGES = [
+  'Non-Error promise rejection captured with value',
+  'captured as exception with keys',
+]
+
+function isSyntheticNonErrorNoise(ex: ExceptionItem): boolean {
+  const value = typeof ex?.value === 'string' ? ex.value : ''
+  const frames = ex?.stacktrace?.frames
+  const frameless = !Array.isArray(frames) || frames.length === 0
+  return (
+    ex?.mechanism?.handled === false &&
+    ex?.mechanism?.synthetic === true &&
+    frameless &&
+    SYNTHETIC_NOISE_MESSAGES.some((sig) => value.includes(sig))
+  )
+}
+
+// All our application and vendor JavaScript loads from `/_next/static/`. A real
+// stack frame from our code always carries that path in its filename.
+function isAppFrame(frame: unknown): boolean {
+  const filename = (frame as { filename?: unknown })?.filename
+  return typeof filename === 'string' && filename.includes('/_next/static/')
+}
+
+// An unhandled `RangeError: Maximum call stack size exceeded.` with a stack that
+// holds no `/_next/static/` frame is an injected WKWebView script, not a site
+// error. `capture_exceptions` autocaptures `window` errors, so a recursive
+// script that the browser evaluates with no source URL surfaces here, attributed
+// to whichever HTML document it ran in. Its frames point at document paths (and
+// a single stack can even mix two documents), never at our JavaScript. The
+// requirement that no frame comes from `/_next/static/` is what keeps the match
+// honest: a genuine recursion bug in our code carries an app frame, so it is
+// still reported.
+function isInjectedStackOverflow(ex: ExceptionItem): boolean {
+  const type = typeof ex?.type === 'string' ? ex.type : ''
+  const value = typeof ex?.value === 'string' ? ex.value : ''
+  const frames = ex?.stacktrace?.frames
+  return (
+    type === 'RangeError' &&
+    value.includes('Maximum call stack size exceeded') &&
+    ex?.mechanism?.handled === false &&
+    Array.isArray(frames) &&
+    frames.length > 0 &&
+    !frames.some(isAppFrame)
+  )
+}
+
+// Drop $exception events whose type or message matches a known noise signature.
 // Returning null tells posthog-js not to send the event.
-function dropExtensionNoise(event: CaptureResult | null): CaptureResult | null {
+function dropInjectedNoise(event: CaptureResult | null): CaptureResult | null {
   if (!event || event.event !== '$exception') return event
 
   const exceptions = event.properties?.$exception_list
   if (!Array.isArray(exceptions)) return event
 
-  const isNoise = exceptions.some((ex: { value?: unknown }) => {
+  const isNoise = exceptions.some((ex: ExceptionItem) => {
+    const type = typeof ex?.type === 'string' ? ex.type : ''
     const value = typeof ex?.value === 'string' ? ex.value : ''
+    const haystack = `${type} ${value}`
+    if (NOISE_SIGNATURES.some((sig) => haystack.includes(sig))) return true
+    if (value.includes(REACT_HYDRATION_MISMATCH_MARKER)) return true
     return (
-      EXTENSION_NOISE_MARKERS.some((marker) => value.includes(marker)) ||
-      value.includes(REACT_HYDRATION_MISMATCH_MARKER)
+      isFramelessNetworkError(ex) ||
+      isSyntheticNonErrorNoise(ex) ||
+      isInjectedStackOverflow(ex)
     )
   })
 
@@ -71,6 +193,13 @@ function dropExtensionNoise(event: CaptureResult | null): CaptureResult | null {
 // rides the first-party domain and survives ad blockers. `defaults` opts into
 // PostHog's current best-practice bundle (autocapture + history-aware pageviews
 // and pageleaves), so no manual $pageview wiring is needed for App Router nav.
+
+// Recover from post-deploy chunk-load failures (a stale document requesting a
+// `/_next/static/chunks/*` asset the new build removed) with a guarded one-shot
+// reload. Installed unconditionally — before the PostHog/admin guards below —
+// so it also covers the CMS admin and runs even when analytics is disabled.
+installChunkErrorReloadHandler()
+
 const key = process.env.NEXT_PUBLIC_POSTHOG_KEY
 
 if (key && typeof window !== 'undefined' && !window.location.pathname.startsWith('/admin')) {
@@ -79,7 +208,7 @@ if (key && typeof window !== 'undefined' && !window.location.pathname.startsWith
     ui_host: 'https://us.posthog.com',
     defaults: '2026-01-30',
     capture_exceptions: true,
-    before_send: dropExtensionNoise,
+    before_send: dropInjectedNoise,
     debug: process.env.NODE_ENV === 'development',
   })
 }

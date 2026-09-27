@@ -114,7 +114,11 @@ export async function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 backdrop-blur-md bg-surface/85 border-b border-line/10">
       {closureMessages.length > 0 && (
-        <ClosureBanner messages={closureMessages} href={closureHref} />
+        <ClosureBanner
+          messages={closureMessages}
+          href={closureHref}
+          speed={(settings as any)?.closureBanner?.speed}
+        />
       )}
       {showGala && (
         <GalaCountdownBar

@@ -30,6 +30,11 @@ import * as migration_20260713_013451_add_gala_table_booking_urls from './202607
 import * as migration_20260713_020648_add_impact_hide_pay_table from './20260713_020648_add_impact_hide_pay_table';
 import * as migration_20260713_021329_add_gala_banner_settings from './20260713_021329_add_gala_banner_settings';
 import * as migration_20260715_232934_add_location_closures from './20260715_232934_add_location_closures';
+import * as migration_20260728_002328_add_closure_banner_speed from './20260728_002328_add_closure_banner_speed';
+import * as migration_20260728_021410_anchor_day_dates_to_nz_timezone from './20260728_021410_anchor_day_dates_to_nz_timezone';
+import * as migration_20260731_000355_add_toast_blocks from './20260731_000355_add_toast_blocks';
+import * as migration_20260814_205953_add_cafe_banner_settings from './20260814_205953_add_cafe_banner_settings';
+import * as migration_20260917_035041_toast_announcement_defaults from './20260917_035041_toast_announcement_defaults';
 
 export const migrations = [
   {
@@ -190,6 +195,31 @@ export const migrations = [
   {
     up: migration_20260715_232934_add_location_closures.up,
     down: migration_20260715_232934_add_location_closures.down,
-    name: '20260715_232934_add_location_closures'
+    name: '20260715_232934_add_location_closures',
+  },
+  {
+    up: migration_20260728_002328_add_closure_banner_speed.up,
+    down: migration_20260728_002328_add_closure_banner_speed.down,
+    name: '20260728_002328_add_closure_banner_speed',
+  },
+  {
+    up: migration_20260728_021410_anchor_day_dates_to_nz_timezone.up,
+    down: migration_20260728_021410_anchor_day_dates_to_nz_timezone.down,
+    name: '20260728_021410_anchor_day_dates_to_nz_timezone',
+  },
+  {
+    up: migration_20260731_000355_add_toast_blocks.up,
+    down: migration_20260731_000355_add_toast_blocks.down,
+    name: '20260731_000355_add_toast_blocks',
+  },
+  {
+    up: migration_20260814_205953_add_cafe_banner_settings.up,
+    down: migration_20260814_205953_add_cafe_banner_settings.down,
+    name: '20260814_205953_add_cafe_banner_settings',
+  },
+  {
+    up: migration_20260917_035041_toast_announcement_defaults.up,
+    down: migration_20260917_035041_toast_announcement_defaults.down,
+    name: '20260917_035041_toast_announcement_defaults'
   },
 ];
