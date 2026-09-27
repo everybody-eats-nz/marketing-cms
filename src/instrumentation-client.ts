@@ -46,6 +46,24 @@ const NOISE_SIGNATURES = [
   'Converting circular structure to JSON',
 ]
 
+// React #418 is a text-content hydration mismatch: the text a server-rendered
+// node contained differs from what the client renders on hydration. React
+// silently recovers by throwing away the server markup for that subtree and
+// re-rendering it on the client, so nothing visibly breaks. `capture_exceptions`
+// still records the throw as an unhandled error.
+//
+// In production it fires across unrelated CMS content pages (faqs, team, contact,
+// journal, …) and every browser, and — now that source maps are uploaded (see
+// `withPostHogConfig` in next.config.mjs) — the symbolicated trace bottoms out in
+// React's own `throwOnHydrationMismatch` with no application frame implicated.
+// That signature (benign, page-agnostic, browser-agnostic, generic `args[]=text`
+// message, no app frame) is the classic fingerprint of client-side text mutation
+// before hydration — browser auto-translation (Chrome/Safari "Translate page")
+// and extensions rewriting the DOM. It is not a defect in our markup, so it only
+// pollutes error tracking. The minified message reliably carries the error code,
+// which is what we match on.
+const REACT_HYDRATION_MISMATCH_MARKER = 'Minified React error #418'
+
 type ExceptionItem = {
   type?: unknown
   value?: unknown
@@ -146,6 +164,7 @@ function dropInjectedNoise(event: CaptureResult | null): CaptureResult | null {
     const value = typeof ex?.value === 'string' ? ex.value : ''
     const haystack = `${type} ${value}`
     if (NOISE_SIGNATURES.some((sig) => haystack.includes(sig))) return true
+    if (value.includes(REACT_HYDRATION_MISMATCH_MARKER)) return true
     return (
       isFramelessNetworkError(ex) ||
       isSyntheticNonErrorNoise(ex) ||
