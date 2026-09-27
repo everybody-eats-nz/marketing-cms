@@ -1,18 +1,19 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useSyncExternalStore } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { resolveHref, type LinkValue } from '@/lib/types'
-import './blocks/hopper/hopper.css'
+import './blocks/toast/toast.css'
 
-// The takeover is the Hopper brand, and the wordmark's per-letter sizes/tilts
-// are hand-tuned in hopper.css (.hopper-wordmark span:nth-child(...)) to the six
-// characters of "hOPPer". It's fixed here rather than CMS-editable so a future
-// campaign can't feed in a word that renders with mismatched letters.
-const WORDMARK = 'hOPPer'
+// The takeover is the Toast brand. Toast's wordmark is a drawn mark rather than
+// set type, so it renders as the same SVG the /toast hero uses; these are its
+// natural proportions (trimmed to the mark's own bounding box), passed to
+// next/image so the panel reserves the space before the asset lands.
+const WORDMARK = { src: '/toast-logo.svg', width: 183, height: 59 }
 
 // Fires when a visitor dismisses the takeover, so useSyncExternalStore re-reads.
-const CHANGE_EVENT = 'ee-hopper-takeover-change'
+const CHANGE_EVENT = 'ee-cafe-takeover-change'
 
 function shouldShow(enabled: boolean, storageKey: string): boolean {
   if (!enabled) return false
@@ -36,14 +37,17 @@ export type Announcement = {
 
 type Props = {
   announcement?: Announcement | null
-  /** Hopper font CSS-variable classes, supplied from the server (next/font). */
+  /** Toast font CSS-variable classes, supplied from the server (next/font). */
   fontClassName?: string
 }
 
-const STORAGE_PREFIX = 'ee-hopper-takeover:'
+// Brand-neutral on purpose: the prefix outlived the Hopper campaign it was
+// named for, and renaming it again would silently re-show the takeover to every
+// visitor who had already dismissed one. Campaign resets go through campaignId.
+const STORAGE_PREFIX = 'ee-cafe-takeover:'
 
 /**
- * A one-per-visitor, full-screen Hopper-branded takeover for the home page.
+ * A one-per-visitor, full-screen Toast-branded takeover for the home page.
  * Renders nothing on the server / for returning visitors; a returning visitor
  * is anyone who has dismissed the current campaign (tracked in localStorage,
  * keyed by campaignId so a new campaign id re-shows it to everyone).
@@ -127,51 +131,50 @@ export function HomeTakeover({ announcement, fontClassName = '' }: Props) {
   const bodyText = announcement?.body
   const link = announcement?.link
   const resolved = resolveHref(link)
-  const ctaHref = resolved === '#' ? '/hopper' : resolved
-  const ctaLabel = link?.label || 'Visit Hopper'
+  const ctaHref = resolved === '#' ? '/toast' : resolved
+  const ctaLabel = link?.label || 'Visit Toast'
   const ctaNewTab = Boolean(link?.openInNewTab)
   const dismissLabel = announcement?.dismissLabel || 'Not now'
 
   return (
     <div
-      className={`hopper-takeover-backdrop ${fontClassName}`}
+      className={`toast-takeover-backdrop ${fontClassName}`}
       onMouseDown={dismiss}
     >
       <div
         ref={panelRef}
         role="dialog"
         aria-modal="true"
-        aria-labelledby="hopper-takeover-title"
-        className="hopper-scope hopper-takeover-panel"
+        aria-labelledby="toast-takeover-title"
+        className="toast-scope toast-takeover-panel"
         onMouseDown={(event) => event.stopPropagation()}
       >
         <button
           ref={closeRef}
           type="button"
           onClick={dismiss}
-          className="hopper-takeover-close"
+          className="toast-takeover-close"
           aria-label="Close announcement"
         >
           <span aria-hidden>✕</span>
         </button>
 
         {eyebrow && (
-          <p className="hopper-label mx-auto max-w-[22ch] text-[0.625rem] opacity-70 !tracking-[0.2em] sm:max-w-none sm:text-xs sm:!tracking-[0.3em]">
+          <p className="toast-label mx-auto max-w-[22ch] text-[0.625rem] opacity-70 !tracking-[0.2em] sm:max-w-none sm:text-xs sm:!tracking-[0.3em]">
             {eyebrow}
           </p>
         )}
 
-        <p
-          id="hopper-takeover-title"
-          aria-label={WORDMARK}
-          className="hopper-display hopper-wordmark mt-6 leading-none tracking-[-0.1em] text-[clamp(3.25rem,16vw,7rem)]"
-        >
-          {[...WORDMARK].map((letter, i) => (
-            <span key={i} aria-hidden style={{ '--i': i } as React.CSSProperties}>
-              {letter}
-            </span>
-          ))}
-        </p>
+        <h2 id="toast-takeover-title" className="mt-6 flex justify-center">
+          <Image
+            src={WORDMARK.src}
+            alt="Toast"
+            width={WORDMARK.width}
+            height={WORDMARK.height}
+            className="toast-wordmark toast-takeover-wordmark"
+            priority
+          />
+        </h2>
 
         {heading && (
           <p className="mt-6 text-[clamp(1.125rem,3.5vw,1.5rem)] font-bold leading-snug tracking-tight">
@@ -188,7 +191,7 @@ export function HomeTakeover({ announcement, fontClassName = '' }: Props) {
         <div className="mt-9">
           <Link
             href={ctaHref}
-            className="hopper-btn"
+            className="toast-btn"
             target={ctaNewTab ? '_blank' : undefined}
             rel={ctaNewTab ? 'noopener noreferrer' : undefined}
             onClick={dismiss}
@@ -198,7 +201,7 @@ export function HomeTakeover({ announcement, fontClassName = '' }: Props) {
           </Link>
         </div>
 
-        <button type="button" onClick={dismiss} className="hopper-takeover-dismiss">
+        <button type="button" onClick={dismiss} className="toast-takeover-dismiss">
           {dismissLabel}
         </button>
       </div>

@@ -18,6 +18,12 @@ import { installChunkErrorReloadHandler } from '@/lib/chunk-error-recovery'
 //   - `webkit.messageHandlers` → generic iOS WKWebView native bridge.
 //   - `Can't find variable: gmo`, `instantSearchSDKJSBridgeClearHighlight` →
 //     in-app browser (Google app / Firefox) injected globals.
+//   - `zaloJSV2` → Zalo in-app browser injected global.
+//   - `Error invoking postMessage` → Android in-app WebView native bridge. The
+//     host injects a `sendDataToNative` bridge; when it tears the page down the
+//     backing Java object is garbage-collected, so the bridge throws "Java
+//     object is gone" (or "Java exception was raised during method invocation").
+//     The throwing frames carry no source url, so they are never our bundle.
 //
 //  A browser extension / injected script calling `JSON.stringify` on a live DOM
 //  node whose React fiber closes a reference cycle, producing a synthetic,
@@ -33,8 +39,10 @@ const NOISE_SIGNATURES = [
   '__firefox__',
   '_AutofillCallbackHandler',
   'webkit.messageHandlers',
+  'Error invoking postMessage',
   'instantSearchSDKJSBridgeClearHighlight',
   "Can't find variable: gmo",
+  'zaloJSV2',
   'Converting circular structure to JSON',
 ]
 
@@ -95,6 +103,36 @@ function isSyntheticNonErrorNoise(ex: ExceptionItem): boolean {
   )
 }
 
+// All our application and vendor JavaScript loads from `/_next/static/`. A real
+// stack frame from our code always carries that path in its filename.
+function isAppFrame(frame: unknown): boolean {
+  const filename = (frame as { filename?: unknown })?.filename
+  return typeof filename === 'string' && filename.includes('/_next/static/')
+}
+
+// An unhandled `RangeError: Maximum call stack size exceeded.` with a stack that
+// holds no `/_next/static/` frame is an injected WKWebView script, not a site
+// error. `capture_exceptions` autocaptures `window` errors, so a recursive
+// script that the browser evaluates with no source URL surfaces here, attributed
+// to whichever HTML document it ran in. Its frames point at document paths (and
+// a single stack can even mix two documents), never at our JavaScript. The
+// requirement that no frame comes from `/_next/static/` is what keeps the match
+// honest: a genuine recursion bug in our code carries an app frame, so it is
+// still reported.
+function isInjectedStackOverflow(ex: ExceptionItem): boolean {
+  const type = typeof ex?.type === 'string' ? ex.type : ''
+  const value = typeof ex?.value === 'string' ? ex.value : ''
+  const frames = ex?.stacktrace?.frames
+  return (
+    type === 'RangeError' &&
+    value.includes('Maximum call stack size exceeded') &&
+    ex?.mechanism?.handled === false &&
+    Array.isArray(frames) &&
+    frames.length > 0 &&
+    !frames.some(isAppFrame)
+  )
+}
+
 // Drop $exception events whose type or message matches a known noise signature.
 // Returning null tells posthog-js not to send the event.
 function dropInjectedNoise(event: CaptureResult | null): CaptureResult | null {
@@ -108,7 +146,11 @@ function dropInjectedNoise(event: CaptureResult | null): CaptureResult | null {
     const value = typeof ex?.value === 'string' ? ex.value : ''
     const haystack = `${type} ${value}`
     if (NOISE_SIGNATURES.some((sig) => haystack.includes(sig))) return true
-    return isFramelessNetworkError(ex) || isSyntheticNonErrorNoise(ex)
+    return (
+      isFramelessNetworkError(ex) ||
+      isSyntheticNonErrorNoise(ex) ||
+      isInjectedStackOverflow(ex)
+    )
   })
 
   return isNoise ? null : event
