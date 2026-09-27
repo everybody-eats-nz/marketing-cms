@@ -49,7 +49,7 @@ const NOISE_SIGNATURES = [
 type ExceptionItem = {
   type?: unknown
   value?: unknown
-  mechanism?: { handled?: unknown }
+  mechanism?: { handled?: unknown; synthetic?: unknown }
   stacktrace?: { frames?: unknown }
 }
 
@@ -72,6 +72,34 @@ function isFramelessNetworkError(ex: ExceptionItem): boolean {
     value.includes('A network error occurred') &&
     ex?.mechanism?.handled === false &&
     frameless
+  )
+}
+
+// A synthetic, frame-less, unhandled non-Error rejection is injected-script
+// noise, not a site error. `capture_exceptions` autocaptures a rejected promise
+// or a thrown non-Error, so a browser extension or injected script that rejects
+// a promise with `null` — or throws a bare `Object` or a DOM `Event` /
+// `CustomEvent` — surfaces as a stack-traceless `$exception` and files a fake
+// "new issue" (1 event, 1 user). posthog-js wraps each such value in a fixed
+// message: `Non-Error promise rejection captured with value: …` for a
+// rejection, `… captured as exception with keys: …` for a thrown non-Error. Our
+// code never rejects with a non-Error value and never throws a bare object or
+// Event, and a genuine app rejection carries a stack frame, so the empty stack
+// plus the synthetic and unhandled flags mark this variant as never ours.
+const SYNTHETIC_NOISE_MESSAGES = [
+  'Non-Error promise rejection captured with value',
+  'captured as exception with keys',
+]
+
+function isSyntheticNonErrorNoise(ex: ExceptionItem): boolean {
+  const value = typeof ex?.value === 'string' ? ex.value : ''
+  const frames = ex?.stacktrace?.frames
+  const frameless = !Array.isArray(frames) || frames.length === 0
+  return (
+    ex?.mechanism?.handled === false &&
+    ex?.mechanism?.synthetic === true &&
+    frameless &&
+    SYNTHETIC_NOISE_MESSAGES.some((sig) => value.includes(sig))
   )
 }
 
@@ -118,7 +146,11 @@ function dropInjectedNoise(event: CaptureResult | null): CaptureResult | null {
     const value = typeof ex?.value === 'string' ? ex.value : ''
     const haystack = `${type} ${value}`
     if (NOISE_SIGNATURES.some((sig) => haystack.includes(sig))) return true
-    return isFramelessNetworkError(ex) || isInjectedStackOverflow(ex)
+    return (
+      isFramelessNetworkError(ex) ||
+      isSyntheticNonErrorNoise(ex) ||
+      isInjectedStackOverflow(ex)
+    )
   })
 
   return isNoise ? null : event
