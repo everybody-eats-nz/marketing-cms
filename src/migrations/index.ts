@@ -35,6 +35,7 @@ import * as migration_20260728_021410_anchor_day_dates_to_nz_timezone from './20
 import * as migration_20260731_000355_add_toast_blocks from './20260731_000355_add_toast_blocks';
 import * as migration_20260814_205953_add_cafe_banner_settings from './20260814_205953_add_cafe_banner_settings';
 import * as migration_20260917_035041_toast_announcement_defaults from './20260917_035041_toast_announcement_defaults';
+import * as migration_20260928_044431_add_upload_object_key from './20260928_044431_add_upload_object_key';
 
 export const migrations = [
   {
@@ -220,6 +221,11 @@ export const migrations = [
   {
     up: migration_20260917_035041_toast_announcement_defaults.up,
     down: migration_20260917_035041_toast_announcement_defaults.down,
-    name: '20260917_035041_toast_announcement_defaults'
+    name: '20260917_035041_toast_announcement_defaults',
+  },
+  {
+    up: migration_20260928_044431_add_upload_object_key.up,
+    down: migration_20260928_044431_add_upload_object_key.down,
+    name: '20260928_044431_add_upload_object_key'
   },
 ];
