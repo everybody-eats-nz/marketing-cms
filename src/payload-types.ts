@@ -164,6 +164,7 @@ export interface User {
   resetPasswordExpiration?: string | null;
   salt?: string | null;
   hash?: string | null;
+  resetPasswordRequestedAt?: string | null;
   _verified?: boolean | null;
   _verificationToken?: string | null;
   loginAttempts?: number | null;
@@ -196,6 +197,7 @@ export interface Media {
    */
   credit?: string | null;
   prefix?: string | null;
+  _objectKey?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -257,6 +259,7 @@ export interface Document {
    */
   description?: string | null;
   prefix?: string | null;
+  _objectKey?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -2336,6 +2339,7 @@ export interface UsersSelect<T extends boolean = true> {
   resetPasswordExpiration?: T;
   salt?: T;
   hash?: T;
+  resetPasswordRequestedAt?: T;
   _verified?: T;
   _verificationToken?: T;
   loginAttempts?: T;
@@ -2357,6 +2361,7 @@ export interface MediaSelect<T extends boolean = true> {
   caption?: T;
   credit?: T;
   prefix?: T;
+  _objectKey?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -2421,6 +2426,7 @@ export interface DocumentsSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   prefix?: T;
+  _objectKey?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
