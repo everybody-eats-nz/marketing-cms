@@ -5,6 +5,10 @@ on:
   push:
     branches: [main]
 
+# Nothing here writes to the repo, checks, or packages — least-privilege token.
+permissions:
+  contents: read
+
 # Cancel superseded runs on the same branch/PR.
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
