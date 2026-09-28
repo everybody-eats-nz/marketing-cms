@@ -5,6 +5,10 @@ on:
   push:
     branches: [main]
 
+# Nothing here writes to the repo, checks, or packages — least-privilege token.
+permissions:
+  contents: read
+
 # Cancel superseded runs on the same branch/PR.
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
@@ -60,3 +64,98 @@ jobs:
           PAYLOAD_SECRET: ci-build-not-a-real-secret
           DATABASE_URI: postgres://payload:payload@localhost:5432/everybodyeats
           NEXT_PUBLIC_SITE_URL: http://localhost:3000
+
+  # Production deploys are migration-only (drizzle push is dev-only), so any
+  # schema the Payload config expects but no checked-in migration creates
+  # silently never reaches prod and takes the site down at the first query.
+  # That is exactly what happened on 2026-09-28: a routine @payloadcms/* minor
+  # bump (3.89 -> 3.90) added hidden `_objectKey` / `resetPasswordRequestedAt`
+  # fields and CI was green because nothing here compared config to schema.
+  #
+  # Two checks, each catching a different failure:
+  #   1. `payload migrate` against a throwaway Postgres proves the checked-in
+  #      chain actually applies (bad SQL, "column already exists", a snapshot
+  #      re-emitting columns from a stale branch).
+  #   2. `payload migrate:create --skip-empty` diffs the Payload config against
+  #      the newest src/migrations/*.json snapshot (it does not read the DB).
+  #      If it writes a migration, the config expects schema that no checked-in
+  #      migration creates, and the PR must ship the generated migration.
+  migrations:
+    name: Migration drift check
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: payload
+          POSTGRES_PASSWORD: payload
+          POSTGRES_DB: everybodyeats
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      # Same pnpm/Node setup as the build job above (see the comment there for
+      # why pnpm is installed via npm rather than pnpm/action-setup).
+      - name: Setup pnpm
+        run: npm install -g "pnpm@$(node -p "require('./package.json').packageManager.match(/pnpm@([^+]+)/)[1]")"
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Apply migration chain to a clean database
+        run: pnpm payload migrate
+        # Scoped to the Payload steps only: at job level NODE_ENV=production
+        # would make `pnpm install` skip devDependencies (implicit --prod).
+        # Here it mirrors the deploy entrypoint and disables schema push, so
+        # the only thing that can build the schema is the migrations.
+        # S3_BUCKET is unset on purpose: the S3 plugin stays registered but
+        # disabled, which (via alwaysInsertFields + explicit prefixes) yields
+        # the same schema as prod. See storagePlugins in src/payload.config.ts.
+        env:
+          NODE_ENV: production
+          PAYLOAD_SECRET: ci-migrations-not-a-real-secret
+          DATABASE_URI: postgres://payload:payload@localhost:5432/everybodyeats
+          S3_BUCKET: ''
+
+      # --skip-empty exits 0 without writing anything when config and the
+      # latest snapshot match. If they differ it writes a migration + snapshot
+      # into src/migrations, which the next step turns into a failure. Drizzle
+      # can prompt "created or renamed?" on ambiguous diffs; feeding CR accepts
+      # the default so the job never hangs on a non-TTY. (`|| true` swallows
+      # the SIGPIPE `yes` gets when pnpm exits, which pipefail would otherwise
+      # report as a failure.)
+      - name: Diff Payload config against the latest migration snapshot
+        run: ( yes $'\r' 2>/dev/null || true ) | pnpm payload migrate:create ci_drift_check --skip-empty
+        env:
+          NODE_ENV: production
+          PAYLOAD_SECRET: ci-migrations-not-a-real-secret
+          DATABASE_URI: postgres://payload:payload@localhost:5432/everybodyeats
+          S3_BUCKET: ''
+
+      - name: Fail if the config needs a migration that is not checked in
+        run: |
+          if [ -n "$(git status --porcelain src/migrations)" ]; then
+            echo "::error::src/payload.config.ts expects schema that no checked-in migration creates."
+            echo "Generated migration:"
+            echo "-------------------"
+            cat src/migrations/*_ci_drift_check.ts
+            echo "-------------------"
+            echo "Fix: run 'pnpm migrate:create <name>' against a clean database and commit the"
+            echo "generated .ts, .json and index.ts changes (see CLAUDE.md, 'Any schema change"
+            echo "MUST ship with a migration'). This applies to @payloadcms/* version bumps too."
+            exit 1
+          fi
+          echo "Schema matches the migration chain."
