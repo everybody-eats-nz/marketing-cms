@@ -70,13 +70,13 @@ export const onRequestError: Instrumentation.onRequestError = async (error, requ
           $exception_list: [
             {
               type: typeof err.name === 'string' ? err.name : 'Error',
-              value: firstLine(err.message) ?? firstLine(String(error)),
+              value: firstLine(typeof err.message === 'string' ? err.message : String(error)),
               mechanism: { handled: false, synthetic: false, type: 'onRequestError' },
             },
           ],
           $exception_level: 'error',
           $session_id: sessionId,
-          ...(distinctId ? {} : { $process_person_profile: false }),
+          $process_person_profile: distinctId ? undefined : false,
           $pathname: request.path.split('?', 1)[0],
           request_method: request.method,
           route_path: context.routePath,
