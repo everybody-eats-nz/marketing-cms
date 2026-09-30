@@ -111,6 +111,10 @@ export default buildConfig({
   globals: [SiteSettings, Navigation, Footer, PaySettings],
   plugins: storagePlugins,
   editor: lexicalEditor(),
+  // Nothing consumes GraphQL, and the schema does not build: the media block and
+  // the Media collection both map to the type name "Media", and the block's
+  // aspect values (e.g. "16:8") are not valid GraphQL enum names.
+  graphQL: { disable: true },
   email: resendAdapter({
     defaultFromName: 'Everybody Eats CMS',
     defaultFromAddress: process.env.RESEND_FROM_ADDRESS || '',
