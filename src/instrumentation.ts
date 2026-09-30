@@ -45,6 +45,18 @@ function visitorFromCookie(cookieHeader: string | string[] | undefined, apiKey: 
   }
 }
 
+// A visitor who leaves mid-stream makes React throw "The destination stream
+// closed early.", which Next 16.3 passes here as a render error. The visitor
+// saw no failure, so it is not reported. Next fixes this upstream in
+// vercel/next.js#96715 (in 16.4 canary): remove this check after that upgrade.
+function isClientDisconnect(err: { name?: unknown; message?: unknown } | undefined) {
+  return (
+    err?.message === 'The destination stream closed early.' ||
+    err?.name === 'AbortError' ||
+    err?.name === 'ResponseAborted'
+  )
+}
+
 export const onRequestError: Instrumentation.onRequestError = async (error, request, context) => {
   const apiKey = process.env.NEXT_PUBLIC_POSTHOG_KEY || process.env.POSTHOG_KEY
   if (!apiKey) return
@@ -54,8 +66,9 @@ export const onRequestError: Instrumentation.onRequestError = async (error, requ
     name?: unknown
     message?: unknown
     digest?: unknown
-    cause?: { message?: unknown }
+    cause?: { name?: unknown; message?: unknown }
   }
+  if (isClientDisconnect(err) || isClientDisconnect(err.cause)) return
   const { distinctId, sessionId } = visitorFromCookie(request.headers.cookie, apiKey)
 
   try {
