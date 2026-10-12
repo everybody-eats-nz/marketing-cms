@@ -38,8 +38,8 @@ importers:
         specifier: ^3.90.2
         version: 3.90.2(@types/react@19.3.0)(monaco-editor@0.55.1)(next@16.4.0(@babel/core@7.29.7)(@types/node@26.6.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(payload@3.90.2(graphql@17.0.2)(typescript@6.0.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@6.0.3)
       '@posthog/nextjs-config':
-        specifier: ^1.11.2
-        version: 1.11.2(next@16.4.0(@babel/core@7.29.7)(@types/node@26.6.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(posthog-js@1.438.5(@types/react@19.3.0)(react@19.3.0))(webpack@5.108.4(esbuild@0.25.12)(postcss@8.5.29))
+        specifier: 1.11.1
+        version: 1.11.1(next@16.4.0(@babel/core@7.29.7)(@types/node@26.6.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(webpack@5.108.4(esbuild@0.25.12)(postcss@8.5.29))
       '@stripe/react-stripe-js':
         specifier: ^6.12.0
         version: 6.12.0(@stripe/stripe-js@9.17.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
@@ -1374,20 +1374,14 @@ packages:
     engines: {node: '>=14.14', npm: '>=6'}
     hasBin: true
 
-  '@posthog/cli@0.18.10':
-    resolution: {integrity: sha512-WFucXcIqUL35NkH4hVlch3TBSGRRAhjqvmh2/2z8sj+HsR7e+NUiG3QT5dy9Qs1C3hVe7uWkdNU6DKyKvONAXw==}
-    engines: {node: '>=14.14', npm: '>=6'}
-    hasBin: true
-
   '@posthog/core@1.57.4':
     resolution: {integrity: sha512-JM2r3ab7D8HvxquB06jesAM7EBLf3pXIwYIOj/wwq59cML0aicSoJRZdDREruhbIHzc7iFgSgAqTqJQZxxvq9w==}
 
-  '@posthog/nextjs-config@1.11.2':
-    resolution: {integrity: sha512-j/a5Nub3ThVRtih5hT/WgytHndz/dA61+FZi/sr0Y9HELpb1OgOan535UYpWhB6SKZw0GgG+etp7Aic8gb1A6A==}
+  '@posthog/nextjs-config@1.11.1':
+    resolution: {integrity: sha512-Mk9olw1ECIaK371L3NWTzM1fnkxYuCmQfU6VQpOSoBFq51Y7xj1R66zazKJLsi7hcjMAqqTkzMs+DqiFF+Jz+w==}
     engines: {node: ^20.20.0 || >=22.22.0}
     peerDependencies:
       next: '>12.1.0'
-      posthog-js: '>=1.438.5'
 
   '@posthog/plugin-utils@2.0.1':
     resolution: {integrity: sha512-ZiQfUcgY65EjF2vkqL4Aau6sx0aqvSWoXaGSGu9Solnmv6e6VRjQbAU0SCKbxpJxcEsCJof9vmvnrFTQIEOUAQ==}
@@ -5694,21 +5688,16 @@ snapshots:
     dependencies:
       detect-libc: 2.1.2
 
-  '@posthog/cli@0.18.10':
-    dependencies:
-      detect-libc: 2.1.2
-
   '@posthog/core@1.57.4':
     dependencies:
       '@posthog/types': 1.415.2
 
-  '@posthog/nextjs-config@1.11.2(next@16.4.0(@babel/core@7.29.7)(@types/node@26.6.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(posthog-js@1.438.5(@types/react@19.3.0)(react@19.3.0))(webpack@5.108.4(esbuild@0.25.12)(postcss@8.5.29))':
+  '@posthog/nextjs-config@1.11.1(next@16.4.0(@babel/core@7.29.7)(@types/node@26.6.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(webpack@5.108.4(esbuild@0.25.12)(postcss@8.5.29))':
     dependencies:
-      '@posthog/cli': 0.18.10
+      '@posthog/cli': 0.16.2
       '@posthog/plugin-utils': 2.0.1
       '@posthog/webpack-plugin': 1.7.1(webpack@5.108.4(esbuild@0.25.12)(postcss@8.5.29))
       next: 16.4.0(@babel/core@7.29.7)(@types/node@26.6.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4)
-      posthog-js: 1.438.5(@types/react@19.3.0)(react@19.3.0)
       semver: 7.8.5
     transitivePeerDependencies:
       - webpack

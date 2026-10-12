@@ -20,6 +20,15 @@ updates:
     # proposals comfortably past the policy window.
     cooldown:
       default-days: 2
+    ignore:
+      # 1.11.2 switched Next 16 + Turbopack builds to native debug IDs and runs
+      # `sourcemap upload` without injecting first. Turbopack leaves some server
+      # chunks without a debug ID, so the upload aborts with "Chunk ID not found"
+      # and fails the deploy's `next build`. package.json pins 1.11.1; drop this
+      # entry (and the pin) once a release fixes it. Only the deploy build has
+      # the upload secrets, so CI can't catch a regression here.
+      - dependency-name: "@posthog/nextjs-config"
+        versions: ["1.11.2"]
     # Group related updates into a single PR to cut review noise.
     groups:
       payload:
