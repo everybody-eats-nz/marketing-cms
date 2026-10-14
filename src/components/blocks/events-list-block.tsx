@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { PayloadImage } from '@/components/payload-image'
 import { renderRichText } from './render-text'
+import { formatEventDate } from '@/lib/event-dates'
 
 type Props = {
   block: {
@@ -61,7 +62,7 @@ export function EventsListBlock({ block, events }: Props) {
               <div className="flex-1 min-w-0 py-2">
                 {date && (
                   <div className="font-mono text-xs uppercase tracking-[0.15em] text-muted/70 mb-2">
-                    {date.toLocaleDateString('en-NZ', {
+                    {formatEventDate(date, {
                       weekday: 'short',
                       day: 'numeric',
                       month: 'short',

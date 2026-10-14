@@ -1941,6 +1941,7 @@ export interface Event {
   name: string;
   slug: string;
   date: string;
+  date_tz: SupportedTimezones;
   /**
    * Human-readable time, e.g. "6:00pm — 9:00pm"
    */
@@ -3517,6 +3518,7 @@ export interface EventsSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
   date?: T;
+  date_tz?: T;
   displayTime?: T;
   location?: T;
   image?: T;

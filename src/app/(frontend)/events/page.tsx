@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getPayloadClient } from '@/lib/payload'
 import { PayloadImage } from '@/components/payload-image'
+import { formatEventDate } from '@/lib/event-dates'
 
 export const metadata: Metadata = {
   title: 'Events',
@@ -96,15 +97,15 @@ function EventCard({ ev, priority, dim }: { ev: any; priority?: boolean; dim?: b
           <div className="absolute top-4 left-4 bg-surface rounded-2xl px-4 py-2.5 flex items-center gap-3 shadow-sm">
             <div className="text-content leading-none">
               <div className="font-mono text-[0.6rem] uppercase tracking-[0.18em] text-muted/85">
-                {date.toLocaleDateString('en-NZ', { month: 'short' })}
+                {formatEventDate(date, { month: 'short' })}
               </div>
               <div className="display text-2xl font-medium mt-0.5">
-                {date.getDate()}
+                {formatEventDate(date, { day: 'numeric' })}
               </div>
             </div>
             <div className="text-xs leading-tight">
               <div className="font-medium text-content">
-                {date.toLocaleDateString('en-NZ', { weekday: 'short' })}
+                {formatEventDate(date, { weekday: 'short' })}
               </div>
               {ev.displayTime && (
                 <div className="text-muted/85">{ev.displayTime}</div>

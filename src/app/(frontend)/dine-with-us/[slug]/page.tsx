@@ -10,6 +10,7 @@ import { BookingLocationLink } from '@/components/booking/booking-dialog'
 import { ClosureNotice } from '@/components/closure-notice'
 import { PayloadImage } from '@/components/payload-image'
 import { DiningRoomMural } from '@/components/dining-room-mural'
+import { formatEventDate } from '@/lib/event-dates'
 
 type Params = { params: Promise<{ slug: string }> }
 
@@ -386,7 +387,7 @@ export default async function LocationPage({ params }: Params) {
                   </div>
                   {date && (
                     <p className="font-mono text-xs uppercase tracking-[0.15em] text-muted/70 mb-2">
-                      {date.toLocaleDateString('en-NZ', { weekday: 'short', day: 'numeric', month: 'short' })}
+                      {formatEventDate(date, { weekday: 'short', day: 'numeric', month: 'short' })}
                     </p>
                   )}
                   <h3 className="display text-xl text-content font-medium leading-snug">
