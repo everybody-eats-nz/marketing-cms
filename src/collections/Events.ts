@@ -18,6 +18,11 @@ export const Events: CollectionConfig = {
       name: 'date',
       type: 'date',
       required: true,
+      // Anchor the picker to Pacific/Auckland (see admin.timezones in
+      // payload.config) so editors pick the restaurant's local day and time
+      // whatever timezone their laptop is in. The public site formats it on
+      // the Auckland calendar too - see src/lib/event-dates.ts.
+      timezone: true,
       admin: {
         date: { pickerAppearance: 'dayAndTime', displayFormat: 'd MMM yyyy h:mm a' },
       },

@@ -7,6 +7,7 @@ import { pageMetadata } from '@/lib/seo'
 import { JsonLd, buildEvent, buildBreadcrumbs } from '@/components/structured-data'
 import { PayloadImage } from '@/components/payload-image'
 import { RichText } from '@/components/rich-text'
+import { formatEventDate } from '@/lib/event-dates'
 
 type Params = { params: Promise<{ slug: string }> }
 
@@ -88,7 +89,7 @@ export default async function EventPage({ params }: Params) {
             {date && (
               <div className="font-mono text-xs uppercase tracking-[0.18em] text-muted/85 mb-4 flex items-center gap-3">
                 <span className="inline-block w-6 h-px bg-line/40" />
-                {date.toLocaleDateString('en-NZ', {
+                {formatEventDate(date, {
                   weekday: 'long',
                   day: 'numeric',
                   month: 'long',
