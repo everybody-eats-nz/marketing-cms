@@ -24,25 +24,25 @@ importers:
         version: 3.91.0(payload@3.91.0(graphql@17.0.2)(typescript@6.0.3))
       '@payloadcms/live-preview-react':
         specifier: ^3.91.0
-        version: 3.91.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+        version: 3.91.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@payloadcms/next':
         specifier: ^3.91.0
-        version: 3.91.0(@types/react@19.3.0)(graphql@17.0.2)(monaco-editor@0.55.1)(next@16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(payload@3.91.0(graphql@17.0.2)(typescript@6.0.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@6.0.3)
+        version: 3.91.0(@types/react@19.3.0)(graphql@17.0.2)(monaco-editor@0.55.1)(next@16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.77.4))(payload@3.91.0(graphql@17.0.2)(typescript@6.0.3))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@6.0.3)
       '@payloadcms/richtext-lexical':
         specifier: ^3.91.0
-        version: 3.91.0(@faceless-ui/modal@3.0.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(@faceless-ui/scroll-info@2.0.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(@payloadcms/next@3.91.0(@types/react@19.3.0)(graphql@17.0.2)(monaco-editor@0.55.1)(next@16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(payload@3.91.0(graphql@17.0.2)(typescript@6.0.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@6.0.3))(@types/react@19.3.0)(monaco-editor@0.55.1)(next@16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(payload@3.91.0(graphql@17.0.2)(typescript@6.0.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@6.0.3)(yjs@13.6.31)
+        version: 3.91.0(@faceless-ui/modal@3.0.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(@faceless-ui/scroll-info@2.0.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(@payloadcms/next@3.91.0(@types/react@19.3.0)(graphql@17.0.2)(monaco-editor@0.55.1)(next@16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.77.4))(payload@3.91.0(graphql@17.0.2)(typescript@6.0.3))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@6.0.3))(@types/react@19.3.0)(monaco-editor@0.55.1)(next@16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.77.4))(payload@3.91.0(graphql@17.0.2)(typescript@6.0.3))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@6.0.3)(yjs@13.6.31)
       '@payloadcms/storage-s3':
         specifier: 3.91.0
-        version: 3.91.0(@types/react@19.3.0)(monaco-editor@0.55.1)(next@16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(payload@3.91.0(graphql@17.0.2)(typescript@6.0.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@6.0.3)
+        version: 3.91.0(@types/react@19.3.0)(monaco-editor@0.55.1)(next@16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.77.4))(payload@3.91.0(graphql@17.0.2)(typescript@6.0.3))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@6.0.3)
       '@payloadcms/ui':
         specifier: ^3.91.0
-        version: 3.91.0(@types/react@19.3.0)(monaco-editor@0.55.1)(next@16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(payload@3.91.0(graphql@17.0.2)(typescript@6.0.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@6.0.3)
+        version: 3.91.0(@types/react@19.3.0)(monaco-editor@0.55.1)(next@16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.77.4))(payload@3.91.0(graphql@17.0.2)(typescript@6.0.3))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@6.0.3)
       '@posthog/nextjs-config':
         specifier: 1.11.3
-        version: 1.11.3(next@16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(posthog-js@1.438.12(@types/react@19.3.0)(react@19.3.0))(webpack@5.108.4(esbuild@0.25.12)(postcss@8.5.29))
+        version: 1.11.3(next@16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.77.4))(posthog-js@1.438.12(@types/react@19.3.0)(react@19.3.1))(webpack@5.108.4(esbuild@0.25.12)(postcss@8.5.29))
       '@stripe/react-stripe-js':
         specifier: ^6.12.0
-        version: 6.12.0(@stripe/stripe-js@9.17.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+        version: 6.12.0(@stripe/stripe-js@9.17.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@stripe/stripe-js':
         specifier: ^9.17.0
         version: 9.17.0
@@ -54,22 +54,22 @@ importers:
         version: 17.0.2
       motion:
         specifier: ^14.3.0
-        version: 14.3.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+        version: 14.3.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       next:
         specifier: 16.4.0
-        version: 16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4)
+        version: 16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.77.4)
       payload:
         specifier: ^3.91.0
         version: 3.91.0(graphql@17.0.2)(typescript@6.0.3)
       posthog-js:
         specifier: ^1.438.12
-        version: 1.438.12(@types/react@19.3.0)(react@19.3.0)
+        version: 1.438.12(@types/react@19.3.0)(react@19.3.1)
       react:
-        specifier: 19.3.0
-        version: 19.3.0
+        specifier: 19.3.1
+        version: 19.3.1
       react-dom:
-        specifier: 19.3.0
-        version: 19.3.0(react@19.3.0)
+        specifier: 19.3.1
+        version: 19.3.1(react@19.3.1)
       sharp:
         specifier: 0.35.5
         version: 0.35.5(@types/node@26.6.5)
@@ -3662,10 +3662,10 @@ packages:
       react: ^16.9.0 || ^17 || ^18 || ^19 || ^19.0.0-rc
       react-dom: ^16.9.0 || ^17 || ^18 || ^19 || ^19.0.0-rc
 
-  react-dom@19.3.0:
-    resolution: {integrity: sha512-JDk8dgif51OjFoDE70+OT9ICyYr+69HlmihNwp1+Nsfbna3t5sIiCa9ZJktDmQ4/1b/rn26hIAR2uYXDMr5r0Q==}
+  react-dom@19.3.1:
+    resolution: {integrity: sha512-Y0bARz53lhEC1NMCASs0/j+faB/zqt3R8hpvg1e8+61ZVJ4UL0UdC4cBbXfZMcIuhrfgeILTLe+ZeBCavQPtKQ==}
     peerDependencies:
-      react: ^19.3.0
+      react: ^19.3.1
 
   react-error-boundary@4.1.2:
     resolution: {integrity: sha512-GQDxZ5Jd+Aq/qUxbCm1UtzmL/s++V7zKgE8yMktJiCQXCCFZnMZh9ng+6/Ne6PjNSXH0L9CjeOEREfRnq6Duag==}
@@ -3692,8 +3692,8 @@ packages:
       react: '>=16.6.0'
       react-dom: '>=16.6.0'
 
-  react@19.3.0:
-    resolution: {integrity: sha512-E8LUcbtBWt20bbl2YoHfx4ZDBdxVTfOKtCZn9cDSJ4l6/nuoApcpIBcj47t2wZoVX8g2ZHuMHbiShgCR1T5Sog==}
+  react@19.3.1:
+    resolution: {integrity: sha512-QNhWdt7nrgVWWQG58QuGsAR3jv3Hbe4mb4vz7w2csnHavciZJgda1CPNaldF6eVxv90ud3jUXpKlHL69gO38yw==}
     engines: {node: '>=0.10.0'}
 
   read-cache@1.0.0:
@@ -4595,36 +4595,36 @@ snapshots:
 
   '@date-fns/tz@1.2.0': {}
 
-  '@dnd-kit/accessibility@3.1.1(react@19.3.0)':
+  '@dnd-kit/accessibility@3.1.1(react@19.3.1)':
     dependencies:
-      react: 19.3.0
+      react: 19.3.1
       tslib: 2.8.1
 
-  '@dnd-kit/core@6.3.1(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
+  '@dnd-kit/core@6.3.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:
-      '@dnd-kit/accessibility': 3.1.1(react@19.3.0)
-      '@dnd-kit/utilities': 3.2.2(react@19.3.0)
-      react: 19.3.0
-      react-dom: 19.3.0(react@19.3.0)
+      '@dnd-kit/accessibility': 3.1.1(react@19.3.1)
+      '@dnd-kit/utilities': 3.2.2(react@19.3.1)
+      react: 19.3.1
+      react-dom: 19.3.1(react@19.3.1)
       tslib: 2.8.1
 
-  '@dnd-kit/modifiers@9.0.0(@dnd-kit/core@6.3.1(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(react@19.3.0)':
+  '@dnd-kit/modifiers@9.0.0(@dnd-kit/core@6.3.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react@19.3.1)':
     dependencies:
-      '@dnd-kit/core': 6.3.1(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
-      '@dnd-kit/utilities': 3.2.2(react@19.3.0)
-      react: 19.3.0
+      '@dnd-kit/core': 6.3.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+      '@dnd-kit/utilities': 3.2.2(react@19.3.1)
+      react: 19.3.1
       tslib: 2.8.1
 
-  '@dnd-kit/sortable@10.0.0(@dnd-kit/core@6.3.1(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(react@19.3.0)':
+  '@dnd-kit/sortable@10.0.0(@dnd-kit/core@6.3.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react@19.3.1)':
     dependencies:
-      '@dnd-kit/core': 6.3.1(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
-      '@dnd-kit/utilities': 3.2.2(react@19.3.0)
-      react: 19.3.0
+      '@dnd-kit/core': 6.3.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+      '@dnd-kit/utilities': 3.2.2(react@19.3.1)
+      react: 19.3.1
       tslib: 2.8.1
 
-  '@dnd-kit/utilities@3.2.2(react@19.3.0)':
+  '@dnd-kit/utilities@3.2.2(react@19.3.1)':
     dependencies:
-      react: 19.3.0
+      react: 19.3.1
       tslib: 2.8.1
 
   '@drizzle-team/brocli@0.10.2': {}
@@ -4678,17 +4678,17 @@ snapshots:
 
   '@emotion/memoize@0.9.0': {}
 
-  '@emotion/react@11.14.0(@types/react@19.3.0)(react@19.3.0)':
+  '@emotion/react@11.14.0(@types/react@19.3.0)(react@19.3.1)':
     dependencies:
       '@babel/runtime': 7.29.10
       '@emotion/babel-plugin': 11.13.5
       '@emotion/cache': 11.14.0
       '@emotion/serialize': 1.3.3
-      '@emotion/use-insertion-effect-with-fallbacks': 1.2.0(react@19.3.0)
+      '@emotion/use-insertion-effect-with-fallbacks': 1.2.0(react@19.3.1)
       '@emotion/utils': 1.4.2
       '@emotion/weak-memoize': 0.4.0
       hoist-non-react-statics: 3.3.2
-      react: 19.3.0
+      react: 19.3.1
     optionalDependencies:
       '@types/react': 19.3.0
     transitivePeerDependencies:
@@ -4706,9 +4706,9 @@ snapshots:
 
   '@emotion/unitless@0.10.0': {}
 
-  '@emotion/use-insertion-effect-with-fallbacks@1.2.0(react@19.3.0)':
+  '@emotion/use-insertion-effect-with-fallbacks@1.2.0(react@19.3.1)':
     dependencies:
-      react: 19.3.0
+      react: 19.3.1
 
   '@emotion/utils@1.4.2': {}
 
@@ -4933,23 +4933,23 @@ snapshots:
       '@eslint/core': 0.17.0
       levn: 0.4.1
 
-  '@faceless-ui/modal@3.0.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
+  '@faceless-ui/modal@3.0.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:
       body-scroll-lock: 4.0.0-beta.0
       focus-trap: 7.5.4
-      react: 19.3.0
-      react-dom: 19.3.0(react@19.3.0)
-      react-transition-group: 4.4.5(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+      react: 19.3.1
+      react-dom: 19.3.1(react@19.3.1)
+      react-transition-group: 4.4.5(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
 
-  '@faceless-ui/scroll-info@2.0.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
+  '@faceless-ui/scroll-info@2.0.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:
-      react: 19.3.0
-      react-dom: 19.3.0(react@19.3.0)
+      react: 19.3.1
+      react-dom: 19.3.1(react@19.3.1)
 
-  '@faceless-ui/window-info@3.0.1(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
+  '@faceless-ui/window-info@3.0.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:
-      react: 19.3.0
-      react-dom: 19.3.0(react@19.3.0)
+      react: 19.3.1
+      react-dom: 19.3.1(react@19.3.1)
 
   '@floating-ui/core@1.8.0':
     dependencies:
@@ -4960,18 +4960,18 @@ snapshots:
       '@floating-ui/core': 1.8.0
       '@floating-ui/utils': 0.2.12
 
-  '@floating-ui/react-dom@2.1.9(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
+  '@floating-ui/react-dom@2.1.9(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:
       '@floating-ui/dom': 1.8.0
-      react: 19.3.0
-      react-dom: 19.3.0(react@19.3.0)
+      react: 19.3.1
+      react-dom: 19.3.1(react@19.3.1)
 
-  '@floating-ui/react@0.27.20(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
+  '@floating-ui/react@0.27.20(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:
-      '@floating-ui/react-dom': 2.1.9(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+      '@floating-ui/react-dom': 2.1.9(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@floating-ui/utils': 0.2.12
-      react: 19.3.0
-      react-dom: 19.3.0(react@19.3.0)
+      react: 19.3.1
+      react-dom: 19.3.1(react@19.3.1)
       tabbable: 6.5.0
 
   '@floating-ui/utils@0.2.12': {}
@@ -5155,7 +5155,7 @@ snapshots:
     optionalDependencies:
       typescript: 6.0.3
 
-  '@lexical/devtools-core@0.50.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@6.0.3)':
+  '@lexical/devtools-core@0.50.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@6.0.3)':
     dependencies:
       '@lexical/html': 0.50.0(typescript@6.0.3)
       '@lexical/link': 0.50.0(typescript@6.0.3)
@@ -5163,8 +5163,8 @@ snapshots:
       '@lexical/table': 0.50.0(typescript@6.0.3)
       '@lexical/utils': 0.50.0(typescript@6.0.3)
       lexical: 0.50.0(typescript@6.0.3)
-      react: 19.3.0
-      react-dom: 19.3.0(react@19.3.0)
+      react: 19.3.1
+      react-dom: 19.3.1(react@19.3.1)
     optionalDependencies:
       typescript: 6.0.3
 
@@ -5284,11 +5284,11 @@ snapshots:
     optionalDependencies:
       typescript: 6.0.3
 
-  '@lexical/react@0.50.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@6.0.3)(yjs@13.6.31)':
+  '@lexical/react@0.50.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@6.0.3)(yjs@13.6.31)':
     dependencies:
-      '@floating-ui/react': 0.27.20(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+      '@floating-ui/react': 0.27.20(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@lexical/a11y': 0.50.0(typescript@6.0.3)
-      '@lexical/devtools-core': 0.50.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@6.0.3)
+      '@lexical/devtools-core': 0.50.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@6.0.3)
       '@lexical/dragon': 0.50.0(typescript@6.0.3)
       '@lexical/extension': 0.50.0(typescript@6.0.3)
       '@lexical/hashtag': 0.50.0(typescript@6.0.3)
@@ -5306,8 +5306,8 @@ snapshots:
       '@lexical/utils': 0.50.0(typescript@6.0.3)
       '@lexical/yjs': 0.50.0(typescript@6.0.3)(yjs@13.6.31)
       lexical: 0.50.0(typescript@6.0.3)
-      react: 19.3.0
-      react-dom: 19.3.0(react@19.3.0)
+      react: 19.3.1
+      react-dom: 19.3.1(react@19.3.1)
     optionalDependencies:
       typescript: 6.0.3
       yjs: 13.6.31
@@ -5371,12 +5371,12 @@ snapshots:
     dependencies:
       state-local: 1.0.7
 
-  '@monaco-editor/react@4.7.0(monaco-editor@0.55.1)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
+  '@monaco-editor/react@4.7.0(monaco-editor@0.55.1)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:
       '@monaco-editor/loader': 1.7.0
       monaco-editor: 0.55.1
-      react: 19.3.0
-      react-dom: 19.3.0(react@19.3.0)
+      react: 19.3.1
+      react-dom: 19.3.1(react@19.3.1)
 
   '@napi-rs/wasm-runtime@1.2.5(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)':
     dependencies:
@@ -5534,22 +5534,22 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@payloadcms/live-preview-react@3.91.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
+  '@payloadcms/live-preview-react@3.91.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:
       '@payloadcms/live-preview': 3.91.0
-      react: 19.3.0
-      react-dom: 19.3.0(react@19.3.0)
+      react: 19.3.1
+      react-dom: 19.3.1(react@19.3.1)
 
   '@payloadcms/live-preview@3.91.0': {}
 
-  '@payloadcms/next@3.91.0(@types/react@19.3.0)(graphql@17.0.2)(monaco-editor@0.55.1)(next@16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(payload@3.91.0(graphql@17.0.2)(typescript@6.0.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@6.0.3)':
+  '@payloadcms/next@3.91.0(@types/react@19.3.0)(graphql@17.0.2)(monaco-editor@0.55.1)(next@16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.77.4))(payload@3.91.0(graphql@17.0.2)(typescript@6.0.3))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@6.0.3)':
     dependencies:
-      '@dnd-kit/core': 6.3.1(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
-      '@dnd-kit/modifiers': 9.0.0(@dnd-kit/core@6.3.1(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(react@19.3.0)
-      '@dnd-kit/sortable': 10.0.0(@dnd-kit/core@6.3.1(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(react@19.3.0)
+      '@dnd-kit/core': 6.3.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+      '@dnd-kit/modifiers': 9.0.0(@dnd-kit/core@6.3.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react@19.3.1)
+      '@dnd-kit/sortable': 10.0.0(@dnd-kit/core@6.3.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react@19.3.1)
       '@payloadcms/graphql': 3.91.0(graphql@17.0.2)(payload@3.91.0(graphql@17.0.2)(typescript@6.0.3))(typescript@6.0.3)
       '@payloadcms/translations': 3.91.0
-      '@payloadcms/ui': 3.91.0(@types/react@19.3.0)(monaco-editor@0.55.1)(next@16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(payload@3.91.0(graphql@17.0.2)(typescript@6.0.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@6.0.3)
+      '@payloadcms/ui': 3.91.0(@types/react@19.3.0)(monaco-editor@0.55.1)(next@16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.77.4))(payload@3.91.0(graphql@17.0.2)(typescript@6.0.3))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@6.0.3)
       busboy: 1.6.0
       dequal: 2.0.3
       file-type: 21.3.4
@@ -5557,7 +5557,7 @@ snapshots:
       graphql-http: 1.23.1(graphql@17.0.2)
       graphql-playground-html: 1.6.30
       http-status: 2.1.0
-      next: 16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4)
+      next: 16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.77.4)
       path-to-regexp: 6.3.0
       payload: 3.91.0(graphql@17.0.2)(typescript@6.0.3)
       qs-esm: 8.0.1
@@ -5571,14 +5571,14 @@ snapshots:
       - supports-color
       - typescript
 
-  '@payloadcms/plugin-cloud-storage@3.91.0(@types/react@19.3.0)(monaco-editor@0.55.1)(next@16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(payload@3.91.0(graphql@17.0.2)(typescript@6.0.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@6.0.3)':
+  '@payloadcms/plugin-cloud-storage@3.91.0(@types/react@19.3.0)(monaco-editor@0.55.1)(next@16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.77.4))(payload@3.91.0(graphql@17.0.2)(typescript@6.0.3))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@6.0.3)':
     dependencies:
-      '@payloadcms/ui': 3.91.0(@types/react@19.3.0)(monaco-editor@0.55.1)(next@16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(payload@3.91.0(graphql@17.0.2)(typescript@6.0.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@6.0.3)
+      '@payloadcms/ui': 3.91.0(@types/react@19.3.0)(monaco-editor@0.55.1)(next@16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.77.4))(payload@3.91.0(graphql@17.0.2)(typescript@6.0.3))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@6.0.3)
       find-node-modules: 2.1.3
       payload: 3.91.0(graphql@17.0.2)(typescript@6.0.3)
       range-parser: 1.3.0
-      react: 19.3.0
-      react-dom: 19.3.0(react@19.3.0)
+      react: 19.3.1
+      react-dom: 19.3.1(react@19.3.1)
     transitivePeerDependencies:
       - '@types/react'
       - monaco-editor
@@ -5586,24 +5586,24 @@ snapshots:
       - supports-color
       - typescript
 
-  '@payloadcms/richtext-lexical@3.91.0(@faceless-ui/modal@3.0.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(@faceless-ui/scroll-info@2.0.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(@payloadcms/next@3.91.0(@types/react@19.3.0)(graphql@17.0.2)(monaco-editor@0.55.1)(next@16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(payload@3.91.0(graphql@17.0.2)(typescript@6.0.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@6.0.3))(@types/react@19.3.0)(monaco-editor@0.55.1)(next@16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(payload@3.91.0(graphql@17.0.2)(typescript@6.0.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@6.0.3)(yjs@13.6.31)':
+  '@payloadcms/richtext-lexical@3.91.0(@faceless-ui/modal@3.0.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(@faceless-ui/scroll-info@2.0.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(@payloadcms/next@3.91.0(@types/react@19.3.0)(graphql@17.0.2)(monaco-editor@0.55.1)(next@16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.77.4))(payload@3.91.0(graphql@17.0.2)(typescript@6.0.3))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@6.0.3))(@types/react@19.3.0)(monaco-editor@0.55.1)(next@16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.77.4))(payload@3.91.0(graphql@17.0.2)(typescript@6.0.3))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@6.0.3)(yjs@13.6.31)':
     dependencies:
-      '@faceless-ui/modal': 3.0.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
-      '@faceless-ui/scroll-info': 2.0.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+      '@faceless-ui/modal': 3.0.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+      '@faceless-ui/scroll-info': 2.0.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@lexical/clipboard': 0.50.0(typescript@6.0.3)
       '@lexical/headless': 0.50.0(typescript@6.0.3)
       '@lexical/html': 0.50.0(typescript@6.0.3)
       '@lexical/link': 0.50.0(typescript@6.0.3)
       '@lexical/list': 0.50.0(typescript@6.0.3)
       '@lexical/mark': 0.50.0(typescript@6.0.3)
-      '@lexical/react': 0.50.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@6.0.3)(yjs@13.6.31)
+      '@lexical/react': 0.50.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@6.0.3)(yjs@13.6.31)
       '@lexical/rich-text': 0.50.0(typescript@6.0.3)
       '@lexical/selection': 0.50.0(typescript@6.0.3)
       '@lexical/table': 0.50.0(typescript@6.0.3)
       '@lexical/utils': 0.50.0(typescript@6.0.3)
-      '@payloadcms/next': 3.91.0(@types/react@19.3.0)(graphql@17.0.2)(monaco-editor@0.55.1)(next@16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(payload@3.91.0(graphql@17.0.2)(typescript@6.0.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@6.0.3)
+      '@payloadcms/next': 3.91.0(@types/react@19.3.0)(graphql@17.0.2)(monaco-editor@0.55.1)(next@16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.77.4))(payload@3.91.0(graphql@17.0.2)(typescript@6.0.3))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@6.0.3)
       '@payloadcms/translations': 3.91.0
-      '@payloadcms/ui': 3.91.0(@types/react@19.3.0)(monaco-editor@0.55.1)(next@16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(payload@3.91.0(graphql@17.0.2)(typescript@6.0.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@6.0.3)
+      '@payloadcms/ui': 3.91.0(@types/react@19.3.0)(monaco-editor@0.55.1)(next@16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.77.4))(payload@3.91.0(graphql@17.0.2)(typescript@6.0.3))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@6.0.3)
       acorn: 8.16.0
       bson-objectid: 2.0.4
       csstype: 3.1.3
@@ -5616,9 +5616,9 @@ snapshots:
       micromark-extension-mdx-jsx: 3.0.1
       payload: 3.91.0(graphql@17.0.2)(typescript@6.0.3)
       qs-esm: 8.0.1
-      react: 19.3.0
-      react-dom: 19.3.0(react@19.3.0)
-      react-error-boundary: 4.1.2(react@19.3.0)
+      react: 19.3.1
+      react-dom: 19.3.1(react@19.3.1)
+      react-error-boundary: 4.1.2(react@19.3.1)
       ts-essentials: 10.0.3(typescript@6.0.3)
       uuid: 13.0.2
     transitivePeerDependencies:
@@ -5631,12 +5631,12 @@ snapshots:
       - utf-8-validate
       - yjs
 
-  '@payloadcms/storage-s3@3.91.0(@types/react@19.3.0)(monaco-editor@0.55.1)(next@16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(payload@3.91.0(graphql@17.0.2)(typescript@6.0.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@6.0.3)':
+  '@payloadcms/storage-s3@3.91.0(@types/react@19.3.0)(monaco-editor@0.55.1)(next@16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.77.4))(payload@3.91.0(graphql@17.0.2)(typescript@6.0.3))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@6.0.3)':
     dependencies:
       '@aws-sdk/client-s3': 3.1152.0
       '@aws-sdk/lib-storage': 3.1152.0(@aws-sdk/client-s3@3.1152.0)
       '@aws-sdk/s3-request-presigner': 3.1152.0
-      '@payloadcms/plugin-cloud-storage': 3.91.0(@types/react@19.3.0)(monaco-editor@0.55.1)(next@16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(payload@3.91.0(graphql@17.0.2)(typescript@6.0.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@6.0.3)
+      '@payloadcms/plugin-cloud-storage': 3.91.0(@types/react@19.3.0)(monaco-editor@0.55.1)(next@16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.77.4))(payload@3.91.0(graphql@17.0.2)(typescript@6.0.3))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@6.0.3)
       payload: 3.91.0(graphql@17.0.2)(typescript@6.0.3)
     transitivePeerDependencies:
       - '@types/react'
@@ -5651,35 +5651,35 @@ snapshots:
     dependencies:
       date-fns: 4.1.0
 
-  '@payloadcms/ui@3.91.0(@types/react@19.3.0)(monaco-editor@0.55.1)(next@16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(payload@3.91.0(graphql@17.0.2)(typescript@6.0.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(typescript@6.0.3)':
+  '@payloadcms/ui@3.91.0(@types/react@19.3.0)(monaco-editor@0.55.1)(next@16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.77.4))(payload@3.91.0(graphql@17.0.2)(typescript@6.0.3))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@6.0.3)':
     dependencies:
       '@date-fns/tz': 1.2.0
-      '@dnd-kit/core': 6.3.1(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
-      '@dnd-kit/sortable': 10.0.0(@dnd-kit/core@6.3.1(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(react@19.3.0)
-      '@dnd-kit/utilities': 3.2.2(react@19.3.0)
-      '@faceless-ui/modal': 3.0.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
-      '@faceless-ui/scroll-info': 2.0.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
-      '@faceless-ui/window-info': 3.0.1(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
-      '@monaco-editor/react': 4.7.0(monaco-editor@0.55.1)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+      '@dnd-kit/core': 6.3.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+      '@dnd-kit/sortable': 10.0.0(@dnd-kit/core@6.3.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react@19.3.1)
+      '@dnd-kit/utilities': 3.2.2(react@19.3.1)
+      '@faceless-ui/modal': 3.0.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+      '@faceless-ui/scroll-info': 2.0.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+      '@faceless-ui/window-info': 3.0.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+      '@monaco-editor/react': 4.7.0(monaco-editor@0.55.1)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@payloadcms/translations': 3.91.0
       '@swc/helpers': 0.5.23
       bson-objectid: 2.0.4
       date-fns: 4.1.0
       dequal: 2.0.3
       md5: 2.3.0
-      next: 16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4)
+      next: 16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.77.4)
       object-to-formdata: 4.5.1
       payload: 3.91.0(graphql@17.0.2)(typescript@6.0.3)
       qs-esm: 8.0.1
-      react: 19.3.0
-      react-datepicker: 7.6.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
-      react-dom: 19.3.0(react@19.3.0)
-      react-image-crop: 10.1.8(react@19.3.0)
-      react-select: 5.9.0(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+      react: 19.3.1
+      react-datepicker: 7.6.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+      react-dom: 19.3.1(react@19.3.1)
+      react-image-crop: 10.1.8(react@19.3.1)
+      react-select: 5.9.0(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       scheduler: 0.25.0
-      sonner: 1.7.4(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+      sonner: 1.7.4(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       ts-essentials: 10.0.3(typescript@6.0.3)
-      use-context-selector: 2.0.0(react@19.3.0)(scheduler@0.25.0)
+      use-context-selector: 2.0.0(react@19.3.1)(scheduler@0.25.0)
       uuid: 13.0.2
     transitivePeerDependencies:
       - '@types/react'
@@ -5706,13 +5706,13 @@ snapshots:
     dependencies:
       '@posthog/types': 1.416.0
 
-  '@posthog/nextjs-config@1.11.3(next@16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(posthog-js@1.438.12(@types/react@19.3.0)(react@19.3.0))(webpack@5.108.4(esbuild@0.25.12)(postcss@8.5.29))':
+  '@posthog/nextjs-config@1.11.3(next@16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.77.4))(posthog-js@1.438.12(@types/react@19.3.0)(react@19.3.1))(webpack@5.108.4(esbuild@0.25.12)(postcss@8.5.29))':
     dependencies:
       '@posthog/cli': 0.18.10
       '@posthog/plugin-utils': 2.0.1
       '@posthog/webpack-plugin': 1.7.1(webpack@5.108.4(esbuild@0.25.12)(postcss@8.5.29))
-      next: 16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4)
-      posthog-js: 1.438.12(@types/react@19.3.0)(react@19.3.0)
+      next: 16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.77.4)
+      posthog-js: 1.438.12(@types/react@19.3.0)(react@19.3.1)
       semver: 7.8.5
     transitivePeerDependencies:
       - webpack
@@ -5769,12 +5769,12 @@ snapshots:
 
   '@stablelib/base64@1.0.1': {}
 
-  '@stripe/react-stripe-js@6.12.0(@stripe/stripe-js@9.17.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
+  '@stripe/react-stripe-js@6.12.0(@stripe/stripe-js@9.17.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:
       '@stripe/stripe-js': 9.17.0
       prop-types: 15.8.1
-      react: 19.3.0
-      react-dom: 19.3.0(react@19.3.0)
+      react: 19.3.1
+      react-dom: 19.3.1(react@19.3.1)
 
   '@stripe/stripe-js@9.17.0': {}
 
@@ -7068,14 +7068,14 @@ snapshots:
 
   fraction.js@5.3.4: {}
 
-  framer-motion@14.3.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0):
+  framer-motion@14.3.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1):
     dependencies:
       motion-dom: 14.3.0
       motion-utils: 14.1.1
       tslib: 2.8.1
     optionalDependencies:
-      react: 19.3.0
-      react-dom: 19.3.0(react@19.3.0)
+      react: 19.3.1
+      react-dom: 19.3.1(react@19.3.1)
 
   fsevents@2.3.3:
     optional: true
@@ -7843,13 +7843,13 @@ snapshots:
 
   motion-utils@14.1.1: {}
 
-  motion@14.3.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0):
+  motion@14.3.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1):
     dependencies:
-      framer-motion: 14.3.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+      framer-motion: 14.3.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       tslib: 2.8.1
     optionalDependencies:
-      react: 19.3.0
-      react-dom: 19.3.0(react@19.3.0)
+      react: 19.3.1
+      react-dom: 19.3.1(react@19.3.1)
 
   ms@2.1.3: {}
 
@@ -7867,16 +7867,16 @@ snapshots:
 
   neo-async@2.6.2: {}
 
-  next@16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4):
+  next@16.4.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.77.4):
     dependencies:
       '@next/env': 16.4.0
       '@swc/helpers': 0.5.23
       baseline-browser-mapping: 2.11.28
       caniuse-lite: 1.0.30001815
       postcss: 8.5.23
-      react: 19.3.0
-      react-dom: 19.3.0(react@19.3.0)
-      styled-jsx: 5.1.6(@babel/core@7.29.7)(react@19.3.0)
+      react: 19.3.1
+      react-dom: 19.3.1(react@19.3.1)
+      styled-jsx: 5.1.6(@babel/core@7.29.7)(react@19.3.1)
     optionalDependencies:
       '@next/swc-darwin-arm64': 16.4.0
       '@next/swc-darwin-x64': 16.4.0
@@ -8199,7 +8199,7 @@ snapshots:
     dependencies:
       xtend: 4.0.2
 
-  posthog-js@1.438.12(@types/react@19.3.0)(react@19.3.0):
+  posthog-js@1.438.12(@types/react@19.3.0)(react@19.3.1):
     dependencies:
       '@posthog/browser-common': 0.9.5
       '@posthog/core': 1.59.1
@@ -8213,7 +8213,7 @@ snapshots:
       web-vitals-soft-navs: web-vitals@6.2.1
     optionalDependencies:
       '@types/react': 19.3.0
-      react: 19.3.0
+      react: 19.3.1
     transitivePeerDependencies:
       - preact-render-to-string
 
@@ -8255,57 +8255,57 @@ snapshots:
 
   range-parser@1.3.0: {}
 
-  react-datepicker@7.6.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0):
+  react-datepicker@7.6.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1):
     dependencies:
-      '@floating-ui/react': 0.27.20(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+      '@floating-ui/react': 0.27.20(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       clsx: 2.1.1
       date-fns: 3.6.0
-      react: 19.3.0
-      react-dom: 19.3.0(react@19.3.0)
+      react: 19.3.1
+      react-dom: 19.3.1(react@19.3.1)
 
-  react-dom@19.3.0(react@19.3.0):
+  react-dom@19.3.1(react@19.3.1):
     dependencies:
-      react: 19.3.0
+      react: 19.3.1
       scheduler: 0.28.0
 
-  react-error-boundary@4.1.2(react@19.3.0):
+  react-error-boundary@4.1.2(react@19.3.1):
     dependencies:
       '@babel/runtime': 7.29.10
-      react: 19.3.0
+      react: 19.3.1
 
-  react-image-crop@10.1.8(react@19.3.0):
+  react-image-crop@10.1.8(react@19.3.1):
     dependencies:
-      react: 19.3.0
+      react: 19.3.1
 
   react-is@16.13.1: {}
 
-  react-select@5.9.0(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0):
+  react-select@5.9.0(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1):
     dependencies:
       '@babel/runtime': 7.29.10
       '@emotion/cache': 11.14.0
-      '@emotion/react': 11.14.0(@types/react@19.3.0)(react@19.3.0)
+      '@emotion/react': 11.14.0(@types/react@19.3.0)(react@19.3.1)
       '@floating-ui/dom': 1.8.0
       '@types/react-transition-group': 4.4.12(@types/react@19.3.0)
       memoize-one: 6.0.0
       prop-types: 15.8.1
-      react: 19.3.0
-      react-dom: 19.3.0(react@19.3.0)
-      react-transition-group: 4.4.5(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
-      use-isomorphic-layout-effect: 1.2.1(@types/react@19.3.0)(react@19.3.0)
+      react: 19.3.1
+      react-dom: 19.3.1(react@19.3.1)
+      react-transition-group: 4.4.5(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+      use-isomorphic-layout-effect: 1.2.1(@types/react@19.3.0)(react@19.3.1)
     transitivePeerDependencies:
       - '@types/react'
       - supports-color
 
-  react-transition-group@4.4.5(react-dom@19.3.0(react@19.3.0))(react@19.3.0):
+  react-transition-group@4.4.5(react-dom@19.3.1(react@19.3.1))(react@19.3.1):
     dependencies:
       '@babel/runtime': 7.29.10
       dom-helpers: 5.2.1
       loose-envify: 1.4.0
       prop-types: 15.8.1
-      react: 19.3.0
-      react-dom: 19.3.0(react@19.3.0)
+      react: 19.3.1
+      react-dom: 19.3.1(react@19.3.1)
 
-  react@19.3.0: {}
+  react@19.3.1: {}
 
   read-cache@1.0.0:
     dependencies:
@@ -8532,10 +8532,10 @@ snapshots:
     dependencies:
       atomic-sleep: 1.0.0
 
-  sonner@1.7.4(react-dom@19.3.0(react@19.3.0))(react@19.3.0):
+  sonner@1.7.4(react-dom@19.3.1(react@19.3.1))(react@19.3.1):
     dependencies:
-      react: 19.3.0
-      react-dom: 19.3.0(react@19.3.0)
+      react: 19.3.1
+      react-dom: 19.3.1(react@19.3.1)
 
   source-map-js@1.2.2: {}
 
@@ -8645,10 +8645,10 @@ snapshots:
     dependencies:
       '@tokenizer/token': 0.3.0
 
-  styled-jsx@5.1.6(@babel/core@7.29.7)(react@19.3.0):
+  styled-jsx@5.1.6(@babel/core@7.29.7)(react@19.3.1):
     dependencies:
       client-only: 0.0.1
-      react: 19.3.0
+      react: 19.3.1
     optionalDependencies:
       '@babel/core': 7.29.7
 
@@ -8909,14 +8909,14 @@ snapshots:
     dependencies:
       punycode: 2.3.1
 
-  use-context-selector@2.0.0(react@19.3.0)(scheduler@0.25.0):
+  use-context-selector@2.0.0(react@19.3.1)(scheduler@0.25.0):
     dependencies:
-      react: 19.3.0
+      react: 19.3.1
       scheduler: 0.25.0
 
-  use-isomorphic-layout-effect@1.2.1(@types/react@19.3.0)(react@19.3.0):
+  use-isomorphic-layout-effect@1.2.1(@types/react@19.3.0)(react@19.3.1):
     dependencies:
-      react: 19.3.0
+      react: 19.3.1
     optionalDependencies:
       '@types/react': 19.3.0
 
