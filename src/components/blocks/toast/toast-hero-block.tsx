@@ -1,4 +1,6 @@
 import Image from 'next/image'
+import { CafeClosedBadge, CafeClosureCard } from '@/components/cafe-closure-notice'
+import type { ActiveClosure } from '@/lib/closures'
 import './toast.css'
 
 // Natural proportions of public/toast-logo.svg (the drawn wordmark, trimmed to
@@ -14,35 +16,42 @@ type Props = {
     addressLine?: string
     hoursLine?: string
   }
+  /** Toast's current or upcoming temporary closure (Site Settings → Closures). */
+  closure?: ActiveClosure | null
 }
 
-export function ToastHeroBlock({ block }: Props) {
+export function ToastHeroBlock({ block, closure }: Props) {
   return (
-    <section className="toast-scope">
-      <div className="toast-hero-frame mx-auto flex max-w-6xl flex-col px-6 pb-10 pt-8 sm:px-10">
-        <div className="flex flex-1 flex-col items-center justify-center py-16 text-center">
-          <h1 className="flex justify-center">
-            <Image
-              src="/toast-logo.svg"
-              alt="Toast"
-              width={WORDMARK.width}
-              height={WORDMARK.height}
-              className="toast-wordmark"
-              priority
-            />
-          </h1>
-          {block.label && (
-            <p className="toast-label mt-10 !tracking-[0.5em] pl-[0.5em] sm:text-sm">
-              {block.label}
-            </p>
-          )}
-        </div>
+    <>
+      <section className="toast-scope">
+        <div className="toast-hero-frame mx-auto flex max-w-6xl flex-col px-6 pb-10 pt-8 sm:px-10">
+          <div className="flex flex-1 flex-col items-center justify-center py-16 text-center">
+            <h1 className="flex justify-center">
+              <Image
+                src="/toast-logo.svg"
+                alt="Toast"
+                width={WORDMARK.width}
+                height={WORDMARK.height}
+                className="toast-wordmark"
+                priority
+              />
+            </h1>
+            {block.label && (
+              <p className="toast-label mt-10 !tracking-[0.5em] pl-[0.5em] sm:text-sm">
+                {block.label}
+              </p>
+            )}
+            {closure?.isToday && <CafeClosedBadge brand="toast" />}
+          </div>
 
-        <div className="toast-rule flex flex-col items-center justify-between gap-3 border-t pt-6 text-center sm:flex-row sm:text-left">
-          {block.addressLine && <p className="toast-label">{block.addressLine}</p>}
-          {block.hoursLine && <p className="toast-label">{block.hoursLine}</p>}
+          <div className="toast-rule flex flex-col items-center justify-between gap-3 border-t pt-6 text-center sm:flex-row sm:text-left">
+            {block.addressLine && <p className="toast-label">{block.addressLine}</p>}
+            {block.hoursLine && <p className="toast-label">{block.hoursLine}</p>}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+      {/* Straight after the hero, so it's the first thing on the way down. */}
+      {closure && <CafeClosureCard brand="toast" closure={closure} />}
+    </>
   )
 }

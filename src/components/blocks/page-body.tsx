@@ -1,5 +1,6 @@
 import { draftMode } from 'next/headers'
 import { getPayloadClient } from '@/lib/payload'
+import { cafeClosure } from '@/lib/cafe-closures'
 import { fetchLiveImpactStats } from '@/lib/impact-stats'
 import { fetchImpactStory, MOCK_IMPACT_STORY } from '@/lib/impact-story'
 import { getPayCopy } from '@/lib/pay-copy.server'
@@ -37,7 +38,10 @@ export async function PageBody({ page, isDraft }: { page: any; isDraft: boolean 
   const needTeam = isDraft || types.has('teamGrid')
   const needFaqs = isDraft || types.has('faqsAccordion')
   const needPartners = isDraft || types.has('partnersGrid')
-  const needSettings = isDraft || types.has('stats') || types.has('donateHero')
+  // The cafe heroes carry that cafe's closure notices (Site Settings → Closures).
+  const needCafeClosures = isDraft || types.has('toastHero') || types.has('hopperHero')
+  const needSettings =
+    isDraft || types.has('stats') || types.has('donateHero') || needCafeClosures
   const needPayCopy = isDraft || types.has('donateHero')
   const needImpactStory = isDraft || types.has('impactLanding')
 
@@ -144,6 +148,9 @@ export async function PageBody({ page, isDraft }: { page: any; isDraft: boolean 
     defaultDonateUrl: (settings as any)?.donateUrl,
     charityNumber: (settings as any)?.charityNumber,
     donateFormCopy: payCopy?.form,
+    cafeClosures: needCafeClosures
+      ? { toast: cafeClosure(settings, 'toast'), hopper: cafeClosure(settings, 'hopper') }
+      : undefined,
   }
 
   const serverURL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'

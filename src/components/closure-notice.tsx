@@ -17,7 +17,7 @@ export function ClosureNotice({ closure }: { closure: ActiveClosure }) {
         <p className="font-mono text-xs uppercase tracking-[0.18em] text-forest-700/70 mb-4">
           Temporary closure
         </p>
-        {closure.isTonight ? (
+        {closure.isToday ? (
           <>
             <p className="display text-4xl sm:text-5xl font-light leading-tight">
               Sorry, we&rsquo;re closed <em>tonight</em>.

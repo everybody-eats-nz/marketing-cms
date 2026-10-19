@@ -173,6 +173,78 @@
   opacity: 0.78;
 }
 
+/*
+ * Temporary closure notice (src/components/cafe-closure-notice.tsx), above the
+ * header bar. The palette inverted - hopper-lilac type on ink - so it can't be
+ * read as part of the page. Not sticky: it's the first thing on the page, then
+ * scrolls away and leaves the bar alone at the top.
+ */
+.hopper-closure {
+  background-color: var(--hopper-ink);
+  color: var(--hopper-lilac);
+  padding-block: 0.75rem;
+  text-align: center;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+}
+.hopper-closure ::selection {
+  background-color: var(--hopper-lilac);
+  color: var(--hopper-ink);
+}
+.hopper-closure-reason {
+  opacity: 0.8;
+}
+
+/* "Closed today" pill under the hero wordmark, on the closed day only. */
+.hopper-closed-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 2rem;
+  border-radius: 9999px;
+  background-color: var(--hopper-ink);
+  color: var(--hopper-lilac);
+  padding: 0.55rem 1.1rem;
+  font-family: var(--hopper-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.hopper-closed-badge-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background-color: currentColor;
+  opacity: 0.7;
+}
+
+/* The large notice straight after the hero - the cafe's counterpart to the
+   closure card on a restaurant page. Same radius as the booking modal, so the
+   page's two "sheets laid on the paper" read as the same object. */
+.hopper-closure-card {
+  border-radius: 20px;
+  background-color: var(--hopper-ink);
+  color: var(--hopper-lilac);
+  padding: 3.5rem 1.75rem;
+}
+@media (min-width: 640px) {
+  .hopper-closure-card {
+    padding: 4.5rem 4rem;
+  }
+}
+.hopper-closure-card ::selection {
+  background-color: var(--hopper-lilac);
+  color: var(--hopper-ink);
+}
+.hopper-closure-card-heading {
+  font-family: var(--hopper-display);
+  font-size: clamp(2.25rem, 6vw, 3.75rem);
+  font-weight: 400;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
 /* The full-height hero, less whatever the bar above it occupies. */
 .hopper-hero-frame {
   min-height: calc(100svh - var(--hopper-bar-h, 0rem));

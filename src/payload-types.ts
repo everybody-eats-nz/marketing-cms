@@ -1715,7 +1715,7 @@ export interface Location {
         endDate?: string | null;
         endDate_tz?: SupportedTimezones;
         /**
-         * Shown to diners, e.g. "due to staff shortages" or "for a private event". Leave blank to show no reason.
+         * Shown to visitors, e.g. "due to staff shortages" or "for a private event". Leave blank to show no reason.
          */
         reason?: string | null;
         id?: string | null;
@@ -3763,6 +3763,50 @@ export interface SiteSetting {
     | null;
   closureBanner?: {
     /**
+     * Unscheduled days Toast is closed (staff shortage, private event…). Each closure shows a notice at the top of /toast and a message in the yellow strip across the main site.
+     */
+    toastClosures?:
+      | {
+          /**
+           * The day Toast is closed (first day, for a closure of several days).
+           */
+          date: string;
+          date_tz: SupportedTimezones;
+          /**
+           * Last closed day. Leave blank for a single day.
+           */
+          endDate?: string | null;
+          endDate_tz?: SupportedTimezones;
+          /**
+           * Shown to visitors, e.g. "due to staff shortages" or "for a private event". Leave blank to show no reason.
+           */
+          reason?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Unscheduled days Hopper Cafe is closed (staff shortage, private event…). Each closure shows a notice at the top of /hopper and a message in the yellow strip across the main site.
+     */
+    hopperClosures?:
+      | {
+          /**
+           * The day Hopper is closed (first day, for a closure of several days).
+           */
+          date: string;
+          date_tz: SupportedTimezones;
+          /**
+           * Last closed day. Leave blank for a single day.
+           */
+          endDate?: string | null;
+          endDate_tz?: SupportedTimezones;
+          /**
+           * Shown to visitors, e.g. "due to staff shortages" or "for a private event". Leave blank to show no reason.
+           */
+          reason?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+    /**
      * How far the strip travels each second, in pixels. 125 is the pace the banner has always run at. Drop to around 80-90 to make the messages easier to read, or raise it for more urgency. Leave blank for 125.
      */
     speed?: number | null;
@@ -4243,6 +4287,26 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   closureBanner?:
     | T
     | {
+        toastClosures?:
+          | T
+          | {
+              date?: T;
+              date_tz?: T;
+              endDate?: T;
+              endDate_tz?: T;
+              reason?: T;
+              id?: T;
+            };
+        hopperClosures?:
+          | T
+          | {
+              date?: T;
+              date_tz?: T;
+              endDate?: T;
+              endDate_tz?: T;
+              reason?: T;
+              id?: T;
+            };
         speed?: T;
       };
   galaBanner?:

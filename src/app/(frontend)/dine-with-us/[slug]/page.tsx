@@ -141,7 +141,7 @@ export default async function LocationPage({ params }: Params) {
     // the display name (e.g. adding a "Restaurant" suffix) never breaks the menu.
     // On a closed night the closure notice takes the menu's place, so don't
     // fetch (or show) a menu nobody can order from.
-    closure?.isTonight ? Promise.resolve(null) : fetchTonightsMenu(loc.menuLocationName || loc.name),
+    closure?.isToday ? Promise.resolve(null) : fetchTonightsMenu(loc.menuLocationName || loc.name),
     // Published diner feedback (positive + consented, auto-approved by the AI
     // classifier on submit, with staff override). Social proof, in diners' words.
     payload.find({
@@ -200,7 +200,7 @@ export default async function LocationPage({ params }: Params) {
                 <span className="w-8 h-px bg-cream-50/40" />
                 {loc.city || 'New Zealand'}
               </span>
-              {closure?.isTonight && (
+              {closure?.isToday && (
                 <span className="inline-flex items-center gap-2 rounded-pill bg-clay-300 px-4 py-1.5 text-xs uppercase tracking-[0.15em] font-medium text-ink">
                   <span className="w-2 h-2 rounded-full bg-ink/60" />
                   Closed tonight

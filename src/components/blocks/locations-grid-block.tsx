@@ -41,7 +41,7 @@ export function LocationsGridBlock({ block, locations }: Props) {
         {docs.map((loc, i) => {
           // Unscheduled closure covering tonight — the live "Open" dot flips
           // to a red "Closed tonight" so nobody turns up to a dark room.
-          const closedTonight = Boolean(activeClosure(loc.closures)?.isTonight)
+          const closedTonight = Boolean(activeClosure(loc.closures)?.isToday)
           return (
           <Link
             key={loc.id}
