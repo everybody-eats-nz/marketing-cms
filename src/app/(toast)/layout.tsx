@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { CafeBar } from '@/components/cafe-bar'
+import { CafeClosureNotice } from '@/components/cafe-closure-notice'
 import { loadCafeBarData } from '@/lib/cafe-bar-data'
 import { SITE_URL, SITE_NOINDEX } from '@/lib/seo'
 import { toastMono } from '@/lib/toast-fonts'
@@ -24,6 +25,7 @@ export default async function ToastLayout({ children }: { children: React.ReactN
   return (
     <html lang="en" className={toastMono.variable}>
       <body className={`toast-scope min-h-svh${bar.show ? ' has-toast-bar' : ''}`}>
+        {bar.closure && <CafeClosureNotice brand="toast" closure={bar.closure} />}
         {bar.show && (
           <CafeBar
             brand="toast"

@@ -14,7 +14,7 @@ export function LocationsMagazineBlock({ locations }: Props) {
         const reverse = i % 2 === 1
         // Unscheduled closure covering tonight — swap the green "Open this
         // week" pill for a red "Closed tonight" one.
-        const closedTonight = Boolean(activeClosure(loc.closures)?.isTonight)
+        const closedTonight = Boolean(activeClosure(loc.closures)?.isToday)
         return (
           <article
             key={loc.id}

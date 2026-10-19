@@ -5,9 +5,10 @@ import { useEffect, useRef, useState } from 'react'
 
 // Site-wide unscheduled-closure strip: bright sun-yellow, scrolling marquee.
 // Shown at the top of every page (in place of the gala countdown strip) while
-// any restaurant has a closure entered in the CMS, and gone the morning after
-// the last closed night. Messages are built in <SiteHeader> from each
-// location's `closures` array via activeClosure().
+// any restaurant or cafe has a closure entered in the CMS, and gone the morning
+// after the last closed day. Messages are built in <SiteHeader> from each
+// location's `closures` array and the cafes' lists in Site Settings, via
+// activeClosure().
 //
 // The moving track is decorative duplication, so it's aria-hidden with an
 // sr-only copy of the message alongside; the global reduced-motion rule in
@@ -23,7 +24,7 @@ export const DEFAULT_CLOSURE_BANNER_SPEED = 125
 type ClosureBannerProps = {
   messages: string[]
   href: string
-  /** Scroll speed in pixels per second - Site Settings → Closure banner. */
+  /** Scroll speed in pixels per second - Site Settings → Closures. */
   speed?: number | null
 }
 

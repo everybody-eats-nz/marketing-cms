@@ -37,6 +37,7 @@ import * as migration_20260814_205953_add_cafe_banner_settings from './20260814_
 import * as migration_20260917_035041_toast_announcement_defaults from './20260917_035041_toast_announcement_defaults';
 import * as migration_20260928_044431_add_upload_object_key from './20260928_044431_add_upload_object_key';
 import * as migration_20261014_225657_anchor_event_dates_to_nz_timezone from './20261014_225657_anchor_event_dates_to_nz_timezone';
+import * as migration_20261019_192056_cafe_closures from './20261019_192056_cafe_closures';
 
 export const migrations = [
   {
@@ -232,6 +233,11 @@ export const migrations = [
   {
     up: migration_20261014_225657_anchor_event_dates_to_nz_timezone.up,
     down: migration_20261014_225657_anchor_event_dates_to_nz_timezone.down,
-    name: '20261014_225657_anchor_event_dates_to_nz_timezone'
+    name: '20261014_225657_anchor_event_dates_to_nz_timezone',
+  },
+  {
+    up: migration_20261019_192056_cafe_closures.up,
+    down: migration_20261019_192056_cafe_closures.down,
+    name: '20261019_192056_cafe_closures'
   },
 ];

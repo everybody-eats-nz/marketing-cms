@@ -1,5 +1,6 @@
 import type { GlobalConfig } from 'payload'
 import { statItemFields } from '../fields/stat-item'
+import { closuresField } from '../fields/closures'
 import { linkGroup } from '../fields/link'
 
 export const SiteSettings: GlobalConfig = {
@@ -82,15 +83,31 @@ export const SiteSettings: GlobalConfig = {
           ],
         },
         {
-          label: 'Closure banner',
+          label: 'Closures',
           description:
-            'The yellow scrolling strip shown at the top of every page while a restaurant has a temporary closure entered. It writes itself from the closures on each location and retires once the last closed night has passed - there is nothing to switch on here.',
+            'Temporary closures and the yellow scrolling strip that announces them at the top of every page. Restaurant closures are entered on each location (Locations → Temporary closures). The Toast and Hopper cafes have no location of their own, so their closures go here. Every closure retires itself once its last day has passed - there is nothing to switch on or off.',
           fields: [
             {
               name: 'closureBanner',
               type: 'group',
               label: false,
               fields: [
+                closuresField({
+                  name: 'toastClosures',
+                  label: 'Toast closures',
+                  description:
+                    'Unscheduled days Toast is closed (staff shortage, private event…). Each closure shows a notice at the top of /toast and a message in the yellow strip across the main site.',
+                  dateDescription: 'The day Toast is closed (first day, for a closure of several days).',
+                  endDateDescription: 'Last closed day. Leave blank for a single day.',
+                }),
+                closuresField({
+                  name: 'hopperClosures',
+                  label: 'Hopper closures',
+                  description:
+                    'Unscheduled days Hopper Cafe is closed (staff shortage, private event…). Each closure shows a notice at the top of /hopper and a message in the yellow strip across the main site.',
+                  dateDescription: 'The day Hopper is closed (first day, for a closure of several days).',
+                  endDateDescription: 'Last closed day. Leave blank for a single day.',
+                }),
                 {
                   name: 'speed',
                   type: 'number',

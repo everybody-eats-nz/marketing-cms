@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { CafeBar } from '@/components/cafe-bar'
+import { CafeClosureNotice } from '@/components/cafe-closure-notice'
 import { loadCafeBarData } from '@/lib/cafe-bar-data'
 import { SITE_URL, SITE_NOINDEX } from '@/lib/seo'
 import { hopperDisplay, hopperMono } from '@/lib/hopper-fonts'
@@ -24,6 +25,7 @@ export default async function HopperLayout({ children }: { children: React.React
   return (
     <html lang="en" className={`${hopperDisplay.variable} ${hopperMono.variable}`}>
       <body className={`hopper-scope min-h-svh${bar.show ? ' has-hopper-bar' : ''}`}>
+        {bar.closure && <CafeClosureNotice brand="hopper" closure={bar.closure} />}
         {bar.show && (
           <CafeBar
             brand="hopper"

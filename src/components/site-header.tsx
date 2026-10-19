@@ -1,7 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { getPayloadClient } from '@/lib/payload'
-import { activeClosure } from '@/lib/closures'
+import { CAFE_BRANDS, CAFES, cafeClosure } from '@/lib/cafe-closures'
+import { activeClosure, closureMessage } from '@/lib/closures'
 import { resolveHref, type LinkValue } from '@/lib/types'
 import { BookingDialog, BookingDialogTrigger, type BookingLocation } from './booking/booking-dialog'
 import { ClosureBanner } from './closure-banner'
@@ -39,28 +40,30 @@ export async function SiteHeader() {
   const showShop = Boolean(ctas.showShop && shopUrl && shopUrl !== '#')
 
   // Unscheduled closures (staff shortages, private events), entered per
-  // location in the CMS. While any closure is live, a yellow marquee strip
-  // appears above the gala strip; on the closed night itself it takes the
-  // gala's slot outright — diners deciding whether to come tonight outrank
-  // the promo — and everything hands back once the night passes.
+  // location in the CMS, plus the cafes' own lists in Site Settings → Closures.
+  // While any closure is live, a yellow marquee strip appears above the gala
+  // strip; on a restaurant's closed night it takes the gala's slot outright —
+  // diners deciding whether to come tonight outrank the promo — and everything
+  // hands back once the night passes.
   const closedLocations = (locationsRes.docs as any[]).flatMap((l) => {
     if (l._status && l._status !== 'published') return []
     const closure = activeClosure(l.closures)
-    return closure ? [{ name: l.name as string, slug: l.slug as string, closure }] : []
+    return closure ? [{ name: l.name as string, href: `/dine-with-us/${l.slug}`, closure }] : []
   })
-  const closureMessages = closedLocations.map(({ name, closure }) => {
-    const when =
-      closure.start === closure.end
-        ? closure.isTonight
-          ? `tonight, ${closure.dateLabel}`
-          : `on ${closure.dateLabel}`
-        : closure.dateLabel
-    const verb = closure.isTonight ? 'is closed' : 'will be closed'
-    return `${name} ${verb} ${when}${closure.reason ? ` · ${closure.reason}` : ''}`
+  const closedCafes = CAFE_BRANDS.flatMap((brand) => {
+    const closure = cafeClosure(settings, brand)
+    return closure ? [{ name: CAFES[brand].name, href: CAFES[brand].href, closure }] : []
   })
-  const closureHref =
-    closedLocations.length === 1 ? `/dine-with-us/${closedLocations[0].slug}` : '/dine-with-us'
-  const closedTonightAnywhere = closedLocations.some((l) => l.closure.isTonight)
+  const closureMessages = [
+    ...closedLocations.map(({ name, closure }) => closureMessage(name, closure, 'tonight')),
+    // Cafes trade by day, so theirs read "closed today".
+    ...closedCafes.map(({ name, closure }) => closureMessage(name, closure, 'today')),
+  ]
+  const closedVenues = [...closedLocations, ...closedCafes]
+  const closureHref = closedVenues.length === 1 ? closedVenues[0].href : '/dine-with-us'
+  // Restaurants only: a cafe's closed day is worth the strip, but not worth
+  // silencing the gala promo for the whole site.
+  const closedTonightAnywhere = closedLocations.some((l) => l.closure.isToday)
 
   // Site-wide gala countdown strip, driven by Site Settings → Gala banner.
   // Fall back to the internal /gala page when no link is configured so the

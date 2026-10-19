@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { closuresField } from '../fields/closures'
 import { seoField } from '../fields/seo'
 import { slugField } from '../fields/slug'
 
@@ -44,52 +45,14 @@ export const Locations: CollectionConfig = {
           'When on, this venue appears in the main "restaurants" grids (e.g. /dine-with-us). Turn on for our permanent restaurants; leave off for pop-ups or one-off sites.',
       },
     },
-    {
+    closuresField({
       name: 'closures',
       label: 'Temporary closures',
-      type: 'array',
-      labels: { singular: 'Closure', plural: 'Closures' },
-      admin: {
-        description:
-          'Unscheduled closed nights (staff shortage, private event…). Each closure shows a yellow banner at the top of every page, a notice where tonight\'s menu normally sits on this restaurant\'s page, and — on the night itself — a red "Closed tonight" badge. Everything disappears automatically once the last night has passed, so there\'s nothing to switch off.',
-      },
-      fields: [
-        {
-          name: 'date',
-          label: 'Closed on',
-          type: 'date',
-          required: true,
-          // Anchored to Pacific/Auckland (see admin.timezones in payload.config).
-          // Without this Payload writes 12:00 UTC for a day-only pick and then
-          // redisplays that raw instant in the browser's timezone - which in NZ
-          // (UTC+12/+13) is midnight the NEXT day, so the field showed a
-          // different date than the one the editor clicked.
-          timezone: true,
-          admin: {
-            date: { pickerAppearance: 'dayOnly' },
-            description: 'The night the restaurant is closed (first night, for a multi-night closure).',
-          },
-        },
-        {
-          name: 'endDate',
-          label: 'Until (optional)',
-          type: 'date',
-          timezone: true,
-          admin: {
-            date: { pickerAppearance: 'dayOnly' },
-            description: 'Last closed night. Leave blank for a single night.',
-          },
-        },
-        {
-          name: 'reason',
-          type: 'text',
-          admin: {
-            description:
-              'Shown to diners, e.g. "due to staff shortages" or "for a private event". Leave blank to show no reason.',
-          },
-        },
-      ],
-    },
+      description:
+        'Unscheduled closed nights (staff shortage, private event…). Each closure shows a yellow banner at the top of every page, a notice where tonight\'s menu normally sits on this restaurant\'s page, and — on the night itself — a red "Closed tonight" badge. Everything disappears automatically once the last night has passed, so there\'s nothing to switch off.',
+      dateDescription: 'The night the restaurant is closed (first night, for a multi-night closure).',
+      endDateDescription: 'Last closed night. Leave blank for a single night.',
+    }),
     {
       type: 'tabs',
       tabs: [

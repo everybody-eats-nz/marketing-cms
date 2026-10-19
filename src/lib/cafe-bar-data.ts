@@ -1,5 +1,7 @@
 import { getPayloadClient } from '@/lib/payload'
 import type { CafeBrand } from '@/components/cafe-booking-dialog'
+import { cafeClosure } from '@/lib/cafe-closures'
+import type { ActiveClosure } from '@/lib/closures'
 
 /**
  * The data behind the cafe pages' header bar (src/components/cafe-bar.tsx).
@@ -27,6 +29,8 @@ export type CafeBarData = {
   bookLabel?: string
   donateUrl: string
   donateLabel?: string
+  /** A temporary closure that's current or ahead, shown above the bar. */
+  closure: ActiveClosure | null
 }
 
 export async function loadCafeBarData(brand: CafeBrand): Promise<CafeBarData> {
@@ -53,5 +57,6 @@ export async function loadCafeBarData(brand: CafeBrand): Promise<CafeBarData> {
     bookLabel: cafeBanner.bookLabel,
     donateUrl: cafeBanner.donateUrl || (settings as any)?.donateUrl || '/get-involved/donate',
     donateLabel: cafeBanner.donateLabel,
+    closure: cafeClosure(settings, brand),
   }
 }

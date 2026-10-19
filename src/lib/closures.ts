@@ -1,8 +1,10 @@
-// Temporary (unscheduled) restaurant closures — staff shortages, private
-// events. Editors add entries to a location's `closures` array; everything on
-// the site derives from that one list: the yellow site-wide banner, the notice
-// in the menu slot on the location page, and the red "Closed tonight" badge on
-// the night itself. Entries expire on their own once the last night has passed.
+// Temporary (unscheduled) closures — staff shortages, private events. Editors
+// add entries to a restaurant's `closures` array (Locations) or to a cafe's
+// list in Site Settings → Closures (src/lib/cafe-closures.ts); everything on
+// the site derives from those lists: the yellow site-wide banner, the notice in
+// the menu slot on a location page, the notice at the top of a cafe page, and
+// the red "Closed tonight" badge on the night itself. Entries expire on their
+// own once the last closed day has passed.
 //
 // "Tonight" is resolved on the Pacific/Auckland calendar, so it means tonight at
 // the restaurants regardless of where the server runs. The dates the editor
@@ -20,10 +22,15 @@ export type ActiveClosure = {
   /** Last closed night (same as `start` for a single night). */
   end: string
   reason: string | null
-  /** True when tonight falls inside the closure — the restaurant is closed right now. */
-  isTonight: boolean
+  /**
+   * True when today (on the Auckland calendar) falls inside the closure - the
+   * venue is closed right now. For a restaurant that's tonight, for a cafe today.
+   */
+  isToday: boolean
   /** Human date(s), e.g. "Friday 18 July" or "Friday 18 July – Saturday 19 July". */
   dateLabel: string
+  /** The last closed day alone, e.g. "Saturday 19 July" (same as `dateLabel` for one day). */
+  endLabel: string
 }
 
 const NZ_DAY = new Intl.DateTimeFormat('en-CA', { timeZone: 'Pacific/Auckland' })
@@ -91,10 +98,31 @@ export function activeClosure(
 
   return {
     ...next,
-    isTonight: next.start <= today && today <= next.end,
+    isToday: next.start <= today && today <= next.end,
     dateLabel:
       next.start === next.end
         ? labelForDay(next.start)
         : `${labelForDay(next.start)} – ${labelForDay(next.end)}`,
+    endLabel: labelForDay(next.end),
   }
+}
+
+/**
+ * One line for the site-wide banner, e.g. "Onehunga is closed tonight, Friday
+ * 18 July · due to staff shortages". `today` is how the venue names the day it
+ * is closed: "tonight" for a restaurant, "today" for a daytime cafe.
+ */
+export function closureMessage(
+  name: string,
+  closure: ActiveClosure,
+  today: 'tonight' | 'today',
+): string {
+  const when =
+    closure.start === closure.end
+      ? closure.isToday
+        ? `${today}, ${closure.dateLabel}`
+        : `on ${closure.dateLabel}`
+      : closure.dateLabel
+  const verb = closure.isToday ? 'is closed' : 'will be closed'
+  return `${name} ${verb} ${when}${closure.reason ? ` · ${closure.reason}` : ''}`
 }

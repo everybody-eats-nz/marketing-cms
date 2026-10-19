@@ -173,6 +173,29 @@
   opacity: 0.78;
 }
 
+/*
+ * Temporary closure notice (src/components/cafe-closure-notice.tsx), above the
+ * header bar. The palette inverted - hopper-lilac type on ink - so it can't be
+ * read as part of the page. Not sticky: it's the first thing on the page, then
+ * scrolls away and leaves the bar alone at the top.
+ */
+.hopper-closure {
+  background-color: var(--hopper-ink);
+  color: var(--hopper-lilac);
+  padding-block: 0.75rem;
+  text-align: center;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+}
+.hopper-closure ::selection {
+  background-color: var(--hopper-lilac);
+  color: var(--hopper-ink);
+}
+.hopper-closure-reason {
+  opacity: 0.8;
+}
+
 /* The full-height hero, less whatever the bar above it occupies. */
 .hopper-hero-frame {
   min-height: calc(100svh - var(--hopper-bar-h, 0rem));

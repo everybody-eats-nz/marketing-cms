@@ -172,6 +172,29 @@
   opacity: 0.78;
 }
 
+/*
+ * Temporary closure notice (src/components/cafe-closure-notice.tsx), above the
+ * header bar. The palette inverted - toast-paper type on ink - so it can't be
+ * read as part of the page. Not sticky: it's the first thing on the page, then
+ * scrolls away and leaves the bar alone at the top.
+ */
+.toast-closure {
+  background-color: var(--toast-ink);
+  color: var(--toast-paper);
+  padding-block: 0.75rem;
+  text-align: center;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+}
+.toast-closure ::selection {
+  background-color: var(--toast-paper);
+  color: var(--toast-ink);
+}
+.toast-closure-reason {
+  opacity: 0.8;
+}
+
 /* The full-height hero, less whatever the bar above it occupies. */
 .toast-hero-frame {
   min-height: calc(100svh - var(--toast-bar-h, 0rem));
