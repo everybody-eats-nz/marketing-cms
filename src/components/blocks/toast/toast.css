@@ -195,6 +195,56 @@
   opacity: 0.8;
 }
 
+/* "Closed today" pill under the hero wordmark, on the closed day only. */
+.toast-closed-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 2.5rem;
+  border-radius: 9999px;
+  background-color: var(--toast-ink);
+  color: var(--toast-paper);
+  padding: 0.55rem 1.1rem;
+  font-family: var(--toast-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.toast-closed-badge-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background-color: currentColor;
+  opacity: 0.7;
+}
+
+/* The large notice straight after the hero - the cafe's counterpart to the
+   closure card on a restaurant page. Same radius as the booking modal, so the
+   page's two "sheets laid on the paper" read as the same object. */
+.toast-closure-card {
+  border-radius: 20px;
+  background-color: var(--toast-ink);
+  color: var(--toast-paper);
+  padding: 3.5rem 1.75rem;
+}
+@media (min-width: 640px) {
+  .toast-closure-card {
+    padding: 4.5rem 4rem;
+  }
+}
+.toast-closure-card ::selection {
+  background-color: var(--toast-paper);
+  color: var(--toast-ink);
+}
+.toast-closure-card-heading {
+  font-family: var(--toast-mono);
+  font-size: clamp(1.75rem, 4.5vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
 /* The full-height hero, less whatever the bar above it occupies. */
 .toast-hero-frame {
   min-height: calc(100svh - var(--toast-bar-h, 0rem));

@@ -62,6 +62,10 @@ export type RenderExtras = {
   defaultDonateUrl?: string
   charityNumber?: string
   donateFormCopy?: import('@/lib/pay-copy').FormCopy
+  /** Each cafe's current or upcoming temporary closure, for its hero block. */
+  cafeClosures?: Partial<
+    Record<import('@/components/cafe-booking-dialog').CafeBrand, import('@/lib/closures').ActiveClosure | null>
+  >
 }
 
 type Props = {
@@ -83,6 +87,7 @@ export function RenderBlocks({
   defaultDonateUrl,
   charityNumber,
   donateFormCopy,
+  cafeClosures,
   fallbackHeroHeading,
 }: Props) {
   if (!blocks?.length) return null
@@ -195,7 +200,7 @@ export function RenderBlocks({
               />
             ) : null
           case 'hopperHero':
-            return <HopperHeroBlock key={key} block={block as any} />
+            return <HopperHeroBlock key={key} block={block as any} closure={cafeClosures?.hopper} />
           case 'hopperStatement':
             return <HopperStatementBlock key={key} block={block as any} />
           case 'hopperMenu':
@@ -203,7 +208,7 @@ export function RenderBlocks({
           case 'hopperVisit':
             return <HopperVisitBlock key={key} block={block as any} />
           case 'toastHero':
-            return <ToastHeroBlock key={key} block={block as any} />
+            return <ToastHeroBlock key={key} block={block as any} closure={cafeClosures?.toast} />
           case 'toastStatement':
             return <ToastStatementBlock key={key} block={block as any} />
           case 'toastMenu':
