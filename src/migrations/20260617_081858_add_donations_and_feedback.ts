@@ -55,18 +55,14 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
 
 export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
   await db.execute(sql`
-   ALTER TABLE "donations" DISABLE ROW LEVEL SECURITY;
-  ALTER TABLE "feedback" DISABLE ROW LEVEL SECURITY;
-  DROP TABLE "donations" CASCADE;
-  DROP TABLE "feedback" CASCADE;
-  ALTER TABLE "payload_locked_documents_rels" DROP CONSTRAINT "payload_locked_documents_rels_donations_fk";
-  
+   ALTER TABLE "payload_locked_documents_rels" DROP CONSTRAINT "payload_locked_documents_rels_donations_fk";
   ALTER TABLE "payload_locked_documents_rels" DROP CONSTRAINT "payload_locked_documents_rels_feedback_fk";
-  
   DROP INDEX "payload_locked_documents_rels_donations_id_idx";
   DROP INDEX "payload_locked_documents_rels_feedback_id_idx";
   ALTER TABLE "payload_locked_documents_rels" DROP COLUMN "donations_id";
   ALTER TABLE "payload_locked_documents_rels" DROP COLUMN "feedback_id";
+  DROP TABLE "donations";
+  DROP TABLE "feedback";
   DROP TYPE "public"."enum_donations_status";
   DROP TYPE "public"."enum_feedback_sentiment";
   DROP TYPE "public"."enum_feedback_status";

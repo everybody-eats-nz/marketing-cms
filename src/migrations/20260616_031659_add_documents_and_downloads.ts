@@ -94,20 +94,14 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
 
 export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
   await db.execute(sql`
-   ALTER TABLE "documents" DISABLE ROW LEVEL SECURITY;
-  ALTER TABLE "pages_blocks_downloads_items" DISABLE ROW LEVEL SECURITY;
-  ALTER TABLE "pages_blocks_downloads" DISABLE ROW LEVEL SECURITY;
-  ALTER TABLE "_pages_v_blocks_downloads_items" DISABLE ROW LEVEL SECURITY;
-  ALTER TABLE "_pages_v_blocks_downloads" DISABLE ROW LEVEL SECURITY;
-  DROP TABLE "documents" CASCADE;
-  DROP TABLE "pages_blocks_downloads_items" CASCADE;
-  DROP TABLE "pages_blocks_downloads" CASCADE;
-  DROP TABLE "_pages_v_blocks_downloads_items" CASCADE;
-  DROP TABLE "_pages_v_blocks_downloads" CASCADE;
-  ALTER TABLE "payload_locked_documents_rels" DROP CONSTRAINT "payload_locked_documents_rels_documents_fk";
-  
+   ALTER TABLE "payload_locked_documents_rels" DROP CONSTRAINT "payload_locked_documents_rels_documents_fk";
   DROP INDEX "payload_locked_documents_rels_documents_id_idx";
   ALTER TABLE "payload_locked_documents_rels" DROP COLUMN "documents_id";
+  DROP TABLE "pages_blocks_downloads_items";
+  DROP TABLE "pages_blocks_downloads";
+  DROP TABLE "_pages_v_blocks_downloads_items";
+  DROP TABLE "_pages_v_blocks_downloads";
+  DROP TABLE "documents";
   DROP TYPE "public"."enum_pages_blocks_downloads_columns";
   DROP TYPE "public"."enum__pages_v_blocks_downloads_columns";`)
 }
