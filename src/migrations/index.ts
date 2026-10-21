@@ -38,6 +38,7 @@ import * as migration_20260917_035041_toast_announcement_defaults from './202609
 import * as migration_20260928_044431_add_upload_object_key from './20260928_044431_add_upload_object_key';
 import * as migration_20261014_225657_anchor_event_dates_to_nz_timezone from './20261014_225657_anchor_event_dates_to_nz_timezone';
 import * as migration_20261019_192056_cafe_closures from './20261019_192056_cafe_closures';
+import * as migration_20261021_034654_gala_regular_giving from './20261021_034654_gala_regular_giving';
 
 export const migrations = [
   {
@@ -238,6 +239,11 @@ export const migrations = [
   {
     up: migration_20261019_192056_cafe_closures.up,
     down: migration_20261019_192056_cafe_closures.down,
-    name: '20261019_192056_cafe_closures'
+    name: '20261019_192056_cafe_closures',
+  },
+  {
+    up: migration_20261021_034654_gala_regular_giving.up,
+    down: migration_20261021_034654_gala_regular_giving.down,
+    name: '20261021_034654_gala_regular_giving'
   },
 ];
