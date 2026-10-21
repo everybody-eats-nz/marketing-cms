@@ -1214,11 +1214,12 @@ export function GalaNoirMonthlyGiftsBlock({ block }: { block: Block }) {
               </Reveal>
               <Reveal delay={0.08}>
                 <ul className="mt-10">
-                  {gifts.map((gift) => {
+                  {gifts.map((gift, i) => {
                     const amount = nzd(gift.amount)
                     const label = ctaLabel.replace(/\{amount\}/g, amount)
+                    // Index key: editors can duplicate rows, so neither url nor amount is unique.
                     return (
-                      <li key={gift.url}>
+                      <li key={i}>
                         <a
                           href={gift.url}
                           className="gn-gift"
@@ -1262,7 +1263,7 @@ export function GalaNoirGivingWaysBlock({ block }: { block: Block }) {
           </Reveal>
           <div className="mt-10 grid gap-px overflow-hidden rounded-md border border-[var(--hairline)] bg-[var(--hairline)] md:grid-cols-3">
             {ways.map((way, i) => (
-              <Reveal key={way.title} delay={i * 0.06} className="h-full">
+              <Reveal key={i} delay={i * 0.06} className="h-full">
                 <div className="flex h-full flex-col bg-[var(--noir)] p-6 sm:p-8">
                   <h3 className="gn-display text-2xl">{way.title}</h3>
                   {way.body ? <p className="gn-body mt-3 text-pretty text-[0.95rem]">{way.body}</p> : null}

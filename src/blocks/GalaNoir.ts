@@ -10,8 +10,8 @@ import type { Block } from 'payload'
 // GALA_NOIR_DEFAULTS is the single source of truth for the initial content:
 // it seeds both the admin `defaultValue`s and the page documents — `gala-new`
 // (scripts/seed-gala-noir-page.ts) and `gala-giving`, the regular-giving page
-// (created by migration 20261021_034654_gala_regular_giving) — so the two
-// never drift.
+// (created by migration 20261021_034654_gala_regular_giving, which inlines a
+// frozen snapshot of these values) — so the two never drift.
 //
 // Renderers live in src/components/blocks/gala-noir-blocks.tsx.
 // ─────────────────────────────────────────────────────────────────────────────

@@ -1,17 +1,100 @@
 import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
 import type { Payload } from 'payload'
-import { GALA_NOIR_DEFAULTS as D } from '../blocks/GalaNoir'
 
 // The regular-giving-at-the-Gala page, created here (not by a seed script) so it
 // appears on deploy: scripts/ is excluded from the production image, and the
 // production database is only reachable from inside the container.
+//
+// The content is a frozen snapshot of GALA_NOIR_DEFAULTS (src/blocks/GalaNoir.ts)
+// as of this migration, so a database migrated later gets exactly the page
+// production got, whatever the defaults say by then.
 const GALA_GIVING_SLUG = 'gala-giving'
 
 const GALA_GIVING_BLOCKS = [
-  { blockType: 'galaNoirGivingHero', ...D.givingHero },
-  { blockType: 'galaNoirMonthlyGifts', ...D.monthlyGifts },
-  { blockType: 'galaNoirGivingWays', ...D.givingWays },
-  { blockType: 'galaNoirGiveOnce', ...D.giveOnce },
+  {
+    blockType: 'galaNoirGivingHero',
+    eyebrow: 'The Everybody Eats Gala',
+    title: 'Regular\ngiving',
+    intro: 'Keep the magic of the Gala going all year. Become an Everybody Eats superstar with a monthly gift and help us plan and grow our impact across Aotearoa.',
+    primaryCtaLabel: 'Choose a monthly gift',
+    secondaryCtaLabel: 'Prefer to give once?',
+    secondaryCtaUrl: '/get-involved/donate',
+    showBadge: true,
+  },
+  {
+    blockType: 'galaNoirMonthlyGifts',
+    eyebrow: '',
+    heading: 'Pick your monthly gift',
+    body: 'Choose an amount that suits your budget. Every gift is a secure monthly payment through Stripe.',
+    periodLabel: 'a month',
+    ctaLabel: 'Give {amount}',
+    gifts: [
+      {
+        amount: 10,
+        blurb: 'Help build stronger communities.',
+        url: 'https://buy.stripe.com/eVag0McpH070e2I3cd',
+      },
+      {
+        amount: 20,
+        blurb: 'Dignified dining for everyone.',
+        url: 'https://buy.stripe.com/28odSEdtL070cYE4gi',
+      },
+      {
+        amount: 50,
+        blurb: 'Rescue quality food from going to waste.',
+        url: 'https://buy.stripe.com/4gw4i4ahz8Dwf6MeUX',
+      },
+      {
+        amount: 100,
+        blurb: 'Keep the doors open for everybody.',
+        url: 'https://buy.stripe.com/7sI6qcgFX9HA4s87sw',
+      },
+      {
+        amount: 250,
+        blurb: 'Bringing people together over food.',
+        url: 'https://buy.stripe.com/14k6qc9dv0705wc28d',
+      },
+      {
+        amount: 500,
+        blurb: 'Be part of building a more sustainable food system.',
+        url: 'https://buy.stripe.com/eVa01O4Xf1b4gaQcMS',
+      },
+    ],
+  },
+  {
+    blockType: 'galaNoirGivingWays',
+    eyebrow: '',
+    heading: 'Other ways to give',
+    ways: [
+      {
+        title: 'A personalised plan',
+        body: 'Want to give a different amount, or talk it through? We will set up a plan that suits your budget.',
+        email: 'amy@everybodyeats.nz',
+        detail: '',
+      },
+      {
+        title: 'Bank transfer',
+        body: 'Kiwibank, Everybody Eats Charitable Trust. Use your name and organisation as the reference.',
+        email: '',
+        detail: '38-9020-0272020-00',
+      },
+      {
+        title: 'Claim it back',
+        body: 'Donations of $5 or more are eligible for a 33.33% tax credit through IRD. Get in touch for a donation receipt.',
+        email: '',
+        detail: '',
+      },
+    ],
+  },
+  {
+    blockType: 'galaNoirGiveOnce',
+    heading: 'Not ready for monthly?\nGive once.',
+    body: 'Every one-off gift goes straight towards keeping our doors open and our communities fed.',
+    ctaLabel: 'Make a one-off gift',
+    ctaUrl: '/get-involved/donate',
+    footerLeft: 'The Everybody Eats Gala · Friday 30 October 2026 · St Matthew-in-the-City, Auckland',
+    footerRight: 'Photography from previous Everybody Eats Galas',
+  },
 ]
 
 /**
