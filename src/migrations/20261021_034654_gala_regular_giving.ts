@@ -1,4 +1,33 @@
 import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
+import type { Payload } from 'payload'
+import { GALA_NOIR_DEFAULTS as D } from '../blocks/GalaNoir'
+
+// The regular-giving-at-the-Gala page, created here (not by a seed script) so it
+// appears on deploy: scripts/ is excluded from the production image, and the
+// production database is only reachable from inside the container.
+const GALA_GIVING_SLUG = 'gala-giving'
+
+const GALA_GIVING_BLOCKS = [
+  { blockType: 'galaNoirGivingHero', ...D.givingHero },
+  { blockType: 'galaNoirMonthlyGifts', ...D.monthlyGifts },
+  { blockType: 'galaNoirGivingWays', ...D.givingWays },
+  { blockType: 'galaNoirGiveOnce', ...D.giveOnce },
+]
+
+/**
+ * Whether the current config still has every giving block. Migrations replay
+ * against the config of the day, so if these blocks are ever removed, a fresh
+ * database skips the page instead of failing validation mid-chain.
+ */
+function hasGivingBlocks(payload: Payload) {
+  const layout = payload.collections.pages.config.fields.find(
+    (f) => 'name' in f && f.name === 'layout',
+  )
+  const slugs = new Set(
+    layout && layout.type === 'blocks' ? layout.blocks.map((block) => block.slug) : [],
+  )
+  return GALA_GIVING_BLOCKS.every((block) => slugs.has(block.blockType))
+}
 
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
@@ -216,9 +245,43 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "_pages_v_blocks_gala_noir_give_once_parent_id_idx" ON "_pages_v_blocks_gala_noir_give_once" USING btree ("_parent_id");
   CREATE INDEX "_pages_v_blocks_gala_noir_give_once_path_idx" ON "_pages_v_blocks_gala_noir_give_once" USING btree ("_path");
   CREATE INDEX "_pages_v_blocks_gala_noir_give_once_image_idx" ON "_pages_v_blocks_gala_noir_give_once" USING btree ("image_id");`)
+
+  // Never touch an existing page: an editor may have created or customised it.
+  const existing = await payload.find({
+    collection: 'pages',
+    where: { slug: { equals: GALA_GIVING_SLUG } },
+    limit: 1,
+    depth: 0,
+    draft: true,
+    req,
+  })
+  if (existing.docs.length === 0 && hasGivingBlocks(payload)) {
+    await payload.create({
+      collection: 'pages',
+      data: {
+        title: 'Regular giving at the Gala',
+        slug: GALA_GIVING_SLUG,
+        layout: GALA_GIVING_BLOCKS,
+        seo: {
+          title: 'Regular giving — The Everybody Eats Gala',
+          description:
+            'Keep the magic of the Gala going all year. Become an Everybody Eats superstar with a monthly gift and help us plan and grow our impact across Aotearoa.',
+        },
+        _status: 'published',
+      } as any,
+      req,
+    })
+  }
 }
 
 export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
+  // The page's layout lives in the tables dropped below, so it can't outlive them.
+  await payload.delete({
+    collection: 'pages',
+    where: { slug: { equals: GALA_GIVING_SLUG } },
+    req,
+  })
+
   await db.execute(sql`
    DROP TABLE "pages_blocks_gala_noir_giving_hero" CASCADE;
   DROP TABLE "pages_blocks_gala_noir_monthly_gifts_gifts" CASCADE;
