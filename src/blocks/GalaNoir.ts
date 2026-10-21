@@ -8,8 +8,9 @@ import type { Block } from 'payload'
 // every line of copy and every image in the admin.
 //
 // GALA_NOIR_DEFAULTS is the single source of truth for the initial content:
-// it seeds both the admin `defaultValue`s and the `gala-new` page document
-// (see scripts/seed-gala-noir-page.ts), so the two never drift.
+// it seeds both the admin `defaultValue`s and the page documents — `gala-new`
+// (scripts/seed-gala-noir-page.ts) and `gala-giving`, the regular-giving page
+// (scripts/seed-gala-giving-page.ts) — so the two never drift.
 //
 // Renderers live in src/components/blocks/gala-noir-blocks.tsx.
 // ─────────────────────────────────────────────────────────────────────────────
@@ -309,6 +310,96 @@ export const GALA_NOIR_DEFAULTS = {
     body: 'We see it every day. We would be honoured to have your support.',
     secondaryCtaLabel: 'everybodyeats.nz',
     secondaryCtaUrl: 'https://everybodyeats.nz',
+    footerLeft:
+      'The Everybody Eats Gala · Friday 30 October 2026 · St Matthew-in-the-City, Auckland',
+    footerRight: 'Photography from previous Everybody Eats Galas',
+  },
+
+  // ── Regular giving at the Gala (the `gala-giving` page) ──────────────────
+  // The /get-involved/regular-giving page in gala dress, for pushing monthly
+  // giving on the night.
+
+  givingHero: {
+    eyebrow: 'The Everybody Eats Gala',
+    title: 'Regular\ngiving',
+    intro:
+      'Keep the magic of the Gala going all year. Become an Everybody Eats superstar with a monthly gift and help us plan and grow our impact across Aotearoa.',
+    primaryCtaLabel: 'Choose a monthly gift',
+    secondaryCtaLabel: 'Prefer to give once?',
+    secondaryCtaUrl: '/get-involved/donate',
+    showBadge: true,
+  },
+
+  monthlyGifts: {
+    eyebrow: '',
+    heading: 'Pick your monthly gift',
+    body: 'Choose an amount that suits your budget. Every gift is a secure monthly payment through Stripe.',
+    periodLabel: 'a month',
+    ctaLabel: 'Give {amount}',
+    gifts: [
+      {
+        amount: 10,
+        blurb: 'Help build stronger communities.',
+        url: 'https://buy.stripe.com/eVag0McpH070e2I3cd',
+      },
+      {
+        amount: 20,
+        blurb: 'Dignified dining for everyone.',
+        url: 'https://buy.stripe.com/28odSEdtL070cYE4gi',
+      },
+      {
+        amount: 50,
+        blurb: 'Rescue quality food from going to waste.',
+        url: 'https://buy.stripe.com/4gw4i4ahz8Dwf6MeUX',
+      },
+      {
+        amount: 100,
+        blurb: 'Keep the doors open for everybody.',
+        url: 'https://buy.stripe.com/7sI6qcgFX9HA4s87sw',
+      },
+      {
+        amount: 250,
+        blurb: 'Bringing people together over food.',
+        url: 'https://buy.stripe.com/14k6qc9dv0705wc28d',
+      },
+      {
+        amount: 500,
+        blurb: 'Be part of building a more sustainable food system.',
+        url: 'https://buy.stripe.com/eVa01O4Xf1b4gaQcMS',
+      },
+    ],
+  },
+
+  givingWays: {
+    eyebrow: '',
+    heading: 'Other ways to give',
+    ways: [
+      {
+        title: 'A personalised plan',
+        body: 'Want to give a different amount, or talk it through? We will set up a plan that suits your budget.',
+        email: 'amy@everybodyeats.nz',
+        detail: '',
+      },
+      {
+        title: 'Bank transfer',
+        body: 'Kiwibank, Everybody Eats Charitable Trust. Use your name and organisation as the reference.',
+        email: '',
+        detail: '38-9020-0272020-00',
+      },
+      {
+        title: 'Claim it back',
+        body: 'Donations of $5 or more are eligible for a 33.33% tax credit through IRD. Get in touch for a donation receipt.',
+        email: '',
+        detail: '',
+      },
+    ],
+  },
+
+  giveOnce: {
+    heading: 'Not ready for monthly?\nGive once.',
+    body: 'Every one-off gift goes straight towards keeping our doors open and our communities fed.',
+    ctaLabel: 'Make a one-off gift',
+    ctaUrl: '/get-involved/donate',
     footerLeft:
       'The Everybody Eats Gala · Friday 30 October 2026 · St Matthew-in-the-City, Auckland',
     footerRight: 'Photography from previous Everybody Eats Galas',
@@ -720,7 +811,139 @@ export const GalaNoirClosing: Block = {
   ],
 }
 
-/** Every gala-noir block, in default page order — used by Pages.ts and the seed script. */
+// ── Regular giving blocks ────────────────────────────────────────────────────
+
+export const GalaNoirGivingHero: Block = {
+  slug: 'galaNoirGivingHero',
+  labels: { singular: 'Gala 2026 — Giving hero', plural: 'Gala 2026 — Giving hero' },
+  fields: [
+    upload('image', 'Background image', 'Full-screen backdrop. Defaults to the peacock feathers.'),
+    text('eyebrow', D.givingHero.eyebrow),
+    area(
+      'title',
+      D.givingHero.title,
+      'The big gradient title, set in capitals. Each line break starts a new line.',
+    ),
+    area('intro', D.givingHero.intro),
+    {
+      name: 'showBadge',
+      type: 'checkbox' as const,
+      defaultValue: D.givingHero.showBadge,
+      admin: { description: 'Show the pink stacked-plates badge from the gala artwork.' },
+    },
+    text(
+      'primaryCtaLabel',
+      D.givingHero.primaryCtaLabel,
+      'Scrolls to the Monthly gifts section. Hidden when that section is not on the page.',
+    ),
+    {
+      type: 'row',
+      fields: [
+        text('secondaryCtaLabel', D.givingHero.secondaryCtaLabel),
+        text('secondaryCtaUrl', D.givingHero.secondaryCtaUrl),
+      ],
+    },
+  ],
+}
+
+export const GalaNoirMonthlyGifts: Block = {
+  slug: 'galaNoirMonthlyGifts',
+  labels: { singular: 'Gala 2026 — Monthly gifts', plural: 'Gala 2026 — Monthly gifts' },
+  fields: [
+    upload('image', 'Photo', 'Defaults to the performers at the dinner table.'),
+    text('eyebrow', D.monthlyGifts.eyebrow),
+    text('heading', D.monthlyGifts.heading),
+    area('body', D.monthlyGifts.body),
+    text('periodLabel', D.monthlyGifts.periodLabel, 'Shown beside each amount, e.g. “a month”.'),
+    text(
+      'ctaLabel',
+      D.monthlyGifts.ctaLabel,
+      'Button text on each gift (hidden on phones, which show just an arrow). {amount} inserts the amount.',
+    ),
+    {
+      name: 'gifts',
+      type: 'array',
+      defaultValue: D.monthlyGifts.gifts,
+      labels: { singular: 'Gift', plural: 'Gifts' },
+      minRows: 1,
+      fields: [
+        {
+          type: 'row',
+          fields: [
+            {
+              name: 'amount',
+              type: 'number',
+              required: true,
+              admin: { description: 'Whole dollars, e.g. 50.', width: '25%' },
+            },
+            { name: 'blurb', type: 'text', required: true, admin: { width: '75%' } },
+          ],
+        },
+        {
+          name: 'url',
+          type: 'text',
+          required: true,
+          admin: { description: 'The Stripe payment link for this monthly amount.' },
+        },
+      ],
+    },
+  ],
+}
+
+export const GalaNoirGivingWays: Block = {
+  slug: 'galaNoirGivingWays',
+  labels: { singular: 'Gala 2026 — Other ways to give', plural: 'Gala 2026 — Other ways to give' },
+  fields: [
+    text('eyebrow', D.givingWays.eyebrow),
+    text('heading', D.givingWays.heading),
+    {
+      name: 'ways',
+      type: 'array',
+      defaultValue: D.givingWays.ways,
+      labels: { singular: 'Way to give', plural: 'Ways to give' },
+      fields: [
+        { name: 'title', type: 'text', required: true },
+        { name: 'body', type: 'textarea' },
+        {
+          name: 'email',
+          type: 'email',
+          admin: { description: 'Optional. Rendered as a mailto link.' },
+        },
+        {
+          name: 'detail',
+          type: 'text',
+          admin: {
+            description:
+              'Optional. A value people need to copy, e.g. a bank account number. Gets a Copy button.',
+          },
+        },
+      ],
+    },
+  ],
+}
+
+export const GalaNoirGiveOnce: Block = {
+  slug: 'galaNoirGiveOnce',
+  labels: { singular: 'Gala 2026 — Give once', plural: 'Gala 2026 — Give once' },
+  fields: [
+    upload('image', 'Photo', 'Defaults to the gala room at St Matthew-in-the-City.'),
+    area('heading', D.giveOnce.heading, 'Each line break starts a new line.'),
+    area('body', D.giveOnce.body),
+    {
+      type: 'row',
+      fields: [text('ctaLabel', D.giveOnce.ctaLabel), text('ctaUrl', D.giveOnce.ctaUrl)],
+    },
+    {
+      type: 'row',
+      fields: [
+        text('footerLeft', D.giveOnce.footerLeft),
+        text('footerRight', D.giveOnce.footerRight),
+      ],
+    },
+  ],
+}
+
+/** Every gala-noir block — spread into the Pages `layout` field in Pages.ts. */
 export const GALA_NOIR_BLOCKS = [
   GalaNoirHero,
   GalaNoirProblem,
@@ -735,4 +958,8 @@ export const GALA_NOIR_BLOCKS = [
   GalaNoirInKind,
   GalaNoirQuotes,
   GalaNoirClosing,
+  GalaNoirGivingHero,
+  GalaNoirMonthlyGifts,
+  GalaNoirGivingWays,
+  GalaNoirGiveOnce,
 ]

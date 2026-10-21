@@ -1504,6 +1504,105 @@ export interface Page {
           }
         | {
             /**
+             * Full-screen backdrop. Defaults to the peacock feathers.
+             */
+            image?: (number | null) | Media;
+            eyebrow?: string | null;
+            /**
+             * The big gradient title, set in capitals. Each line break starts a new line.
+             */
+            title?: string | null;
+            intro?: string | null;
+            /**
+             * Show the pink stacked-plates badge from the gala artwork.
+             */
+            showBadge?: boolean | null;
+            /**
+             * Scrolls to the Monthly gifts section. Hidden when that section is not on the page.
+             */
+            primaryCtaLabel?: string | null;
+            secondaryCtaLabel?: string | null;
+            secondaryCtaUrl?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'galaNoirGivingHero';
+          }
+        | {
+            /**
+             * Defaults to the performers at the dinner table.
+             */
+            image?: (number | null) | Media;
+            eyebrow?: string | null;
+            heading?: string | null;
+            body?: string | null;
+            /**
+             * Shown beside each amount, e.g. “a month”.
+             */
+            periodLabel?: string | null;
+            /**
+             * Button text on each gift (hidden on phones, which show just an arrow). {amount} inserts the amount.
+             */
+            ctaLabel?: string | null;
+            gifts?:
+              | {
+                  /**
+                   * Whole dollars, e.g. 50.
+                   */
+                  amount: number;
+                  blurb: string;
+                  /**
+                   * The Stripe payment link for this monthly amount.
+                   */
+                  url: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'galaNoirMonthlyGifts';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            ways?:
+              | {
+                  title: string;
+                  body?: string | null;
+                  /**
+                   * Optional. Rendered as a mailto link.
+                   */
+                  email?: string | null;
+                  /**
+                   * Optional. A value people need to copy, e.g. a bank account number. Gets a Copy button.
+                   */
+                  detail?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'galaNoirGivingWays';
+          }
+        | {
+            /**
+             * Defaults to the gala room at St Matthew-in-the-City.
+             */
+            image?: (number | null) | Media;
+            /**
+             * Each line break starts a new line.
+             */
+            heading?: string | null;
+            body?: string | null;
+            ctaLabel?: string | null;
+            ctaUrl?: string | null;
+            footerLeft?: string | null;
+            footerRight?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'galaNoirGiveOnce';
+          }
+        | {
+            /**
              * Accessible label for the Everybody Eats logo shown above the wordmark (links back to the main site).
              */
             kicker?: string | null;
@@ -3252,6 +3351,70 @@ export interface PagesSelect<T extends boolean = true> {
               galaEmail?: T;
               secondaryCtaLabel?: T;
               secondaryCtaUrl?: T;
+              footerLeft?: T;
+              footerRight?: T;
+              id?: T;
+              blockName?: T;
+            };
+        galaNoirGivingHero?:
+          | T
+          | {
+              image?: T;
+              eyebrow?: T;
+              title?: T;
+              intro?: T;
+              showBadge?: T;
+              primaryCtaLabel?: T;
+              secondaryCtaLabel?: T;
+              secondaryCtaUrl?: T;
+              id?: T;
+              blockName?: T;
+            };
+        galaNoirMonthlyGifts?:
+          | T
+          | {
+              image?: T;
+              eyebrow?: T;
+              heading?: T;
+              body?: T;
+              periodLabel?: T;
+              ctaLabel?: T;
+              gifts?:
+                | T
+                | {
+                    amount?: T;
+                    blurb?: T;
+                    url?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        galaNoirGivingWays?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              ways?:
+                | T
+                | {
+                    title?: T;
+                    body?: T;
+                    email?: T;
+                    detail?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        galaNoirGiveOnce?:
+          | T
+          | {
+              image?: T;
+              heading?: T;
+              body?: T;
+              ctaLabel?: T;
+              ctaUrl?: T;
               footerLeft?: T;
               footerRight?: T;
               id?: T;

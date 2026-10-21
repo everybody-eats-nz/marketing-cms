@@ -8,6 +8,7 @@ import { GalaMarquee } from '@/components/gala-noir/marquee'
 import { TiltCard } from '@/components/gala-noir/tilt-card'
 import { SeatCalculator } from '@/components/gala-noir/seat-calculator'
 import { HeroWord } from '@/components/gala-noir/hero-word'
+import { CopyValue } from '@/components/gala-noir/copy-value'
 import './gala-noir.css'
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -36,6 +37,7 @@ const IMG = {
   auction: '/images/gala/auction.jpg',
   quotes: '/images/gala/venue.jpg',
   closing: '/images/gala/volunteers.jpg',
+  giveOnce: '/images/gala/venue.jpg',
 }
 const PERFORMER_FALLBACK = [
   '/images/gala/performer-hugo.jpg',
@@ -959,26 +961,372 @@ export function GalaNoirClosingBlock({ block }: { block: Block }) {
             </div>
           </Reveal>
         </div>
-        <Reveal className="relative mt-16" y={0}>
-          <div className="relative h-[52vh] min-h-80">
-            <FillImage
-              media={b.image}
-              fallback={IMG.closing}
-              alt="Everybody Eats volunteers gathered at the gala"
-              sizes="100vw"
-              size="hero"
-              className="object-cover object-[center_62%]"
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-[var(--noir)] via-transparent to-[rgba(11,9,16,0.7)]" />
+        <ClosingPhoto
+          media={b.image}
+          fallback={IMG.closing}
+          alt="Everybody Eats volunteers gathered at the gala"
+          position="object-[center_62%]"
+        />
+        <SunsetStrip left={b.footerLeft} right={b.footerRight} />
+      </section>
+    </div>
+  )
+}
+
+/** The full-bleed photo that closes a gala page, fading up out of the noir ground. */
+function ClosingPhoto({
+  media,
+  fallback,
+  alt,
+  position,
+}: {
+  media?: any
+  fallback: string
+  alt: string
+  position: string
+}) {
+  return (
+    <Reveal className="relative mt-16" y={0}>
+      <div className="relative h-[52vh] min-h-80">
+        <FillImage
+          media={media}
+          fallback={fallback}
+          alt={alt}
+          sizes="100vw"
+          size="hero"
+          className={`object-cover ${position}`}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[var(--noir)] via-transparent to-[rgba(11,9,16,0.7)]" />
+      </div>
+    </Reveal>
+  )
+}
+
+/** Sunset strip — the deck's closing gradient, carrying the event footer line. */
+function SunsetStrip({ left, right }: { left?: string; right?: string }) {
+  if (!left && !right) return null
+  return (
+    <footer className="bg-[linear-gradient(100deg,#c9b7e6,#f2b8c6_30%,#f8ce9a_65%,#f3ce6f)] py-5 text-[#33203a]">
+      <div className="gn-container flex flex-col items-center justify-between gap-2 text-balance text-center text-xs font-semibold sm:flex-row sm:text-left">
+        {left ? <p>{left}</p> : null}
+        {right ? <p>{right}</p> : null}
+      </div>
+    </footer>
+  )
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// Regular giving at the Gala — the /get-involved/regular-giving page in gala
+// dress, built for pushing monthly giving on the night.
+// ═════════════════════════════════════════════════════════════════════════════
+
+/**
+ * The pink badge from the gala "Regular giving" artwork: an organic blob with
+ * three stacked plates cut out of it, so the feathers behind show through the
+ * linework. Plates are drawn bottom-up, each masking out the one behind it.
+ */
+function PlatesBadge({ className = '' }: { className?: string }) {
+  const plates = [
+    { cy: 131, rx: 55, tilt: 1.5 },
+    { cy: 101, rx: 52, tilt: -1 },
+    { cy: 71, rx: 54, tilt: -2.5 },
+  ]
+  return (
+    <svg className={className} viewBox="0 0 220 210" aria-hidden="true">
+      <defs>
+        <mask id="gn-plates-cut" maskUnits="userSpaceOnUse" x="0" y="0" width="220" height="210">
+          <path
+            d="M100 5C118.7 2.7 142.7 2.2 160 8C177.3 13.8 194.7 25.5 204 40C213.3 54.5 216 77 216 95C216 113 211.7 132.8 204 148C196.3 163.2 184.3 177 170 186C155.7 195 135.3 200 118 202C100.7 204 81.3 203.3 66 198C50.7 192.7 35.7 183 26 170C16.3 157 10 137.3 8 120C6 102.7 7.3 82.3 14 66C20.7 49.7 33.7 32.2 48 22C62.3 11.8 81.3 7.3 100 5Z"
+            fill="#fff"
+          />
+          {plates.map(({ cy, rx, tilt }) => {
+            const l = 110 - rx
+            const r = 110 + rx
+            const bowl = `M${l} ${cy}C${l + 9} ${cy + 30} ${r - 9} ${cy + 30} ${r} ${cy}`
+            return (
+              <g key={cy} transform={`rotate(${tilt} 110 ${cy})`}>
+                <path d={`${bowl}Z`} fill="#fff" />
+                <ellipse cx="110" cy={cy} rx={rx} ry="12" fill="#fff" />
+                <g fill="none" stroke="#000" strokeWidth="5" strokeLinecap="round">
+                  <ellipse cx="110" cy={cy} rx={rx} ry="12" />
+                  <path d={bowl} />
+                </g>
+              </g>
+            )
+          })}
+        </mask>
+      </defs>
+      <rect width="220" height="210" fill="var(--badge-pink)" mask="url(#gn-plates-cut)" />
+    </svg>
+  )
+}
+
+// ── Giving hero ──────────────────────────────────────────────────────────────
+
+export function GalaNoirGivingHeroBlock({
+  block,
+  pageBlockTypes,
+}: {
+  block: Block
+  pageBlockTypes?: Set<string>
+}) {
+  const b = block
+  const lines = String(b.title || 'Regular giving')
+    .split('\n')
+    .map((line) => line.trim())
+    .filter(Boolean)
+  const showPrimary = b.primaryCtaLabel && (!pageBlockTypes || pageBlockTypes.has('galaNoirMonthlyGifts'))
+  const secondaryUrl: string = (b.secondaryCtaUrl || '').trim()
+
+  return (
+    <div className="gala-noir">
+      {/* Sized to fill the viewport below the h-16 / sm:h-20 site header. */}
+      <header className="gn-grain relative flex min-h-[calc(100svh-4rem)] flex-col overflow-hidden sm:min-h-[calc(100svh-5rem)]">
+        <div className="absolute inset-0">
+          <FillImage
+            media={b.image}
+            fallback={IMG.hero}
+            alt=""
+            priority
+            sizes="100vw"
+            size="hero"
+            className="gn-hero-photo object-cover"
+          />
+          <div className="absolute inset-0 bg-[radial-gradient(110%_80%_at_50%_42%,rgba(11,9,16,0.1)_30%,rgba(11,9,16,0.6)_75%,rgba(11,9,16,0.94)_100%)]" />
+          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[var(--noir)] to-transparent" />
+        </div>
+
+        <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-5 py-14 text-center sm:py-12">
+          {b.eyebrow ? <p className="gn-label gn-hero-kicker gn-rise">{b.eyebrow}</p> : null}
+          {b.showBadge ? <PlatesBadge className="gn-badge mt-6" /> : null}
+          <h1 className="gn-giving-title mt-5" aria-label={lines.join(' ')}>
+            {lines.map((line, i) => (
+              <span
+                key={i}
+                aria-hidden="true"
+                className="gn-giving-line"
+                style={{ animationDelay: `${0.45 + i * 0.16}s` }}
+              >
+                {line}
+              </span>
+            ))}
+          </h1>
+          {b.intro ? (
+            <p
+              className="gn-hero-kicker gn-rise mt-6 max-w-[34rem] text-balance text-base leading-relaxed text-[rgba(245,238,223,0.88)] sm:text-lg"
+              style={{ animationDelay: '0.85s' }}
+            >
+              {b.intro}
+            </p>
+          ) : null}
+          <div
+            className="gn-rise mt-8 flex flex-wrap items-center justify-center gap-3"
+            style={{ animationDelay: '1s' }}
+          >
+            {showPrimary ? (
+              <a href="#monthly" className="gn-btn gn-btn--gradient !min-h-12 !px-7">
+                {b.primaryCtaLabel}
+                <ArrowDownIcon />
+              </a>
+            ) : null}
+            {b.secondaryCtaLabel && secondaryUrl ? (
+              <a href={secondaryUrl} className="gn-btn gn-btn--ghost !min-h-12 !px-7">
+                {b.secondaryCtaLabel}
+              </a>
+            ) : null}
           </div>
-        </Reveal>
-        {/* sunset strip — the deck's closing gradient */}
-        <footer className="bg-[linear-gradient(100deg,#c9b7e6,#f2b8c6_30%,#f8ce9a_65%,#f3ce6f)] py-5 text-[#33203a]">
-          <div className="gn-container flex flex-col items-center justify-between gap-2 text-center text-xs font-semibold sm:flex-row sm:text-left">
-            {b.footerLeft ? <p>{b.footerLeft}</p> : null}
-            {b.footerRight ? <p>{b.footerRight}</p> : null}
+        </div>
+      </header>
+    </div>
+  )
+}
+
+function ArrowDownIcon() {
+  return (
+    <svg
+      className="h-4 w-4"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M12 5v14m0 0l-6-6m6 6l6-6" />
+    </svg>
+  )
+}
+
+function ArrowRightIcon({ className = 'h-4 w-4' }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M5 12h14m0 0l-6-6m6 6l-6 6" />
+    </svg>
+  )
+}
+
+// ── Monthly gifts ────────────────────────────────────────────────────────────
+
+const nzd = (amount: number) =>
+  `$${Number(amount).toLocaleString('en-NZ', { maximumFractionDigits: 0 })}`
+
+export function GalaNoirMonthlyGiftsBlock({ block }: { block: Block }) {
+  const b = block
+  const gifts: { amount: number; blurb: string; url: string }[] = (b.gifts || []).filter(
+    (g: any) => g?.url && g?.amount,
+  )
+  const period: string = b.periodLabel || 'a month'
+  const ctaLabel: string = b.ctaLabel || 'Give {amount}'
+
+  return (
+    <div className="gala-noir">
+      <section id="monthly" className="gn-section scroll-mt-20">
+        <div className="gn-container">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
+            <Reveal className="lg:sticky lg:top-28 lg:self-start">
+              <div className="relative aspect-[5/4] overflow-hidden rounded-md lg:aspect-[4/5]">
+                <FillImage
+                  media={b.image}
+                  fallback={IMG.night}
+                  alt="Drag performers in feathers and sequins at a gala dinner table"
+                  sizes="(min-width: 1024px) 38vw, 100vw"
+                  size="feature"
+                  className="object-cover object-[center_30%]"
+                />
+              </div>
+            </Reveal>
+
+            <div>
+              <Reveal>
+                <Eyebrow>{b.eyebrow}</Eyebrow>
+                <Heading text={b.heading} className="text-balance" />
+                {b.body ? <p className="gn-body mt-5 max-w-lg text-pretty">{b.body}</p> : null}
+              </Reveal>
+              <Reveal delay={0.08}>
+                <ul className="mt-10">
+                  {gifts.map((gift) => {
+                    const amount = nzd(gift.amount)
+                    const label = ctaLabel.replace(/\{amount\}/g, amount)
+                    return (
+                      <li key={gift.url}>
+                        <a
+                          href={gift.url}
+                          className="gn-gift"
+                          aria-label={`${label} ${period}: ${gift.blurb}`}
+                        >
+                          <span className="gn-gift-amount">
+                            <span className="gn-gift-figure">{amount}</span>
+                            <span className="gn-gift-period">{period}</span>
+                          </span>
+                          <span className="gn-gift-blurb">{gift.blurb}</span>
+                          <span className="gn-gift-go" aria-hidden="true">
+                            <span className="hidden sm:inline">{label}</span>
+                            <ArrowRightIcon />
+                          </span>
+                        </a>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </Reveal>
+            </div>
           </div>
-        </footer>
+        </div>
+      </section>
+    </div>
+  )
+}
+
+// ── Other ways to give ───────────────────────────────────────────────────────
+
+export function GalaNoirGivingWaysBlock({ block }: { block: Block }) {
+  const b = block
+  const ways: { title: string; body?: string; email?: string; detail?: string }[] = b.ways || []
+  return (
+    <div className="gala-noir">
+      <section className="gn-section gn-grain overflow-hidden !pt-0">
+        <div className="gn-container relative">
+          <Reveal>
+            <Eyebrow>{b.eyebrow}</Eyebrow>
+            <Heading text={b.heading} className="!text-[clamp(1.9rem,4vw,3rem)]" />
+          </Reveal>
+          <div className="mt-10 grid gap-px overflow-hidden rounded-md border border-[var(--hairline)] bg-[var(--hairline)] md:grid-cols-3">
+            {ways.map((way, i) => (
+              <Reveal key={way.title} delay={i * 0.06} className="h-full">
+                <div className="flex h-full flex-col bg-[var(--noir)] p-6 sm:p-8">
+                  <h3 className="gn-display text-2xl">{way.title}</h3>
+                  {way.body ? <p className="gn-body mt-3 text-pretty text-[0.95rem]">{way.body}</p> : null}
+                  {way.detail ? (
+                    <div className="mt-5">
+                      <CopyValue value={way.detail} label={`${way.title} details`} />
+                    </div>
+                  ) : null}
+                  {way.email ? (
+                    <a
+                      href={mailto(way.email, `${way.title} — regular giving`)}
+                      className="mt-5 inline-flex items-center gap-2 self-start text-sm font-semibold text-[var(--magenta-bright)] underline decoration-[rgba(241,78,150,0.4)] underline-offset-4 transition hover:decoration-[var(--magenta-bright)]"
+                    >
+                      <MailIcon />
+                      {way.email}
+                    </a>
+                  ) : null}
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
+  )
+}
+
+// ── Give once (closing) ──────────────────────────────────────────────────────
+
+export function GalaNoirGiveOnceBlock({ block }: { block: Block }) {
+  const b = block
+  const ctaUrl: string = (b.ctaUrl || '').trim()
+  return (
+    // -mb-32 cancels the SiteFooter's `mt-32`, as on the closing block.
+    <div className="gala-noir -mb-32">
+      <section className="gn-section gn-grain overflow-hidden !pb-0">
+        <div className="gn-container">
+          <Reveal className="text-center">
+            {b.heading ? (
+              <h2 className="gn-display gn-gradient-lines text-[clamp(2.4rem,5.6vw,4.3rem)] leading-[1.04]">
+                <span>{renderRichText(b.heading)}</span>
+              </h2>
+            ) : null}
+            {b.body ? (
+              <p className="gn-body mx-auto mt-6 max-w-md text-balance text-base">{b.body}</p>
+            ) : null}
+            {b.ctaLabel && ctaUrl ? (
+              <a
+                href={ctaUrl}
+                className="gn-btn gn-btn--gradient mt-10 !min-h-12 !px-8 !text-base"
+              >
+                {b.ctaLabel}
+                <ArrowRightIcon />
+              </a>
+            ) : null}
+          </Reveal>
+        </div>
+        <ClosingPhoto
+          media={b.image}
+          fallback={IMG.giveOnce}
+          alt="Guests at round tables in the gala room at St Matthew-in-the-City"
+          position="object-[center_58%]"
+        />
+        <SunsetStrip left={b.footerLeft} right={b.footerRight} />
       </section>
     </div>
   )

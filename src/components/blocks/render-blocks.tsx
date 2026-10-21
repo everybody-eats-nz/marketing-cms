@@ -36,6 +36,10 @@ import {
   GalaNoirInKindBlock,
   GalaNoirQuotesBlock,
   GalaNoirClosingBlock,
+  GalaNoirGivingHeroBlock,
+  GalaNoirMonthlyGiftsBlock,
+  GalaNoirGivingWaysBlock,
+  GalaNoirGiveOnceBlock,
 } from './gala-noir-blocks'
 import { ImpactLandingBlock } from './impact-landing-block'
 import { HopperHeroBlock } from './hopper/hopper-hero-block'
@@ -190,6 +194,20 @@ export function RenderBlocks({
             return <GalaNoirQuotesBlock key={key} block={block as any} />
           case 'galaNoirClosing':
             return <GalaNoirClosingBlock key={key} block={block as any} />
+          case 'galaNoirGivingHero':
+            return (
+              <GalaNoirGivingHeroBlock
+                key={key}
+                block={block as any}
+                pageBlockTypes={pageBlockTypes}
+              />
+            )
+          case 'galaNoirMonthlyGifts':
+            return <GalaNoirMonthlyGiftsBlock key={key} block={block as any} />
+          case 'galaNoirGivingWays':
+            return <GalaNoirGivingWaysBlock key={key} block={block as any} />
+          case 'galaNoirGiveOnce':
+            return <GalaNoirGiveOnceBlock key={key} block={block as any} />
           case 'impactLanding':
             return impactStory ? (
               <ImpactLandingBlock
