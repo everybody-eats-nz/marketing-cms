@@ -24,6 +24,8 @@ import { installChunkErrorReloadHandler } from '@/lib/chunk-error-recovery'
 //     backing Java object is garbage-collected, so the bridge throws "Java
 //     object is gone" (or "Java exception was raised during method invocation").
 //     The throwing frames carry no source url, so they are never our bundle.
+//   - `window.ethereum.selectedAddress` → iOS Brave wallet script. Its only
+//     frame points at the page URL, so each page opens a new issue.
 //
 //  A browser extension / injected script calling `JSON.stringify` on a live DOM
 //  node whose React fiber closes a reference cycle, producing a synthetic,
@@ -44,6 +46,7 @@ const NOISE_SIGNATURES = [
   "Can't find variable: gmo",
   'zaloJSV2',
   'Converting circular structure to JSON',
+  'window.ethereum.selectedAddress',
 ]
 
 // React #418 is a text-content hydration mismatch: the text a server-rendered
@@ -104,9 +107,16 @@ function isFramelessNetworkError(ex: ExceptionItem): boolean {
 // code never rejects with a non-Error value and never throws a bare object or
 // Event, and a genuine app rejection carries a stack frame, so the empty stack
 // plus the synthetic and unhandled flags mark this variant as never ours.
+//
+// `Script error.` has the same shape. The browser reports it in place of the
+// real message when a cross-origin script throws, so the event has no detail
+// and no stack. Our bundle loads from our own origin, so its errors keep their
+// message and frames. This also drops Stripe.js errors on the pay route, but
+// the browser already strips their detail.
 const SYNTHETIC_NOISE_MESSAGES = [
   'Non-Error promise rejection captured with value',
   'captured as exception with keys',
+  'Script error',
 ]
 
 function isSyntheticNonErrorNoise(ex: ExceptionItem): boolean {
