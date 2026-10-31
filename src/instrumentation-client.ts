@@ -161,6 +161,37 @@ function isInjectedStackOverflow(ex: ExceptionItem): boolean {
   )
 }
 
+// A frame whose filename is an HTML document on our own origin, not a script
+// file. Injected scripts that the browser evaluates with no source URL report
+// the page URL as their filename. Our only inline script (`<ThemeScript>`)
+// catches its own errors and runs before PostHog loads.
+function isDocumentFrame(frame: unknown): boolean {
+  const filename = (frame as { filename?: unknown })?.filename
+  if (typeof filename !== 'string') return false
+  try {
+    const url = new URL(filename)
+    return url.origin === window.location.origin && !/\.m?js$/.test(url.pathname)
+  } catch {
+    return false
+  }
+}
+
+// An unhandled error of any type whose every frame points at one of our HTML
+// documents is an injected script, not a site error. It is the general form of
+// `isInjectedStackOverflow`: the message can be anything (even a minified one,
+// such as `Error: Ma`), and each new page or message opens a new fake issue. A
+// genuine error in our bundle always has a `/_next/static/` frame, so it is
+// still reported.
+function isInjectedDocumentScriptError(ex: ExceptionItem): boolean {
+  const frames = ex?.stacktrace?.frames
+  return (
+    ex?.mechanism?.handled === false &&
+    Array.isArray(frames) &&
+    frames.length > 0 &&
+    frames.every(isDocumentFrame)
+  )
+}
+
 // Drop $exception events whose type or message matches a known noise signature.
 // Returning null tells posthog-js not to send the event.
 function dropInjectedNoise(event: CaptureResult | null): CaptureResult | null {
@@ -178,7 +209,8 @@ function dropInjectedNoise(event: CaptureResult | null): CaptureResult | null {
     return (
       isFramelessNetworkError(ex) ||
       isSyntheticNonErrorNoise(ex) ||
-      isInjectedStackOverflow(ex)
+      isInjectedStackOverflow(ex) ||
+      isInjectedDocumentScriptError(ex)
     )
   })
 
