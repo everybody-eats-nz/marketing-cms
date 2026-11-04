@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound, redirect } from 'next/navigation'
 import { getPayloadClient } from '@/lib/payload'
+import { NOT_FOUND_METADATA } from '@/lib/seo'
 import { getPayCopy } from '@/lib/pay-copy.server'
 import { fillTemplate } from '@/lib/pay-copy'
 import { renderRichText } from '@/components/blocks/render-text'
@@ -27,7 +28,7 @@ async function resolveLocation(slug: string): Promise<{ slug: string; name: stri
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { location } = await params
   const loc = await resolveLocation(location)
-  if (!loc) return { title: 'Not found' }
+  if (!loc) return NOT_FOUND_METADATA
   const { payment } = await getPayCopy()
   return {
     title: fillTemplate(payment.metaTitle, { location: loc.name }),

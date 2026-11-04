@@ -6,6 +6,7 @@ import { JsonLd, buildOrganization } from '@/components/structured-data'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { ThemeScript } from '@/components/theme-script'
+import { ThemeSync } from '@/components/theme-sync'
 import './globals.css'
 
 // Layout fetches site-wide CMS data (settings, nav, footer) on every request.
@@ -100,6 +101,7 @@ export default async function FrontendLayout({ children }: { children: React.Rea
         <JsonLd data={buildOrganization(settings)} />
       </head>
       <body>
+        <ThemeSync />
         <SiteHeader />
         <main className="min-h-[60vh]">{children}</main>
         <SiteFooter />

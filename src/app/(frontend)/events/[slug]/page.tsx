@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { getPayloadClient } from '@/lib/payload'
-import { pageMetadata } from '@/lib/seo'
+import { NOT_FOUND_METADATA, pageMetadata } from '@/lib/seo'
 import { JsonLd, buildEvent, buildBreadcrumbs } from '@/components/structured-data'
 import { PayloadImage } from '@/components/payload-image'
 import { RichText } from '@/components/rich-text'
@@ -33,7 +33,7 @@ async function fetchEvent(slug: string) {
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params
   const ev: any = await fetchEvent(slug)
-  if (!ev) return { title: 'Event not found', robots: { index: false, follow: false } }
+  if (!ev) return NOT_FOUND_METADATA
   return pageMetadata({
     title: ev.name,
     description: ev.shortDescription,
