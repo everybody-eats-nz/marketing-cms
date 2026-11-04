@@ -575,6 +575,9 @@ export interface Page {
                    */
                   email?: string | null;
                   ctaLabel?: string | null;
+                  /**
+                   * Where the card goes. A page path (/get-involved/donate), #enquiry to jump to the enquiry form on this page, or a document link (opens in a new tab). Needs a CTA label to be clickable.
+                   */
                   href?: string | null;
                   /**
                    * Used only when Card style = Per-card colours

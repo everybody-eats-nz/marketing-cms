@@ -73,6 +73,17 @@ const nextConfig = {
       // Squarespace `-2` artifact.
       { source: '/get-involved-2', destination: '/get-involved', permanent: true },
 
+      // Team experiences page renamed in the CMS (was cooking-sessions). The
+      // old URLs are still indexed (Meals that Matter: ~5.7k impressions/yr,
+      // audit §2) and still linked from CMS content. Covers the parent and
+      // every child; query strings (?type=) carry over, and browsers re-apply
+      // the #fragment after a redirect.
+      {
+        source: '/get-involved/cooking-sessions/:path*',
+        destination: '/get-involved/team-experiences/:path*',
+        permanent: true,
+      },
+
       // Fundraise page renamed + flattened.
       {
         source: '/get-involved/donate/fundraise-for-everybody-eats',
