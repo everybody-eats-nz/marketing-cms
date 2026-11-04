@@ -198,8 +198,7 @@ function isInjectedDocumentScriptError(ex: ExceptionItem): boolean {
 
 // A `ChunkLoadError` that started a recovery reload (see
 // src/lib/chunk-error-recovery.ts) is not a failure the visitor sees: the page
-// reloads with the new build and works. Only that recovered error is dropped. A
-// failure after the reload hits the guard, starts no reload, and is reported.
+// reloads with the new build and works.
 function isRecoveredChunkLoadError(ex: ExceptionItem): boolean {
   return isChunkReloadPending() && isChunkLoadError({ name: ex?.type, message: ex?.value })
 }

@@ -46,6 +46,8 @@ export function isChunkLoadError(reason: unknown): boolean {
   return /Failed to load chunk/i.test(message) || /Loading (?:CSS )?chunk .* failed/i.test(message)
 }
 
+let reloadPending = false
+
 function reloadOnce(): void {
   let last = 0
   try {
@@ -63,8 +65,6 @@ function reloadOnce(): void {
   reloadPending = true
   window.location.reload()
 }
-
-let reloadPending = false
 
 // True after this page has started a recovery reload. A failure that the guard
 // blocks does not set it, so a chunk that is still missing is reported.
