@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { isFileHref } from '@/lib/links'
 import { renderRichText } from './render-text'
 import { type DocFile, formatBytes, fileLabel } from './file-meta'
 
@@ -198,6 +199,15 @@ export function CardGridBlock({ block }: Props) {
 
           const cls = `group ${style === 'tile' ? '' : ''}`
 
+          if (c.href && c.ctaLabel && isFileHref(c.href)) {
+            // A card can link straight to a document (e.g. the section's PDF):
+            // open it in a new tab like the download bar does.
+            return (
+              <a key={i} href={c.href} target="_blank" rel="noopener noreferrer" className={cls}>
+                {cardInner}
+              </a>
+            )
+          }
           if (c.href && c.ctaLabel) {
             return (
               <Link key={i} href={c.href} className={cls}>

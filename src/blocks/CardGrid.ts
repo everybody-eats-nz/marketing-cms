@@ -71,7 +71,14 @@ export const CardGrid: Block = {
           admin: { description: 'Optional. Renders as mailto link below the copy.' },
         },
         { name: 'ctaLabel', type: 'text' },
-        { name: 'href', type: 'text' },
+        {
+          name: 'href',
+          type: 'text',
+          admin: {
+            description:
+              'Where the card goes. A page path (/get-involved/donate), #enquiry to jump to the enquiry form on this page, or a document link (opens in a new tab). Needs a CTA label to be clickable.',
+          },
+        },
         {
           name: 'color',
           type: 'select',
