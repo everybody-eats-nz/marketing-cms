@@ -4,7 +4,7 @@ import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { activeClosure } from '@/lib/closures'
 import { getPayloadClient } from '@/lib/payload'
-import { pageMetadata } from '@/lib/seo'
+import { NOT_FOUND_METADATA, pageMetadata } from '@/lib/seo'
 import { JsonLd, buildRestaurant, buildBreadcrumbs } from '@/components/structured-data'
 import { BookingLocationLink } from '@/components/booking/booking-dialog'
 import { ClosureNotice } from '@/components/closure-notice'
@@ -98,7 +98,7 @@ function roughDate(iso?: string): string | null {
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params
   const loc: any = await fetchLocation(slug)
-  if (!loc) return { title: 'Not found', robots: { index: false, follow: false } }
+  if (!loc) return NOT_FOUND_METADATA
   return pageMetadata({
     // Honour a CMS-set SEO title; otherwise lead with the intent these pages
     // actually rank for in Search Console ("<suburb> restaurant", "cheap eats",

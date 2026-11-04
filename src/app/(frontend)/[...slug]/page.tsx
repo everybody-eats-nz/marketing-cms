@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { fetchPageDoc, PageBody } from '@/components/blocks/page-body'
-import { pageMetadata } from '@/lib/seo'
+import { NOT_FOUND_METADATA, pageMetadata } from '@/lib/seo'
 
 type Params = { params: Promise<{ slug: string[] }> }
 
@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params
   const path = joinSlug(slug)
   const { page } = await fetchPageDoc(path)
-  if (!page) return { title: 'Not found', robots: { index: false, follow: false } }
+  if (!page) return NOT_FOUND_METADATA
   return pageMetadata({
     title: page.seo?.title || page.title,
     description: page.seo?.description,

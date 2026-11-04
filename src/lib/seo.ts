@@ -8,6 +8,17 @@ import { SITE_NOINDEX, mediaUrl } from '@/lib/site-url'
 // free of the Payload (node:fs) import below.
 export { SITE_URL, SITE_NOINDEX, absoluteUrl, mediaUrl } from '@/lib/site-url'
 
+/**
+ * Metadata for any "nothing here" response: the branded not-found.tsx and the
+ * generateMetadata of routes whose CMS doc is missing (those run before the
+ * page calls notFound(), so they set the title the 404 is served with).
+ * Kept out of search indexes.
+ */
+export const NOT_FOUND_METADATA: Metadata = {
+  title: 'Page not found',
+  robots: { index: false, follow: false },
+}
+
 /** Memoised per-request fetch of the site-settings global. */
 export const getSiteSettings = cache(async (): Promise<any> => {
   const payload = await getPayloadClient()
