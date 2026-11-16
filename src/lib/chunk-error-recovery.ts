@@ -15,6 +15,11 @@
 // reload loops — if a reload was just attempted and the chunk is *still*
 // unreachable (a genuine outage rather than a stale deploy), we stop reloading
 // and let the error surface to error tracking instead of spinning.
+//
+// The error that starts a reload is recovered, so it is not reported: the
+// `before_send` hook in src/instrumentation-client.ts drops it while
+// `isChunkReloadPending()` is true. Our listeners are installed before PostHog
+// loads, so they run before its exception autocapture and set the flag first.
 
 const RELOAD_GUARD_KEY = 'ee:chunk-reload-at'
 
@@ -22,7 +27,7 @@ const RELOAD_GUARD_KEY = 'ee:chunk-reload-at'
 // this window means the asset is genuinely missing — stop rather than loop.
 const RELOAD_GUARD_WINDOW_MS = 10_000
 
-function isChunkLoadError(reason: unknown): boolean {
+export function isChunkLoadError(reason: unknown): boolean {
   if (!reason) return false
 
   if (typeof reason === 'object' && (reason as { name?: unknown }).name === 'ChunkLoadError') {
@@ -41,6 +46,8 @@ function isChunkLoadError(reason: unknown): boolean {
   return /Failed to load chunk/i.test(message) || /Loading (?:CSS )?chunk .* failed/i.test(message)
 }
 
+let reloadPending = false
+
 function reloadOnce(): void {
   let last = 0
   try {
@@ -55,7 +62,14 @@ function reloadOnce(): void {
     return
   }
 
+  reloadPending = true
   window.location.reload()
+}
+
+// True after this page has started a recovery reload. A failure that the guard
+// blocks does not set it, so a chunk that is still missing is reported.
+export function isChunkReloadPending(): boolean {
+  return reloadPending
 }
 
 let installed = false

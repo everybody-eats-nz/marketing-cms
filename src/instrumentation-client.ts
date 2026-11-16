@@ -1,6 +1,10 @@
 import posthog from 'posthog-js'
 import type { CaptureResult } from 'posthog-js'
-import { installChunkErrorReloadHandler } from '@/lib/chunk-error-recovery'
+import {
+  installChunkErrorReloadHandler,
+  isChunkLoadError,
+  isChunkReloadPending,
+} from '@/lib/chunk-error-recovery'
 
 // Substrings that mark a captured exception as third-party noise rather than a
 // real site error. `capture_exceptions` turns on global autocapture of
@@ -192,7 +196,15 @@ function isInjectedDocumentScriptError(ex: ExceptionItem): boolean {
   )
 }
 
-// Drop $exception events whose type or message matches a known noise signature.
+// A `ChunkLoadError` that started a recovery reload (see
+// src/lib/chunk-error-recovery.ts) is not a failure the visitor sees: the page
+// reloads with the new build and works.
+function isRecoveredChunkLoadError(ex: ExceptionItem): boolean {
+  return isChunkReloadPending() && isChunkLoadError({ name: ex?.type, message: ex?.value })
+}
+
+// Drop $exception events whose type or message matches a known noise signature,
+// and chunk errors that a reload already recovered.
 // Returning null tells posthog-js not to send the event.
 function dropInjectedNoise(event: CaptureResult | null): CaptureResult | null {
   if (!event || event.event !== '$exception') return event
@@ -210,7 +222,8 @@ function dropInjectedNoise(event: CaptureResult | null): CaptureResult | null {
       isFramelessNetworkError(ex) ||
       isSyntheticNonErrorNoise(ex) ||
       isInjectedStackOverflow(ex) ||
-      isInjectedDocumentScriptError(ex)
+      isInjectedDocumentScriptError(ex) ||
+      isRecoveredChunkLoadError(ex)
     )
   })
 
