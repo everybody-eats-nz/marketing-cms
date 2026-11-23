@@ -39,6 +39,7 @@ import * as migration_20260928_044431_add_upload_object_key from './20260928_044
 import * as migration_20261014_225657_anchor_event_dates_to_nz_timezone from './20261014_225657_anchor_event_dates_to_nz_timezone';
 import * as migration_20261019_192056_cafe_closures from './20261019_192056_cafe_closures';
 import * as migration_20261021_034654_gala_regular_giving from './20261021_034654_gala_regular_giving';
+import * as migration_20261123_190126_payload_3_94_long_fk_names from './20261123_190126_payload_3_94_long_fk_names';
 
 export const migrations = [
   {
@@ -244,6 +245,11 @@ export const migrations = [
   {
     up: migration_20261021_034654_gala_regular_giving.up,
     down: migration_20261021_034654_gala_regular_giving.down,
-    name: '20261021_034654_gala_regular_giving'
+    name: '20261021_034654_gala_regular_giving',
+  },
+  {
+    up: migration_20261123_190126_payload_3_94_long_fk_names.up,
+    down: migration_20261123_190126_payload_3_94_long_fk_names.down,
+    name: '20261123_190126_payload_3_94_long_fk_names'
   },
 ];
