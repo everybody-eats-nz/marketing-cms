@@ -340,6 +340,8 @@ export function DonateForm({
 // and the longest wait after `ready` before they appear anyway.
 const SETTLE_MS = 250
 const MAX_SETTLE_MS = 2500
+// The longest wait for Stripe to signal at all before the form appears anyway.
+const LOAD_TIMEOUT_MS = 10000
 
 function CheckoutForm({
   amount,
@@ -371,10 +373,23 @@ function CheckoutForm({
   // height after `ready`; on a phone that moved the pay button and footer
   // several times (poor CLS). So keep them hidden and out of the flow until
   // they stop resizing. A card-form load error also counts as ready, so the
-  // diner sees the message instead of an endless loader.
+  // diner sees the message instead of an endless loader. (`error` is also set
+  // by a failed confirm(), but by then `loaded` is already true.)
   const stripeRef = useRef<HTMLDivElement>(null)
-  const ready = hasWallet !== null && (paymentReady || error !== null)
+  // Set when Stripe hasn't signalled within LOAD_TIMEOUT_MS (stalled network,
+  // blocked iframe, or an element that fires neither `ready` nor `loaderror`),
+  // so the diner is never stuck on the loader.
+  const [timedOut, setTimedOut] = useState(false)
+  const ready = timedOut || (hasWallet !== null && (paymentReady || error !== null))
   const [loaded, setLoaded] = useState(false)
+  // Shown if the card form still hasn't loaded when we give up waiting. Clears
+  // itself if the card form turns up late.
+  const shownError = error ?? (timedOut && !paymentReady ? copy.loadError : null)
+  useEffect(() => {
+    if (loaded) return
+    const timeout = setTimeout(() => setTimedOut(true), LOAD_TIMEOUT_MS)
+    return () => clearTimeout(timeout)
+  }, [loaded])
   useEffect(() => {
     const el = stripeRef.current
     if (!ready || loaded || !el) return
@@ -460,7 +475,7 @@ function CheckoutForm({
         </button>
       </div>
 
-      <div className="relative flex-1">
+      <div className="relative flex-1 min-h-24">
         {!loaded && (
           <p
             role="status"
@@ -494,7 +509,7 @@ function CheckoutForm({
             options={{ wallets: { applePay: 'never', googlePay: 'never' } }}
           />
 
-          {error && <p className="mt-4 text-sm text-clay-300">{error}</p>}
+          {shownError && <p className="mt-4 text-sm text-clay-300">{shownError}</p>}
 
           <button
             type="submit"
