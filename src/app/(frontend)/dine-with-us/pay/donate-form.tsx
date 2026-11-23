@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useSyncExternalStore } from 'react'
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 import { useRouter } from 'next/navigation'
 import { useIsDark } from '@/lib/hooks'
 import { loadStripe } from '@stripe/stripe-js'
@@ -106,6 +106,10 @@ export function DonateForm({
   const [clientSecret, setClientSecret] = useState<string | null>(null)
   const [starting, setStarting] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  // Height of the amount step when the diner taps Continue. The card step holds
+  // at least this height, so the page below it doesn't jump (see CheckoutForm).
+  const amountStepRef = useRef<HTMLDivElement>(null)
+  const [amountStepHeight, setAmountStepHeight] = useState<number>()
   const isDark = useIsDark()
   const appearance = isDark ? darkAppearance : lightAppearance
 
@@ -187,6 +191,7 @@ export function DonateForm({
       if (!res.ok || !data.clientSecret) {
         throw new Error(data.error || 'Could not start the payment.')
       }
+      setAmountStepHeight(amountStepRef.current?.offsetHeight)
       setClientSecret(data.clientSecret)
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Something went wrong. Please try again.')
@@ -224,6 +229,7 @@ export function DonateForm({
         <CheckoutForm
           amount={effectiveAmount as number}
           copy={copy}
+          minHeight={amountStepHeight}
           onBack={() => {
             setClientSecret(null)
             setError(null)
@@ -235,7 +241,7 @@ export function DonateForm({
 
   // Step 1 — choose an amount.
   return (
-    <div>
+    <div ref={amountStepRef}>
       <p className="eyebrow mb-4">
         {source === 'donation' ? copy.donationPrompt : copy.payPrompt}
       </p>
@@ -330,13 +336,20 @@ export function DonateForm({
   )
 }
 
+// How long the hidden Stripe fields must hold one height before they appear,
+// and the longest wait after `ready` before they appear anyway.
+const SETTLE_MS = 250
+const MAX_SETTLE_MS = 2500
+
 function CheckoutForm({
   amount,
   copy,
+  minHeight,
   onBack,
 }: {
   amount: number
   copy: FormCopy
+  minHeight?: number
   onBack: () => void
 }) {
   const stripe = useStripe()
@@ -346,13 +359,41 @@ function CheckoutForm({
   const [error, setError] = useState<string | null>(null)
   // Whether Apple Pay / Google Pay actually rendered (browser/device support),
   // so the "or pay by card" divider only shows when an express button is there.
-  const [hasWallet, setHasWallet] = useState(false)
+  // Null until the express element is ready.
+  const [hasWallet, setHasWallet] = useState<boolean | null>(null)
   // The PaymentElement mounts asynchronously inside its iframe. confirmPayment()
   // requires every Element in the group to have emitted `ready`, and *throws* an
   // IntegrationError if it hasn't — the trigger being a wallet tap (Apple Pay /
   // Google Pay) firing confirm() before the card element finished mounting.
   // Gate confirm() on this so that can't happen.
   const [paymentReady, setPaymentReady] = useState(false)
+  // Stripe's iframes start empty and grow in steps as they load, and keep
+  // animating their height for a moment after `ready`. On a phone that pushed
+  // the pay button and footer down several times — the main source of poor
+  // CLS on the pay pages. So the form holds the amount step's height, and the
+  // Stripe fields stay hidden and out of the flow until both elements are
+  // ready and have stopped resizing, then appear in one step. A card-form load
+  // error also counts as ready, so the diner sees the message instead of an
+  // endless loader.
+  const stripeRef = useRef<HTMLDivElement>(null)
+  const ready = hasWallet !== null && (paymentReady || error !== null)
+  const [loaded, setLoaded] = useState(false)
+  useEffect(() => {
+    const el = stripeRef.current
+    if (!ready || !el) return
+    let settle = setTimeout(() => setLoaded(true), SETTLE_MS)
+    const observer = new ResizeObserver(() => {
+      clearTimeout(settle)
+      settle = setTimeout(() => setLoaded(true), SETTLE_MS)
+    })
+    observer.observe(el)
+    const cap = setTimeout(() => setLoaded(true), MAX_SETTLE_MS)
+    return () => {
+      clearTimeout(settle)
+      clearTimeout(cap)
+      observer.disconnect()
+    }
+  }, [ready])
 
   // Shared by the card form submit and the express (wallet) buttons.
   async function confirm() {
@@ -406,6 +447,8 @@ function CheckoutForm({
         e.preventDefault()
         confirm()
       }}
+      style={{ minHeight }}
+      className="flex flex-col"
     >
       <div className="flex items-baseline justify-between mb-5">
         <p className="eyebrow">{fillTemplate(copy.givingLabel, { amount: formatDollars(amount) })}</p>
@@ -418,42 +461,57 @@ function CheckoutForm({
         </button>
       </div>
 
-      {/* Apple Pay / Google Pay first, so they're visible without scrolling.
-          Renders nothing on browsers/devices without an available wallet. */}
-      <ExpressCheckoutElement
-        onConfirm={confirm}
-        onReady={(event) => setHasWallet(Boolean(event.availablePaymentMethods))}
-      />
-      {hasWallet && (
-        <div className="my-5 flex items-center gap-3 text-[0.7rem] uppercase tracking-[0.15em] text-muted/70">
-          <span className="h-px flex-1 bg-line/20" />
-          {copy.orPayByCard}
-          <span className="h-px flex-1 bg-line/20" />
+      <div className="relative flex-1">
+        {!loaded && (
+          <p
+            role="status"
+            className="absolute inset-0 flex items-center justify-center gap-2 text-sm text-muted"
+          >
+            <span aria-hidden className="h-2 w-2 rounded-full bg-forest-500 animate-pulse" />
+            {copy.oneMomentLabel}
+          </p>
+        )}
+        <div ref={stripeRef} className={loaded ? undefined : 'invisible absolute inset-x-0 top-0'}>
+          {/* Apple Pay / Google Pay first, so they're visible without scrolling.
+              Renders nothing on browsers/devices without an available wallet. */}
+          <ExpressCheckoutElement
+            onConfirm={confirm}
+            onReady={(event) => setHasWallet(Boolean(event.availablePaymentMethods))}
+            onLoadError={() => setHasWallet(false)}
+          />
+          {hasWallet && (
+            <div className="my-5 flex items-center gap-3 text-[0.7rem] uppercase tracking-[0.15em] text-muted/70">
+              <span className="h-px flex-1 bg-line/20" />
+              {copy.orPayByCard}
+              <span className="h-px flex-1 bg-line/20" />
+            </div>
+          )}
+
+          {/* Wallets are handled by the express element above, so keep them out of
+              the card form to avoid duplicate Apple Pay / Google Pay entries. */}
+          <PaymentElement
+            onReady={() => setPaymentReady(true)}
+            onLoadError={() => setError(copy.loadError)}
+            options={{ wallets: { applePay: 'never', googlePay: 'never' } }}
+          />
+
+          {error && <p className="mt-4 text-sm text-clay-300">{error}</p>}
+
+          <button
+            type="submit"
+            disabled={!stripe || !paymentReady || submitting}
+            className="btn-primary w-full justify-center mt-6 py-4 text-base disabled:opacity-60"
+          >
+            {submitting
+              ? copy.processingLabel
+              : fillTemplate(copy.giveLabel, { amount: formatDollars(amount) })}
+          </button>
+
+          <p className="mt-5 text-xs text-muted/85 text-center leading-relaxed">
+            {copy.cardSecurityNote}
+          </p>
         </div>
-      )}
-
-      {/* Wallets are handled by the express element above, so keep them out of
-          the card form to avoid duplicate Apple Pay / Google Pay entries. */}
-      <PaymentElement
-        onReady={() => setPaymentReady(true)}
-        options={{ wallets: { applePay: 'never', googlePay: 'never' } }}
-      />
-
-      {error && <p className="mt-4 text-sm text-clay-300">{error}</p>}
-
-      <button
-        type="submit"
-        disabled={!stripe || !paymentReady || submitting}
-        className="btn-primary w-full justify-center mt-6 py-4 text-base disabled:opacity-60"
-      >
-        {submitting
-          ? copy.processingLabel
-          : fillTemplate(copy.giveLabel, { amount: formatDollars(amount) })}
-      </button>
-
-      <p className="mt-5 text-xs text-muted/85 text-center leading-relaxed">
-        {copy.cardSecurityNote}
-      </p>
+      </div>
     </form>
   )
 }
