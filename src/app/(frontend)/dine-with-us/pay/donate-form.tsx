@@ -367,33 +367,32 @@ function CheckoutForm({
   // Google Pay) firing confirm() before the card element finished mounting.
   // Gate confirm() on this so that can't happen.
   const [paymentReady, setPaymentReady] = useState(false)
-  // Stripe's iframes start empty and grow in steps as they load, and keep
-  // animating their height for a moment after `ready`. On a phone that pushed
-  // the pay button and footer down several times — the main source of poor
-  // CLS on the pay pages. So the form holds the amount step's height, and the
-  // Stripe fields stay hidden and out of the flow until both elements are
-  // ready and have stopped resizing, then appear in one step. A card-form load
-  // error also counts as ready, so the diner sees the message instead of an
-  // endless loader.
+  // Stripe's iframes grow in steps as they load and keep animating their
+  // height after `ready`; on a phone that moved the pay button and footer
+  // several times (poor CLS). So keep them hidden and out of the flow until
+  // they stop resizing. A card-form load error also counts as ready, so the
+  // diner sees the message instead of an endless loader.
   const stripeRef = useRef<HTMLDivElement>(null)
   const ready = hasWallet !== null && (paymentReady || error !== null)
   const [loaded, setLoaded] = useState(false)
   useEffect(() => {
     const el = stripeRef.current
-    if (!ready || !el) return
-    let settle = setTimeout(() => setLoaded(true), SETTLE_MS)
+    if (!ready || loaded || !el) return
+    const reveal = () => setLoaded(true)
+    let settle: ReturnType<typeof setTimeout> | undefined
+    // Fires once on observe(), which starts the first countdown.
     const observer = new ResizeObserver(() => {
       clearTimeout(settle)
-      settle = setTimeout(() => setLoaded(true), SETTLE_MS)
+      settle = setTimeout(reveal, SETTLE_MS)
     })
     observer.observe(el)
-    const cap = setTimeout(() => setLoaded(true), MAX_SETTLE_MS)
+    const cap = setTimeout(reveal, MAX_SETTLE_MS)
     return () => {
       clearTimeout(settle)
       clearTimeout(cap)
       observer.disconnect()
     }
-  }, [ready])
+  }, [ready, loaded])
 
   // Shared by the card form submit and the express (wallet) buttons.
   async function confirm() {
